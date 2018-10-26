@@ -8,17 +8,17 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.shivshambhuwebapi.master.model.Plant;
+import com.shivshambhuwebapi.master.model.Item;
 
-public interface PlantRepo extends JpaRepository<Plant, Integer> {
+public interface ItemRepo extends JpaRepository<Item, Integer> {
 
 	@Transactional
 	@Modifying
-	@Query("UPDATE Plant SET delStatus=0  WHERE plant_id=:plantId")
-	int deletePlant(@Param("plantId") int plantId);
+	@Query("UPDATE Item SET delStatus=0  WHERE item_id=:itemId")
+	int deleteItem(@Param("itemId") int itemId);
 
-	List<Plant> findByDelStatusOrderByPlantIdDesc(int i);
+	List<Item> findByDelStatusOrderByItemIdDesc(int i);
 
-	Plant findByPlantIdAndDelStatus(int plantId, int i);
+	Item findByItemIdAndDelStatus(int itemId, int i);
 
 }
