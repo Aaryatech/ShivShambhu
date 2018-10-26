@@ -18,6 +18,7 @@ import com.shivshambhuwebapi.master.model.Dept;
 import com.shivshambhuwebapi.master.repo.CompanyRepo;
 import com.shivshambhuwebapi.master.repo.CustRepo;
 import com.shivshambhuwebapi.master.repo.DeptRepo;
+import com.shivshambhuwebapi.master.repo.PlantRepo;
 
 @RestController
 public class MasterApiController {
@@ -30,6 +31,9 @@ public class MasterApiController {
 
 	@Autowired
 	DeptRepo deptRepo;
+
+	@Autowired
+	PlantRepo plantRepo;
 
 	// ----------------------------------------Customer----------------------------------------------------
 
@@ -139,7 +143,7 @@ public class MasterApiController {
 		Company comp = new Company();
 
 		try {
-			comp = companyRepo.findByCompanyIdAndIsUsed(companyId, 1);
+			comp = companyRepo.findByCompanyIdAndDelStatus(companyId, 1);
 			comp.setFromDate(DateConvertor.convertToDMY(comp.getFromDate()));
 			comp.setToDate(DateConvertor.convertToDMY(comp.getToDate()));
 
@@ -159,7 +163,7 @@ public class MasterApiController {
 
 		try {
 
-			compList = companyRepo.findByIsUsedOrderByCompanyIdDesc(1);
+			compList = companyRepo.findByDelStatusOrderByCompanyIdDesc(1);
 			for (int i = 0; i < compList.size(); i++) {
 				compList.get(i).setFromDate(DateConvertor.convertToDMY(compList.get(i).getFromDate()));
 				compList.get(i).setToDate(DateConvertor.convertToDMY(compList.get(i).getToDate()));
@@ -238,7 +242,7 @@ public class MasterApiController {
 		return dept;
 
 	}
-	
+
 	@RequestMapping(value = { "/getAllDeptList" }, method = RequestMethod.GET)
 	public @ResponseBody List<Dept> getAllDeptList() {
 
@@ -247,7 +251,7 @@ public class MasterApiController {
 		try {
 
 			deptList = deptRepo.findByDelStatusOrderByDeptIdDesc(1);
-			
+
 		} catch (Exception e) {
 
 			e.printStackTrace();
@@ -257,7 +261,6 @@ public class MasterApiController {
 
 	}
 
-
 	@RequestMapping(value = { "/deleteDept" }, method = RequestMethod.POST)
 	public @ResponseBody Info deleteDept(@RequestParam("deptId") int deptId) {
 
@@ -265,6 +268,33 @@ public class MasterApiController {
 
 		try {
 			int delete = deptRepo.deleteDept(deptId);
+
+			if (delete == 1) {
+				info.setError(false);
+				info.setMessage("successfully Deleted");
+			} else {
+				info.setError(true);
+				info.setMessage(" Deleted to Delete");
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage(" Deleted to Delete");
+
+		}
+		return info;
+
+	}
+
+	@RequestMapping(value = { "/deletePlant" }, method = RequestMethod.POST)
+	public @ResponseBody Info deletePlant(@RequestParam("plantId") int plantId) {
+
+		Info info = new Info();
+
+		try {
+			int delete = plantRepo.deletePlant(plantId);
 
 			if (delete == 1) {
 				info.setError(false);

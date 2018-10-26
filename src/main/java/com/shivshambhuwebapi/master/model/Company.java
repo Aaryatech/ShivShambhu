@@ -105,10 +105,9 @@ public class Company {
 
 	@Column(name = "ex_bool3")
 	private int exBool3;
-	
-	@Column(name = "is_used")
-	private int isUsed;
 
+	@Column(name = "del_status")
+	private int delStatus;
 
 	public int getCompanyId() {
 		return companyId;
@@ -357,15 +356,13 @@ public class Company {
 	public void setExBool3(int exBool3) {
 		this.exBool3 = exBool3;
 	}
-	
-	
 
-	public int getIsUsed() {
-		return isUsed;
+	public int getDelStatus() {
+		return delStatus;
 	}
 
-	public void setIsUsed(int isUsed) {
-		this.isUsed = isUsed;
+	public void setDelStatus(int delStatus) {
+		this.delStatus = delStatus;
 	}
 
 	@Override
@@ -378,9 +375,7 @@ public class Company {
 				+ compLogo + ", fromDate=" + fromDate + ", toDate=" + toDate + ", cinNo=" + cinNo + ", exInt1=" + exInt1
 				+ ", exInt2=" + exInt2 + ", exInt3=" + exInt3 + ", exVar1=" + exVar1 + ", exVar2=" + exVar2
 				+ ", exVar3=" + exVar3 + ", exDate1=" + exDate1 + ", exDate2=" + exDate2 + ", exBool1=" + exBool1
-				+ ", exBool2=" + exBool2 + ", exBool3=" + exBool3 + ", isUsed=" + isUsed + "]";
+				+ ", exBool2=" + exBool2 + ", exBool3=" + exBool3 + ", delStatus=" + delStatus + "]";
 	}
-	
-	
 
 }

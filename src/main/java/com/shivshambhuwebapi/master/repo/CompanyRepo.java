@@ -12,13 +12,13 @@ import com.shivshambhuwebapi.master.model.Company;
 
 public interface CompanyRepo extends JpaRepository<Company, Integer> {
 
-	Company findByCompanyIdAndIsUsed(int companyId, int i);
+	Company findByCompanyIdAndDelStatus(int companyId, int i);
 
-	List<Company> findByIsUsedOrderByCompanyIdDesc(int i);
+	List<Company> findByDelStatusOrderByCompanyIdDesc(int i);
 
 	@Transactional
 	@Modifying
-	@Query("UPDATE Company SET isUsed=0  WHERE company_id=:companyId")
+	@Query("UPDATE Company SET delStatus=0  WHERE company_id=:companyId")
 	int deleteCompany(@Param("companyId") int companyId);
 
 }
