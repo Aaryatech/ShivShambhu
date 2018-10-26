@@ -8,15 +8,18 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "m_dept")
+@Table(name = "m_plant")
 public class Plant {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "dept_id")
-	private int deptId;
+	@Column(name = "plant_id")
+	private int plant_id;
 
-	@Column(name = "dept_name")
-	private String deptName;
+	@Column(name = "plant_name")
+	private String plant_name;
+	
+	@Column(name = "company_id")
+	private int company_id;
 
 	@Column(name = "sort_no")
 	private int sortNo;
