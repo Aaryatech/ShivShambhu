@@ -8,17 +8,16 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.shivshambhuwebapi.master.model.Cust;
+import com.shivshambhuwebapi.master.model.User;
 
-public interface CustRepo extends JpaRepository<Cust, Integer> {
-
-	Cust findByCustIdAndDelStatus(int custId, int i);
+public interface UserRepo extends JpaRepository<User, Integer> {
 
 	@Transactional
 	@Modifying
-	@Query("UPDATE Cust SET del_status=0  WHERE cust_id=:custId")
-	int deleteCust(@Param("custId") int custId);
+	@Query("UPDATE User SET del_status=0  WHERE user_id=:userId")
+	int deleteUser(@Param("userId") int userId);
 
-	List<Cust> findByDelStatusOrderByCustIdDesc(int i);
+	User findByUserIdAndDelStatus(int userId, int i);
 
+	List<User> findByDelStatusOrderByUserIdDesc(int i);
 }

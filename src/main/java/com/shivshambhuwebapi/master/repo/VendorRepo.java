@@ -8,17 +8,17 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.shivshambhuwebapi.master.model.Cust;
+import com.shivshambhuwebapi.master.model.Vendor;
 
-public interface CustRepo extends JpaRepository<Cust, Integer> {
-
-	Cust findByCustIdAndDelStatus(int custId, int i);
+public interface VendorRepo extends JpaRepository<Vendor, Integer> {
 
 	@Transactional
 	@Modifying
-	@Query("UPDATE Cust SET del_status=0  WHERE cust_id=:custId")
-	int deleteCust(@Param("custId") int custId);
+	@Query("UPDATE Vendor SET del_status=0  WHERE vend_id=:vendId")
+	int deleteVendor(@Param("vendId") int vendId);
 
-	List<Cust> findByDelStatusOrderByCustIdDesc(int i);
+	Vendor findByVendIdAndDelStatus(int vendId, int i);
+
+	List<Vendor> findByDelStatusOrderByVendIdDesc(int i);
 
 }

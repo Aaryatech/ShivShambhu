@@ -19,6 +19,10 @@ import com.shivshambhuwebapi.master.model.Item;
 import com.shivshambhuwebapi.master.model.MarketingUser;
 import com.shivshambhuwebapi.master.model.Plant;
 import com.shivshambhuwebapi.master.model.Project;
+import com.shivshambhuwebapi.master.model.QuotTracking;
+import com.shivshambhuwebapi.master.model.Uom;
+import com.shivshambhuwebapi.master.model.User;
+import com.shivshambhuwebapi.master.model.Vendor;
 import com.shivshambhuwebapi.master.repo.CompanyRepo;
 import com.shivshambhuwebapi.master.repo.CustRepo;
 import com.shivshambhuwebapi.master.repo.DeptRepo;
@@ -26,12 +30,19 @@ import com.shivshambhuwebapi.master.repo.ItemRepo;
 import com.shivshambhuwebapi.master.repo.MarketingUserRepo;
 import com.shivshambhuwebapi.master.repo.PlantRepo;
 import com.shivshambhuwebapi.master.repo.ProjectRepo;
+import com.shivshambhuwebapi.master.repo.QuotTrackingRepo;
+import com.shivshambhuwebapi.master.repo.UomRepo;
+import com.shivshambhuwebapi.master.repo.UserRepo;
+import com.shivshambhuwebapi.master.repo.VendorRepo;
 
 @RestController
 public class MasterApiController {
 
 	@Autowired
 	CompanyRepo companyRepo;
+
+	@Autowired
+	UserRepo userRepo;
 
 	@Autowired
 	CustRepo custRepo;
@@ -50,6 +61,343 @@ public class MasterApiController {
 
 	@Autowired
 	MarketingUserRepo marketingUserRepo;
+
+	@Autowired
+	UomRepo uomRepo;
+
+	@Autowired
+	VendorRepo vendorRepo;
+
+	@Autowired
+	QuotTrackingRepo quotTrackingRepo;
+
+	// ----------------------------------------QuotTracking----------------------------------------------------
+
+	@RequestMapping(value = { "/saveQuotTracking" }, method = RequestMethod.POST)
+	public @ResponseBody QuotTracking saveQuotTracking(@RequestBody QuotTracking quotTracking) {
+
+		QuotTracking res = new QuotTracking();
+
+		try {
+
+			res = quotTrackingRepo.saveAndFlush(quotTracking);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return res;
+
+	}
+
+	@RequestMapping(value = { "/getQuotByQuotTrackId" }, method = RequestMethod.POST)
+	public @ResponseBody QuotTracking getQuotByQuotTrackId(@RequestParam("quotTrackId") int quotTrackId) {
+
+		QuotTracking quotTracking = new QuotTracking();
+
+		try {
+			quotTracking = quotTrackingRepo.findByQuotTrackIdAndDelStatus(quotTrackId, 1);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return quotTracking;
+
+	}
+
+	@RequestMapping(value = { "/getAllQuotTrackList" }, method = RequestMethod.GET)
+	public @ResponseBody List<QuotTracking> getAllQuotTrackList() {
+
+		List<QuotTracking> quotTrackList = new ArrayList<QuotTracking>();
+
+		try {
+
+			quotTrackList = quotTrackingRepo.findByDelStatusOrderByQuotTrackIdDesc(1);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return quotTrackList;
+
+	}
+
+	@RequestMapping(value = { "/deleteQuotTracking" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteQuotTracking(@RequestParam("quotTrackId") int quotTrackId) {
+
+		Info info = new Info();
+
+		try {
+			int delete = quotTrackingRepo.deleteQuotTracking(quotTrackId);
+
+			if (delete == 1) {
+				info.setError(false);
+				info.setMessage("successfully Deleted");
+			} else {
+				info.setError(true);
+				info.setMessage(" Deleted to Delete");
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage(" Deleted to Delete");
+
+		}
+		return info;
+
+	}
+
+	// ----------------------------------------Vendor----------------------------------------------------
+
+	@RequestMapping(value = { "/saveVendor" }, method = RequestMethod.POST)
+	public @ResponseBody Vendor saveVendor(@RequestBody Vendor vendor) {
+
+		Vendor res = new Vendor();
+
+		try {
+
+			res = vendorRepo.saveAndFlush(vendor);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return res;
+
+	}
+
+	@RequestMapping(value = { "/getVendorByVendorId" }, method = RequestMethod.POST)
+	public @ResponseBody Vendor getVendorByVendorId(@RequestParam("vendId") int vendId) {
+
+		Vendor vendor = new Vendor();
+
+		try {
+			vendor = vendorRepo.findByVendIdAndDelStatus(vendId, 1);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return vendor;
+
+	}
+
+	@RequestMapping(value = { "/getAllVendList" }, method = RequestMethod.GET)
+	public @ResponseBody List<Vendor> getAllVendList() {
+
+		List<Vendor> vendList = new ArrayList<Vendor>();
+
+		try {
+
+			vendList = vendorRepo.findByDelStatusOrderByVendIdDesc(1);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return vendList;
+
+	}
+
+	@RequestMapping(value = { "/deleteVendor" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteVendor(@RequestParam("vendId") int vendId) {
+
+		Info info = new Info();
+
+		try {
+			int delete = vendorRepo.deleteVendor(vendId);
+
+			if (delete == 1) {
+				info.setError(false);
+				info.setMessage("successfully Deleted");
+			} else {
+				info.setError(true);
+				info.setMessage(" Deleted to Delete");
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage(" Deleted to Delete");
+
+		}
+		return info;
+
+	}
+
+	// ----------------------------------------Uom----------------------------------------------------
+
+	@RequestMapping(value = { "/saveUom" }, method = RequestMethod.POST)
+	public @ResponseBody Uom saveUom(@RequestBody Uom uom) {
+
+		Uom res = new Uom();
+
+		try {
+
+			res = uomRepo.saveAndFlush(uom);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return res;
+
+	}
+
+	@RequestMapping(value = { "/getUomByUomId" }, method = RequestMethod.POST)
+	public @ResponseBody Uom getUomByUomId(@RequestParam("uomId") int uomId) {
+
+		Uom uom = new Uom();
+
+		try {
+			uom = uomRepo.findByUomIdAndDelStatus(uomId, 1);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return uom;
+
+	}
+
+	@RequestMapping(value = { "/getAllUomList" }, method = RequestMethod.GET)
+	public @ResponseBody List<Uom> getAllUomList() {
+
+		List<Uom> uomList = new ArrayList<Uom>();
+
+		try {
+
+			uomList = uomRepo.findByDelStatusOrderByUomIdDesc(1);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return uomList;
+
+	}
+
+	@RequestMapping(value = { "/deleteUom" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteUom(@RequestParam("uomId") int uomId) {
+
+		Info info = new Info();
+
+		try {
+			int delete = uomRepo.deleteUom(uomId);
+
+			if (delete == 1) {
+				info.setError(false);
+				info.setMessage("successfully Deleted");
+			} else {
+				info.setError(true);
+				info.setMessage(" Deleted to Delete");
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage(" Deleted to Delete");
+
+		}
+		return info;
+
+	}
+
+	// ----------------------------------------User----------------------------------------------------
+
+	@RequestMapping(value = { "/saveUser" }, method = RequestMethod.POST)
+	public @ResponseBody User saveUser(@RequestBody User user) {
+
+		User res = new User();
+
+		try {
+
+			res = userRepo.saveAndFlush(user);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return res;
+
+	}
+
+	@RequestMapping(value = { "/getUserByUserId" }, method = RequestMethod.POST)
+	public @ResponseBody User getUserByUserId(@RequestParam("userId") int userId) {
+
+		User user = new User();
+
+		try {
+			user = userRepo.findByUserIdAndDelStatus(userId, 1);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return user;
+
+	}
+
+	@RequestMapping(value = { "/getAllUserList" }, method = RequestMethod.GET)
+	public @ResponseBody List<User> getAllUserList() {
+
+		List<User> userList = new ArrayList<User>();
+
+		try {
+
+			userList = userRepo.findByDelStatusOrderByUserIdDesc(1);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return userList;
+
+	}
+
+	@RequestMapping(value = { "/deleteUser" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteUser(@RequestParam("userId") int userId) {
+
+		Info info = new Info();
+
+		try {
+			int delete = userRepo.deleteUser(userId);
+
+			if (delete == 1) {
+				info.setError(false);
+				info.setMessage("successfully Deleted");
+			} else {
+				info.setError(true);
+				info.setMessage(" Deleted to Delete");
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage(" Deleted to Delete");
+
+		}
+		return info;
+
+	}
 
 	// ----------------------------------------Customer----------------------------------------------------
 
@@ -586,7 +934,7 @@ public class MasterApiController {
 		return mu;
 
 	}
-	
+
 	@RequestMapping(value = { "/getAllMUList" }, method = RequestMethod.GET)
 	public @ResponseBody List<MarketingUser> getAllMUList() {
 
