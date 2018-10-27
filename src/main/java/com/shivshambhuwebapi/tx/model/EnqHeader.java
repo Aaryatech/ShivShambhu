@@ -11,7 +11,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 @Entity
-@Table(name = "t_enq_header")
+@Table(name = "t_quot_header")
 public class EnqHeader {
 
 	@Id

@@ -14,6 +14,8 @@ import com.shivshambhuwebapi.tx.model.EnqDetail;
 import com.shivshambhuwebapi.tx.model.EnqHeader;
 import com.shivshambhuwebapi.tx.repo.EnqDetailRepo;
 import com.shivshambhuwebapi.tx.repo.EnqHeaderRepo;
+import com.shivshambhuwebapi.tx.repo.QuotDetailRepo;
+import com.shivshambhuwebapi.tx.repo.QuotHeaderRepo;
 
 @RestController
 
@@ -25,6 +27,12 @@ public class EnquiryApiController {
 	@Autowired
 	EnqDetailRepo enqDetailRepo;
 
+	@Autowired
+	QuotHeaderRepo quotHeaderRepo;
+
+	@Autowired
+	QuotDetailRepo quotDetailRepo;
+
 	@RequestMapping(value = { "/saveEnqHeaderAndDetail" }, method = RequestMethod.POST)
 	public @ResponseBody Info saveEnquiryHeaderAndDetail(@RequestBody EnqHeader enqHeader) {
 
@@ -35,8 +43,12 @@ public class EnquiryApiController {
 
 			enquiryHeader = enqHeaderRepo.save(enqHeader);
 
-			List<EnqDetail> enquiryDetailsList = enqDetailRepo.saveAll(enqHeader.getEnqDetailList());
-			enquiryHeader.setEnqDetailList(enquiryDetailsList);
+			for (int i = 0; i < enqHeader.getEnqDetailList().size(); i++) {
+				enqHeader.getEnqDetailList().get(i).setEnqHeadId(enquiryHeader.getEnqHeadId());
+				List<EnqDetail> enqDetailsList = enqDetailRepo.saveAll(enqHeader.getEnqDetailList());
+				enquiryHeader.setEnqDetailList(enqDetailsList);
+
+			}
 
 			errorMessage.setError(false);
 			errorMessage.setMessage("successfully Saved ");

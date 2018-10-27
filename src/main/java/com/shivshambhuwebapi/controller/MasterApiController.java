@@ -17,6 +17,7 @@ import com.shivshambhuwebapi.master.model.Cust;
 import com.shivshambhuwebapi.master.model.Dept;
 import com.shivshambhuwebapi.master.model.Item;
 import com.shivshambhuwebapi.master.model.MarketingUser;
+import com.shivshambhuwebapi.master.model.PaymentTerm;
 import com.shivshambhuwebapi.master.model.Plant;
 import com.shivshambhuwebapi.master.model.Project;
 import com.shivshambhuwebapi.master.model.QuotTracking;
@@ -28,6 +29,7 @@ import com.shivshambhuwebapi.master.repo.CustRepo;
 import com.shivshambhuwebapi.master.repo.DeptRepo;
 import com.shivshambhuwebapi.master.repo.ItemRepo;
 import com.shivshambhuwebapi.master.repo.MarketingUserRepo;
+import com.shivshambhuwebapi.master.repo.PaymentTermRepo;
 import com.shivshambhuwebapi.master.repo.PlantRepo;
 import com.shivshambhuwebapi.master.repo.ProjectRepo;
 import com.shivshambhuwebapi.master.repo.QuotTrackingRepo;
@@ -40,6 +42,9 @@ public class MasterApiController {
 
 	@Autowired
 	CompanyRepo companyRepo;
+
+	@Autowired
+	PaymentTermRepo paymentTermRepo;
 
 	@Autowired
 	UserRepo userRepo;
@@ -70,6 +75,88 @@ public class MasterApiController {
 
 	@Autowired
 	QuotTrackingRepo quotTrackingRepo;
+
+	// ----------------------------------------Payment Term-------------------------
+
+	@RequestMapping(value = { "/savePaymentTerm" }, method = RequestMethod.POST)
+	public @ResponseBody PaymentTerm savePaymentTerm(@RequestBody PaymentTerm paymentTerm) {
+
+		PaymentTerm res = new PaymentTerm();
+
+		try {
+
+			res = paymentTermRepo.saveAndFlush(paymentTerm);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return res;
+
+	}
+
+	@RequestMapping(value = { "/getPTByPaymentTermId" }, method = RequestMethod.POST)
+	public @ResponseBody PaymentTerm getPTByPaymentTermId(@RequestParam("payTermId") int payTermId) {
+
+		PaymentTerm Pt = new PaymentTerm();
+
+		try {
+			Pt = paymentTermRepo.findByPayTermIdAndDelStatus(payTermId, 1);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return Pt;
+
+	}
+
+	@RequestMapping(value = { "/getAllPaymentTermList" }, method = RequestMethod.GET)
+	public @ResponseBody List<PaymentTerm> getAllPaymentTermList() {
+
+		List<PaymentTerm> ptList = new ArrayList<PaymentTerm>();
+
+		try {
+
+			ptList = paymentTermRepo.findByDelStatusOrderByPayTermIdDesc(1);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return ptList;
+
+	}
+
+	@RequestMapping(value = { "/deletePaymentTerm" }, method = RequestMethod.POST)
+	public @ResponseBody Info deletePaymentTerm(@RequestParam("payTermId") int payTermId) {
+
+		Info info = new Info();
+
+		try {
+			int delete = paymentTermRepo.deletePaymentTerm(payTermId);
+
+			if (delete == 1) {
+				info.setError(false);
+				info.setMessage("successfully Deleted");
+			} else {
+				info.setError(true);
+				info.setMessage(" Deleted to Delete");
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage(" Deleted to Delete");
+
+		}
+		return info;
+
+	}
 
 	// ----------------------------------------QuotTracking----------------------------------------------------
 
