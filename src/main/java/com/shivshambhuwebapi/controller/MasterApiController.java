@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.shivshambhuwebapi.common.DateConvertor;
 import com.shivshambhuwebapi.master.model.Company;
 import com.shivshambhuwebapi.master.model.Cust;
+import com.shivshambhuwebapi.master.model.CustType;
 import com.shivshambhuwebapi.master.model.Dept;
+import com.shivshambhuwebapi.master.model.EnqGenFact;
 import com.shivshambhuwebapi.master.model.Item;
 import com.shivshambhuwebapi.master.model.MarketingUser;
 import com.shivshambhuwebapi.master.model.PaymentTerm;
@@ -26,7 +28,9 @@ import com.shivshambhuwebapi.master.model.User;
 import com.shivshambhuwebapi.master.model.Vendor;
 import com.shivshambhuwebapi.master.repo.CompanyRepo;
 import com.shivshambhuwebapi.master.repo.CustRepo;
+import com.shivshambhuwebapi.master.repo.CustTypeRepo;
 import com.shivshambhuwebapi.master.repo.DeptRepo;
+import com.shivshambhuwebapi.master.repo.EnqGenFactRepo;
 import com.shivshambhuwebapi.master.repo.ItemRepo;
 import com.shivshambhuwebapi.master.repo.MarketingUserRepo;
 import com.shivshambhuwebapi.master.repo.PaymentTermRepo;
@@ -39,6 +43,12 @@ import com.shivshambhuwebapi.master.repo.VendorRepo;
 
 @RestController
 public class MasterApiController {
+
+	@Autowired
+	EnqGenFactRepo enqGenFactRepo;
+
+	@Autowired
+	CustTypeRepo custTypeRepo;
 
 	@Autowired
 	CompanyRepo companyRepo;
@@ -76,6 +86,169 @@ public class MasterApiController {
 	@Autowired
 	QuotTrackingRepo quotTrackingRepo;
 
+	// ----------------------------------------Cust Type-------------------------
+
+	@RequestMapping(value = { "/saveCustType" }, method = RequestMethod.POST)
+	public @ResponseBody CustType saveCustType(@RequestBody CustType custType) {
+
+		CustType res = new CustType();
+
+		try {
+
+			res = custTypeRepo.saveAndFlush(custType);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return res;
+
+	}
+
+	@RequestMapping(value = { "/getCustTypeByCustTypeId" }, method = RequestMethod.POST)
+	public @ResponseBody CustType getCustTypeByCustTypeId(@RequestParam("custTypeId") int custTypeId) {
+
+		CustType custType = new CustType();
+
+		try {
+			custType = custTypeRepo.findByCustTypeIdAndDelStatus(custTypeId, 1);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return custType;
+
+	}
+
+	@RequestMapping(value = { "/getAllCustTypeList" }, method = RequestMethod.GET)
+	public @ResponseBody List<CustType> getAllCustTypeList() {
+
+		List<CustType> custTypeList = new ArrayList<CustType>();
+
+		try {
+
+			custTypeList = custTypeRepo.findByDelStatusOrderByCustTypeIdDesc(1);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return custTypeList;
+
+	}
+
+	@RequestMapping(value = { "/deleteCustType" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteCustType(@RequestParam("custTypeId") int custTypeId) {
+
+		Info info = new Info();
+
+		try {
+			int delete = custTypeRepo.deleteCustType(custTypeId);
+
+			if (delete == 1) {
+				info.setError(false);
+				info.setMessage("successfully Deleted");
+			} else {
+				info.setError(true);
+				info.setMessage(" Deleted to Delete");
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage(" Deleted to Delete");
+
+		}
+		return info;
+
+	}
+
+	// ----------------------------------------Enq Gen Fact-------------------------
+
+	@RequestMapping(value = { "/saveEnqGenFact" }, method = RequestMethod.POST)
+	public @ResponseBody EnqGenFact saveEnqGenFact(@RequestBody EnqGenFact enqGenFact) {
+
+		EnqGenFact res = new EnqGenFact();
+
+		try {
+
+			res = enqGenFactRepo.saveAndFlush(enqGenFact);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return res;
+
+	}
+
+	@RequestMapping(value = { "/getAllEGFList" }, method = RequestMethod.GET)
+	public @ResponseBody List<EnqGenFact> getAllEGFList() {
+
+		List<EnqGenFact> egfList = new ArrayList<EnqGenFact>();
+
+		try {
+
+			egfList = enqGenFactRepo.findByDelStatusOrderByEnqGenIdDesc(1);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return egfList;
+
+	}
+
+	@RequestMapping(value = { "/getEnqGenFactByEnqGenFactId" }, method = RequestMethod.POST)
+	public @ResponseBody EnqGenFact getEnqGenFactByEnqGenFactId(@RequestParam("enqGenId") int enqGenId) {
+
+		EnqGenFact egf = new EnqGenFact();
+
+		try {
+			egf = enqGenFactRepo.findByEnqGenIdAndDelStatus(enqGenId, 1);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return egf;
+
+	}
+
+	@RequestMapping(value = { "/deleteEnqGenFact" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteEnqGenFact(@RequestParam("enqGenId") int enqGenId) {
+
+		Info info = new Info();
+
+		try {
+			int delete = enqGenFactRepo.deleteEnqGenFact(enqGenId);
+
+			if (delete == 1) {
+				info.setError(false);
+				info.setMessage("successfully Deleted");
+			} else {
+				info.setError(true);
+				info.setMessage(" Deleted to Delete");
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage(" Deleted to Delete");
+
+		}
+		return info;
+
+	}
 	// ----------------------------------------Payment Term-------------------------
 
 	@RequestMapping(value = { "/savePaymentTerm" }, method = RequestMethod.POST)

@@ -73,6 +73,12 @@ public class EnqDetail {
 	@Column(name = "ex_bool3")
 	private int exBool3;
 
+	@Column(name = "enq_uom_id")
+	private int enqUomId;
+
+	@Column(name = "enq_d_remark")
+	private String enqDRemark;
+
 	public int getEnqDetailId() {
 		return enqDetailId;
 	}
@@ -233,6 +239,22 @@ public class EnqDetail {
 		this.exBool3 = exBool3;
 	}
 
+	public int getEnqUomId() {
+		return enqUomId;
+	}
+
+	public void setEnqUomId(int enqUomId) {
+		this.enqUomId = enqUomId;
+	}
+
+	public String getEnqDRemark() {
+		return enqDRemark;
+	}
+
+	public void setEnqDRemark(String enqDRemark) {
+		this.enqDRemark = enqDRemark;
+	}
+
 	@Override
 	public String toString() {
 		return "EnqDetail [enqDetailId=" + enqDetailId + ", enqHeadId=" + enqHeadId + ", itemId=" + itemId
@@ -240,7 +262,7 @@ public class EnqDetail {
 				+ ", delStatus=" + delStatus + ", quotId=" + quotId + ", exInt1=" + exInt1 + ", exInt2=" + exInt2
 				+ ", exInt3=" + exInt3 + ", exVar1=" + exVar1 + ", exVar2=" + exVar2 + ", exVar3=" + exVar3
 				+ ", exDate1=" + exDate1 + ", exDate2=" + exDate2 + ", exBool1=" + exBool1 + ", exBool2=" + exBool2
-				+ ", exBool3=" + exBool3 + "]";
+				+ ", exBool3=" + exBool3 + ", enqUomId=" + enqUomId + ", enqDRemark=" + enqDRemark + "]";
 	}
 
 }

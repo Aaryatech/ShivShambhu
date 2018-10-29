@@ -1,6 +1,5 @@
 package com.shivshambhuwebapi.tx.model;
 
-
 import java.util.List;
 
 import javax.persistence.Column;
@@ -82,6 +81,12 @@ public class EnqHeader {
 
 	@Column(name = "ex_bool3")
 	private int exBool3;
+
+	@Column(name = "enq_gen_id")
+	private int enqGenId;
+
+	@Column(name = "enq_h_remark")
+	private String enqHRemark;
 
 	@Transient
 	List<EnqDetail> enqDetailList;
@@ -270,6 +275,22 @@ public class EnqHeader {
 		this.enqDetailList = enqDetailList;
 	}
 
+	public int getEnqGenId() {
+		return enqGenId;
+	}
+
+	public void setEnqGenId(int enqGenId) {
+		this.enqGenId = enqGenId;
+	}
+
+	public String getEnqHRemark() {
+		return enqHRemark;
+	}
+
+	public void setEnqHRemark(String enqHRemark) {
+		this.enqHRemark = enqHRemark;
+	}
+
 	@Override
 	public String toString() {
 		return "EnqHeader [enqHeadId=" + enqHeadId + ", enqNo=" + enqNo + ", enqUsrId=" + enqUsrId + ", enqDate="
@@ -277,8 +298,8 @@ public class EnqHeader {
 				+ ", enqStatus=" + enqStatus + ", plantId=" + plantId + ", enqUsrId2=" + enqUsrId2 + ", quotId="
 				+ quotId + ", exInt1=" + exInt1 + ", exInt2=" + exInt2 + ", exInt3=" + exInt3 + ", exVar1=" + exVar1
 				+ ", exVar2=" + exVar2 + ", exVar3=" + exVar3 + ", exDate1=" + exDate1 + ", exDate2=" + exDate2
-				+ ", exBool1=" + exBool1 + ", exBool2=" + exBool2 + ", exBool3=" + exBool3 + ", enqDetailList="
-				+ enqDetailList + "]";
+				+ ", exBool1=" + exBool1 + ", exBool2=" + exBool2 + ", exBool3=" + exBool3 + ", enqGenId=" + enqGenId
+				+ ", enqHRemark=" + enqHRemark + ", enqDetailList=" + enqDetailList + "]";
 	}
 
 }

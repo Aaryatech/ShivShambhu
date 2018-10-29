@@ -7,7 +7,5 @@ import com.shivshambhuwebapi.tx.model.EnqHeader;
 public interface EnqHeaderRepo extends JpaRepository<EnqHeader, Integer> {
 
 	EnqHeader findByEnqHeadId(int enqHeadId);
-	
 
 }
- 

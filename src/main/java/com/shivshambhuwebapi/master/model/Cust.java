@@ -91,6 +91,33 @@ public class Cust {
 	@Column(name = "ex_bool3")
 	private int exBool3;
 
+	@Column(name = "date_of_reg")
+	private String dateOfReg;
+
+	@Column(name = "cheque_remark")
+	private String chequeRemark;
+
+	@Column(name = "is_cheque_rcvd")
+	private int isChequeRcvd;
+
+	@Column(name = "contact_per_name")
+	private String contactPerName;
+
+	@Column(name = "contact_per_mob")
+	private String contactPerMob;
+
+	@Column(name = "cust_landline")
+	private String custLandline;
+
+	@Column(name = "is_same_state")
+	private int isSameState;
+
+	@Column(name = "cust_code")
+	private String custCode;
+
+	@Column(name = "cust_vendor")
+	private int custVendor;
+
 	public int getCustId() {
 		return custId;
 	}
@@ -299,6 +326,78 @@ public class Cust {
 		this.exBool3 = exBool3;
 	}
 
+	public String getDateOfReg() {
+		return dateOfReg;
+	}
+
+	public void setDateOfReg(String dateOfReg) {
+		this.dateOfReg = dateOfReg;
+	}
+
+	public String getChequeRemark() {
+		return chequeRemark;
+	}
+
+	public void setChequeRemark(String chequeRemark) {
+		this.chequeRemark = chequeRemark;
+	}
+
+	public int getIsChequeRcvd() {
+		return isChequeRcvd;
+	}
+
+	public void setIsChequeRcvd(int isChequeRcvd) {
+		this.isChequeRcvd = isChequeRcvd;
+	}
+
+	public String getContactPerName() {
+		return contactPerName;
+	}
+
+	public void setContactPerName(String contactPerName) {
+		this.contactPerName = contactPerName;
+	}
+
+	public String getContactPerMob() {
+		return contactPerMob;
+	}
+
+	public void setContactPerMob(String contactPerMob) {
+		this.contactPerMob = contactPerMob;
+	}
+
+	public String getCustLandline() {
+		return custLandline;
+	}
+
+	public void setCustLandline(String custLandline) {
+		this.custLandline = custLandline;
+	}
+
+	public int getIsSameState() {
+		return isSameState;
+	}
+
+	public void setIsSameState(int isSameState) {
+		this.isSameState = isSameState;
+	}
+
+	public String getCustCode() {
+		return custCode;
+	}
+
+	public void setCustCode(String custCode) {
+		this.custCode = custCode;
+	}
+
+	public int getCustVendor() {
+		return custVendor;
+	}
+
+	public void setCustVendor(int custVendor) {
+		this.custVendor = custVendor;
+	}
+
 	@Override
 	public String toString() {
 		return "Cust [custId=" + custId + ", custName=" + custName + ", respPerson=" + respPerson + ", custMobNo="
@@ -308,7 +407,10 @@ public class Cust {
 				+ ", custCat=" + custCat + ", exInt1=" + exInt1 + ", exInt2=" + exInt2 + ", exInt3=" + exInt3
 				+ ", exVar1=" + exVar1 + ", exVar2=" + exVar2 + ", exVar3=" + exVar3 + ", exDate1=" + exDate1
 				+ ", exDate2=" + exDate2 + ", exBool1=" + exBool1 + ", exBool2=" + exBool2 + ", exBool3=" + exBool3
-				+ "]";
+				+ ", dateOfReg=" + dateOfReg + ", chequeRemark=" + chequeRemark + ", isChequeRcvd=" + isChequeRcvd
+				+ ", contactPerName=" + contactPerName + ", contactPerMob=" + contactPerMob + ", custLandline="
+				+ custLandline + ", isSameState=" + isSameState + ", custCode=" + custCode + ", custVendor="
+				+ custVendor + "]";
 	}
 
 }
