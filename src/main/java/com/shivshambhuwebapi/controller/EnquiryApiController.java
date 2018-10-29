@@ -84,8 +84,8 @@ public class EnquiryApiController {
 		try {
 
 			enqHeader = enqHeaderRepo.findByEnqHeadId(enqHeadId);
-		//	List<EnqDetail> enqDetailList = enqDetailRepo.findByEnqHeadId(enqHeadId);
-			//enqHeader.setEnqDetailList(enqDetailList);
+			List<EnqDetail> enqDetailList = enqDetailRepo.findByEnqHeadId(enqHeadId);
+			enqHeader.setEnqDetailList(enqDetailList);
 		} catch (Exception e) {
 
 			e.printStackTrace();
