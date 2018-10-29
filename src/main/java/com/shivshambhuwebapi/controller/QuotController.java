@@ -109,7 +109,7 @@ public class QuotController {
 		return info;
 
 	}
-	
+
 	@RequestMapping(value = { "/getQuotHeaderByQuotHeadId" }, method = RequestMethod.POST)
 	public @ResponseBody QuotHeader getQuotHeaderByQuotHeadId(@RequestParam("quotHeadId") int quotHeadId) {
 

@@ -1,5 +1,6 @@
 package com.shivshambhuwebapi.tx.model;
 
+
 import java.util.List;
 
 import javax.persistence.Column;
@@ -11,7 +12,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 @Entity
-@Table(name = "t_quot_header")
+@Table(name = "t_enq_header")
 public class EnqHeader {
 
 	@Id
