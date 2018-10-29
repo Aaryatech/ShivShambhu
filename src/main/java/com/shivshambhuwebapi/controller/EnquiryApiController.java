@@ -1,12 +1,14 @@
 package com.shivshambhuwebapi.controller;
 
 import java.util.ArrayList;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,8 +16,6 @@ import com.shivshambhuwebapi.tx.model.EnqDetail;
 import com.shivshambhuwebapi.tx.model.EnqHeader;
 import com.shivshambhuwebapi.tx.repo.EnqDetailRepo;
 import com.shivshambhuwebapi.tx.repo.EnqHeaderRepo;
-import com.shivshambhuwebapi.tx.repo.QuotDetailRepo;
-import com.shivshambhuwebapi.tx.repo.QuotHeaderRepo;
 
 @RestController
 
@@ -26,12 +26,6 @@ public class EnquiryApiController {
 
 	@Autowired
 	EnqDetailRepo enqDetailRepo;
-
-	@Autowired
-	QuotHeaderRepo quotHeaderRepo;
-
-	@Autowired
-	QuotDetailRepo quotDetailRepo;
 
 	@RequestMapping(value = { "/saveEnqHeaderAndDetail" }, method = RequestMethod.POST)
 	public @ResponseBody Info saveEnquiryHeaderAndDetail(@RequestBody EnqHeader enqHeader) {
@@ -79,6 +73,25 @@ public class EnquiryApiController {
 
 		}
 		return enquiryHeaderList;
+
+	}
+
+	@RequestMapping(value = { "/getEnqHeaderByEnqHeadId" }, method = RequestMethod.POST)
+	public @ResponseBody EnqHeader getEnqHeaderByEnqHeadId(@RequestParam("enqHeadId") int enqHeadId) {
+
+		EnqHeader enqHeader = new EnqHeader();
+
+		try {
+
+			enqHeader = enqHeaderRepo.findByEnqHeadId(enqHeadId);
+			List<EnqDetail> enqDetailList = enqDetailRepo.findByEnqHeadId(enqHeadId);
+			enqHeader.setEnqDetailList(enqDetailList);
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return enqHeader;
 
 	}
 
