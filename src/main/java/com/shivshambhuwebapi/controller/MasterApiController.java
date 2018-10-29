@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.shivshambhuwebapi.common.DateConvertor;
+import com.shivshambhuwebapi.master.model.BankDetail;
 import com.shivshambhuwebapi.master.model.Company;
 import com.shivshambhuwebapi.master.model.Cust;
 import com.shivshambhuwebapi.master.model.CustType;
@@ -26,6 +27,7 @@ import com.shivshambhuwebapi.master.model.QuotTracking;
 import com.shivshambhuwebapi.master.model.Uom;
 import com.shivshambhuwebapi.master.model.User;
 import com.shivshambhuwebapi.master.model.Vendor;
+import com.shivshambhuwebapi.master.repo.BankDetailRepo;
 import com.shivshambhuwebapi.master.repo.CompanyRepo;
 import com.shivshambhuwebapi.master.repo.CustRepo;
 import com.shivshambhuwebapi.master.repo.CustTypeRepo;
@@ -46,6 +48,9 @@ public class MasterApiController {
 
 	@Autowired
 	EnqGenFactRepo enqGenFactRepo;
+
+	@Autowired
+	BankDetailRepo bankDetailRepo;
 
 	@Autowired
 	CustTypeRepo custTypeRepo;
@@ -85,6 +90,88 @@ public class MasterApiController {
 
 	@Autowired
 	QuotTrackingRepo quotTrackingRepo;
+
+	// ---------------------------------------Bank Detail-------------------------
+
+	@RequestMapping(value = { "/saveBankDetail" }, method = RequestMethod.POST)
+	public @ResponseBody BankDetail saveBankDetail(@RequestBody BankDetail bankDetail) {
+
+		BankDetail res = new BankDetail();
+
+		try {
+
+			res = bankDetailRepo.saveAndFlush(bankDetail);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return res;
+
+	}
+
+	@RequestMapping(value = { "/getBankDetailByBankDetailId" }, method = RequestMethod.POST)
+	public @ResponseBody BankDetail getBankDetailByBankDetailId(@RequestParam("bankDetId") int bankDetId) {
+
+		BankDetail bankDetail = new BankDetail();
+
+		try {
+			bankDetail = bankDetailRepo.findByBankDetIdAndDelStatus(bankDetId, 1);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return bankDetail;
+
+	}
+
+	@RequestMapping(value = { "/getAllBankDetList" }, method = RequestMethod.GET)
+	public @ResponseBody List<BankDetail> getAllBankDetList() {
+
+		List<BankDetail> bankDetailList = new ArrayList<BankDetail>();
+
+		try {
+
+			bankDetailList = bankDetailRepo.findByDelStatusOrderByBankDetIdDesc(1);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return bankDetailList;
+
+	}
+
+	@RequestMapping(value = { "/deleteBankDetail" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteBankDetail(@RequestParam("bankDetId") int bankDetId) {
+
+		Info info = new Info();
+
+		try {
+			int delete = bankDetailRepo.deleteBankDetail(bankDetId);
+
+			if (delete == 1) {
+				info.setError(false);
+				info.setMessage("successfully Deleted");
+			} else {
+				info.setError(true);
+				info.setMessage(" Deleted to Delete");
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage(" Deleted to Delete");
+
+		}
+		return info;
+
+	}
 
 	// ----------------------------------------Cust Type-------------------------
 
