@@ -832,7 +832,7 @@ public class MasterApiController {
 
 	@RequestMapping(value = { "/saveCompany" }, method = RequestMethod.POST)
 	public @ResponseBody Company saveCompany(@RequestBody Company company) {
-
+System.err.println("Inside saveCompany");
 		Company res = new Company();
 
 		try {

@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.shivshambhuwebapi.master.model.Setting;
+import com.shivshambhuwebapi.master.repo.SettingRepo;
 import com.shivshambhuwebapi.tx.model.MarketingTravel;
 import com.shivshambhuwebapi.tx.repo.MarketingTravelRepo;
 
@@ -99,6 +101,31 @@ public class TxApiController {
 
 		}
 		return info;
+
+	}
+
+	// Sachin 1 Nov 2018
+
+	@Autowired
+	SettingRepo settingRepo;
+
+	@RequestMapping(value = { "/getSettingValueByKeyList" }, method = RequestMethod.POST)
+	public @ResponseBody List<Setting> getSettingValueByKeyList(@RequestParam("keyList") List<Integer> keyList) {
+
+		List<Setting> settingList = new ArrayList<Setting>();
+
+		try {
+
+			settingList = settingRepo.findBySettingKeyIn(keyList);
+
+		} catch (Exception e) {
+			
+			System.err.println("Exce in getting  getSettingValueByKeyList  In TxApi" + e.getMessage());
+			e.printStackTrace();
+
+		}
+		
+		return settingList;
 
 	}
 
