@@ -12,12 +12,33 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.shivshambhuwebapi.master.model.Setting;
+import com.shivshambhuwebapi.master.model.Tax;
 import com.shivshambhuwebapi.master.repo.SettingRepo;
+import com.shivshambhuwebapi.master.repo.TaxRepo;
 import com.shivshambhuwebapi.tx.model.MarketingTravel;
 import com.shivshambhuwebapi.tx.repo.MarketingTravelRepo;
 
 @RestController
 public class TxApiController {
+	@RequestMapping(value = { "/getTaxList" }, method = RequestMethod.GET)
+	public @ResponseBody List<Tax> getTAxList() {
+
+		List<Tax> taxList = new ArrayList<Tax>();
+
+		try {
+
+			taxList = objTaxrepo.findByDelStatusOrderByTaxIdDesc(1);
+			
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return taxList;
+
+	}
+	@Autowired
+	TaxRepo objTaxrepo;
 
 	@Autowired
 	MarketingTravelRepo marketingTravelRepo;
