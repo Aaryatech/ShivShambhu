@@ -24,6 +24,8 @@ import com.shivshambhuwebapi.master.model.PaymentTerm;
 import com.shivshambhuwebapi.master.model.Plant;
 import com.shivshambhuwebapi.master.model.Project;
 import com.shivshambhuwebapi.master.model.QuotTracking;
+import com.shivshambhuwebapi.master.model.Task;
+import com.shivshambhuwebapi.master.model.Tax;
 import com.shivshambhuwebapi.master.model.Uom;
 import com.shivshambhuwebapi.master.model.User;
 import com.shivshambhuwebapi.master.model.Vendor;
@@ -39,6 +41,8 @@ import com.shivshambhuwebapi.master.repo.PaymentTermRepo;
 import com.shivshambhuwebapi.master.repo.PlantRepo;
 import com.shivshambhuwebapi.master.repo.ProjectRepo;
 import com.shivshambhuwebapi.master.repo.QuotTrackingRepo;
+import com.shivshambhuwebapi.master.repo.TaskRepo;
+import com.shivshambhuwebapi.master.repo.TaxRepo;
 import com.shivshambhuwebapi.master.repo.UomRepo;
 import com.shivshambhuwebapi.master.repo.UserRepo;
 import com.shivshambhuwebapi.master.repo.VendorRepo;
@@ -1326,5 +1330,153 @@ System.err.println("Inside saveCompany");
 		return info;
 
 	}
+	
+	
+
+@Autowired
+	TaskRepo objTaskrepo;
+
+	@Autowired
+	TaxRepo objTaxrepo;
+
+
+
+//sumit 1
+	// ----------------------------------------Tax----------------------------------------------------
+
+	@RequestMapping(value = { "/saveTax" }, method = RequestMethod.POST)
+	public @ResponseBody Tax saveTax(@RequestBody Tax objTaxParam) {
+
+		Tax objTAx = new Tax();
+
+		try {
+
+			objTAx = objTaxrepo.saveAndFlush(objTaxParam);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return objTAx;
+
+	}
+
+//sumit 2
+	@RequestMapping(value = { "/getTaxList" }, method = RequestMethod.GET)
+	public @ResponseBody List<Tax> getTAxList() {
+
+		List<Tax> taxList = new ArrayList<Tax>();
+
+		try {
+
+			taxList = objTaxrepo.findByDelStatusOrderByTaxIdAsc(1);
+			
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return taxList;
+
+	}
+
+	//sumit 3
+	@RequestMapping(value = { "/deleteTax" }, method = RequestMethod.POST)
+	public @ResponseBody void deleteTax(@RequestParam("TaxId") int taxId) {
+
+		Info info = new Info();
+
+		try {
+			//int delete = objTaxrepo.deleteTax(taxId);
+			objTaxrepo.deleteById(taxId);
+			
+//			if (delete == 1) {
+//				info.setError(false);
+//				info.setMessage("successfully Deleted");
+//			} else {
+//				info.setError(true);
+//				info.setMessage(" Deleted to Delete");
+//			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage(" Deleted to Delete");
+
+		}
+		
+
+	}
+
+	//----------------------------------------Task----------------------------------------------------
+	//sumit 4
+	@RequestMapping(value = { "/saveTask" }, method = RequestMethod.POST)
+	public @ResponseBody Task saveTask(@RequestBody Task objTaskParam) {
+
+		Task objTask = new Task();
+
+		try {
+
+			objTask = objTaskrepo.saveAndFlush(objTaskParam);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return objTask;
+
+	}
+
+	//sumit 5
+	@RequestMapping(value = { "/getTaskList" }, method = RequestMethod.GET)
+	public @ResponseBody List<Task> getTaskList() {
+
+		List<Task> taskList = new ArrayList<Task>();
+
+		try {
+
+			taskList = objTaskrepo.findByDelStatusOrderByTaskIdDesc(1);
+			
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return taskList;
+
+	}
+	//sumit 6
+
+	@RequestMapping(value = { "/deleteTask" }, method = RequestMethod.POST)
+	public @ResponseBody void deleteTask(@RequestParam("TaskId") int taskId) {
+
+		Info info = new Info();
+
+		try {
+			//int delete = objTaxrepo.deleteTax(taxId);
+			objTaskrepo.deleteById(taskId);
+			
+//			if (delete == 1) {
+//				info.setError(false);
+//				info.setMessage("successfully Deleted");
+//			} else {
+//				info.setError(true);
+//				info.setMessage(" Deleted to Delete");
+//			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage(" Deleted to Delete");
+
+		}
+		
+
+	}
+
 
 }
