@@ -20,7 +20,7 @@ import com.shivshambhuwebapi.tx.repo.MarketingTravelRepo;
 
 @RestController
 public class TxApiController {
-	@RequestMapping(value = { "/getTaxList" }, method = RequestMethod.GET)
+	/*@RequestMapping(value = { "/getTaxList" }, method = RequestMethod.GET)
 	public @ResponseBody List<Tax> getTAxList() {
 
 		List<Tax> taxList = new ArrayList<Tax>();
@@ -42,7 +42,7 @@ public class TxApiController {
 
 	}
 	@Autowired
-	TaxRepo objTaxrepo;
+	TaxRepo objTaxrepo;*/
 
 	@Autowired
 	MarketingTravelRepo marketingTravelRepo;
