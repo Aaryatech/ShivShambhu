@@ -20,5 +20,7 @@ public interface ItemRepo extends JpaRepository<Item, Integer> {
 	List<Item> findByDelStatusOrderByItemIdDesc(int i);
 
 	Item findByItemIdAndDelStatus(int itemId, int i);
+	
+	List<Item> findByPlantIdAndDelStatusOrderByItemIdDesc(int plantId,int delStatus);
 
 }

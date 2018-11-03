@@ -804,6 +804,25 @@ public class MasterApiController {
 		return custList;
 
 	}
+	//Sachin 3 nov
+	@RequestMapping(value = { "/getCustListByPlant" }, method = RequestMethod.POST)
+	public @ResponseBody List<Cust> getCustListByPlant(@RequestParam("plantId") int plantId) {
+
+		List<Cust> custList = new ArrayList<Cust>();
+
+		try {
+
+			custList = custRepo.findByDelStatusAndPlantIdOrderByCustIdDesc(1, plantId);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		
+		return custList;
+
+	}
 
 	@RequestMapping(value = { "/deleteCust" }, method = RequestMethod.POST)
 	public @ResponseBody Info deleteCust(@RequestParam("custId") int custId) {
@@ -1219,6 +1238,27 @@ System.err.println("Inside saveCompany");
 
 		}
 		return item;
+
+	}
+//sachin 3 nov 	
+	@RequestMapping(value = { "/getItemsByPlantId" }, method = RequestMethod.POST)
+	public @ResponseBody List<Item> getItemByPlantId(@RequestParam("plantId") int plantId) {
+
+		List<Item> itemList = new ArrayList<>();
+
+		try {
+			
+			itemList = itemRepo.findByPlantIdAndDelStatusOrderByItemIdDesc(plantId, 1);
+
+		} catch (Exception e) {
+			
+			System.err.println("exe in getting  getItemsByPlantId " +e.getMessage());
+
+			e.printStackTrace();
+
+		}
+		
+		return itemList;
 
 	}
 
