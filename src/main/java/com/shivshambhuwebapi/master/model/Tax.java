@@ -17,194 +17,80 @@ public class Tax
 @Id
 @GeneratedValue(strategy = GenerationType.AUTO)
 @Column(name="tax_id")
-private int TaxId;
+private int taxId;
 
 @Column(name="tax_name")
-private String TaxName;
+private String taxName;
 
 @Column(name="del_status")
-private int DelStatus;
+private int delStatus;
 
 @Column(name="hsn_code")
-private int HsnCode;
+private String hsnCode;
 
 @Column(name="total_tax_per")
-private int TotalTaxPer;
+private float totalTaxPer;
 
 @Column(name="cgst")
-private int Cgst;
+private float cgst;
 
 @Column(name="igst")
-private int Igst;
+private float igst;
 
 @Column(name="sgst")
-private int Sgst;
+private float sgst;
 
 @Column(name="cess")
-private int Cess;
+private float cess;
 
 @Column(name="sort_no")
-private int SortNo;
+private int sortNo;
 
 @Column(name="ex_int1")
-private int ExInt1;
+private int exInt1;
 
 @Column(name="ex_int2")
-private int ExInt2;
+private int exInt2;
 
 @Column(name="ex_int3")
-private int ExInt3;
+private int exInt3;
 
 @Column(name="ex_var1")
-private String ExVar1;
+private String exVar1;
 
 @Column(name="ex_var2")
-private String ExVar2;
+private String exVar2;
 
 @Column(name="ex_var3")
-private String ExVar3;
+private String exVar3;
 
 @Column(name="ex_date1")
-private String ExDate1;
+private String exDate1;
 
 @Column(name="ex_date2")
-private String ExDate2;
+private String exDate2;
 
 
-public String getTaxName() {
-	return TaxName;
-}
 
-public void setTaxName(String taxName) {
-	TaxName = taxName;
-}
+@Column(name="ex_bool1")
+private int exBool1;
 
-public int getHsnCode() {
-	return HsnCode;
-}
+@Column(name="ex_bool2")
+private int exBool2;
 
-public void setHsnCode(int hsnCode) {
-	HsnCode = hsnCode;
-}
+@Column(name="ex_bool3")
+private int exBool3;
 
-public int getTotalTaxPer() {
-	return TotalTaxPer;
-}
-
-public void setTotalTaxPer(int totalTaxPer) {
-	TotalTaxPer = totalTaxPer;
-}
-
-public int getCgst() {
-	return Cgst;
-}
-
-public void setCgst(int cgst) {
-	Cgst = cgst;
-}
-
-public int getIgst() {
-	return Igst;
-}
-
-public void setIgst(int igst) {
-	Igst = igst;
-}
-
-public int getSgst() {
-	return Sgst;
-}
-
-public void setSgst(int sgst) {
-	Sgst = sgst;
-}
-
-public int getCess() {
-	return Cess;
-}
-
-public void setCess(int cess) {
-	Cess = cess;
-}
-
-public int getSortNo() {
-	return SortNo;
-}
-
-public void setSortNo(int sortNo) {
-	SortNo = sortNo;
-}
-
-public int getExInt1() {
-	return ExInt1;
-}
-
-public void setExInt1(int exInt1) {
-	ExInt1 = exInt1;
-}
-
-public int getExInt2() {
-	return ExInt2;
-}
-
-public void setExInt2(int exInt2) {
-	ExInt2 = exInt2;
-}
-
-public int getExInt3() {
-	return ExInt3;
-}
-
-public void setExInt3(int exInt3) {
-	ExInt3 = exInt3;
-}
-
-public String getExVar1() {
-	return ExVar1;
-}
-
-public void setExVar1(String exVar1) {
-	ExVar1 = exVar1;
-}
-
-public String getExVar2() {
-	return ExVar2;
-}
-
-public void setExVar2(String exVar2) {
-	ExVar2 = exVar2;
-}
-
-public String getExVar3() {
-	return ExVar3;
-}
-
-public void setExVar3(String exVar3) {
-	ExVar3 = exVar3;
-}
-
-public String getExDate1() {
-	return ExDate1;
-}
-
-public void setExDate1(String exDate1) {
-	ExDate1 = exDate1;
-}
-
-public String getExDate2() {
-	return ExDate2;
-}
-
-public void setExDate2(String exDate2) {
-	ExDate2 = exDate2;
+public int getTaxId() {
+	return taxId;
 }
 
 public int getExBool1() {
-	return ExBool1;
+	return exBool1;
 }
 
 public void setExBool1(int exBool1) {
-	ExBool1 = exBool1;
+	this.exBool1 = exBool1;
 }
 
 public int getExBool2() {
@@ -223,43 +109,154 @@ public void setExBool3(int exBool3) {
 	this.exBool3 = exBool3;
 }
 
-@Column(name="ex_bool1")
-private int ExBool1;
-
-@Column(name="ex_bool2")
-private int exBool2;
-
-@Column(name="ex_bool3")
-private int exBool3;
-
-
-public int getTaxId() {
-	return TaxId;
+public void setTaxId(int taxId) {
+	this.taxId = taxId;
 }
 
-public void setTaxId(int taxId) {
-	TaxId = taxId;
+public String getTaxName() {
+	return taxName;
+}
+
+public void setTaxName(String taxName) {
+	this.taxName = taxName;
 }
 
 public int getDelStatus() {
-	return DelStatus;
+	return delStatus;
 }
 
 public void setDelStatus(int delStatus) {
-	DelStatus = delStatus;
+	this.delStatus = delStatus;
+}
+
+public String getHsnCode() {
+	return hsnCode;
+}
+
+public void setHsnCode(String hsnCode) {
+	this.hsnCode = hsnCode;
+}
+
+public float getTotalTaxPer() {
+	return totalTaxPer;
+}
+
+public void setTotalTaxPer(float totalTaxPer) {
+	this.totalTaxPer = totalTaxPer;
+}
+
+public float getCgst() {
+	return cgst;
+}
+
+public void setCgst(float cgst) {
+	this.cgst = cgst;
+}
+
+public float getIgst() {
+	return igst;
+}
+
+public void setIgst(float igst) {
+	this.igst = igst;
+}
+
+public float getSgst() {
+	return sgst;
+}
+
+public void setSgst(float sgst) {
+	this.sgst = sgst;
+}
+
+public float getCess() {
+	return cess;
+}
+
+public void setCess(float cess) {
+	this.cess = cess;
+}
+
+public int getSortNo() {
+	return sortNo;
+}
+
+public void setSortNo(int sortNo) {
+	this.sortNo = sortNo;
+}
+
+public int getExInt1() {
+	return exInt1;
+}
+
+public void setExInt1(int exInt1) {
+	this.exInt1 = exInt1;
+}
+
+public int getExInt2() {
+	return exInt2;
+}
+
+public void setExInt2(int exInt2) {
+	this.exInt2 = exInt2;
+}
+
+public int getExInt3() {
+	return exInt3;
+}
+
+public void setExInt3(int exInt3) {
+	this.exInt3 = exInt3;
+}
+
+public String getExVar1() {
+	return exVar1;
+}
+
+public void setExVar1(String exVar1) {
+	this.exVar1 = exVar1;
+}
+
+public String getExVar2() {
+	return exVar2;
+}
+
+public void setExVar2(String exVar2) {
+	this.exVar2 = exVar2;
+}
+
+public String getExVar3() {
+	return exVar3;
+}
+
+public void setExVar3(String exVar3) {
+	this.exVar3 = exVar3;
+}
+
+public String getExDate1() {
+	return exDate1;
+}
+
+public void setExDate1(String exDate1) {
+	this.exDate1 = exDate1;
+}
+
+public String getExDate2() {
+	return exDate2;
+}
+
+public void setExDate2(String exDate2) {
+	this.exDate2 = exDate2;
 }
 
 @Override
 public String toString() {
-	return "Tax [TaxId=" + TaxId + ", TaxName=" + TaxName + ", DelStatus=" + DelStatus + ", HsnCode=" + HsnCode
-			+ ", TotalTaxPer=" + TotalTaxPer + ", Cgst=" + Cgst + ", Igst=" + Igst + ", Sgst=" + Sgst + ", Cess=" + Cess
-			+ ", SortNo=" + SortNo + ", ExInt1=" + ExInt1 + ", ExInt2=" + ExInt2 + ", ExInt3=" + ExInt3 + ", ExVar1="
-			+ ExVar1 + ", ExVar2=" + ExVar2 + ", ExVar3=" + ExVar3 + ", ExDate1=" + ExDate1 + ", ExDate2=" + ExDate2
-			+ ", ExBool1=" + ExBool1 + ", exBool2=" + exBool2 + ", exBool3=" + exBool3 + "]";
+	return "Tax [taxId=" + taxId + ", taxName=" + taxName + ", delStatus=" + delStatus + ", hsnCode=" + hsnCode
+			+ ", totalTaxPer=" + totalTaxPer + ", cgst=" + cgst + ", igst=" + igst + ", sgst=" + sgst + ", cess=" + cess
+			+ ", sortNo=" + sortNo + ", exInt1=" + exInt1 + ", exInt2=" + exInt2 + ", exInt3=" + exInt3 + ", exVar1="
+			+ exVar1 + ", exVar2=" + exVar2 + ", exVar3=" + exVar3 + ", exDate1=" + exDate1 + ", exDate2=" + exDate2
+			+ ", exBool1=" + exBool1 + ", exBool2=" + exBool2 + ", exBool3=" + exBool3 + "]";
 }
-
-
-
 
 	
 }

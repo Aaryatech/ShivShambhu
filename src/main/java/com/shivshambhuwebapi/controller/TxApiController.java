@@ -27,10 +27,14 @@ public class TxApiController {
 
 		try {
 
-			taxList = objTaxrepo.findByDelStatusOrderByTaxIdDesc(1);
+			taxList = objTaxrepo.findByDelStatusOrderByTaxIdAsc(1);
+			
+			System.err.println("tx List " +taxList.toString());
+			
 			
 		} catch (Exception e) {
 
+			System.err.println("Exce in tax List " +e.getMessage());
 			e.printStackTrace();
 
 		}
