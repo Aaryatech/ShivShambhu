@@ -18,6 +18,7 @@ import com.shivshambhuwebapi.master.model.Cust;
 import com.shivshambhuwebapi.master.model.CustType;
 import com.shivshambhuwebapi.master.model.Dept;
 import com.shivshambhuwebapi.master.model.EnqGenFact;
+import com.shivshambhuwebapi.master.model.GetPlant;
 import com.shivshambhuwebapi.master.model.Item;
 import com.shivshambhuwebapi.master.model.MarketingUser;
 import com.shivshambhuwebapi.master.model.PaymentTerm;
@@ -35,6 +36,7 @@ import com.shivshambhuwebapi.master.repo.CustRepo;
 import com.shivshambhuwebapi.master.repo.CustTypeRepo;
 import com.shivshambhuwebapi.master.repo.DeptRepo;
 import com.shivshambhuwebapi.master.repo.EnqGenFactRepo;
+import com.shivshambhuwebapi.master.repo.GetPlantRepo;
 import com.shivshambhuwebapi.master.repo.ItemRepo;
 import com.shivshambhuwebapi.master.repo.MarketingUserRepo;
 import com.shivshambhuwebapi.master.repo.PaymentTermRepo;
@@ -52,6 +54,9 @@ public class MasterApiController {
 
 	@Autowired
 	EnqGenFactRepo enqGenFactRepo;
+
+	@Autowired
+	GetPlantRepo getPlantRepo;
 
 	@Autowired
 	BankDetailRepo bankDetailRepo;
@@ -804,7 +809,8 @@ public class MasterApiController {
 		return custList;
 
 	}
-	//Sachin 3 nov
+
+	// Sachin 3 nov
 	@RequestMapping(value = { "/getCustListByPlant" }, method = RequestMethod.POST)
 	public @ResponseBody List<Cust> getCustListByPlant(@RequestParam("plantId") int plantId) {
 
@@ -819,7 +825,7 @@ public class MasterApiController {
 			e.printStackTrace();
 
 		}
-		
+
 		return custList;
 
 	}
@@ -855,7 +861,7 @@ public class MasterApiController {
 
 	@RequestMapping(value = { "/saveCompany" }, method = RequestMethod.POST)
 	public @ResponseBody Company saveCompany(@RequestBody Company company) {
-System.err.println("Inside saveCompany");
+		System.err.println("Inside saveCompany");
 		Company res = new Company();
 
 		try {
@@ -1060,6 +1066,25 @@ System.err.println("Inside saveCompany");
 
 	}
 
+	@RequestMapping(value = { "/getAllCompanyPlantList" }, method = RequestMethod.GET)
+	public @ResponseBody List<GetPlant> getAllCompanyPlantList() {
+
+		List<GetPlant> plantList = new ArrayList<GetPlant>();
+
+		try {
+
+			plantList = getPlantRepo.getAllPlantList();
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+
+		return plantList;
+
+	}
+
 	@RequestMapping(value = { "/getPlantByPlantId" }, method = RequestMethod.POST)
 	public @ResponseBody Plant getPlantByPlantId(@RequestParam("plantId") int plantId) {
 
@@ -1067,6 +1092,23 @@ System.err.println("Inside saveCompany");
 
 		try {
 			plant = plantRepo.findByPlantIdAndDelStatus(plantId, 1);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return plant;
+
+	}
+
+	@RequestMapping(value = { "/getPlantCompanyByPlantId" }, method = RequestMethod.POST)
+	public @ResponseBody GetPlant getPlantCompanyByPlantId(@RequestParam("plantId") int plantId) {
+
+		GetPlant plant = new GetPlant();
+
+		try {
+			plant = getPlantRepo.getPlantByPlantId(plantId);
 
 		} catch (Exception e) {
 
@@ -1240,6 +1282,7 @@ System.err.println("Inside saveCompany");
 		return item;
 
 	}
+
 //sachin 3 nov 	
 	@RequestMapping(value = { "/getItemsByPlantId" }, method = RequestMethod.POST)
 	public @ResponseBody List<Item> getItemByPlantId(@RequestParam("plantId") int plantId) {
@@ -1247,17 +1290,17 @@ System.err.println("Inside saveCompany");
 		List<Item> itemList = new ArrayList<>();
 
 		try {
-			
+
 			itemList = itemRepo.findByPlantIdAndDelStatusOrderByItemIdDesc(plantId, 1);
 
 		} catch (Exception e) {
-			
-			System.err.println("exe in getting  getItemsByPlantId " +e.getMessage());
+
+			System.err.println("exe in getting  getItemsByPlantId " + e.getMessage());
 
 			e.printStackTrace();
 
 		}
-		
+
 		return itemList;
 
 	}
@@ -1370,16 +1413,12 @@ System.err.println("Inside saveCompany");
 		return info;
 
 	}
-	
-	
 
-@Autowired
+	@Autowired
 	TaskRepo objTaskrepo;
 
 	@Autowired
 	TaxRepo objTaxrepo;
-
-
 
 //sumit 1
 	// ----------------------------------------Tax----------------------------------------------------
@@ -1411,7 +1450,7 @@ System.err.println("Inside saveCompany");
 		try {
 
 			taxList = objTaxrepo.findByDelStatusOrderByTaxIdAsc(1);
-			
+
 		} catch (Exception e) {
 
 			e.printStackTrace();
@@ -1421,16 +1460,16 @@ System.err.println("Inside saveCompany");
 
 	}
 
-	//sumit 3
+	// sumit 3
 	@RequestMapping(value = { "/deleteTax" }, method = RequestMethod.POST)
 	public @ResponseBody void deleteTax(@RequestParam("TaxId") int taxId) {
 
 		Info info = new Info();
 
 		try {
-			//int delete = objTaxrepo.deleteTax(taxId);
+			// int delete = objTaxrepo.deleteTax(taxId);
 			objTaxrepo.deleteById(taxId);
-			
+
 //			if (delete == 1) {
 //				info.setError(false);
 //				info.setMessage("successfully Deleted");
@@ -1446,12 +1485,11 @@ System.err.println("Inside saveCompany");
 			info.setMessage(" Deleted to Delete");
 
 		}
-		
 
 	}
 
-	//----------------------------------------Task----------------------------------------------------
-	//sumit 4
+	// ----------------------------------------Task----------------------------------------------------
+	// sumit 4
 	@RequestMapping(value = { "/saveTask" }, method = RequestMethod.POST)
 	public @ResponseBody Task saveTask(@RequestBody Task objTaskParam) {
 
@@ -1470,7 +1508,7 @@ System.err.println("Inside saveCompany");
 
 	}
 
-	//sumit 5
+	// sumit 5
 	@RequestMapping(value = { "/getTaskList" }, method = RequestMethod.GET)
 	public @ResponseBody List<Task> getTaskList() {
 
@@ -1479,7 +1517,7 @@ System.err.println("Inside saveCompany");
 		try {
 
 			taskList = objTaskrepo.findByDelStatusOrderByTaskIdDesc(1);
-			
+
 		} catch (Exception e) {
 
 			e.printStackTrace();
@@ -1488,7 +1526,7 @@ System.err.println("Inside saveCompany");
 		return taskList;
 
 	}
-	//sumit 6
+	// sumit 6
 
 	@RequestMapping(value = { "/deleteTask" }, method = RequestMethod.POST)
 	public @ResponseBody void deleteTask(@RequestParam("TaskId") int taskId) {
@@ -1496,9 +1534,9 @@ System.err.println("Inside saveCompany");
 		Info info = new Info();
 
 		try {
-			//int delete = objTaxrepo.deleteTax(taxId);
+			// int delete = objTaxrepo.deleteTax(taxId);
 			objTaskrepo.deleteById(taskId);
-			
+
 //			if (delete == 1) {
 //				info.setError(false);
 //				info.setMessage("successfully Deleted");
@@ -1514,9 +1552,7 @@ System.err.println("Inside saveCompany");
 			info.setMessage(" Deleted to Delete");
 
 		}
-		
 
 	}
-
 
 }
