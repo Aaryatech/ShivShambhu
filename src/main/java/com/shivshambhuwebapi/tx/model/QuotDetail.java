@@ -88,6 +88,21 @@ public class QuotDetail {
 	@Column(name = "ex_bool3")
 	private int exBool3;
 
+	@Column(name = "con_factor")
+	private float conFactor;
+
+	@Column(name = "conv_qty")
+	private float convQty;
+
+	@Column(name = "quot_item_id")
+	private int quotItemId;
+
+	@Column(name = "igst_per")
+	private float igstPer;
+
+	@Column(name = "igst_value")
+	private float igstValue;
+
 	public int getQuotDetailId() {
 		return quotDetailId;
 	}
@@ -287,6 +302,48 @@ public class QuotDetail {
 	public void setOtherCost(float otherCost) {
 		this.otherCost = otherCost;
 	}
+	
+	
+
+	public float getConFactor() {
+		return conFactor;
+	}
+
+	public void setConFactor(float conFactor) {
+		this.conFactor = conFactor;
+	}
+
+	public float getConvQty() {
+		return convQty;
+	}
+
+	public void setConvQty(float convQty) {
+		this.convQty = convQty;
+	}
+
+	public int getQuotItemId() {
+		return quotItemId;
+	}
+
+	public void setQuotItemId(int quotItemId) {
+		this.quotItemId = quotItemId;
+	}
+
+	public float getIgstPer() {
+		return igstPer;
+	}
+
+	public void setIgstPer(float igstPer) {
+		this.igstPer = igstPer;
+	}
+
+	public float getIgstValue() {
+		return igstValue;
+	}
+
+	public void setIgstValue(float igstValue) {
+		this.igstValue = igstValue;
+	}
 
 	@Override
 	public String toString() {
@@ -296,7 +353,9 @@ public class QuotDetail {
 				+ ", sgstValue=" + sgstValue + ", otherCost=" + otherCost + ", status=" + status + ", delStatus="
 				+ delStatus + ", exInt1=" + exInt1 + ", exInt2=" + exInt2 + ", exInt3=" + exInt3 + ", exVar1=" + exVar1
 				+ ", exVar2=" + exVar2 + ", exVar3=" + exVar3 + ", exDate1=" + exDate1 + ", exDate2=" + exDate2
-				+ ", exBool1=" + exBool1 + ", exBool2=" + exBool2 + ", exBool3=" + exBool3 + "]";
+				+ ", exBool1=" + exBool1 + ", exBool2=" + exBool2 + ", exBool3=" + exBool3 + ", conFactor=" + conFactor
+				+ ", convQty=" + convQty + ", quotItemId=" + quotItemId + ", igstPer=" + igstPer + ", igstValue="
+				+ igstValue + "]";
 	}
 
 }

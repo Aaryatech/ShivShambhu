@@ -126,6 +126,24 @@ public class Item {
 	@Column(name = "sort_no")
 	private int sortNo;
 
+	@Column(name = "length")
+	private float length;
+
+	@Column(name = "height")
+	private float height;
+
+	@Column(name = "width")
+	private float width;
+
+	@Column(name = "item_location")
+	private String itemLocation;
+
+	@Column(name = "royalty_rate")
+	private float royalty_rate;
+
+	@Column(name = "freight_rate")
+	private float freight_rate;
+
 	public int getItemId() {
 		return itemId;
 	}
@@ -430,6 +448,54 @@ public class Item {
 		this.sortNo = sortNo;
 	}
 
+	public float getLength() {
+		return length;
+	}
+
+	public void setLength(float length) {
+		this.length = length;
+	}
+
+	public float getHeight() {
+		return height;
+	}
+
+	public void setHeight(float height) {
+		this.height = height;
+	}
+
+	public float getWidth() {
+		return width;
+	}
+
+	public void setWidth(float width) {
+		this.width = width;
+	}
+
+	public String getItemLocation() {
+		return itemLocation;
+	}
+
+	public void setItemLocation(String itemLocation) {
+		this.itemLocation = itemLocation;
+	}
+
+	public float getRoyalty_rate() {
+		return royalty_rate;
+	}
+
+	public void setRoyalty_rate(float royalty_rate) {
+		this.royalty_rate = royalty_rate;
+	}
+
+	public float getFreight_rate() {
+		return freight_rate;
+	}
+
+	public void setFreight_rate(float freight_rate) {
+		this.freight_rate = freight_rate;
+	}
+
 	@Override
 	public String toString() {
 		return "Item [itemId=" + itemId + ", itemName=" + itemName + ", itemCode=" + itemCode + ", itemImage="
@@ -442,7 +508,9 @@ public class Item {
 				+ ", plantRolStock=" + plantRolStock + ", vendorIds=" + vendorIds + ", delStatus=" + delStatus
 				+ ", exInt1=" + exInt1 + ", exInt2=" + exInt2 + ", exInt3=" + exInt3 + ", exVar1=" + exVar1
 				+ ", exVar2=" + exVar2 + ", exVar3=" + exVar3 + ", exDate1=" + exDate1 + ", exDate2=" + exDate2
-				+ ", exBool1=" + exBool1 + ", exBool2=" + exBool2 + ", exBool3=" + exBool3 + ", sortNo=" + sortNo + "]";
+				+ ", exBool1=" + exBool1 + ", exBool2=" + exBool2 + ", exBool3=" + exBool3 + ", sortNo=" + sortNo
+				+ ", length=" + length + ", height=" + height + ", width=" + width + ", itemLocation=" + itemLocation
+				+ ", royalty_rate=" + royalty_rate + ", freight_rate=" + freight_rate + "]";
 	}
 
 }

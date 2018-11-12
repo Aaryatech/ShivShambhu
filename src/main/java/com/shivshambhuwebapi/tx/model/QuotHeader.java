@@ -139,6 +139,18 @@ public class QuotHeader {
 	@Column(name = "ex_bool3")
 	private int exBool3;
 
+	@Column(name = "quot_value")
+	private float quotValue;
+
+	@Column(name = "tax_value")
+	private float taxValue;
+
+	@Column(name = "taxable_value")
+	private float taxableValue;
+
+	@Column(name = "quot_term_id")
+	private int quotTermId;
+
 	@Transient
 	List<QuotDetail> quotDetailList;
 
@@ -470,12 +482,44 @@ public class QuotHeader {
 		this.exBool3 = exBool3;
 	}
 
+	public int getQuotTermId() {
+		return quotTermId;
+	}
+
+	public void setQuotTermId(int quotTermId) {
+		this.quotTermId = quotTermId;
+	}
+
 	public List<QuotDetail> getQuotDetailList() {
 		return quotDetailList;
 	}
 
 	public void setQuotDetailList(List<QuotDetail> quotDetailList) {
 		this.quotDetailList = quotDetailList;
+	}
+
+	public float getQuotValue() {
+		return quotValue;
+	}
+
+	public void setQuotValue(float quotValue) {
+		this.quotValue = quotValue;
+	}
+
+	public float getTaxValue() {
+		return taxValue;
+	}
+
+	public void setTaxValue(float taxValue) {
+		this.taxValue = taxValue;
+	}
+
+	public float getTaxableValue() {
+		return taxableValue;
+	}
+
+	public void setTaxableValue(float taxableValue) {
+		this.taxableValue = taxableValue;
 	}
 
 	@Override
@@ -493,7 +537,8 @@ public class QuotHeader {
 				+ ", transportCost=" + transportCost + ", exInt1=" + exInt1 + ", exInt2=" + exInt2 + ", exInt3="
 				+ exInt3 + ", exVar1=" + exVar1 + ", exVar2=" + exVar2 + ", exVar3=" + exVar3 + ", exDate1=" + exDate1
 				+ ", exDate2=" + exDate2 + ", exBool1=" + exBool1 + ", exBool2=" + exBool2 + ", exBool3=" + exBool3
-				+ ", quotDetailList=" + quotDetailList + "]";
+				+ ", quotValue=" + quotValue + ", taxValue=" + taxValue + ", taxableValue=" + taxableValue
+				+ ", quotTermId=" + quotTermId + ", quotDetailList=" + quotDetailList + "]";
 	}
 
 }
