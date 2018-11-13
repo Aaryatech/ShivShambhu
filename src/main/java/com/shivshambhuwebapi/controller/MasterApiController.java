@@ -23,6 +23,8 @@ import com.shivshambhuwebapi.master.model.CustType;
 import com.shivshambhuwebapi.master.model.Dept;
 import com.shivshambhuwebapi.master.model.Document;
 import com.shivshambhuwebapi.master.model.EnqGenFact;
+import com.shivshambhuwebapi.master.model.GetCust;
+import com.shivshambhuwebapi.master.model.GetItem;
 import com.shivshambhuwebapi.master.model.GetPlant;
 import com.shivshambhuwebapi.master.model.Item;
 import com.shivshambhuwebapi.master.model.MarketingUser;
@@ -42,6 +44,8 @@ import com.shivshambhuwebapi.master.repo.CustTypeRepo;
 import com.shivshambhuwebapi.master.repo.DeptRepo;
 import com.shivshambhuwebapi.master.repo.DocumentRepo;
 import com.shivshambhuwebapi.master.repo.EnqGenFactRepo;
+import com.shivshambhuwebapi.master.repo.GetCustRepo;
+import com.shivshambhuwebapi.master.repo.GetItemRepo;
 import com.shivshambhuwebapi.master.repo.GetPlantRepo;
 import com.shivshambhuwebapi.master.repo.ItemRepo;
 import com.shivshambhuwebapi.master.repo.MarketingUserRepo;
@@ -63,6 +67,12 @@ public class MasterApiController {
 
 	@Autowired
 	GetPlantRepo getPlantRepo;
+
+	@Autowired
+	GetItemRepo getItemRepo;
+
+	@Autowired
+	GetCustRepo getCustRepo;
 
 	@Autowired
 	BankDetailRepo bankDetailRepo;
@@ -118,7 +128,7 @@ public class MasterApiController {
 		String curDate = dateFormat.format(new Date());
 
 		try {
-			
+
 			doc = getDocumentRepo.getDocuData(docCode, curDate);
 			System.err.println("getting doc " + doc.toString());
 
@@ -131,16 +141,15 @@ public class MasterApiController {
 		return doc;
 
 	}
-	
+
 	@RequestMapping(value = { "/updateDocSrNo" }, method = RequestMethod.POST)
-	public @ResponseBody Info updateDocSrNo(@RequestParam("docCode") int docCode,
-			@RequestParam("srNo") int srNo) {
+	public @ResponseBody Info updateDocSrNo(@RequestParam("docCode") int docCode, @RequestParam("srNo") int srNo) {
 
 		Info info = new Info();
 
 		try {
-			
-			int update =getDocumentRepo.updateDocSrNo(srNo, docCode);
+
+			int update = getDocumentRepo.updateDocSrNo(srNo, docCode);
 
 			if (update == 1) {
 				info.setError(false);
@@ -160,7 +169,6 @@ public class MasterApiController {
 		return info;
 
 	}
-
 
 	// ---------------------------------------Bank Detail-------------------------
 
@@ -854,6 +862,23 @@ public class MasterApiController {
 
 	}
 
+	@RequestMapping(value = { "/getCustomerByCustId" }, method = RequestMethod.POST)
+	public @ResponseBody GetCust getCustomerByCustId(@RequestParam("custId") int custId) {
+
+		GetCust cust = new GetCust();
+
+		try {
+			cust = getCustRepo.getCustByCustId(custId);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return cust;
+
+	}
+
 	@RequestMapping(value = { "/getAllCustList" }, method = RequestMethod.GET)
 	public @ResponseBody List<Cust> getAllCustList() {
 
@@ -862,6 +887,24 @@ public class MasterApiController {
 		try {
 
 			custList = custRepo.findByDelStatusOrderByCustIdDesc(1);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return custList;
+
+	}
+
+	@RequestMapping(value = { "/getAllCustomerList" }, method = RequestMethod.GET)
+	public @ResponseBody List<GetCust> getAllCustomerList() {
+
+		List<GetCust> custList = new ArrayList<GetCust>();
+
+		try {
+
+			custList = getCustRepo.getAllCustList();
 
 		} catch (Exception e) {
 
@@ -1310,8 +1353,8 @@ public class MasterApiController {
 
 	}
 
-	@RequestMapping(value = { "/getAllItemList" }, method = RequestMethod.GET)
-	public @ResponseBody List<Item> getAllItemList() {
+	@RequestMapping(value = { "/getItemList" }, method = RequestMethod.GET)
+	public @ResponseBody List<Item> getItemList() {
 
 		List<Item> itemList = new ArrayList<Item>();
 
@@ -1364,6 +1407,41 @@ public class MasterApiController {
 		}
 
 		return itemList;
+
+	}
+
+	@RequestMapping(value = { "/getAllItemList" }, method = RequestMethod.GET)
+	public @ResponseBody List<GetItem> getAllItemList() {
+
+		List<GetItem> itemList = new ArrayList<GetItem>();
+
+		try {
+
+			itemList = getItemRepo.getAllItemList();
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return itemList;
+
+	}
+
+	@RequestMapping(value = { "/getItemByItemIdWithName" }, method = RequestMethod.POST)
+	public @ResponseBody GetItem getItemByItemIdWithName(@RequestParam("itemId") int itemId) {
+
+		GetItem item = new GetItem();
+
+		try {
+			item = getItemRepo.getItemByItemId(itemId);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return item;
 
 	}
 

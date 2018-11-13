@@ -1,148 +1,107 @@
 package com.shivshambhuwebapi.master.model;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
 
 @Entity
-@Table(name = "m_item")
-public class Item {
+public class GetItem {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "item_id")
 	private int itemId;
 
-	@Column(name = "item_name")
 	private String itemName;
 
-	@Column(name = "item_code")
 	private String itemCode;
 
-	@Column(name = "item_image")
 	private String itemImage;
 
-	@Column(name = "item_type")
 	private int itemType;
 
-	@Column(name = "plant_id")
 	private int plantId;
 
-	@Column(name = "item_rate1")
 	private float itemRate1;
 
-	@Column(name = "item_rate2")
 	private float itemRate2;
 
-	@Column(name = "item_rate3")
 	private float itemRate3;
 
-	@Column(name = "item_rate4")
 	private float itemRate4;
 
-	@Column(name = "tax_id")
 	private int taxId;
 
-	@Column(name = "uom_id")
 	private int uomId;
 
-	@Column(name = "actual_weight")
 	private float actualWeight;
 
-	@Column(name = "base_weight")
 	private float baseWeight;
 
-	@Column(name = "short_name")
 	private String shortName;
 
-	@Column(name = "dispatch_limit")
 	private float dispatchLimit;
 
-	@Column(name = "is_critical")
 	private int isCritical;
 
-	@Column(name = "item_is_used")
 	private int itemIsUsed;
 
-	@Column(name = "min_stock")
 	private float minStock;
 
-	@Column(name = "max_stock")
 	private float maxStock;
 
-	@Column(name = "rol_stock")
 	private float rolStock;
 
-	@Column(name = "plant_min_stock")
 	private float plantMinStock;
 
-	@Column(name = "plant_max_stock")
 	private float plantMaxStock;
 
-	@Column(name = "plant_rol_stock")
 	private float plantRolStock;
 
-	@Column(name = "vendor_ids")
 	private String vendorIds;
 
-	@Column(name = "del_status")
 	private int delStatus;
 
-	@Column(name = "ex_int1")
 	private int exInt1;
 
-	@Column(name = "ex_int2")
 	private int exInt2;
 
-	@Column(name = "ex_int3")
 	private int exInt3;
 
-	@Column(name = "ex_var1")
 	private String exVar1;
 
-	@Column(name = "ex_var2")
 	private String exVar2;
 
-	@Column(name = "ex_var3")
 	private String exVar3;
 
-	@Column(name = "ex_date1")
 	private String exDate1;
 
-	@Column(name = "ex_date2")
 	private String exDate2;
 
-	@Column(name = "ex_bool1")
 	private int exBool1;
 
-	@Column(name = "ex_bool2")
 	private int exBool2;
 
-	@Column(name = "ex_bool3")
 	private int exBool3;
 
-	@Column(name = "sort_no")
 	private int sortNo;
 
-	@Column(name = "length")
 	private float length;
 
-	@Column(name = "height")
 	private float height;
 
-	@Column(name = "width")
 	private float width;
 
-	@Column(name = "item_location")
 	private String itemLocation;
 
-	@Column(name = "royalty_rate")
 	private float royaltyRate;
 
-	@Column(name = "freight_rate")
 	private float freightRate;
+
+	private String taxName;
+	private String hsnCode;
+	private String uomName;
+	private String plantName;
 
 	public int getItemId() {
 		return itemId;
@@ -496,9 +455,41 @@ public class Item {
 		this.freightRate = freightRate;
 	}
 
+	public String getTaxName() {
+		return taxName;
+	}
+
+	public void setTaxName(String taxName) {
+		this.taxName = taxName;
+	}
+
+	public String getHsnCode() {
+		return hsnCode;
+	}
+
+	public void setHsnCode(String hsnCode) {
+		this.hsnCode = hsnCode;
+	}
+
+	public String getUomName() {
+		return uomName;
+	}
+
+	public void setUomName(String uomName) {
+		this.uomName = uomName;
+	}
+
+	public String getPlantName() {
+		return plantName;
+	}
+
+	public void setPlantName(String plantName) {
+		this.plantName = plantName;
+	}
+
 	@Override
 	public String toString() {
-		return "Item [itemId=" + itemId + ", itemName=" + itemName + ", itemCode=" + itemCode + ", itemImage="
+		return "GetItem [itemId=" + itemId + ", itemName=" + itemName + ", itemCode=" + itemCode + ", itemImage="
 				+ itemImage + ", itemType=" + itemType + ", plantId=" + plantId + ", itemRate1=" + itemRate1
 				+ ", itemRate2=" + itemRate2 + ", itemRate3=" + itemRate3 + ", itemRate4=" + itemRate4 + ", taxId="
 				+ taxId + ", uomId=" + uomId + ", actualWeight=" + actualWeight + ", baseWeight=" + baseWeight
@@ -510,7 +501,8 @@ public class Item {
 				+ ", exVar2=" + exVar2 + ", exVar3=" + exVar3 + ", exDate1=" + exDate1 + ", exDate2=" + exDate2
 				+ ", exBool1=" + exBool1 + ", exBool2=" + exBool2 + ", exBool3=" + exBool3 + ", sortNo=" + sortNo
 				+ ", length=" + length + ", height=" + height + ", width=" + width + ", itemLocation=" + itemLocation
-				+ ", royaltyRate=" + royaltyRate + ", freightRate=" + freightRate + "]";
+				+ ", royaltyRate=" + royaltyRate + ", freightRate=" + freightRate + ", taxName=" + taxName
+				+ ", hsnCode=" + hsnCode + ", uomName=" + uomName + ", plantName=" + plantName + "]";
 	}
 
 }
