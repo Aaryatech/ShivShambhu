@@ -1,5 +1,6 @@
 package com.shivshambhuwebapi.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +11,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.shivshambhuwebapi.master.model.CustType;
+import com.shivshambhuwebapi.tx.model.GetQuotHeads;
 import com.shivshambhuwebapi.tx.model.QuotDetail;
 import com.shivshambhuwebapi.tx.model.QuotHeader;
+import com.shivshambhuwebapi.tx.repo.GetQuotHeadsRepo;
 import com.shivshambhuwebapi.tx.repo.QuotDetailRepo;
 import com.shivshambhuwebapi.tx.repo.QuotHeaderRepo;
 
@@ -128,5 +132,32 @@ public class QuotController {
 		return quotHeader;
 
 	}
+	
+	//GetQuotHeads
+	
+	@Autowired
+	GetQuotHeadsRepo getQuotHeadsRepo;
+	
+	@RequestMapping(value = { "/getQuotHeaders" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetQuotHeads> getQuotHeads(@RequestParam("statusList") List<String> statusList) {
+
+		List<GetQuotHeads> quotHeadList = new ArrayList<GetQuotHeads>();
+
+		try {
+
+			quotHeadList = getQuotHeadsRepo.getQuotHeads(statusList);
+
+		} catch (Exception e) {
+			
+			System.err.println("Exce in getting  quotHeadList" + quotHeadList.toString());
+
+			e.printStackTrace();
+
+		}
+		return quotHeadList;
+
+	}
+	
+	
 
 }
