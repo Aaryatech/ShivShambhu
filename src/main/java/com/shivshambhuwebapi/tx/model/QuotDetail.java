@@ -36,6 +36,26 @@ public class QuotDetail {
 
 	@Column(name = "tax_id")
 	private int taxId;
+	
+	private float sgstPer;
+	private float cgstPer;
+
+
+	public float getSgstPer() {
+		return sgstPer;
+	}
+
+	public void setSgstPer(float sgstPer) {
+		this.sgstPer = sgstPer;
+	}
+
+	public float getCgstPer() {
+		return cgstPer;
+	}
+
+	public void setCgstPer(float cgstPer) {
+		this.cgstPer = cgstPer;
+	}
 
 	@Column(name = "enq_detail_id")
 	private int enqDetailId;
@@ -94,8 +114,8 @@ public class QuotDetail {
 	@Column(name = "conv_qty")
 	private float convQty;
 
-	@Column(name = "quot_item_id")
-	private int quotItemId;
+	@Column(name = "quot_uom_id")
+	private int quotUomId;
 
 	@Column(name = "igst_per")
 	private float igstPer;
@@ -321,12 +341,14 @@ public class QuotDetail {
 		this.convQty = convQty;
 	}
 
-	public int getQuotItemId() {
-		return quotItemId;
+	
+
+	public int getQuotUomId() {
+		return quotUomId;
 	}
 
-	public void setQuotItemId(int quotItemId) {
-		this.quotItemId = quotItemId;
+	public void setQuotUomId(int quotUomId) {
+		this.quotUomId = quotUomId;
 	}
 
 	public float getIgstPer() {
@@ -349,13 +371,13 @@ public class QuotDetail {
 	public String toString() {
 		return "QuotDetail [quotDetailId=" + quotDetailId + ", quotHeadId=" + quotHeadId + ", itemId=" + itemId
 				+ ", quotQty=" + quotQty + ", rate=" + rate + ", taxableValue=" + taxableValue + ", taxValue="
-				+ taxValue + ", taxId=" + taxId + ", enqDetailId=" + enqDetailId + ", cgstValue=" + cgstValue
-				+ ", sgstValue=" + sgstValue + ", otherCost=" + otherCost + ", status=" + status + ", delStatus="
-				+ delStatus + ", exInt1=" + exInt1 + ", exInt2=" + exInt2 + ", exInt3=" + exInt3 + ", exVar1=" + exVar1
-				+ ", exVar2=" + exVar2 + ", exVar3=" + exVar3 + ", exDate1=" + exDate1 + ", exDate2=" + exDate2
-				+ ", exBool1=" + exBool1 + ", exBool2=" + exBool2 + ", exBool3=" + exBool3 + ", conFactor=" + conFactor
-				+ ", convQty=" + convQty + ", quotItemId=" + quotItemId + ", igstPer=" + igstPer + ", igstValue="
-				+ igstValue + "]";
+				+ taxValue + ", taxId=" + taxId + ", sgstPer=" + sgstPer + ", cgstPer=" + cgstPer + ", enqDetailId="
+				+ enqDetailId + ", cgstValue=" + cgstValue + ", sgstValue=" + sgstValue + ", otherCost=" + otherCost
+				+ ", status=" + status + ", delStatus=" + delStatus + ", exInt1=" + exInt1 + ", exInt2=" + exInt2
+				+ ", exInt3=" + exInt3 + ", exVar1=" + exVar1 + ", exVar2=" + exVar2 + ", exVar3=" + exVar3
+				+ ", exDate1=" + exDate1 + ", exDate2=" + exDate2 + ", exBool1=" + exBool1 + ", exBool2=" + exBool2
+				+ ", exBool3=" + exBool3 + ", conFactor=" + conFactor + ", convQty=" + convQty + ", quotUomId="
+				+ quotUomId + ", igstPer=" + igstPer + ", igstValue=" + igstValue + "]";
 	}
 
 }

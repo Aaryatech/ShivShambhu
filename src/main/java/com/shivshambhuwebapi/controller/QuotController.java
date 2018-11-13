@@ -25,22 +25,22 @@ public class QuotController {
 	QuotDetailRepo quotDetailRepo;
 
 	@RequestMapping(value = { "/saveQuotHeaderAndDetail" }, method = RequestMethod.POST)
-	public @ResponseBody Info saveQuotHeaderAndDetail(@RequestBody QuotHeader quotHeader) {
+	public @ResponseBody QuotHeader saveQuotHeaderAndDetail(@RequestBody QuotHeader quotHeader) {
 
 		Info errorMessage = new Info();
-		QuotHeader quot = new QuotHeader();
+		QuotHeader quotRes = new QuotHeader();
 
 		try {
 
-			quot = quotHeaderRepo.save(quotHeader);
+			quotRes = quotHeaderRepo.save(quotHeader);
 
-			for (int i = 0; i < quot.getQuotDetailList().size(); i++) {
+			for (int i = 0; i < quotRes.getQuotDetailList().size(); i++) {
 
 				quotHeader.getQuotDetailList().get(i).setQuotHeadId(quotHeader.getQuotHeadId());
-				List<QuotDetail> quotDetailsList = quotDetailRepo.saveAll(quotHeader.getQuotDetailList());
-				quot.setQuotDetailList(quotDetailsList);
-
+				
 			}
+			List<QuotDetail> quotDetailsList = quotDetailRepo.saveAll(quotHeader.getQuotDetailList());
+			quotRes.setQuotDetailList(quotDetailsList);
 
 			errorMessage.setError(false);
 			errorMessage.setMessage("successfully Saved ");
@@ -52,7 +52,7 @@ public class QuotController {
 			errorMessage.setMessage("failed to Save ");
 
 		}
-		return errorMessage;
+		return quotRes;
 
 	}
 

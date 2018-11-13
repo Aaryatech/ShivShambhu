@@ -1,6 +1,10 @@
 package com.shivshambhuwebapi.controller;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +21,7 @@ import com.shivshambhuwebapi.master.model.Company;
 import com.shivshambhuwebapi.master.model.Cust;
 import com.shivshambhuwebapi.master.model.CustType;
 import com.shivshambhuwebapi.master.model.Dept;
+import com.shivshambhuwebapi.master.model.Document;
 import com.shivshambhuwebapi.master.model.EnqGenFact;
 import com.shivshambhuwebapi.master.model.GetPlant;
 import com.shivshambhuwebapi.master.model.Item;
@@ -35,6 +40,7 @@ import com.shivshambhuwebapi.master.repo.CompanyRepo;
 import com.shivshambhuwebapi.master.repo.CustRepo;
 import com.shivshambhuwebapi.master.repo.CustTypeRepo;
 import com.shivshambhuwebapi.master.repo.DeptRepo;
+import com.shivshambhuwebapi.master.repo.DocumentRepo;
 import com.shivshambhuwebapi.master.repo.EnqGenFactRepo;
 import com.shivshambhuwebapi.master.repo.GetPlantRepo;
 import com.shivshambhuwebapi.master.repo.ItemRepo;
@@ -99,6 +105,62 @@ public class MasterApiController {
 
 	@Autowired
 	QuotTrackingRepo quotTrackingRepo;
+
+	@Autowired
+	DocumentRepo getDocumentRepo;
+
+	@RequestMapping(value = { "/getDocument" }, method = RequestMethod.POST)
+	public @ResponseBody Document getDocument(@RequestParam("docCode") int docCode) {
+
+		Document doc = new Document();
+
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		String curDate = dateFormat.format(new Date());
+
+		try {
+			
+			doc = getDocumentRepo.getDocuData(docCode, curDate);
+			System.err.println("getting doc " + doc.toString());
+
+		} catch (Exception e) {
+			System.err.println("Exc in  /getDocument" + e.getMessage());
+			e.printStackTrace();
+
+		}
+
+		return doc;
+
+	}
+	
+	@RequestMapping(value = { "/updateDocSrNo" }, method = RequestMethod.POST)
+	public @ResponseBody Info updateDocSrNo(@RequestParam("docCode") int docCode,
+			@RequestParam("srNo") int srNo) {
+
+		Info info = new Info();
+
+		try {
+			
+			int update =getDocumentRepo.updateDocSrNo(srNo, docCode);
+
+			if (update == 1) {
+				info.setError(false);
+				info.setMessage("successfully update");
+			} else {
+				info.setError(true);
+				info.setMessage(" failed to update");
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage(" failed to update");
+
+		}
+		return info;
+
+	}
+
 
 	// ---------------------------------------Bank Detail-------------------------
 
@@ -1283,7 +1345,7 @@ public class MasterApiController {
 
 	}
 
-//sachin 3 nov 	
+	// sachin 3 nov
 	@RequestMapping(value = { "/getItemsByPlantId" }, method = RequestMethod.POST)
 	public @ResponseBody List<Item> getItemByPlantId(@RequestParam("plantId") int plantId) {
 
@@ -1420,7 +1482,7 @@ public class MasterApiController {
 	@Autowired
 	TaxRepo objTaxrepo;
 
-//sumit 1
+	// sumit 1
 	// ----------------------------------------Tax----------------------------------------------------
 
 	@RequestMapping(value = { "/saveTax" }, method = RequestMethod.POST)
@@ -1441,7 +1503,7 @@ public class MasterApiController {
 
 	}
 
-//sumit 2
+	// sumit 2
 	@RequestMapping(value = { "/getTaxList" }, method = RequestMethod.GET)
 	public @ResponseBody List<Tax> getTAxList() {
 
@@ -1470,13 +1532,13 @@ public class MasterApiController {
 			// int delete = objTaxrepo.deleteTax(taxId);
 			objTaxrepo.deleteById(taxId);
 
-//			if (delete == 1) {
-//				info.setError(false);
-//				info.setMessage("successfully Deleted");
-//			} else {
-//				info.setError(true);
-//				info.setMessage(" Deleted to Delete");
-//			}
+			// if (delete == 1) {
+			// info.setError(false);
+			// info.setMessage("successfully Deleted");
+			// } else {
+			// info.setError(true);
+			// info.setMessage(" Deleted to Delete");
+			// }
 
 		} catch (Exception e) {
 
@@ -1537,13 +1599,13 @@ public class MasterApiController {
 			// int delete = objTaxrepo.deleteTax(taxId);
 			objTaskrepo.deleteById(taskId);
 
-//			if (delete == 1) {
-//				info.setError(false);
-//				info.setMessage("successfully Deleted");
-//			} else {
-//				info.setError(true);
-//				info.setMessage(" Deleted to Delete");
-//			}
+			// if (delete == 1) {
+			// info.setError(false);
+			// info.setMessage("successfully Deleted");
+			// } else {
+			// info.setError(true);
+			// info.setMessage(" Deleted to Delete");
+			// }
 
 		} catch (Exception e) {
 

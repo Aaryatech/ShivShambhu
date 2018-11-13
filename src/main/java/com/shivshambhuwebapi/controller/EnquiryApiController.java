@@ -28,7 +28,7 @@ public class EnquiryApiController {
 	EnqDetailRepo enqDetailRepo;
 
 	@RequestMapping(value = { "/saveEnqHeaderAndDetail" }, method = RequestMethod.POST)
-	public @ResponseBody Info saveEnquiryHeaderAndDetail(@RequestBody EnqHeader enqHeader) {
+	public @ResponseBody EnqHeader saveEnquiryHeaderAndDetail(@RequestBody EnqHeader enqHeader) {
 
 		Info errorMessage = new Info();
 		EnqHeader enquiryHeader = new EnqHeader();
@@ -54,7 +54,7 @@ public class EnquiryApiController {
 			errorMessage.setMessage("failed to Save ");
 
 		}
-		return errorMessage;
+		return enquiryHeader;
 
 	}
 
