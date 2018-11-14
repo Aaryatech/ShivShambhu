@@ -17,4 +17,8 @@ public interface GetItemRepo extends JpaRepository<GetItem, Integer> {
 	@Query(value = "SELECT i.*,p.plant_name,t.tax_name,t.hsn_code,u.uom_name FROM m_item i,m_plant p ,m_tax t,m_uom u  WHERE "
 			+ "i.del_status=1 AND p.plant_id=i.plant_id AND t.tax_id=i.tax_id AND u.uom_id=i.uom_id AND i.item_id =:itemId", nativeQuery = true)
 	GetItem getItemByItemId(@Param("itemId") int itemId);
+	
+	@Query(value = "SELECT i.*,p.plant_name,t.tax_name,t.hsn_code,u.uom_name FROM m_item i,m_plant p ,m_tax t,m_uom u  WHERE "
+			+ "i.del_status=1 AND p.plant_id=i.plant_id AND p.plant_id=:plantId AND t.tax_id=i.tax_id AND u.uom_id=i.uom_id ", nativeQuery = true)
+	List<GetItem> getItemByPlantId(@Param("plantId") int plantId);
 }

@@ -1504,6 +1504,24 @@ public class MasterApiController {
 
 	}
 
+	
+	@RequestMapping(value = { "/getGetItemsByPlantId" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetItem> getGetItemByPlantId(@RequestParam("plantId") int plantId) {
+
+		List<GetItem> itemList = new ArrayList<>();
+
+		try {
+			itemList = getItemRepo.getItemByPlantId(plantId);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return itemList;
+
+	}
+
 	@RequestMapping(value = { "/deleteItem" }, method = RequestMethod.POST)
 	public @ResponseBody Info deleteItem(@RequestParam("itemId") int itemId) {
 
