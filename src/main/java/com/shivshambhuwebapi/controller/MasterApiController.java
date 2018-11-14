@@ -1345,6 +1345,25 @@ public class MasterApiController {
 		return project;
 
 	}
+	
+	@RequestMapping(value = { "/getProjectByCustId" }, method = RequestMethod.POST)
+	public @ResponseBody List<Project> getProjectByCustId(@RequestParam("custId") int custId) {
+
+		List<Project> projList = new ArrayList<>();
+
+		try {
+			projList = projectRepo.findByCustIdAndDelStatus(custId, 1);
+
+		} catch (Exception e) {
+			System.err.println(" Exce in getting project by /getProjectByCustId " +e.getMessage());
+
+			e.printStackTrace();
+
+		}
+		return projList;
+
+	}
+	
 
 	@RequestMapping(value = { "/deleteProject" }, method = RequestMethod.POST)
 	public @ResponseBody Info deleteProject(@RequestParam("projId") int projId) {
