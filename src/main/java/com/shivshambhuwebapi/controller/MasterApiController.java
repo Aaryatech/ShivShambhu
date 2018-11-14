@@ -3,7 +3,6 @@ package com.shivshambhuwebapi.controller;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -118,6 +117,45 @@ public class MasterApiController {
 
 	@Autowired
 	DocumentRepo getDocumentRepo;
+
+	// --------------------------------------Document-------------------------
+
+	@RequestMapping(value = { "/saveDocument" }, method = RequestMethod.POST)
+	public @ResponseBody Document saveDocument(@RequestBody Document document) {
+
+		Document res = new Document();
+
+		try {
+
+			res = getDocumentRepo.saveAndFlush(document);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return res;
+
+	}
+	
+	@RequestMapping(value = { "/getAllDocList" }, method = RequestMethod.GET)
+	public @ResponseBody List<Document> getAllDocList() {
+
+		List<Document> docList = new ArrayList<Document>();
+
+		try {
+
+			docList = getDocumentRepo.findByDelStatusOrderByDocIdDesc(1);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return docList;
+
+	}
+
 
 	@RequestMapping(value = { "/getDocument" }, method = RequestMethod.POST)
 	public @ResponseBody Document getDocument(@RequestParam("docCode") int docCode) {
@@ -852,6 +890,8 @@ public class MasterApiController {
 
 		try {
 			cust = custRepo.findByCustIdAndDelStatus(custId, 1);
+			cust.setDateOfReg(DateConvertor.convertToDMY(cust.getDateOfReg()));
+			cust.setCustDob(DateConvertor.convertToDMY(cust.getCustDob()));
 
 		} catch (Exception e) {
 
