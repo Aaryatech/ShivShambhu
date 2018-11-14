@@ -1,11 +1,13 @@
 package com.shivshambhuwebapi.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -13,6 +15,8 @@ import com.shivshambhuwebapi.master.model.DocTermDetail;
 import com.shivshambhuwebapi.master.model.DocTermHeader;
 import com.shivshambhuwebapi.master.repo.DocTermDetailRepo;
 import com.shivshambhuwebapi.master.repo.DocTermHeaderRepo;
+import com.shivshambhuwebapi.tx.model.EnqDetail;
+import com.shivshambhuwebapi.tx.model.EnqHeader;
 
 @RestController
 public class DocTermApiController {
@@ -52,6 +56,67 @@ public class DocTermApiController {
 
 		}
 		return docTermHeader;
+
+	}
+
+	@RequestMapping(value = { "/getDocHeaderList" }, method = RequestMethod.GET)
+	public @ResponseBody List<DocTermHeader> getDocHeaderList() {
+
+		List<DocTermHeader> docHeaderList = new ArrayList<DocTermHeader>();
+
+		try {
+
+			docHeaderList = docTermHeaderRepo.findAll();
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return docHeaderList;
+
+	}
+
+	@RequestMapping(value = { "/getDocHeaderByDocId" }, method = RequestMethod.POST)
+	public @ResponseBody List<DocTermHeader> getDocHeaderByDocId(@RequestParam("docId") int docId) {
+
+		List<DocTermHeader> docHeaderList = new ArrayList<DocTermHeader>();
+
+		try {
+
+			docHeaderList = docTermHeaderRepo.findByDocIdAndDelStatus(docId, 1);
+
+			for (int i = 0; i <docHeaderList.size(); i++) {
+				List<DocTermDetail> detailList = docTermDetailRepo
+						.findByTermId(docHeaderList.get(i).getTermId());
+				docHeaderList.get(i).setDetailList(detailList);
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return docHeaderList;
+
+	}
+
+	@RequestMapping(value = { "/getDocHeaderByTermId" }, method = RequestMethod.POST)
+	public @ResponseBody DocTermHeader getDocHeaderByTermId(@RequestParam("termId") int termId) {
+
+		DocTermHeader termHeader = new DocTermHeader();
+
+		try {
+
+			termHeader = docTermHeaderRepo.findByTermIdAndDelStatus(termId, 1);
+			List<DocTermDetail> detailList = docTermDetailRepo.findByTermIdAndDelStatus(termId, 1);
+			termHeader.setDetailList(detailList);
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return termHeader;
 
 	}
 
