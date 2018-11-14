@@ -39,10 +39,11 @@ public class EnquiryApiController {
 
 			for (int i = 0; i < enqHeader.getEnqDetailList().size(); i++) {
 				enqHeader.getEnqDetailList().get(i).setEnqHeadId(enquiryHeader.getEnqHeadId());
-				List<EnqDetail> enqDetailsList = enqDetailRepo.saveAll(enqHeader.getEnqDetailList());
-				enquiryHeader.setEnqDetailList(enqDetailsList);
-
+				
 			}
+			
+			List<EnqDetail> enqDetailsList = enqDetailRepo.saveAll(enqHeader.getEnqDetailList());
+			enquiryHeader.setEnqDetailList(enqDetailsList);
 
 			errorMessage.setError(false);
 			errorMessage.setMessage("successfully Saved ");
