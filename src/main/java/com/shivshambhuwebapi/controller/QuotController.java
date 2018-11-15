@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.shivshambhuwebapi.master.model.CustType;
+import com.shivshambhuwebapi.tx.model.GetItemWithEnq;
 import com.shivshambhuwebapi.tx.model.GetQuotHeads;
 import com.shivshambhuwebapi.tx.model.QuotDetail;
 import com.shivshambhuwebapi.tx.model.QuotHeader;
+import com.shivshambhuwebapi.tx.repo.GetItemWithEnqRepo;
 import com.shivshambhuwebapi.tx.repo.GetQuotHeadsRepo;
 import com.shivshambhuwebapi.tx.repo.QuotDetailRepo;
 import com.shivshambhuwebapi.tx.repo.QuotHeaderRepo;
@@ -41,7 +43,7 @@ public class QuotController {
 			for (int i = 0; i < quotRes.getQuotDetailList().size(); i++) {
 
 				quotHeader.getQuotDetailList().get(i).setQuotHeadId(quotHeader.getQuotHeadId());
-				
+
 			}
 			List<QuotDetail> quotDetailsList = quotDetailRepo.saveAll(quotHeader.getQuotDetailList());
 			quotRes.setQuotDetailList(quotDetailsList);
@@ -132,12 +134,12 @@ public class QuotController {
 		return quotHeader;
 
 	}
-	
-	//GetQuotHeads
-	
+
+	// GetQuotHeads
+
 	@Autowired
 	GetQuotHeadsRepo getQuotHeadsRepo;
-	
+
 	@RequestMapping(value = { "/getQuotHeaders" }, method = RequestMethod.POST)
 	public @ResponseBody List<GetQuotHeads> getQuotHeads(@RequestParam("statusList") List<String> statusList) {
 
@@ -148,7 +150,7 @@ public class QuotController {
 			quotHeadList = getQuotHeadsRepo.getQuotHeads(statusList);
 
 		} catch (Exception e) {
-			
+
 			System.err.println("Exce in getting  quotHeadList" + quotHeadList.toString());
 
 			e.printStackTrace();
@@ -157,7 +159,32 @@ public class QuotController {
 		return quotHeadList;
 
 	}
-	
-	
+
+	// SACHIN 15 NOV
+	@Autowired
+	GetItemWithEnqRepo getGetItemWithEnqRepo;
+
+	@RequestMapping(value = { "/getItemsAndEnqItemList" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetItemWithEnq> getGetItemWithEnq(@RequestParam("plantId") int plantId,
+			@RequestParam("enqHeadId") int enqHeadId) {
+
+		List<GetItemWithEnq> itemsAndEnqItemList = new ArrayList<GetItemWithEnq>();
+
+		try {
+			
+			System.err.println("getItemsAndEnqItemList enqHeadId   " +enqHeadId +"plant Id  " +plantId );
+
+			itemsAndEnqItemList = getGetItemWithEnqRepo.getGetItemWithEnq(plantId, enqHeadId);
+
+		} catch (Exception e) {
+
+			System.err.println("Exce in getting  itemsAndEnqItemList" + itemsAndEnqItemList.toString());
+
+			e.printStackTrace();
+
+		}
+		return itemsAndEnqItemList;
+
+	}
 
 }
