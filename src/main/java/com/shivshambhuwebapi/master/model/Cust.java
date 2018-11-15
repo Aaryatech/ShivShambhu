@@ -118,6 +118,15 @@ public class Cust {
 	@Column(name = "cust_vendor")
 	private int custVendor;
 
+	@Column(name = "owner_name")
+	private String ownerName;
+
+	@Column(name = "acc_person")
+	private String accPerson;
+
+	@Column(name = "acc_per_mob")
+	private String accPerMob;
+
 	public int getCustId() {
 		return custId;
 	}
@@ -398,6 +407,30 @@ public class Cust {
 		this.custVendor = custVendor;
 	}
 
+	public String getOwnerName() {
+		return ownerName;
+	}
+
+	public void setOwnerName(String ownerName) {
+		this.ownerName = ownerName;
+	}
+
+	public String getAccPerson() {
+		return accPerson;
+	}
+
+	public void setAccPerson(String accPerson) {
+		this.accPerson = accPerson;
+	}
+
+	public String getAccPerMob() {
+		return accPerMob;
+	}
+
+	public void setAccPerMob(String accPerMob) {
+		this.accPerMob = accPerMob;
+	}
+
 	@Override
 	public String toString() {
 		return "Cust [custId=" + custId + ", custName=" + custName + ", respPerson=" + respPerson + ", custMobNo="
@@ -410,7 +443,8 @@ public class Cust {
 				+ ", dateOfReg=" + dateOfReg + ", chequeRemark=" + chequeRemark + ", isChequeRcvd=" + isChequeRcvd
 				+ ", contactPerName=" + contactPerName + ", contactPerMob=" + contactPerMob + ", custLandline="
 				+ custLandline + ", isSameState=" + isSameState + ", custCode=" + custCode + ", custVendor="
-				+ custVendor + "]";
+				+ custVendor + ", ownerName=" + ownerName + ", accPerson=" + accPerson + ", accPerMob=" + accPerMob
+				+ "]";
 	}
 
 }

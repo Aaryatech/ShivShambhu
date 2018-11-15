@@ -26,7 +26,9 @@ import com.shivshambhuwebapi.master.model.GetCust;
 import com.shivshambhuwebapi.master.model.GetItem;
 import com.shivshambhuwebapi.master.model.GetPlant;
 import com.shivshambhuwebapi.master.model.GetProject;
+import com.shivshambhuwebapi.master.model.GetUser;
 import com.shivshambhuwebapi.master.model.Item;
+import com.shivshambhuwebapi.master.model.ItemType;
 import com.shivshambhuwebapi.master.model.MarketingUser;
 import com.shivshambhuwebapi.master.model.PaymentTerm;
 import com.shivshambhuwebapi.master.model.Plant;
@@ -48,7 +50,9 @@ import com.shivshambhuwebapi.master.repo.GetCustRepo;
 import com.shivshambhuwebapi.master.repo.GetItemRepo;
 import com.shivshambhuwebapi.master.repo.GetPlantRepo;
 import com.shivshambhuwebapi.master.repo.GetProjectRepo;
+import com.shivshambhuwebapi.master.repo.GetUserRepo;
 import com.shivshambhuwebapi.master.repo.ItemRepo;
+import com.shivshambhuwebapi.master.repo.ItemTypeRepo;
 import com.shivshambhuwebapi.master.repo.MarketingUserRepo;
 import com.shivshambhuwebapi.master.repo.PaymentTermRepo;
 import com.shivshambhuwebapi.master.repo.PlantRepo;
@@ -65,6 +69,12 @@ public class MasterApiController {
 
 	@Autowired
 	EnqGenFactRepo enqGenFactRepo;
+
+	@Autowired
+	ItemTypeRepo itemTypeRepo;
+
+	@Autowired
+	GetUserRepo getUserRepo;
 
 	@Autowired
 	GetPlantRepo getPlantRepo;
@@ -122,6 +132,43 @@ public class MasterApiController {
 
 	@Autowired
 	GetProjectRepo getProjectRepo;
+
+	// ----------------Item Type-------------------------------
+
+	@RequestMapping(value = { "/getAllItemTypeList" }, method = RequestMethod.GET)
+	public @ResponseBody List<ItemType> getAllItemTypeList() {
+
+		List<ItemType> itemTypeList = new ArrayList<ItemType>();
+
+		try {
+
+			itemTypeList = itemTypeRepo.findByDelStatusOrderByItemTypeIdDesc(1);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return itemTypeList;
+
+	}
+
+	@RequestMapping(value = { "/getItemTypeByItemTypeId" }, method = RequestMethod.POST)
+	public @ResponseBody ItemType getItemTypeByItemTypeId(@RequestParam("itemTypeId") int itemTypeId) {
+
+		ItemType itemType = new ItemType();
+
+		try {
+			itemType = itemTypeRepo.findByItemTypeIdAndDelStatus(itemTypeId, 1);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return itemType;
+
+	}
 
 	// --------------------------------------Document-------------------------
 
@@ -830,6 +877,24 @@ public class MasterApiController {
 		try {
 
 			userList = userRepo.findByDelStatusOrderByUserIdDesc(1);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return userList;
+
+	}
+
+	@RequestMapping(value = { "/getUserList" }, method = RequestMethod.GET)
+	public @ResponseBody List<GetUser> getUserList() {
+
+		List<GetUser> userList = new ArrayList<GetUser>();
+
+		try {
+
+			userList = getUserRepo.getUserList();
 
 		} catch (Exception e) {
 

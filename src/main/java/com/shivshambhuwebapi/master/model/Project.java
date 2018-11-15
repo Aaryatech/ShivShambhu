@@ -37,6 +37,12 @@ public class Project {
 	@Column(name = "del_status")
 	private int delStatus;
 
+	@Column(name = "contact_per_mob")
+	private String contactPerMob;
+
+	@Column(name = "contact_per_name")
+	private String contactPerName;
+
 	public int getProjId() {
 		return projId;
 	}
@@ -101,11 +107,27 @@ public class Project {
 		this.delStatus = delStatus;
 	}
 
+	public String getContactPerMob() {
+		return contactPerMob;
+	}
+
+	public void setContactPerMob(String contactPerMob) {
+		this.contactPerMob = contactPerMob;
+	}
+
+	public String getContactPerName() {
+		return contactPerName;
+	}
+
+	public void setContactPerName(String contactPerName) {
+		this.contactPerName = contactPerName;
+	}
+
 	@Override
 	public String toString() {
 		return "Project [projId=" + projId + ", projName=" + projName + ", custId=" + custId + ", location=" + location
 				+ ", startDate=" + startDate + ", endDate=" + endDate + ", isUsed=" + isUsed + ", delStatus="
-				+ delStatus + "]";
+				+ delStatus + ", contactPerMob=" + contactPerMob + ", contactPerName=" + contactPerName + "]";
 	}
 
 }
