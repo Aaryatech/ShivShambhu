@@ -10,7 +10,7 @@ import com.shivshambhuwebapi.tx.model.GetItemWithEnq;
 
 public interface GetItemWithEnqRepo extends JpaRepository<GetItemWithEnq, Integer> {
 
-	@Query(value = " SELECT i.*,p.plant_name,t.tax_name,t.hsn_code,u.uom_name,"
+	@Query(value = " SELECT i.*,p.plant_name,t.tax_name,t.hsn_code,u.uom_name,t.sgst,t.cgst,t.igst,t.cess,t.total_tax_per,"
 			
 			+ " COALESCE((SELECT t_enq_detail.item_qty FROM t_enq_detail,t_enq_header "
 			+ " WHERE t_enq_detail.enq_head_id=t_enq_header.enq_head_id AND t_enq_header.plant_id=p.plant_id"

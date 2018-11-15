@@ -105,8 +105,59 @@ public class GetItemWithEnq {
 	private float enqUomId;
 	
 	private String enqUomName;
+	
+	
+	private float totalTaxPer;
+
+	private float cgst;
+
+	private float igst;
+
+	private float sgst;
+
+	private float cess;
 
 	
+
+	public float getTotalTaxPer() {
+		return totalTaxPer;
+	}
+
+	public void setTotalTaxPer(float totalTaxPer) {
+		this.totalTaxPer = totalTaxPer;
+	}
+
+	public float getCgst() {
+		return cgst;
+	}
+
+	public void setCgst(float cgst) {
+		this.cgst = cgst;
+	}
+
+	public float getIgst() {
+		return igst;
+	}
+
+	public void setIgst(float igst) {
+		this.igst = igst;
+	}
+
+	public float getSgst() {
+		return sgst;
+	}
+
+	public void setSgst(float sgst) {
+		this.sgst = sgst;
+	}
+
+	public float getCess() {
+		return cess;
+	}
+
+	public void setCess(float cess) {
+		this.cess = cess;
+	}
 
 	public String getEnqUomName() {
 		return enqUomName;
@@ -532,7 +583,8 @@ public class GetItemWithEnq {
 				+ ", length=" + length + ", height=" + height + ", width=" + width + ", itemLocation=" + itemLocation
 				+ ", royaltyRate=" + royaltyRate + ", freightRate=" + freightRate + ", taxName=" + taxName
 				+ ", hsnCode=" + hsnCode + ", uomName=" + uomName + ", plantName=" + plantName + ", enqQty=" + enqQty
-				+ ", enqUomId=" + enqUomId + ", enqUomName=" + enqUomName + "]";
+				+ ", enqUomId=" + enqUomId + ", enqUomName=" + enqUomName + ", totalTaxPer=" + totalTaxPer + ", cgst="
+				+ cgst + ", igst=" + igst + ", sgst=" + sgst + ", cess=" + cess + "]";
 	}
 	
 	
