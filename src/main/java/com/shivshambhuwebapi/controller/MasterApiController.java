@@ -25,6 +25,7 @@ import com.shivshambhuwebapi.master.model.EnqGenFact;
 import com.shivshambhuwebapi.master.model.GetCust;
 import com.shivshambhuwebapi.master.model.GetItem;
 import com.shivshambhuwebapi.master.model.GetPlant;
+import com.shivshambhuwebapi.master.model.GetProject;
 import com.shivshambhuwebapi.master.model.Item;
 import com.shivshambhuwebapi.master.model.MarketingUser;
 import com.shivshambhuwebapi.master.model.PaymentTerm;
@@ -46,6 +47,7 @@ import com.shivshambhuwebapi.master.repo.EnqGenFactRepo;
 import com.shivshambhuwebapi.master.repo.GetCustRepo;
 import com.shivshambhuwebapi.master.repo.GetItemRepo;
 import com.shivshambhuwebapi.master.repo.GetPlantRepo;
+import com.shivshambhuwebapi.master.repo.GetProjectRepo;
 import com.shivshambhuwebapi.master.repo.ItemRepo;
 import com.shivshambhuwebapi.master.repo.MarketingUserRepo;
 import com.shivshambhuwebapi.master.repo.PaymentTermRepo;
@@ -118,6 +120,9 @@ public class MasterApiController {
 	@Autowired
 	DocumentRepo getDocumentRepo;
 
+	@Autowired
+	GetProjectRepo getProjectRepo;
+
 	// --------------------------------------Document-------------------------
 
 	@RequestMapping(value = { "/saveDocument" }, method = RequestMethod.POST)
@@ -137,7 +142,7 @@ public class MasterApiController {
 		return res;
 
 	}
-	
+
 	@RequestMapping(value = { "/getAllDocList" }, method = RequestMethod.GET)
 	public @ResponseBody List<Document> getAllDocList() {
 
@@ -155,7 +160,6 @@ public class MasterApiController {
 		return docList;
 
 	}
-
 
 	@RequestMapping(value = { "/getDocument" }, method = RequestMethod.POST)
 	public @ResponseBody Document getDocument(@RequestParam("docCode") int docCode) {
@@ -1329,6 +1333,28 @@ public class MasterApiController {
 
 	}
 
+	@RequestMapping(value = { "/getAllProList" }, method = RequestMethod.GET)
+	public @ResponseBody List<GetProject> getAllProList() {
+
+		List<GetProject> proList = new ArrayList<GetProject>();
+
+		try {
+
+			proList = getProjectRepo.getAllProList();
+			for (int i = 0; i < proList.size(); i++) {
+				proList.get(i).setStartDate(DateConvertor.convertToDMY(proList.get(i).getStartDate()));
+				proList.get(i).setEndDate(DateConvertor.convertToDMY(proList.get(i).getEndDate()));
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return proList;
+
+	}
+
 	@RequestMapping(value = { "/getProjectByProjId" }, method = RequestMethod.POST)
 	public @ResponseBody Project getProjectByProjId(@RequestParam("projId") int projId) {
 
@@ -1336,6 +1362,8 @@ public class MasterApiController {
 
 		try {
 			project = projectRepo.findByProjIdAndDelStatus(projId, 1);
+			project.setStartDate(DateConvertor.convertToDMY(project.getStartDate()));
+			project.setEndDate(DateConvertor.convertToDMY(project.getEndDate()));
 
 		} catch (Exception e) {
 
@@ -1345,7 +1373,7 @@ public class MasterApiController {
 		return project;
 
 	}
-	
+
 	@RequestMapping(value = { "/getProjectByCustId" }, method = RequestMethod.POST)
 	public @ResponseBody List<Project> getProjectByCustId(@RequestParam("custId") int custId) {
 
@@ -1355,7 +1383,7 @@ public class MasterApiController {
 			projList = projectRepo.findByCustIdAndDelStatus(custId, 1);
 
 		} catch (Exception e) {
-			System.err.println(" Exce in getting project by /getProjectByCustId " +e.getMessage());
+			System.err.println(" Exce in getting project by /getProjectByCustId " + e.getMessage());
 
 			e.printStackTrace();
 
@@ -1363,7 +1391,6 @@ public class MasterApiController {
 		return projList;
 
 	}
-	
 
 	@RequestMapping(value = { "/deleteProject" }, method = RequestMethod.POST)
 	public @ResponseBody Info deleteProject(@RequestParam("projId") int projId) {
@@ -1504,7 +1531,6 @@ public class MasterApiController {
 
 	}
 
-	
 	@RequestMapping(value = { "/getGetItemsByPlantId" }, method = RequestMethod.POST)
 	public @ResponseBody List<GetItem> getGetItemByPlantId(@RequestParam("plantId") int plantId) {
 

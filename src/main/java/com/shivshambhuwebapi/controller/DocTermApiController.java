@@ -66,7 +66,7 @@ public class DocTermApiController {
 
 		try {
 
-			docHeaderList = docTermHeaderRepo.findAll();
+			docHeaderList = docTermHeaderRepo.findByDelStatus(1);
 
 		} catch (Exception e) {
 
@@ -86,9 +86,8 @@ public class DocTermApiController {
 
 			docHeaderList = docTermHeaderRepo.findByDocIdAndDelStatus(docId, 1);
 
-			for (int i = 0; i <docHeaderList.size(); i++) {
-				List<DocTermDetail> detailList = docTermDetailRepo
-						.findByTermId(docHeaderList.get(i).getTermId());
+			for (int i = 0; i < docHeaderList.size(); i++) {
+				List<DocTermDetail> detailList = docTermDetailRepo.findByTermId(docHeaderList.get(i).getTermId());
 				docHeaderList.get(i).setDetailList(detailList);
 			}
 
@@ -117,6 +116,33 @@ public class DocTermApiController {
 
 		}
 		return termHeader;
+
+	}
+
+	@RequestMapping(value = { "/deleteDocHeader" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteDocHeader(@RequestParam("termId") int termId) {
+
+		Info info = new Info();
+
+		try {
+			int delete = docTermHeaderRepo.deleteDocHeader(termId);
+
+			if (delete == 1) {
+				info.setError(false);
+				info.setMessage("successfully Deleted");
+			} else {
+				info.setError(true);
+				info.setMessage(" Deleted to Delete");
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage(" Deleted to Delete");
+
+		}
+		return info;
 
 	}
 
