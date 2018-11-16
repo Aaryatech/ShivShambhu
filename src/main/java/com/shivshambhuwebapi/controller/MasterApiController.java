@@ -531,6 +531,7 @@ public class MasterApiController {
 
 		try {
 			Pt = paymentTermRepo.findByPayTermIdAndDelStatus(payTermId, 1);
+			Pt.setDate(DateConvertor.convertToDMY(Pt.getDate()));
 
 		} catch (Exception e) {
 
@@ -549,6 +550,9 @@ public class MasterApiController {
 		try {
 
 			ptList = paymentTermRepo.findByDelStatusOrderByPayTermIdDesc(1);
+			for (int i = 0; i < ptList.size(); i++) {
+				ptList.get(i).setDate(DateConvertor.convertToDMY(ptList.get(i).getDate()));
+			}
 
 		} catch (Exception e) {
 

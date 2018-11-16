@@ -43,6 +43,10 @@ public class Project {
 	@Column(name = "contact_per_name")
 	private String contactPerName;
 
+	private String pincode;
+	private float km;
+	private String address;
+
 	public int getProjId() {
 		return projId;
 	}
@@ -123,11 +127,36 @@ public class Project {
 		this.contactPerName = contactPerName;
 	}
 
+	public String getPincode() {
+		return pincode;
+	}
+
+	public void setPincode(String pincode) {
+		this.pincode = pincode;
+	}
+
+	public float getKm() {
+		return km;
+	}
+
+	public void setKm(float km) {
+		this.km = km;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
 	@Override
 	public String toString() {
 		return "Project [projId=" + projId + ", projName=" + projName + ", custId=" + custId + ", location=" + location
 				+ ", startDate=" + startDate + ", endDate=" + endDate + ", isUsed=" + isUsed + ", delStatus="
-				+ delStatus + ", contactPerMob=" + contactPerMob + ", contactPerName=" + contactPerName + "]";
+				+ delStatus + ", contactPerMob=" + contactPerMob + ", contactPerName=" + contactPerName + ", pincode="
+				+ pincode + ", km=" + km + ", address=" + address + "]";
 	}
 
 }

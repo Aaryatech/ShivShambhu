@@ -126,6 +126,26 @@ public class Cust {
 
 	@Column(name = "acc_per_mob")
 	private String accPerMob;
+	
+	
+	
+
+	@Column(name = "pincode")
+	private String pincode;
+
+	
+
+	@Column(name = "km")
+	private float km;
+
+	
+
+	@Column(name = "creadit_limit")
+	private float creaditLimit;
+	
+	@Column(name = "creadit_days")
+	private float creaditDays;
+
 
 	public int getCustId() {
 		return custId;
@@ -431,6 +451,38 @@ public class Cust {
 		this.accPerMob = accPerMob;
 	}
 
+	public String getPincode() {
+		return pincode;
+	}
+
+	public void setPincode(String pincode) {
+		this.pincode = pincode;
+	}
+
+	public float getKm() {
+		return km;
+	}
+
+	public void setKm(float km) {
+		this.km = km;
+	}
+
+	public float getCreaditLimit() {
+		return creaditLimit;
+	}
+
+	public void setCreaditLimit(float creaditLimit) {
+		this.creaditLimit = creaditLimit;
+	}
+
+	public float getCreaditDays() {
+		return creaditDays;
+	}
+
+	public void setCreaditDays(float creaditDays) {
+		this.creaditDays = creaditDays;
+	}
+
 	@Override
 	public String toString() {
 		return "Cust [custId=" + custId + ", custName=" + custName + ", respPerson=" + respPerson + ", custMobNo="
@@ -444,7 +496,8 @@ public class Cust {
 				+ ", contactPerName=" + contactPerName + ", contactPerMob=" + contactPerMob + ", custLandline="
 				+ custLandline + ", isSameState=" + isSameState + ", custCode=" + custCode + ", custVendor="
 				+ custVendor + ", ownerName=" + ownerName + ", accPerson=" + accPerson + ", accPerMob=" + accPerMob
-				+ "]";
+				+ ", pincode=" + pincode + ", km=" + km + ", creaditLimit=" + creaditLimit + ", creaditDays="
+				+ creaditDays + "]";
 	}
 
 }

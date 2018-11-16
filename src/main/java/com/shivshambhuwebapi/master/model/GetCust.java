@@ -1,6 +1,5 @@
 package com.shivshambhuwebapi.master.model;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -81,12 +80,17 @@ public class GetCust {
 	private int custVendor;
 
 	private String plantName;
-	
+
 	private String ownerName;
 
 	private String accPerson;
 
 	private String accPerMob;
+
+	private String pincode;
+	private float km;
+	private float creaditLimit;
+	private float creaditDays;
 
 	public int getCustId() {
 		return custId;
@@ -400,6 +404,38 @@ public class GetCust {
 		this.accPerMob = accPerMob;
 	}
 
+	public String getPincode() {
+		return pincode;
+	}
+
+	public void setPincode(String pincode) {
+		this.pincode = pincode;
+	}
+
+	public float getKm() {
+		return km;
+	}
+
+	public void setKm(float km) {
+		this.km = km;
+	}
+
+	public float getCreaditLimit() {
+		return creaditLimit;
+	}
+
+	public void setCreaditLimit(float creaditLimit) {
+		this.creaditLimit = creaditLimit;
+	}
+
+	public float getCreaditDays() {
+		return creaditDays;
+	}
+
+	public void setCreaditDays(float creaditDays) {
+		this.creaditDays = creaditDays;
+	}
+
 	@Override
 	public String toString() {
 		return "GetCust [custId=" + custId + ", custName=" + custName + ", respPerson=" + respPerson + ", custMobNo="
@@ -413,7 +449,8 @@ public class GetCust {
 				+ ", contactPerName=" + contactPerName + ", contactPerMob=" + contactPerMob + ", custLandline="
 				+ custLandline + ", isSameState=" + isSameState + ", custCode=" + custCode + ", custVendor="
 				+ custVendor + ", plantName=" + plantName + ", ownerName=" + ownerName + ", accPerson=" + accPerson
-				+ ", accPerMob=" + accPerMob + "]";
+				+ ", accPerMob=" + accPerMob + ", pincode=" + pincode + ", km=" + km + ", creaditLimit=" + creaditLimit
+				+ ", creaditDays=" + creaditDays + "]";
 	}
 
 }
