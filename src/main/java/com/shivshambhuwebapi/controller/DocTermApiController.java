@@ -13,8 +13,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.shivshambhuwebapi.master.model.DocTermDetail;
 import com.shivshambhuwebapi.master.model.DocTermHeader;
+import com.shivshambhuwebapi.master.model.GetDocTermHeader;
 import com.shivshambhuwebapi.master.repo.DocTermDetailRepo;
 import com.shivshambhuwebapi.master.repo.DocTermHeaderRepo;
+import com.shivshambhuwebapi.master.repo.GetDocTermDetailRepo;
+import com.shivshambhuwebapi.master.repo.GetDocTermHeaderRepo;
 import com.shivshambhuwebapi.tx.model.EnqDetail;
 import com.shivshambhuwebapi.tx.model.EnqHeader;
 
@@ -23,6 +26,12 @@ public class DocTermApiController {
 
 	@Autowired
 	DocTermHeaderRepo docTermHeaderRepo;
+
+	@Autowired
+	GetDocTermHeaderRepo getDocTermHeaderRepo;
+
+	@Autowired
+	GetDocTermDetailRepo getDocTermDetailRepo;
 
 	@Autowired
 	DocTermDetailRepo docTermDetailRepo;
@@ -67,6 +76,24 @@ public class DocTermApiController {
 		try {
 
 			docHeaderList = docTermHeaderRepo.findByDelStatus(1);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return docHeaderList;
+
+	}
+
+	@RequestMapping(value = { "/getAllDocHeaderList" }, method = RequestMethod.GET)
+	public @ResponseBody List<GetDocTermHeader> getAllDocHeaderList() {
+
+		List<GetDocTermHeader> docHeaderList = new ArrayList<GetDocTermHeader>();
+
+		try {
+
+			docHeaderList = getDocTermHeaderRepo.getDocHeaderList();
 
 		} catch (Exception e) {
 

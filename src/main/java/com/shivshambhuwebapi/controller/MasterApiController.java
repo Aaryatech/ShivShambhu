@@ -859,6 +859,7 @@ public class MasterApiController {
 
 		try {
 			user = userRepo.findByUserIdAndDelStatus(userId, 1);
+			user.setUsrDob(DateConvertor.convertToDMY(user.getUsrDob()));
 
 		} catch (Exception e) {
 
