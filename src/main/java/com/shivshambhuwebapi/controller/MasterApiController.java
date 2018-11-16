@@ -1754,6 +1754,23 @@ public class MasterApiController {
 
 	}
 
+	@RequestMapping(value = { "/getTaxByTaxId" }, method = RequestMethod.POST)
+	public @ResponseBody Tax getTaxByTaxId(@RequestParam("taxId") int taxId) {
+
+		Tax tax = new Tax();
+
+		try {
+			tax = objTaxrepo.findByTaxIdAndDelStatus(taxId, 1);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return tax;
+
+	}
+
 	// sumit 2
 	@RequestMapping(value = { "/getTaxList" }, method = RequestMethod.GET)
 	public @ResponseBody List<Tax> getTAxList() {
@@ -1775,21 +1792,20 @@ public class MasterApiController {
 
 	// sumit 3
 	@RequestMapping(value = { "/deleteTax" }, method = RequestMethod.POST)
-	public @ResponseBody void deleteTax(@RequestParam("TaxId") int taxId) {
+	public @ResponseBody void deleteTax(@RequestParam("taxId") int taxId) {
 
 		Info info = new Info();
 
 		try {
-			// int delete = objTaxrepo.deleteTax(taxId);
-			objTaxrepo.deleteById(taxId);
+			int delete = objTaxrepo.deleteTax(taxId);
 
-			// if (delete == 1) {
-			// info.setError(false);
-			// info.setMessage("successfully Deleted");
-			// } else {
-			// info.setError(true);
-			// info.setMessage(" Deleted to Delete");
-			// }
+			if (delete == 1) {
+				info.setError(false);
+				info.setMessage("successfully Deleted");
+			} else {
+				info.setError(true);
+				info.setMessage(" Deleted to Delete");
+			}
 
 		} catch (Exception e) {
 
