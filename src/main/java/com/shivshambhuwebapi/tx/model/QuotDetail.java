@@ -36,10 +36,30 @@ public class QuotDetail {
 
 	@Column(name = "tax_id")
 	private int taxId;
-	
+
+	@Column(name = "total")
+	private float total;
+
+	@Column(name = "total_cost")
+	private float totalCost;
+
+	@Column(name = "trans_cost")
+	private float transCost;
+
+	@Column(name = "other_cost_before_tax")
+	private float otherCostBeforeTax;
+
+	@Column(name = "other_tax_after_tax")
+	private float otherTaxAfterTax;
+
+	@Column(name = "royalty_tax")
+	private float royaltyTax;
+
+	@Column(name = "no_of_km")
+	private float noOfKm;
+
 	private float sgstPer;
 	private float cgstPer;
-
 
 	public float getSgstPer() {
 		return sgstPer;
@@ -122,6 +142,62 @@ public class QuotDetail {
 
 	@Column(name = "igst_value")
 	private float igstValue;
+
+	public float getTotal() {
+		return total;
+	}
+
+	public void setTotal(float total) {
+		this.total = total;
+	}
+
+	public float getTotalCost() {
+		return totalCost;
+	}
+
+	public void setTotalCost(float totalCost) {
+		this.totalCost = totalCost;
+	}
+
+	public float getTransCost() {
+		return transCost;
+	}
+
+	public void setTransCost(float transCost) {
+		this.transCost = transCost;
+	}
+
+	public float getOtherCostBeforeTax() {
+		return otherCostBeforeTax;
+	}
+
+	public void setOtherCostBeforeTax(float otherCostBeforeTax) {
+		this.otherCostBeforeTax = otherCostBeforeTax;
+	}
+
+	public float getOtherTaxAfterTax() {
+		return otherTaxAfterTax;
+	}
+
+	public void setOtherTaxAfterTax(float otherTaxAfterTax) {
+		this.otherTaxAfterTax = otherTaxAfterTax;
+	}
+
+	public float getRoyaltyTax() {
+		return royaltyTax;
+	}
+
+	public void setRoyaltyTax(float royaltyTax) {
+		this.royaltyTax = royaltyTax;
+	}
+
+	public float getNoOfKm() {
+		return noOfKm;
+	}
+
+	public void setNoOfKm(float noOfKm) {
+		this.noOfKm = noOfKm;
+	}
 
 	public int getQuotDetailId() {
 		return quotDetailId;
@@ -322,8 +398,6 @@ public class QuotDetail {
 	public void setOtherCost(float otherCost) {
 		this.otherCost = otherCost;
 	}
-	
-	
 
 	public float getConFactor() {
 		return conFactor;
@@ -340,8 +414,6 @@ public class QuotDetail {
 	public void setConvQty(float convQty) {
 		this.convQty = convQty;
 	}
-
-	
 
 	public int getQuotUomId() {
 		return quotUomId;
@@ -371,13 +443,15 @@ public class QuotDetail {
 	public String toString() {
 		return "QuotDetail [quotDetailId=" + quotDetailId + ", quotHeadId=" + quotHeadId + ", itemId=" + itemId
 				+ ", quotQty=" + quotQty + ", rate=" + rate + ", taxableValue=" + taxableValue + ", taxValue="
-				+ taxValue + ", taxId=" + taxId + ", sgstPer=" + sgstPer + ", cgstPer=" + cgstPer + ", enqDetailId="
-				+ enqDetailId + ", cgstValue=" + cgstValue + ", sgstValue=" + sgstValue + ", otherCost=" + otherCost
-				+ ", status=" + status + ", delStatus=" + delStatus + ", exInt1=" + exInt1 + ", exInt2=" + exInt2
-				+ ", exInt3=" + exInt3 + ", exVar1=" + exVar1 + ", exVar2=" + exVar2 + ", exVar3=" + exVar3
-				+ ", exDate1=" + exDate1 + ", exDate2=" + exDate2 + ", exBool1=" + exBool1 + ", exBool2=" + exBool2
-				+ ", exBool3=" + exBool3 + ", conFactor=" + conFactor + ", convQty=" + convQty + ", quotUomId="
-				+ quotUomId + ", igstPer=" + igstPer + ", igstValue=" + igstValue + "]";
+				+ taxValue + ", taxId=" + taxId + ", total=" + total + ", totalCost=" + totalCost + ", transCost="
+				+ transCost + ", otherCostBeforeTax=" + otherCostBeforeTax + ", otherTaxAfterTax=" + otherTaxAfterTax
+				+ ", royaltyTax=" + royaltyTax + ", noOfKm=" + noOfKm + ", sgstPer=" + sgstPer + ", cgstPer=" + cgstPer
+				+ ", enqDetailId=" + enqDetailId + ", cgstValue=" + cgstValue + ", sgstValue=" + sgstValue
+				+ ", otherCost=" + otherCost + ", status=" + status + ", delStatus=" + delStatus + ", exInt1=" + exInt1
+				+ ", exInt2=" + exInt2 + ", exInt3=" + exInt3 + ", exVar1=" + exVar1 + ", exVar2=" + exVar2
+				+ ", exVar3=" + exVar3 + ", exDate1=" + exDate1 + ", exDate2=" + exDate2 + ", exBool1=" + exBool1
+				+ ", exBool2=" + exBool2 + ", exBool3=" + exBool3 + ", conFactor=" + conFactor + ", convQty=" + convQty
+				+ ", quotUomId=" + quotUomId + ", igstPer=" + igstPer + ", igstValue=" + igstValue + "]";
 	}
 
 }

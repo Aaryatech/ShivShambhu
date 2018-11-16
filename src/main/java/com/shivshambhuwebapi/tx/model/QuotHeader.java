@@ -151,6 +151,9 @@ public class QuotHeader {
 	@Column(name = "quot_term_id")
 	private int quotTermId;
 
+	@Column(name = "no_of_km")
+	private float noOfKm;
+
 	@Transient
 	List<QuotDetail> quotDetailList;
 
@@ -522,6 +525,14 @@ public class QuotHeader {
 		this.taxableValue = taxableValue;
 	}
 
+	public float getNoOfKm() {
+		return noOfKm;
+	}
+
+	public void setNoOfKm(float noOfKm) {
+		this.noOfKm = noOfKm;
+	}
+
 	@Override
 	public String toString() {
 		return "QuotHeader [quotHeadId=" + quotHeadId + ", quotNo=" + quotNo + ", custId=" + custId + ", userId="
@@ -538,7 +549,7 @@ public class QuotHeader {
 				+ exInt3 + ", exVar1=" + exVar1 + ", exVar2=" + exVar2 + ", exVar3=" + exVar3 + ", exDate1=" + exDate1
 				+ ", exDate2=" + exDate2 + ", exBool1=" + exBool1 + ", exBool2=" + exBool2 + ", exBool3=" + exBool3
 				+ ", quotValue=" + quotValue + ", taxValue=" + taxValue + ", taxableValue=" + taxableValue
-				+ ", quotTermId=" + quotTermId + ", quotDetailList=" + quotDetailList + "]";
+				+ ", quotTermId=" + quotTermId + ", noOfKm=" + noOfKm + ", quotDetailList=" + quotDetailList + "]";
 	}
 
 }
