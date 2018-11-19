@@ -1,0 +1,27 @@
+package com.shivshambhuwebapi.tx.repo;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
+import com.shivshambhuwebapi.tx.model.GetQuotHeader;
+
+public interface GetQuotHeaderRepo extends JpaRepository<GetQuotHeader, Integer> {
+
+	@Query(value = " SELECT h.*, c.cust_name ,u.usr_name,o.comp_name,p.proj_name,t.pay_term FROM t_quot_header h,m_customer c ,"
+			+ "m_user u,m_company o ,m_project p ,m_payment_term t WHERE h.del_status=1 AND h.cust_id=c.cust_id AND"
+			+ " u.user_id=h.user_id AND h.company_id=o.company_id AND p.proj_id=h.proj_id AND t.pay_term_id=h.pay_term_id "
+			+ " AND h.quot_head_id =:quotHeadId ORDER BY h.quot_head_id DESC", nativeQuery = true)
+
+	GetQuotHeader getQuotHeaderByQuotHeadId(@Param("quotHeadId") int quotHeadId);
+
+	@Query(value = "SELECT h.*, c.cust_name ,u.usr_name,o.comp_name,p.proj_name,t.pay_term FROM t_quot_header h,m_customer c ,"
+			+ "m_user u,m_company o ,m_project p ,m_payment_term t WHERE h.del_status=1 AND h.cust_id=c.cust_id AND "
+			+ "u.user_id=h.user_id AND h.company_id=o.company_id AND p.proj_id=h.proj_id AND t.pay_term_id=h.pay_term_id "
+			+ "ORDER BY h.quot_head_id DESC ", nativeQuery = true)
+
+	List<GetQuotHeader> getQuotHeaderList();
+
+}

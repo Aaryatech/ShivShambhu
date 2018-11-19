@@ -13,10 +13,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.shivshambhuwebapi.master.model.CustType;
 import com.shivshambhuwebapi.tx.model.GetItemWithEnq;
+import com.shivshambhuwebapi.tx.model.GetQuotDetail;
+import com.shivshambhuwebapi.tx.model.GetQuotHeader;
 import com.shivshambhuwebapi.tx.model.GetQuotHeads;
 import com.shivshambhuwebapi.tx.model.QuotDetail;
 import com.shivshambhuwebapi.tx.model.QuotHeader;
 import com.shivshambhuwebapi.tx.repo.GetItemWithEnqRepo;
+import com.shivshambhuwebapi.tx.repo.GetQuotDetailRepo;
+import com.shivshambhuwebapi.tx.repo.GetQuotHeaderRepo;
 import com.shivshambhuwebapi.tx.repo.GetQuotHeadsRepo;
 import com.shivshambhuwebapi.tx.repo.QuotDetailRepo;
 import com.shivshambhuwebapi.tx.repo.QuotHeaderRepo;
@@ -29,6 +33,12 @@ public class QuotController {
 
 	@Autowired
 	QuotDetailRepo quotDetailRepo;
+
+	@Autowired
+	GetQuotDetailRepo getQuotDetailRepo;
+
+	@Autowired
+	GetQuotHeaderRepo getQuotHeaderRepo;
 
 	@RequestMapping(value = { "/saveQuotHeaderAndDetail" }, method = RequestMethod.POST)
 	public @ResponseBody QuotHeader saveQuotHeaderAndDetail(@RequestBody QuotHeader quotHeader) {
@@ -171,8 +181,8 @@ public class QuotController {
 		List<GetItemWithEnq> itemsAndEnqItemList = new ArrayList<GetItemWithEnq>();
 
 		try {
-			
-			System.err.println("getItemsAndEnqItemList enqHeadId   " +enqHeadId +"plant Id  " +plantId );
+
+			System.err.println("getItemsAndEnqItemList enqHeadId   " + enqHeadId + "plant Id  " + plantId);
 
 			itemsAndEnqItemList = getGetItemWithEnqRepo.getGetItemWithEnq(plantId, enqHeadId);
 
@@ -184,6 +194,25 @@ public class QuotController {
 
 		}
 		return itemsAndEnqItemList;
+
+	}
+
+	@RequestMapping(value = { "/getQuotHeaderWithNameByQuotHeadId" }, method = RequestMethod.POST)
+	public @ResponseBody GetQuotHeader getQuotHeaderWithNameByQuotHeadId(@RequestParam("quotHeadId") int quotHeadId) {
+
+		GetQuotHeader quotHeader = new GetQuotHeader();
+
+		try {
+
+			quotHeader = getQuotHeaderRepo.getQuotHeaderByQuotHeadId(quotHeadId);
+			List<GetQuotDetail> quotDetailList = getQuotDetailRepo.getQuotDetailByQuotHeadId(quotHeadId);
+			quotHeader.setGetQuotDetailList(quotDetailList);
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return quotHeader;
 
 	}
 
