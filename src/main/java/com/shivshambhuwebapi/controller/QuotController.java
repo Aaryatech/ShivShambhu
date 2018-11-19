@@ -35,6 +35,12 @@ public class QuotController {
 	@Autowired
 	QuotDetailRepo quotDetailRepo;
 
+	@Autowired
+	GetQuotDetailRepo getQuotDetailRepo;
+
+	@Autowired
+	GetQuotHeaderRepo getQuotHeaderRepo;
+
 	@RequestMapping(value = { "/saveQuotHeaderAndDetail" }, method = RequestMethod.POST)
 	public @ResponseBody QuotHeader saveQuotHeaderAndDetail(@RequestBody QuotHeader quotHeader) {
 
@@ -176,8 +182,8 @@ public class QuotController {
 		List<GetItemWithEnq> itemsAndEnqItemList = new ArrayList<GetItemWithEnq>();
 
 		try {
-			
-			System.err.println("getItemsAndEnqItemList enqHeadId   " +enqHeadId +"plant Id  " +plantId );
+
+			System.err.println("getItemsAndEnqItemList enqHeadId   " + enqHeadId + "plant Id  " + plantId);
 
 			itemsAndEnqItemList = getGetItemWithEnqRepo.getGetItemWithEnq(plantId, enqHeadId);
 
@@ -189,6 +195,53 @@ public class QuotController {
 
 		}
 		return itemsAndEnqItemList;
+
+	}
+
+	@RequestMapping(value = { "/getQuotHeaderWithNameByQuotHeadId" }, method = RequestMethod.POST)
+	public @ResponseBody GetQuotHeader getQuotHeaderWithNameByQuotHeadId(@RequestParam("quotHeadId") int quotHeadId) {
+
+		GetQuotHeader quotHeader = new GetQuotHeader();
+
+		try {
+
+			quotHeader = getQuotHeaderRepo.getQuotHeaderByQuotHeadId(quotHeadId);
+			List<GetQuotDetail> quotDetailList = getQuotDetailRepo.getQuotDetailByQuotHeadId(quotHeadId);
+			quotHeader.setGetQuotDetailList(quotDetailList);
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return quotHeader;
+
+	}
+
+	@RequestMapping(value = { "/getAllQuotHeaderList" }, method = RequestMethod.GET)
+	public @ResponseBody List<GetQuotHeader> getAllQuotHeaderList() {
+
+		List<GetQuotHeader> getQuotHeaderList = new ArrayList<GetQuotHeader>();
+
+		try {
+
+			getQuotHeaderList = getQuotHeaderRepo.getQuotHeaderList();
+			for (int i = 0; i < getQuotHeaderList.size(); i++) {
+
+				List<GetQuotDetail> quotDetailList = getQuotDetailRepo
+						.getQuotDetailByQuotHeadId(getQuotHeaderList.get(i).getQuotHeadId());
+
+				getQuotHeaderList.get(i).setGetQuotDetailList(quotDetailList);
+			}
+
+			System.err.println("head " + getQuotHeaderList.toString());
+		} catch (Exception e) {
+
+			System.err.println("Exce in getting  getQuotHeaderList" + getQuotHeaderList.toString());
+
+			e.printStackTrace();
+
+		}
+		return getQuotHeaderList;
 
 	}
 
