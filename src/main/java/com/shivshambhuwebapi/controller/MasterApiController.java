@@ -22,6 +22,7 @@ import com.shivshambhuwebapi.master.model.CustType;
 import com.shivshambhuwebapi.master.model.Dept;
 import com.shivshambhuwebapi.master.model.Document;
 import com.shivshambhuwebapi.master.model.EnqGenFact;
+import com.shivshambhuwebapi.master.model.GetBankDetail;
 import com.shivshambhuwebapi.master.model.GetCust;
 import com.shivshambhuwebapi.master.model.GetItem;
 import com.shivshambhuwebapi.master.model.GetPlant;
@@ -46,6 +47,7 @@ import com.shivshambhuwebapi.master.repo.CustTypeRepo;
 import com.shivshambhuwebapi.master.repo.DeptRepo;
 import com.shivshambhuwebapi.master.repo.DocumentRepo;
 import com.shivshambhuwebapi.master.repo.EnqGenFactRepo;
+import com.shivshambhuwebapi.master.repo.GetBankDetailRepo;
 import com.shivshambhuwebapi.master.repo.GetCustRepo;
 import com.shivshambhuwebapi.master.repo.GetItemRepo;
 import com.shivshambhuwebapi.master.repo.GetPlantRepo;
@@ -69,6 +71,9 @@ public class MasterApiController {
 
 	@Autowired
 	EnqGenFactRepo enqGenFactRepo;
+
+	@Autowired
+	GetBankDetailRepo getBankDetailRepo;
 
 	@Autowired
 	ItemTypeRepo itemTypeRepo;
@@ -296,14 +301,32 @@ public class MasterApiController {
 
 	}
 
-	@RequestMapping(value = { "/getAllBankDetList" }, method = RequestMethod.GET)
-	public @ResponseBody List<BankDetail> getAllBankDetList() {
+	@RequestMapping(value = { "/getBankDetList" }, method = RequestMethod.GET)
+	public @ResponseBody List<BankDetail> getBankDetList() {
 
 		List<BankDetail> bankDetailList = new ArrayList<BankDetail>();
 
 		try {
 
 			bankDetailList = bankDetailRepo.findByDelStatusOrderByBankDetIdDesc(1);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return bankDetailList;
+
+	}
+
+	@RequestMapping(value = { "/getAllBankDetList" }, method = RequestMethod.GET)
+	public @ResponseBody List<GetBankDetail> getAllBankDetList() {
+
+		List<GetBankDetail> bankDetailList = new ArrayList<GetBankDetail>();
+
+		try {
+
+			bankDetailList = getBankDetailRepo.getAllBankDetailList();
 
 		} catch (Exception e) {
 
