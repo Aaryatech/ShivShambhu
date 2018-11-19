@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.shivshambhuwebapi.master.model.CustType;
 import com.shivshambhuwebapi.tx.model.GetItemWithEnq;
 import com.shivshambhuwebapi.tx.model.GetQuotDetail;
@@ -213,6 +214,34 @@ public class QuotController {
 
 		}
 		return quotHeader;
+
+	}
+
+	@RequestMapping(value = { "/getAllQuotHeaderList" }, method = RequestMethod.GET)
+	public @ResponseBody List<GetQuotHeader> getAllQuotHeaderList() {
+
+		List<GetQuotHeader> getQuotHeaderList = new ArrayList<GetQuotHeader>();
+
+		try {
+
+			getQuotHeaderList = getQuotHeaderRepo.getQuotHeaderList();
+			for (int i = 0; i < getQuotHeaderList.size(); i++) {
+
+				List<GetQuotDetail> quotDetailList = getQuotDetailRepo
+						.getQuotDetailByQuotHeadId(getQuotHeaderList.get(i).getQuotHeadId());
+
+				getQuotHeaderList.get(i).setGetQuotDetailList(quotDetailList);
+			}
+			
+			System.err.println("head " +getQuotHeaderList.toString());
+		} catch (Exception e) {
+
+			System.err.println("Exce in getting  getQuotHeaderList" + getQuotHeaderList.toString());
+
+			e.printStackTrace();
+
+		}
+		return getQuotHeaderList;
 
 	}
 
