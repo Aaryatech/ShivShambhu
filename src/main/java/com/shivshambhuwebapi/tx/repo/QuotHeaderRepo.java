@@ -18,4 +18,9 @@ public interface QuotHeaderRepo extends JpaRepository<QuotHeader, Integer> {
 
 	QuotHeader findByQuotHeadId(int quotHeadId);
 
+	@Transactional
+	@Modifying
+	@Query("UPDATE QuotHeader SET status=2  WHERE quot_head_id=:quotHeadId")
+	int updateQuatationStatus(@Param("quotHeadId")int quotHeadId);
+
 }

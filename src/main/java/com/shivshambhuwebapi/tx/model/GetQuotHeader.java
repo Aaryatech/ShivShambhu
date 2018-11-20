@@ -160,6 +160,8 @@ public class GetQuotHeader {
 
 	@Column(name = "no_of_km")
 	private float noOfKm;
+	
+	private String plantName;
 
 	@Transient
 	List<GetQuotDetail> getQuotDetailList;
@@ -580,6 +582,14 @@ public class GetQuotHeader {
 		this.getQuotDetailList = getQuotDetailList;
 	}
 
+	public String getPlantName() {
+		return plantName;
+	}
+
+	public void setPlantName(String plantName) {
+		this.plantName = plantName;
+	}
+
 	@Override
 	public String toString() {
 		return "GetQuotHeader [quotHeadId=" + quotHeadId + ", quotNo=" + quotNo + ", custId=" + custId + ", custName="
@@ -597,8 +607,8 @@ public class GetQuotHeader {
 				+ ", exInt3=" + exInt3 + ", exVar1=" + exVar1 + ", exVar2=" + exVar2 + ", exVar3=" + exVar3
 				+ ", exDate1=" + exDate1 + ", exDate2=" + exDate2 + ", exBool1=" + exBool1 + ", exBool2=" + exBool2
 				+ ", exBool3=" + exBool3 + ", quotValue=" + quotValue + ", taxValue=" + taxValue + ", taxableValue="
-				+ taxableValue + ", quotTermId=" + quotTermId + ", noOfKm=" + noOfKm + ", getQuotDetailList="
-				+ getQuotDetailList + "]";
+				+ taxableValue + ", quotTermId=" + quotTermId + ", noOfKm=" + noOfKm + ", plantName=" + plantName
+				+ ", getQuotDetailList=" + getQuotDetailList + "]";
 	}
 
 }
