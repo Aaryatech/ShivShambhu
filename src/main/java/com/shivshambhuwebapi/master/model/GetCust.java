@@ -91,6 +91,8 @@ public class GetCust {
 	private float km;
 	private float creaditLimit;
 	private float creaditDays;
+	
+	private String custTypeName;
 
 	public int getCustId() {
 		return custId;
@@ -435,6 +437,16 @@ public class GetCust {
 	public void setCreaditDays(float creaditDays) {
 		this.creaditDays = creaditDays;
 	}
+	
+	
+
+	public String getCustTypeName() {
+		return custTypeName;
+	}
+
+	public void setCustTypeName(String custTypeName) {
+		this.custTypeName = custTypeName;
+	}
 
 	@Override
 	public String toString() {
@@ -450,7 +462,7 @@ public class GetCust {
 				+ custLandline + ", isSameState=" + isSameState + ", custCode=" + custCode + ", custVendor="
 				+ custVendor + ", plantName=" + plantName + ", ownerName=" + ownerName + ", accPerson=" + accPerson
 				+ ", accPerMob=" + accPerMob + ", pincode=" + pincode + ", km=" + km + ", creaditLimit=" + creaditLimit
-				+ ", creaditDays=" + creaditDays + "]";
+				+ ", creaditDays=" + creaditDays + ", custTypeName=" + custTypeName + "]";
 	}
 
 }

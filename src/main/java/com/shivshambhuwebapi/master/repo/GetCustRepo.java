@@ -10,10 +10,10 @@ import com.shivshambhuwebapi.master.model.GetCust;
 
 public interface GetCustRepo extends JpaRepository<GetCust, Integer> {
 
-	@Query(value = "SELECT c.*,p.plant_name FROM m_customer c,m_plant p  WHERE c.del_status=1 AND p.plant_id=c.plant_id ORDER BY c.cust_id DESC", nativeQuery = true)
+	@Query(value = "SELECT c.*,p.plant_name,u.cust_type_name FROM m_customer c,m_plant p  ,cust_type_mst u WHERE c.del_status=1 AND p.plant_id=c.plant_id AND c.cust_type=u.cust_type_id ORDER BY  c.cust_id DESC", nativeQuery = true)
 	List<GetCust> getAllCustList();
 
-	@Query(value = "SELECT c.*,p.plant_name FROM m_customer c,m_plant p  WHERE c.del_status=1 AND p.plant_id=c.plant_id AND  c.cust_id=:custId", nativeQuery = true)
+	@Query(value = "SELECT c.*,p.plant_name,u.cust_type_name FROM m_customer c,m_plant p  ,cust_type_mst u WHERE c.del_status=1 AND p.plant_id=c.plant_id AND  c.cust_id=:custId AND c.cust_type=u.cust_type_id", nativeQuery = true)
 	GetCust getCustByCustId(@Param("custId") int custId);
 
 }
