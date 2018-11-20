@@ -46,7 +46,7 @@ public class DocTermApiController {
 
 			docTermHeader = docTermHeaderRepo.save(docTerm);
 
-			for (int i = 0; i < docTermHeader.getDetailList().size(); i++) {
+			for (int i = 0; i < docTerm.getDetailList().size(); i++) {
 
 				docTerm.getDetailList().get(i).setTermId(docTermHeader.getTermId());
 

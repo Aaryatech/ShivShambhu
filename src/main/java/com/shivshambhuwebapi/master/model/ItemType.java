@@ -37,6 +37,9 @@ public class ItemType {
 	@Column(name = "ex_var2")
 	private String exVar2;
 
+	@Column(name = "ex_type")
+	private int exType;
+
 	public int getItemTypeId() {
 		return itemTypeId;
 	}
@@ -100,12 +103,22 @@ public class ItemType {
 	public void setExVar2(String exVar2) {
 		this.exVar2 = exVar2;
 	}
+	
+	
+
+	public int getExType() {
+		return exType;
+	}
+
+	public void setExType(int exType) {
+		this.exType = exType;
+	}
 
 	@Override
 	public String toString() {
 		return "ItemType [itemTypeId=" + itemTypeId + ", itemTypeName=" + itemTypeName + ", itemTypeDesc="
 				+ itemTypeDesc + ", delStatus=" + delStatus + ", exInt1=" + exInt1 + ", exInt2=" + exInt2 + ", exVar1="
-				+ exVar1 + ", exVar2=" + exVar2 + "]";
+				+ exVar1 + ", exVar2=" + exVar2 + ", exType=" + exType + "]";
 	}
 
 }
