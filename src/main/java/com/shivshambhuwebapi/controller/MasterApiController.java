@@ -28,6 +28,7 @@ import com.shivshambhuwebapi.master.model.GetItem;
 import com.shivshambhuwebapi.master.model.GetPlant;
 import com.shivshambhuwebapi.master.model.GetProject;
 import com.shivshambhuwebapi.master.model.GetUser;
+import com.shivshambhuwebapi.master.model.GetVendor;
 import com.shivshambhuwebapi.master.model.Item;
 import com.shivshambhuwebapi.master.model.ItemType;
 import com.shivshambhuwebapi.master.model.MarketingUser;
@@ -53,6 +54,7 @@ import com.shivshambhuwebapi.master.repo.GetItemRepo;
 import com.shivshambhuwebapi.master.repo.GetPlantRepo;
 import com.shivshambhuwebapi.master.repo.GetProjectRepo;
 import com.shivshambhuwebapi.master.repo.GetUserRepo;
+import com.shivshambhuwebapi.master.repo.GetVendorRepo;
 import com.shivshambhuwebapi.master.repo.ItemRepo;
 import com.shivshambhuwebapi.master.repo.ItemTypeRepo;
 import com.shivshambhuwebapi.master.repo.MarketingUserRepo;
@@ -71,6 +73,9 @@ public class MasterApiController {
 
 	@Autowired
 	EnqGenFactRepo enqGenFactRepo;
+
+	@Autowired
+	GetVendorRepo getVendorRepo;
 
 	@Autowired
 	GetBankDetailRepo getBankDetailRepo;
@@ -740,6 +745,24 @@ public class MasterApiController {
 		try {
 
 			vendList = vendorRepo.findByDelStatusOrderByVendIdDesc(1);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return vendList;
+
+	}
+
+	@RequestMapping(value = { "/getAllVendorList" }, method = RequestMethod.GET)
+	public @ResponseBody List<GetVendor> getAllVendorList() {
+
+		List<GetVendor> vendList = new ArrayList<GetVendor>();
+
+		try {
+
+			vendList = getVendorRepo.getVendorList();
 
 		} catch (Exception e) {
 
@@ -1802,7 +1825,7 @@ public class MasterApiController {
 
 		try {
 
-			taxList = objTaxrepo.findByDelStatusOrderByTaxIdAsc(1);
+			taxList = objTaxrepo.findByDelStatusOrderByTaxIdDesc(1);
 
 		} catch (Exception e) {
 

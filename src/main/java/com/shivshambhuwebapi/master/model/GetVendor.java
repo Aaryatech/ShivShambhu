@@ -5,11 +5,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
 
 @Entity
-@Table(name = "m_vendor")
-public class Vendor {
+public class GetVendor {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -102,6 +100,8 @@ public class Vendor {
 
 	@Column(name = "is_same_state")
 	private int isSameState;
+
+	private String plantName;
 
 	public int getVendId() {
 		return vendId;
@@ -343,9 +343,17 @@ public class Vendor {
 		this.isSameState = isSameState;
 	}
 
+	public String getPlantName() {
+		return plantName;
+	}
+
+	public void setPlantName(String plantName) {
+		this.plantName = plantName;
+	}
+
 	@Override
 	public String toString() {
-		return "Vendor [vendId=" + vendId + ", vendCompName=" + vendCompName + ", vendContactName=" + vendContactName
+		return "GetVendor [vendId=" + vendId + ", vendCompName=" + vendCompName + ", vendContactName=" + vendContactName
 				+ ", vendContact1=" + vendContact1 + ", vendContact2=" + vendContact2 + ", vendEmail1=" + vendEmail1
 				+ ", vendEmail2=" + vendEmail2 + ", vendEmail3=" + vendEmail3 + ", vendGst=" + vendGst + ", vendPan="
 				+ vendPan + ", vendCity=" + vendCity + ", vendState=" + vendState + ", vendType=" + vendType
@@ -353,7 +361,8 @@ public class Vendor {
 				+ ", delStatus=" + delStatus + ", exInt1=" + exInt1 + ", exInt2=" + exInt2 + ", exInt3=" + exInt3
 				+ ", exVar1=" + exVar1 + ", exVar2=" + exVar2 + ", exVar3=" + exVar3 + ", exDate1=" + exDate1
 				+ ", exDate2=" + exDate2 + ", exBool1=" + exBool1 + ", exBool2=" + exBool2 + ", exBool3=" + exBool3
-				+ ", vendCreditLimit=" + vendCreditLimit + ", isSameState=" + isSameState + "]";
+				+ ", vendCreditLimit=" + vendCreditLimit + ", isSameState=" + isSameState + ", plantName=" + plantName
+				+ "]";
 	}
 
 }

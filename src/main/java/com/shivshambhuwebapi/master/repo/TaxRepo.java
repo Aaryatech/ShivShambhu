@@ -12,9 +12,7 @@ import com.shivshambhuwebapi.master.model.Tax;
 
 public interface TaxRepo extends JpaRepository<Tax, Integer> {
 
-	// List<Tax> findByDelStatusOrderByTaxIdDesc(int i);
-
-	List<Tax> findByDelStatusOrderByTaxIdAsc(int i);
+	List<Tax> findByDelStatusOrderByTaxIdDesc(int i);
 
 	Tax findByTaxIdAndDelStatus(int taxId, int i);
 
