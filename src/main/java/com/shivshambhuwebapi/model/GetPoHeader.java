@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 public class GetPoHeader {
 	
@@ -114,7 +116,7 @@ public class GetPoHeader {
 	public void setPoNo(String poNo) {
 		this.poNo = poNo;
 	}
-
+	@JsonFormat(locale = "hi", timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 	public Date getPoDate() {
 		return poDate;
 	}
@@ -178,7 +180,7 @@ public class GetPoHeader {
 	public void setQuatationNo(String quatationNo) {
 		this.quatationNo = quatationNo;
 	}
-
+	@JsonFormat(locale = "hi", timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 	public Date getPoValidityDate() {
 		return poValidityDate;
 	}
@@ -266,7 +268,7 @@ public class GetPoHeader {
 	public void setVarchar2(String varchar2) {
 		this.varchar2 = varchar2;
 	}
-
+	@JsonFormat(locale = "hi", timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 	public Date getExtraDate1() {
 		return extraDate1;
 	}
@@ -274,7 +276,7 @@ public class GetPoHeader {
 	public void setExtraDate1(Date extraDate1) {
 		this.extraDate1 = extraDate1;
 	}
-
+	@JsonFormat(locale = "hi", timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 	public Date getExtraDate2() {
 		return extraDate2;
 	}

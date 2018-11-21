@@ -1,5 +1,6 @@
 package com.shivshambhuwebapi.controller;
  
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -111,9 +112,48 @@ public class PurchaseOrderApiController {
 
 	}
 	
-	/*select ph.*,c.cust_name,pl.plant_name,pt.pay_term,pr.proj_name from t_cust_po_header ph,m_customer c,m_plant pl,m_payment_term pt,m_project pr
-where ph.del_status=1 and c.cust_id=ph.cust_id and pl.plant_id=ph.plant_id and pt.pay_term_id=ph.po_term_id and pr.proj_id=ph.cust_project_id*/
+	@RequestMapping(value = { "/getPoListByDate" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetPoHeader> getPoListByDate(@RequestParam("fromDate") String fromDate,
+			@RequestParam("toDate") String toDate) {
 
+		List<GetPoHeader> getPoListByDate = new ArrayList<GetPoHeader>();
+
+		try {
+			getPoListByDate = getPoHeaderRepository.getPoListByDate(fromDate,toDate);
+			 
+		} catch (Exception e) {
+
+			e.printStackTrace(); 
+		}
+		return getPoListByDate;
+
+	}
 	
-	/*select pd.*,i.item_name from t_cust_po_detail pd,m_item i  where pd.po_id=3 and i.item_id=pd.item_id*/
+	@RequestMapping(value = { "/deletePurchaseOrder" }, method = RequestMethod.POST)
+	public @ResponseBody Info deletePurchaseOrder(@RequestParam("poId") int poId) {
+
+		Info info = new Info();
+
+		try {
+			int delete = poHeaderRepository.deletePurchaseOrder(poId);
+
+			if (delete == 1) {
+				info.setError(false);
+				info.setMessage("updatated");
+			} else {
+				info.setError(true);
+				info.setMessage(" failed to updatated");
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage(" failed to updatated");
+
+		}
+		return info;
+
+	}
+	 
 }
