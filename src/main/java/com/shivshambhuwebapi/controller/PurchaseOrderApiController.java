@@ -18,7 +18,9 @@ import com.shivshambhuwebapi.model.PoHeader;
 import com.shivshambhuwebapi.repository.GetPoDetailRepository;
 import com.shivshambhuwebapi.repository.GetPoHeaderRepository;
 import com.shivshambhuwebapi.repository.PoDetailRepository;
-import com.shivshambhuwebapi.repository.PoHeaderRepository; 
+import com.shivshambhuwebapi.repository.PoHeaderRepository;
+import com.shivshambhuwebapi.tx.model.GetPoForOrder;
+import com.shivshambhuwebapi.tx.repo.GetPoForOrderRepo;
 import com.shivshambhuwebapi.tx.repo.QuotHeaderRepo; 
 
 @RestController
@@ -155,5 +157,50 @@ public class PurchaseOrderApiController {
 		return info;
 
 	}
+	
+	//sachin
+		@RequestMapping(value = { "/getPoHeaderByCustIdAndStatus" }, method = RequestMethod.POST)
+		public @ResponseBody List<PoHeader> getPoHeaderByCustIdAndStatus(@RequestParam("custId") int custId, @RequestParam("statusList") List<Integer> statusList) {
+
+			List<PoHeader> poHeadResList = new ArrayList<>();
+
+			try {
+
+				poHeadResList = poHeaderRepository.findByDelStatusAndCustIdAndStatusIn(1, custId, statusList);
+				
+				
+			} catch (Exception e) {
+				System.err.println("Exce in getting /getPoHeaderByCustIdAndStatus" + e.getMessage());
+				e.printStackTrace();
+
+			}
+			
+			return poHeadResList;
+
+		}
+		
+		//sachin
+		@Autowired
+		GetPoForOrderRepo getPoForOrderRepo;
+		
+		@RequestMapping(value = { "/getPoDetailForOrderByPoId" }, method = RequestMethod.POST)
+		public @ResponseBody List<GetPoForOrder> getPoForOrderByPoId(@RequestParam("poId") int poId) {
+
+			List<GetPoForOrder> poDetailList = new ArrayList<>();
+
+			try {
+
+				poDetailList = getPoForOrderRepo.getGetPoForOrderByPoId(poId);
+				
+			} catch (Exception e) {
+				System.err.println("Exce in getting /getPoDetailForOrderByPoId" + e.getMessage());
+				e.printStackTrace();
+
+			}
+			
+			return poDetailList;
+
+		}
+		
 	 
 }

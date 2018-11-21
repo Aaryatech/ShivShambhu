@@ -57,7 +57,8 @@ public interface GetItemWithEnqRepo extends JpaRepository<GetItemWithEnq, Intege
 			+ " AND t_enq_header.enq_head_id=:enqHeadId AND t_enq_detail.item_id=i.item_id AND t_enq_detail.enq_uom_id=m_uom.uom_id),'NA') AS enq_uom_name"
 
 			+ " FROM m_item i,m_plant p ,m_tax t,m_uom u "
-			+ " WHERE i.del_status=1 AND p.plant_id=i.plant_id AND p.plant_id=:plantId AND t.tax_id=i.tax_id AND u.uom_id=i.uom_id", nativeQuery = true)
+			+ " WHERE i.del_status=1 AND p.plant_id=i.plant_id AND p.plant_id=:plantId AND t.tax_id=i.tax_id AND u.uom_id=i.uom_id"
+			+ "  ", nativeQuery = true)
 
 	List<GetItemWithEnq> getGetItemWithEnq(@Param("plantId") int plantId, @Param("enqHeadId") int enqHeadId);
 
