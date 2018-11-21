@@ -98,6 +98,9 @@ public class GetPoHeader {
 	@Column(name = "proj_name")
 	private String projName;
 	
+	@Column(name = "qut_date")
+	private Date qutDate;
+	
 	@Transient
 	List<GetPoDetail> getPoDetailList;
 
@@ -324,6 +327,14 @@ public class GetPoHeader {
 	public void setGetPoDetailList(List<GetPoDetail> getPoDetailList) {
 		this.getPoDetailList = getPoDetailList;
 	}
+	@JsonFormat(locale = "hi", timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
+	public Date getQutDate() {
+		return qutDate;
+	}
+
+	public void setQutDate(Date qutDate) {
+		this.qutDate = qutDate;
+	}
 
 	@Override
 	public String toString() {
@@ -334,8 +345,8 @@ public class GetPoHeader {
 				+ ", plantId=" + plantId + ", status=" + status + ", extra1=" + extra1 + ", extra2=" + extra2
 				+ ", bool1=" + bool1 + ", bool2=" + bool2 + ", varchar1=" + varchar1 + ", varchar2=" + varchar2
 				+ ", extraDate1=" + extraDate1 + ", extraDate2=" + extraDate2 + ", custName=" + custName
-				+ ", plantName=" + plantName + ", payTerm=" + payTerm + ", projName=" + projName + ", getPoDetailList="
-				+ getPoDetailList + "]";
+				+ ", plantName=" + plantName + ", payTerm=" + payTerm + ", projName=" + projName + ", qutDate="
+				+ qutDate + ", getPoDetailList=" + getPoDetailList + "]";
 	}
 	
 

@@ -36,7 +36,7 @@ public class GetPoDetail {
 	private int status;
 
 	@Column(name = "remark")
-	private float remark;
+	private String remark;
 
 	@Column(name = "tax_amt")
 	private float taxAmt;
@@ -135,11 +135,11 @@ public class GetPoDetail {
 		this.status = status;
 	}
 
-	public float getRemark() {
+	public String getRemark() {
 		return remark;
 	}
 
-	public void setRemark(float remark) {
+	public void setRemark(String remark) {
 		this.remark = remark;
 	}
 

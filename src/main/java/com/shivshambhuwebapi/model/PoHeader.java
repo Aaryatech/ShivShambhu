@@ -1,5 +1,6 @@
 package com.shivshambhuwebapi.model;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -84,6 +85,9 @@ public class PoHeader {
 	
 	@Column(name = "extra_date2")
 	private String extraDate2;
+	
+	@Column(name = "qut_date")
+	private String qutDate;
 	
 	@Transient
 	List<PoDetail> poDetailList;
@@ -280,6 +284,14 @@ public class PoHeader {
 		this.poDetailList = poDetailList;
 	}
 
+	public String getQutDate() {
+		return qutDate;
+	}
+
+	public void setQutDate(String qutDate) {
+		this.qutDate = qutDate;
+	}
+
 	@Override
 	public String toString() {
 		return "PoHeader [poId=" + poId + ", poNo=" + poNo + ", poDate=" + poDate + ", custId=" + custId + ", remark="
@@ -288,7 +300,7 @@ public class PoHeader {
 				+ poValidityDate + ", poTermId=" + poTermId + ", delStatus=" + delStatus + ", plantId=" + plantId
 				+ ", status=" + status + ", extra1=" + extra1 + ", extra2=" + extra2 + ", bool1=" + bool1 + ", bool2="
 				+ bool2 + ", varchar1=" + varchar1 + ", varchar2=" + varchar2 + ", extraDate1=" + extraDate1
-				+ ", extraDate2=" + extraDate2 + ", poDetailList=" + poDetailList + "]";
+				+ ", extraDate2=" + extraDate2 + ", qutDate=" + qutDate + ", poDetailList=" + poDetailList + "]";
 	}
 	
 	
