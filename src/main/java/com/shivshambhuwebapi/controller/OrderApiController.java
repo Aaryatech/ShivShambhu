@@ -69,14 +69,17 @@ public class OrderApiController {
 	@RequestMapping(value = { "/getOrderListBetDate" }, method = RequestMethod.POST)
 	public @ResponseBody List<GetOrder> getOrderListBetDate(@RequestParam("plantId") int plantId,
 			@RequestParam("custId") int custId, @RequestParam("fromDate") String fromDate,
-			@RequestParam("toDate") String toDate) {
+			@RequestParam("toDate") String toDate,@RequestParam("status") int status) {
 
 		List<GetOrder> getOrderList = new ArrayList<>();
 
 		try {
-			getOrderList = getOrderRepo.getOrderBetweenDate(plantId, custId, fromDate, toDate);
+			getOrderList = getOrderRepo.getOrderBetweenDate(plantId, custId, fromDate, toDate,status);
 
 		} catch (Exception e) {
+			System.err.println("getOrderList" +getOrderList.toString());
+			
+			System.err.println("Exce in getting /getOrderListBetDate  Orde Api cont  " +e.getMessage());
 
 			e.printStackTrace();
 		}
@@ -84,4 +87,7 @@ public class OrderApiController {
 
 	}
 
+	//
+	//SELECT t_order_detail.*, t_cust_po_detail.po_rate,t_cust_po_detail.po_qty,t_cust_po_detail.po_consume_qty,t_cust_po_detail.po_remaining_qty,t_cust_po_detail.total ,m_item.item_name,m_item.item_code,t_cust_po_header.po_no,t_cust_po_header.po_date FROM t_order_header,t_order_detail,t_cust_po_header,t_cust_po_detail,m_item WHERE t_order_detail.item_id=m_item.item_id AND t_order_header.order_id=t_order_detail.order_id AND t_order_detail.po_detail_id=t_cust_po_detail.po_detail_id AND t_cust_po_header.po_id=t_cust_po_detail.po_id and t_order_header.po_id=t_cust_po_header.po_id AND t_order_header.order_id=5 //
+	//
 }
