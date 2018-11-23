@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.shivshambhuwebapi.master.model.GetOrder;
+import com.shivshambhuwebapi.master.model.GetOrderDetail;
 import com.shivshambhuwebapi.master.model.OrderDetail;
 import com.shivshambhuwebapi.master.model.OrderHeader;
+import com.shivshambhuwebapi.master.repo.GetOrderDetailRepo;
 import com.shivshambhuwebapi.master.repo.GetOrderRepo;
 import com.shivshambhuwebapi.master.repo.OrderDetailRepo;
 import com.shivshambhuwebapi.master.repo.OrderHeaderRepo;
@@ -31,6 +33,9 @@ public class OrderApiController {
 
 	@Autowired
 	OrderDetailRepo orderDetailRepo;
+	
+	@Autowired
+	GetOrderDetailRepo getOrderDetailRepo;
 
 	@RequestMapping(value = { "/saveOrder" }, method = RequestMethod.POST)
 	public @ResponseBody OrderHeader saveOrder(@RequestBody OrderHeader orderHeader) {
@@ -69,25 +74,37 @@ public class OrderApiController {
 	@RequestMapping(value = { "/getOrderListBetDate" }, method = RequestMethod.POST)
 	public @ResponseBody List<GetOrder> getOrderListBetDate(@RequestParam("plantId") int plantId,
 			@RequestParam("custId") int custId, @RequestParam("fromDate") String fromDate,
-			@RequestParam("toDate") String toDate,@RequestParam("status") int status) {
+			@RequestParam("toDate") String toDate) {
 
 		List<GetOrder> getOrderList = new ArrayList<>();
 
 		try {
-			getOrderList = getOrderRepo.getOrderBetweenDate(plantId, custId, fromDate, toDate,status);
+			getOrderList = getOrderRepo.getOrderBetweenDate(plantId, custId, fromDate, toDate);
 
 		} catch (Exception e) {
-			System.err.println("getOrderList" +getOrderList.toString());
-			
-			System.err.println("Exce in getting /getOrderListBetDate  Orde Api cont  " +e.getMessage());
 
 			e.printStackTrace();
 		}
 		return getOrderList;
 
 	}
+	
+	
+	@RequestMapping(value = { "/getOrderDetailList" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetOrderDetail> getOrderDetailList(@RequestParam("orderHeaderId") int orderHeaderId) {
 
-	//
-	//SELECT t_order_detail.*, t_cust_po_detail.po_rate,t_cust_po_detail.po_qty,t_cust_po_detail.po_consume_qty,t_cust_po_detail.po_remaining_qty,t_cust_po_detail.total ,m_item.item_name,m_item.item_code,t_cust_po_header.po_no,t_cust_po_header.po_date FROM t_order_header,t_order_detail,t_cust_po_header,t_cust_po_detail,m_item WHERE t_order_detail.item_id=m_item.item_id AND t_order_header.order_id=t_order_detail.order_id AND t_order_detail.po_detail_id=t_cust_po_detail.po_detail_id AND t_cust_po_header.po_id=t_cust_po_detail.po_id and t_order_header.po_id=t_cust_po_header.po_id AND t_order_header.order_id=5 //
-	//
+		List<GetOrderDetail> getOrderDetailList = new ArrayList<>();
+
+		try {
+			getOrderDetailList = getOrderDetailRepo.getOrderDtailList(orderHeaderId);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+		return getOrderDetailList;
+
+	}
+
+
 }
