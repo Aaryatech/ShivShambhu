@@ -62,6 +62,18 @@ public class OrderDetail {
 
 	@Column(name = "ex_bool3")
 	private int exBool3;
+	
+	private int status;
+	
+	
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
 
 	public int getOrderDetId() {
 		return orderDetId;
@@ -230,7 +242,7 @@ public class OrderDetail {
 				+ ", total=" + total + ", delStatus=" + delStatus + ", exInt1=" + exInt1 + ", exInt2=" + exInt2
 				+ ", exInt3=" + exInt3 + ", exVar1=" + exVar1 + ", exVar2=" + exVar2 + ", exVar3=" + exVar3
 				+ ", exDate1=" + exDate1 + ", exDate2=" + exDate2 + ", exBool1=" + exBool1 + ", exBool2=" + exBool2
-				+ ", exBool3=" + exBool3 + "]";
+				+ ", exBool3=" + exBool3 + ", status=" + status + "]";
 	}
 
 }

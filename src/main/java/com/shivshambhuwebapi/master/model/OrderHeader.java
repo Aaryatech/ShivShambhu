@@ -85,6 +85,18 @@ public class OrderHeader {
 	@Column(name = "ex_bool2")
 	private int exBool2;
 	
+	
+	private int status;
+	
+	
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
+
 	@Transient
 	List<OrderDetail> orderDetailList;
 
@@ -288,7 +300,7 @@ public class OrderHeader {
 				+ ", isTaxIncluding=" + isTaxIncluding + ", delStatus=" + delStatus + ", exInt1=" + exInt1 + ", exInt2="
 				+ exInt2 + ", exInt3=" + exInt3 + ", exVar1=" + exVar1 + ", exVar2=" + exVar2 + ", exVar3=" + exVar3
 				+ ", exDate1=" + exDate1 + ", exDate2=" + exDate2 + ", exBool1=" + exBool1 + ", exBool2=" + exBool2
-				+ ", orderDetailList=" + orderDetailList + "]";
+				+ ", status=" + status + ", orderDetailList=" + orderDetailList + "]";
 	}
 	
 	
