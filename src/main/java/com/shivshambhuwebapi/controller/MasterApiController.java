@@ -31,6 +31,7 @@ import com.shivshambhuwebapi.master.model.GetUser;
 import com.shivshambhuwebapi.master.model.GetVendor;
 import com.shivshambhuwebapi.master.model.Item;
 import com.shivshambhuwebapi.master.model.ItemType;
+import com.shivshambhuwebapi.master.model.LoginResUser;
 import com.shivshambhuwebapi.master.model.MarketingUser;
 import com.shivshambhuwebapi.master.model.PaymentTerm;
 import com.shivshambhuwebapi.master.model.Plant;
@@ -1928,6 +1929,35 @@ public class MasterApiController {
 
 		}
 
+	}
+
+	// ---------- User Login--------------------
+
+	@RequestMapping(value = { "/loginUser" }, method = RequestMethod.POST)
+	public @ResponseBody LoginResUser loginUser(@RequestParam("usrMob") String usrMob,
+			@RequestParam("userPass") String userPass) {
+
+		LoginResUser loginResponse = new LoginResUser();
+		try {
+
+			User mu = userRepo.findByUsrMobAndUserPassAndDelStatus(usrMob, userPass, 1);
+			if (mu == null) {
+				loginResponse.setError(true);
+				loginResponse.setMsg("login Failed");
+			} else {
+				loginResponse.setError(false);
+				loginResponse.setMsg("login successfully");
+				loginResponse.setUser(mu);
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			loginResponse.setError(true);
+			loginResponse.setMsg("login Failed");
+		}
+
+		return loginResponse;
 	}
 
 }

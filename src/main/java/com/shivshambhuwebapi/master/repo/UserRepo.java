@@ -2,6 +2,7 @@ package com.shivshambhuwebapi.master.repo;
 
 import java.util.List;
 
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -20,4 +21,7 @@ public interface UserRepo extends JpaRepository<User, Integer> {
 	User findByUserIdAndDelStatus(int userId, int i);
 
 	List<User> findByDelStatusOrderByUserIdDesc(int i);
+
+	User findByUsrMobAndUserPassAndDelStatus(String usrMob, String userPass, int i);
+
 }
