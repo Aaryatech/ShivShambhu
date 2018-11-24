@@ -21,4 +21,6 @@ public interface PlantRepo extends JpaRepository<Plant, Integer> {
 
 	Plant findByPlantIdAndDelStatus(int plantId, int i);
 
+	List<Plant> findByCompanyIdAndDelStatus(int companyId, int i);
+
 }

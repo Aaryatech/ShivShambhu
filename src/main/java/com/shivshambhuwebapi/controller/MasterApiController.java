@@ -1368,6 +1368,23 @@ public class MasterApiController {
 
 	}
 
+	@RequestMapping(value = { "/getPlantListByCompanyId" }, method = RequestMethod.POST)
+	public @ResponseBody List<Plant> getPlantListByCompanyId(@RequestParam("companyId") int companyId) {
+
+		List<Plant> plantList = new ArrayList<>();
+
+		try {
+			plantList = plantRepo.findByCompanyIdAndDelStatus(companyId, 1);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return plantList;
+
+	}
+
 	@RequestMapping(value = { "/getPlantCompanyByPlantId" }, method = RequestMethod.POST)
 	public @ResponseBody GetPlant getPlantCompanyByPlantId(@RequestParam("plantId") int plantId) {
 
