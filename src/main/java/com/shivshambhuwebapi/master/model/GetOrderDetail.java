@@ -1,10 +1,14 @@
 package com.shivshambhuwebapi.master.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 public class GetOrderDetail {
@@ -75,7 +79,7 @@ public class GetOrderDetail {
 
 	private String itemName;
 	private String itemCode;
-	private String poDate;
+	private Date poDate;
 	private String poNo;
 
 	public int getOrderDetId() {
@@ -301,12 +305,12 @@ public class GetOrderDetail {
 	public void setItemCode(String itemCode) {
 		this.itemCode = itemCode;
 	}
-
-	public String getPoDate() {
+	@JsonFormat(locale = "hi", timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
+	public Date getPoDate() {
 		return poDate;
 	}
 
-	public void setPoDate(String poDate) {
+	public void setPoDate(Date poDate) {
 		this.poDate = poDate;
 	}
 

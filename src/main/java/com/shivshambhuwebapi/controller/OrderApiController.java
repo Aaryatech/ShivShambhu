@@ -74,18 +74,34 @@ public class OrderApiController {
 	@RequestMapping(value = { "/getOrderListBetDate" }, method = RequestMethod.POST)
 	public @ResponseBody List<GetOrder> getOrderListBetDate(@RequestParam("plantId") int plantId,
 			@RequestParam("custId") int custId, @RequestParam("fromDate") String fromDate,
-			@RequestParam("toDate") String toDate) {
+			@RequestParam("toDate") String toDate,@RequestParam("status") int status) {
 
 		List<GetOrder> getOrderList = new ArrayList<>();
 
 		try {
-			getOrderList = getOrderRepo.getOrderBetweenDate(plantId, custId, fromDate, toDate);
+			getOrderList = getOrderRepo.getOrderBetweenDate(plantId, custId, fromDate, toDate,status);
 
 		} catch (Exception e) {
 
 			e.printStackTrace();
 		}
 		return getOrderList;
+
+	}
+	
+	@RequestMapping(value = { "/getOrderHeaderById" }, method = RequestMethod.POST)
+	public @ResponseBody GetOrder getOrderHeaderById(@RequestParam("orderId") int orderId) {
+
+		GetOrder getOrder =new GetOrder();
+		try {
+			getOrder = getOrderRepo.getOrderHeaderById(orderId);
+		} catch (Exception e) {
+			
+			System.err.println("exc in getting  getOrderHeaderById " +e.getMessage());
+
+			e.printStackTrace();
+		}
+		return getOrder;
 
 	}
 	
@@ -105,6 +121,20 @@ public class OrderApiController {
 		return getOrderDetailList;
 
 	}
+	
+	@RequestMapping(value = { "/getOrdHeaderByOrdId" }, method = RequestMethod.POST)
+	public @ResponseBody OrderHeader getOrdHeaderByOrdId (@RequestParam("orderHeaderId") int orderHeaderId) {
 
+		OrderHeader orderRes = null;
 
+		try {
+
+			orderRes = orderHeaderRepo.findByOrderId(orderHeaderId);
+		}catch (Exception e) {
+			System.err.println("exce in getting getOrdHeaderByOrdId " +e.getMessage());
+			e.printStackTrace();
+		}
+		return orderRes;
+
+	}
 }
