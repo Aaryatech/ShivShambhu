@@ -137,4 +137,32 @@ public class OrderApiController {
 		return orderRes;
 
 	}
+	
+	
+	@RequestMapping(value = { "/getOrdHeaderForChalan" }, method = RequestMethod.POST)
+	public @ResponseBody List<OrderHeader> getOrdHeaderForChalan (@RequestParam("custId") int custId,
+			@RequestParam("projId") int projId,@RequestParam("statusList") List<Integer> statusList) {
+
+		 List<OrderHeader> orderResList = new ArrayList<>();
+
+		try {
+
+			if(projId==-1) {
+				
+			orderResList = orderHeaderRepo.findByCustIdAndStatusIn(custId, statusList);
+			
+			}
+			else {
+				
+				orderResList = orderHeaderRepo.findByProjIdAndStatusIn(projId, statusList);
+			}
+		}catch (Exception e) {
+			
+			System.err.println("exce in getting getOrdHeaderForChalan " +e.getMessage());
+			e.printStackTrace();
+		}
+		
+		return orderResList;
+
+	}
 }
