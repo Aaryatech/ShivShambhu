@@ -41,6 +41,7 @@ import com.shivshambhuwebapi.master.model.Task;
 import com.shivshambhuwebapi.master.model.Tax;
 import com.shivshambhuwebapi.master.model.Uom;
 import com.shivshambhuwebapi.master.model.User;
+import com.shivshambhuwebapi.master.model.Vehicle;
 import com.shivshambhuwebapi.master.model.Vendor;
 import com.shivshambhuwebapi.master.repo.BankDetailRepo;
 import com.shivshambhuwebapi.master.repo.CompanyRepo;
@@ -67,10 +68,14 @@ import com.shivshambhuwebapi.master.repo.TaskRepo;
 import com.shivshambhuwebapi.master.repo.TaxRepo;
 import com.shivshambhuwebapi.master.repo.UomRepo;
 import com.shivshambhuwebapi.master.repo.UserRepo;
+import com.shivshambhuwebapi.master.repo.VehicleRepo;
 import com.shivshambhuwebapi.master.repo.VendorRepo;
 
 @RestController
 public class MasterApiController {
+
+	@Autowired
+	VehicleRepo vehicleRepo;
 
 	@Autowired
 	EnqGenFactRepo enqGenFactRepo;
@@ -143,6 +148,26 @@ public class MasterApiController {
 
 	@Autowired
 	GetProjectRepo getProjectRepo;
+
+	// ----------------Vehicle Master-------------------------------
+
+	@RequestMapping(value = { "/getAllVehicleList" }, method = RequestMethod.GET)
+	public @ResponseBody List<Vehicle> getAllVehicleList() {
+
+		List<Vehicle> vehList = new ArrayList<Vehicle>();
+
+		try {
+
+			vehList = vehicleRepo.findByDelStatusOrderByVehicleIdDesc(1);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return vehList;
+
+	}
 
 	// ----------------Item Type-------------------------------
 
