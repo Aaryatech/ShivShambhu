@@ -31,6 +31,16 @@ public class GetOrderDetail {
 
 	private float total;
 	private int delStatus;
+	
+	private float remOrdQty;
+
+	public float getRemOrdQty() {
+		return remOrdQty;
+	}
+
+	public void setRemOrdQty(float remOrdQty) {
+		this.remOrdQty = remOrdQty;
+	}
 
 	@Column(name = "ex_int1")
 	private int exInt1;
@@ -326,12 +336,13 @@ public class GetOrderDetail {
 	public String toString() {
 		return "GetOrderDetail [orderDetId=" + orderDetId + ", orderId=" + orderId + ", poId=" + poId + ", itemId="
 				+ itemId + ", poDetailId=" + poDetailId + ", orderQty=" + orderQty + ", orderRate=" + orderRate
-				+ ", total=" + total + ", delStatus=" + delStatus + ", exInt1=" + exInt1 + ", exInt2=" + exInt2
-				+ ", exInt3=" + exInt3 + ", exVar1=" + exVar1 + ", exVar2=" + exVar2 + ", exVar3=" + exVar3
-				+ ", exDate1=" + exDate1 + ", exDate2=" + exDate2 + ", exBool1=" + exBool1 + ", exBool2=" + exBool2
-				+ ", exBool3=" + exBool3 + ", status=" + status + ", poRate=" + poRate + ", poQty=" + poQty
-				+ ", poConsumeQty=" + poConsumeQty + ", poTotal=" + poTotal + ", poRemainingQty=" + poRemainingQty
-				+ ", itemName=" + itemName + ", itemCode=" + itemCode + ", poDate=" + poDate + ", poNo=" + poNo + "]";
+				+ ", total=" + total + ", delStatus=" + delStatus + ", remOrdQty=" + remOrdQty + ", exInt1=" + exInt1
+				+ ", exInt2=" + exInt2 + ", exInt3=" + exInt3 + ", exVar1=" + exVar1 + ", exVar2=" + exVar2
+				+ ", exVar3=" + exVar3 + ", exDate1=" + exDate1 + ", exDate2=" + exDate2 + ", exBool1=" + exBool1
+				+ ", exBool2=" + exBool2 + ", exBool3=" + exBool3 + ", status=" + status + ", poRate=" + poRate
+				+ ", poQty=" + poQty + ", poConsumeQty=" + poConsumeQty + ", poTotal=" + poTotal + ", poRemainingQty="
+				+ poRemainingQty + ", itemName=" + itemName + ", itemCode=" + itemCode + ", poDate=" + poDate
+				+ ", poNo=" + poNo + "]";
 	}
 
 }
