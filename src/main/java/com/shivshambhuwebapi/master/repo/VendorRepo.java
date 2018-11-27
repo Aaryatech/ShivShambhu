@@ -21,4 +21,9 @@ public interface VendorRepo extends JpaRepository<Vendor, Integer> {
 
 	List<Vendor> findByDelStatusOrderByVendIdDesc(int i);
 
+	@Transactional
+	@Modifying
+	@Query("UPDATE Vendor SET delStatus=0  WHERE vendId IN(:vendIds)")
+	int deleteMultiVendor(@Param("vendIds") List<Integer> vendIds);
+
 }

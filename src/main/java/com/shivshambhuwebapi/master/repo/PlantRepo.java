@@ -23,4 +23,9 @@ public interface PlantRepo extends JpaRepository<Plant, Integer> {
 
 	List<Plant> findByCompanyIdAndDelStatus(int companyId, int i);
 
+	@Transactional
+	@Modifying
+	@Query("UPDATE Plant SET delStatus=0  WHERE plant_id IN(:plantIds)")
+	int deleteMultiPlant(@Param("plantIds") List<Integer> plantIds);
+
 }

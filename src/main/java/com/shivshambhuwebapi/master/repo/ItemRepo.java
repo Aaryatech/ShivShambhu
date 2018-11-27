@@ -20,7 +20,12 @@ public interface ItemRepo extends JpaRepository<Item, Integer> {
 	List<Item> findByDelStatusOrderByItemIdDesc(int i);
 
 	Item findByItemIdAndDelStatus(int itemId, int i);
-	
-	List<Item> findByPlantIdAndDelStatusOrderByItemIdDesc(int plantId,int delStatus);
+
+	List<Item> findByPlantIdAndDelStatusOrderByItemIdDesc(int plantId, int delStatus);
+
+	@Transactional
+	@Modifying
+	@Query("UPDATE Item SET delStatus=0  WHERE itemId IN(:itemIds)")
+	int deleteMultiItem(@Param("itemIds") List<Integer> itemIds);
 
 }

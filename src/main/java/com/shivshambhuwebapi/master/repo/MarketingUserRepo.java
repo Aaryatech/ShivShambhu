@@ -21,4 +21,9 @@ public interface MarketingUserRepo extends JpaRepository<MarketingUser, Integer>
 
 	List<MarketingUser> findByDelStatusOrderByMarkUsrIdDesc(int i);
 
+	@Transactional
+	@Modifying
+	@Query("UPDATE MarketingUser SET delStatus=0  WHERE markUsrId IN(:markUsrIds)")
+	int deleteMultiMarketingUser(@Param("markUsrIds") List<Integer> markUsrIds);
+
 }

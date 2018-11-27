@@ -20,4 +20,9 @@ public interface CustTypeRepo extends JpaRepository<CustType, Integer> {
 
 	List<CustType> findByDelStatusOrderByCustTypeIdDesc(int i);
 
+	@Transactional
+	@Modifying
+	@Query("UPDATE CustType SET delStatus=0  WHERE custTypeId IN(:custTypeIds)")
+	int deleteMultiCustType(@Param("custTypeIds") List<Integer> custTypeIds);
+
 }

@@ -20,8 +20,12 @@ public interface CustRepo extends JpaRepository<Cust, Integer> {
 	int deleteCust(@Param("custId") int custId);
 
 	List<Cust> findByDelStatusOrderByCustIdDesc(int i);
-	
-	
-	List<Cust> findByDelStatusAndPlantIdOrderByCustIdDesc(int i,int plantId);
+
+	List<Cust> findByDelStatusAndPlantIdOrderByCustIdDesc(int i, int plantId);
+
+	@Transactional
+	@Modifying
+	@Query("UPDATE Cust SET delStatus=0  WHERE custId IN(:custIds)")
+	int deleteMultiCust(@Param("custIds") List<Integer> custIds);
 
 }

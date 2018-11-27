@@ -21,4 +21,9 @@ public interface PaymentTermRepo extends JpaRepository<PaymentTerm, Integer> {
 
 	List<PaymentTerm> findByDelStatusOrderByPayTermIdDesc(int i);
 
+	@Transactional
+	@Modifying
+	@Query("UPDATE Dept SET delStatus=0  WHERE payTermId IN(:payTermIds)")
+	int deleteMultiPaymentTerm(@Param("payTermIds") List<Integer> payTermIds);
+
 }

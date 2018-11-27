@@ -21,6 +21,10 @@ public interface ProjectRepo extends JpaRepository<Project, Integer> {
 
 	Project findByProjIdAndDelStatus(int projId, int i);
 
-	
 	List<Project> findByCustIdAndDelStatus(int custId, int delStatus);
+
+	@Transactional
+	@Modifying
+	@Query("UPDATE Project SET delStatus=0  WHERE projId IN(:projIds)")
+	int deleteMultiProject(@Param("projIds") List<Integer> projIds);
 }

@@ -395,6 +395,33 @@ public class MasterApiController {
 
 	}
 
+	@RequestMapping(value = { "/deleteMultiBankDetail" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteMultiBankDetail(@RequestParam("bankDetIds") List<Integer> bankDetIds) {
+
+		Info info = new Info();
+
+		try {
+			int delete = bankDetailRepo.deleteMultiBankDetail(bankDetIds);
+
+			if (delete >= 1) {
+				info.setError(false);
+				info.setMessage("successfully Multiple Deleted");
+			} else {
+				info.setError(true);
+				info.setMessage(" Deleted to Delete");
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage(" Deleted to Delete");
+
+		}
+		return info;
+
+	}
+
 	// ----------------------------------------Cust Type-------------------------
 
 	@RequestMapping(value = { "/saveCustType" }, method = RequestMethod.POST)
@@ -461,6 +488,33 @@ public class MasterApiController {
 			if (delete == 1) {
 				info.setError(false);
 				info.setMessage("successfully Deleted");
+			} else {
+				info.setError(true);
+				info.setMessage(" Deleted to Delete");
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage(" Deleted to Delete");
+
+		}
+		return info;
+
+	}
+
+	@RequestMapping(value = { "/deleteMultiCustType" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteMultiCustType(@RequestParam("custTypeIds") List<Integer> custTypeIds) {
+
+		Info info = new Info();
+
+		try {
+			int delete = custTypeRepo.deleteMultiCustType(custTypeIds);
+
+			if (delete >= 1) {
+				info.setError(false);
+				info.setMessage("successfully Multiple Deleted");
 			} else {
 				info.setError(true);
 				info.setMessage(" Deleted to Delete");
@@ -558,6 +612,33 @@ public class MasterApiController {
 		return info;
 
 	}
+
+	@RequestMapping(value = { "/deleteMultiEnqGenFact" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteMultiEnqGenFact(@RequestParam("enqGenIds") List<Integer> enqGenIds) {
+
+		Info info = new Info();
+
+		try {
+			int delete = enqGenFactRepo.deleteMultiEnqGenFact(enqGenIds);
+
+			if (delete >= 1) {
+				info.setError(false);
+				info.setMessage("successfully Multiple Deleted");
+			} else {
+				info.setError(true);
+				info.setMessage(" Deleted to Delete");
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage(" Deleted to Delete");
+
+		}
+		return info;
+
+	}
 	// ----------------------------------------Payment Term-------------------------
 
 	@RequestMapping(value = { "/savePaymentTerm" }, method = RequestMethod.POST)
@@ -628,6 +709,33 @@ public class MasterApiController {
 			if (delete == 1) {
 				info.setError(false);
 				info.setMessage("successfully Deleted");
+			} else {
+				info.setError(true);
+				info.setMessage(" Deleted to Delete");
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage(" Deleted to Delete");
+
+		}
+		return info;
+
+	}
+
+	@RequestMapping(value = { "/deleteMultiPaymentTerm" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteMultiPaymentTerm(@RequestParam("payTermIds") List<Integer> payTermIds) {
+
+		Info info = new Info();
+
+		try {
+			int delete = paymentTermRepo.deleteMultiPaymentTerm(payTermIds);
+
+			if (delete >= 1) {
+				info.setError(false);
+				info.setMessage("successfully Multiple Deleted");
 			} else {
 				info.setError(true);
 				info.setMessage(" Deleted to Delete");
@@ -826,6 +934,33 @@ public class MasterApiController {
 
 	}
 
+	@RequestMapping(value = { "/deleteMultiVendor" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteMultiVendor(@RequestParam("vendIds") List<Integer> vendIds) {
+
+		Info info = new Info();
+
+		try {
+			int delete = vendorRepo.deleteMultiVendor(vendIds);
+
+			if (delete >= 1) {
+				info.setError(false);
+				info.setMessage("successfully Multiple Deleted");
+			} else {
+				info.setError(true);
+				info.setMessage(" Deleted to Delete");
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage(" Deleted to Delete");
+
+		}
+		return info;
+
+	}
+
 	// ----------------------------------------Uom----------------------------------------------------
 
 	@RequestMapping(value = { "/saveUom" }, method = RequestMethod.POST)
@@ -892,6 +1027,33 @@ public class MasterApiController {
 			if (delete == 1) {
 				info.setError(false);
 				info.setMessage("successfully Deleted");
+			} else {
+				info.setError(true);
+				info.setMessage(" Deleted to Delete");
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage(" Deleted to Delete");
+
+		}
+		return info;
+
+	}
+
+	@RequestMapping(value = { "/deleteMultiUom" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteMultiUom(@RequestParam("uomIds") List<Integer> uomIds) {
+
+		Info info = new Info();
+
+		try {
+			int delete = uomRepo.deleteMultiUom(uomIds);
+
+			if (delete >= 1) {
+				info.setError(false);
+				info.setMessage("successfully Multiple Deleted");
 			} else {
 				info.setError(true);
 				info.setMessage(" Deleted to Delete");
@@ -993,6 +1155,33 @@ public class MasterApiController {
 			if (delete == 1) {
 				info.setError(false);
 				info.setMessage("successfully Deleted");
+			} else {
+				info.setError(true);
+				info.setMessage(" Deleted to Delete");
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage(" Deleted to Delete");
+
+		}
+		return info;
+
+	}
+
+	@RequestMapping(value = { "/deleteMultiUser" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteMultiUser(@RequestParam("userIds") List<Integer> userIds) {
+
+		Info info = new Info();
+
+		try {
+			int delete = userRepo.deleteMultiUser(userIds);
+
+			if (delete >= 1) {
+				info.setError(false);
+				info.setMessage("successfully Multiple Deleted");
 			} else {
 				info.setError(true);
 				info.setMessage(" Deleted to Delete");
@@ -1148,6 +1337,33 @@ public class MasterApiController {
 
 	}
 
+	@RequestMapping(value = { "/deleteMultiCust" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteMultiCust(@RequestParam("custIds") List<Integer> custIds) {
+
+		Info info = new Info();
+
+		try {
+			int delete = custRepo.deleteMultiCust(custIds);
+
+			if (delete >= 1) {
+				info.setError(false);
+				info.setMessage("successfully Multiple Deleted");
+			} else {
+				info.setError(true);
+				info.setMessage(" Deleted to Delete");
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage(" Deleted to Delete");
+
+		}
+		return info;
+
+	}
+
 	// ----------------------------------------Company----------------------------------------------------
 
 	@RequestMapping(value = { "/saveCompany" }, method = RequestMethod.POST)
@@ -1237,6 +1453,32 @@ public class MasterApiController {
 
 	}
 
+	@RequestMapping(value = { "/deleteMultiCompany" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteMultiCompany(@RequestParam("companyIds") List<Integer> companyIds) {
+
+		Info info = new Info();
+
+		try {
+			int delete = companyRepo.deleteMultiCompany(companyIds);
+
+			if (delete >= 1) {
+				info.setError(false);
+				info.setMessage("successfully Multiple Deleted");
+			} else {
+				info.setError(true);
+				info.setMessage(" Deleted to Delete");
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage(" Deleted to Delete");
+
+		}
+		return info;
+
+	}
 	// ----------------------------------------Dept----------------------------------------------------
 
 	@RequestMapping(value = { "/saveDept" }, method = RequestMethod.POST)
@@ -1327,7 +1569,7 @@ public class MasterApiController {
 		try {
 			int delete = deptRepo.deleteMultiDept(deptIds);
 
-			if (delete == 1) {
+			if (delete >= 1) {
 				info.setError(false);
 				info.setMessage("successfully Multiple Deleted");
 			} else {
@@ -1481,6 +1723,32 @@ public class MasterApiController {
 
 	}
 
+	@RequestMapping(value = { "/deleteMultiPlant" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteMultiPlant(@RequestParam("plantIds") List<Integer> plantIds) {
+
+		Info info = new Info();
+
+		try {
+			int delete = plantRepo.deleteMultiPlant(plantIds);
+
+			if (delete >= 1) {
+				info.setError(false);
+				info.setMessage("successfully Multiple Deleted");
+			} else {
+				info.setError(true);
+				info.setMessage(" Deleted to Delete");
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage(" Deleted to Delete");
+
+		}
+		return info;
+
+	}
 	// ----------------------------------------Project----------------------------------------------------
 
 	@RequestMapping(value = { "/saveProject" }, method = RequestMethod.POST)
@@ -1589,6 +1857,33 @@ public class MasterApiController {
 			if (delete == 1) {
 				info.setError(false);
 				info.setMessage("successfully Deleted");
+			} else {
+				info.setError(true);
+				info.setMessage(" Deleted to Delete");
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage(" Deleted to Delete");
+
+		}
+		return info;
+
+	}
+
+	@RequestMapping(value = { "/deleteMultiProject" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteMultiProject(@RequestParam("projIds") List<Integer> projIds) {
+
+		Info info = new Info();
+
+		try {
+			int delete = projectRepo.deleteMultiProject(projIds);
+
+			if (delete >= 1) {
+				info.setError(false);
+				info.setMessage("successfully Multiple Deleted");
 			} else {
 				info.setError(true);
 				info.setMessage(" Deleted to Delete");
@@ -1761,6 +2056,33 @@ public class MasterApiController {
 
 	}
 
+	@RequestMapping(value = { "/deleteMultiItem" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteMultiItem(@RequestParam("itemIds") List<Integer> itemIds) {
+
+		Info info = new Info();
+
+		try {
+			int delete = itemRepo.deleteMultiItem(itemIds);
+
+			if (delete >= 1) {
+				info.setError(false);
+				info.setMessage("successfully Multiple Deleted");
+			} else {
+				info.setError(true);
+				info.setMessage(" Deleted to Delete");
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage(" Deleted to Delete");
+
+		}
+		return info;
+
+	}
+
 	// -------------------------------------MarketingUser----------------------------
 
 	@RequestMapping(value = { "/saveMarketingUser" }, method = RequestMethod.POST)
@@ -1827,6 +2149,33 @@ public class MasterApiController {
 			if (delete == 1) {
 				info.setError(false);
 				info.setMessage("successfully Deleted");
+			} else {
+				info.setError(true);
+				info.setMessage(" Deleted to Delete");
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage(" Deleted to Delete");
+
+		}
+		return info;
+
+	}
+
+	@RequestMapping(value = { "/deleteMultiMarketingUser" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteMultiMarketingUser(@RequestParam("itemIds") List<Integer> itemIds) {
+
+		Info info = new Info();
+
+		try {
+			int delete = marketingUserRepo.deleteMultiMarketingUser(itemIds);
+
+			if (delete >= 1) {
+				info.setError(false);
+				info.setMessage("successfully Multiple Deleted");
 			} else {
 				info.setError(true);
 				info.setMessage(" Deleted to Delete");
@@ -1930,6 +2279,33 @@ public class MasterApiController {
 			info.setMessage(" Deleted to Delete");
 
 		}
+
+	}
+
+	@RequestMapping(value = { "/deleteMultiTax" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteMultiTax(@RequestParam("taxIds") List<Integer> taxIds) {
+
+		Info info = new Info();
+
+		try {
+			int delete = objTaxrepo.deleteMultiTax(taxIds);
+
+			if (delete >= 1) {
+				info.setError(false);
+				info.setMessage("successfully Multiple Deleted");
+			} else {
+				info.setError(true);
+				info.setMessage(" Deleted to Delete");
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage(" Deleted to Delete");
+
+		}
+		return info;
 
 	}
 
