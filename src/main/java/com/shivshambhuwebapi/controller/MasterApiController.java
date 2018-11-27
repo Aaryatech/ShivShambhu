@@ -1319,6 +1319,33 @@ public class MasterApiController {
 
 	}
 
+	@RequestMapping(value = { "/deleteMultiDept" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteMultiDept(@RequestParam("deptIds") List<Integer> deptIds) {
+
+		Info info = new Info();
+
+		try {
+			int delete = deptRepo.deleteMultiDept(deptIds);
+
+			if (delete == 1) {
+				info.setError(false);
+				info.setMessage("successfully Multiple Deleted");
+			} else {
+				info.setError(true);
+				info.setMessage(" Deleted to Delete");
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage(" Deleted to Delete");
+
+		}
+		return info;
+
+	}
+
 	// ----------------------------------------Plant----------------------------------------------------
 
 	@RequestMapping(value = { "/savePlant" }, method = RequestMethod.POST)
