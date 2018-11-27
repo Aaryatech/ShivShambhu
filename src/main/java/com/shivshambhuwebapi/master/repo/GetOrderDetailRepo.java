@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.shivshambhuwebapi.master.model.GetOrderDetail;
-
+ 
 public interface GetOrderDetailRepo extends JpaRepository<GetOrderDetail, Integer> {
 
 	@Query(value = "SELECT t_order_detail.*, t_cust_po_detail.po_rate,t_cust_po_detail.po_qty,t_cust_po_detail.po_consume_qty,"
