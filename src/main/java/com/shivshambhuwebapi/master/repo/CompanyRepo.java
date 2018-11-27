@@ -20,5 +20,9 @@ public interface CompanyRepo extends JpaRepository<Company, Integer> {
 	@Modifying
 	@Query("UPDATE Company SET delStatus=0  WHERE company_id=:companyId")
 	int deleteCompany(@Param("companyId") int companyId);
-
+	
+	@Transactional
+	@Modifying
+	@Query("UPDATE Company SET delStatus=0  WHERE companyId IN(:companyIds)")
+	int deleteMultiCompany(@Param("companyIds") List<Integer> companyIds);
 }

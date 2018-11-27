@@ -17,6 +17,11 @@ public interface DeptRepo extends JpaRepository<Dept, Integer> {
 	@Query("UPDATE Dept SET delStatus=0  WHERE dept_id=:deptId")
 	int deleteDept(@Param("deptId") int deptId);
 
+	@Transactional
+	@Modifying
+	@Query("UPDATE Dept SET delStatus=0  WHERE dept_id IN(:deptIds)")
+	int deleteMultiDept(@Param("deptIds") List<Integer> deptIds);
+
 	Dept findByDeptIdAndDelStatus(int deptId, int i);
 
 	List<Dept> findByDelStatusOrderByDeptIdDesc(int i);

@@ -21,4 +21,9 @@ public interface BankDetailRepo extends JpaRepository<BankDetail, Integer> {
 
 	List<BankDetail> findByDelStatusOrderByBankDetIdDesc(int i);
 
+	@Transactional
+	@Modifying
+	@Query("UPDATE BankDetail SET delStatus=0  WHERE bankDetId IN(:bankDetIds)")
+	int deleteMultiBankDetail(@Param("bankDetIds") List<Integer> bankDetIds);
+
 }

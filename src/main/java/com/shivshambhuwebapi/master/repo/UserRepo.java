@@ -2,7 +2,6 @@ package com.shivshambhuwebapi.master.repo;
 
 import java.util.List;
 
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -23,5 +22,10 @@ public interface UserRepo extends JpaRepository<User, Integer> {
 	List<User> findByDelStatusOrderByUserIdDesc(int i);
 
 	User findByUsrMobAndUserPassAndDelStatus(String usrMob, String userPass, int i);
+
+	@Transactional
+	@Modifying
+	@Query("UPDATE User SET delStatus=0  WHERE user_id IN(:userIds)")
+	int deleteMultiUser(@Param("userIds") List<Integer> userIds);
 
 }
