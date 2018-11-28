@@ -26,4 +26,6 @@ public interface UomRepo extends JpaRepository<Uom, Integer> {
 	@Query("UPDATE Uom SET delStatus=0  WHERE uomId IN(:uomIds)")
 	int deleteMultiUom(@Param("uomIds") List<Integer> uomIds);
 
+	Uom findByUomNameAndDelStatus(String uomName, int i);
+
 }

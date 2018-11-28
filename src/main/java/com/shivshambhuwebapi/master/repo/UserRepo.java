@@ -33,4 +33,6 @@ public interface UserRepo extends JpaRepository<User, Integer> {
 	@Query("UPDATE User SET deviceToken=:token  WHERE user_id=:userId")
 	int updatetoken(@Param("userId") int userId, @Param("token") String token);
 
+	User findByUsrMobAndDelStatus(String usrMob, int i);
+
 }

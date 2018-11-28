@@ -442,6 +442,39 @@ public class MasterApiController {
 
 	}
 
+/*	@RequestMapping(value = { "/saveUniqueCustType" }, method = RequestMethod.POST)
+	public @ResponseBody Info saveUniqueCustType(@RequestBody CustType custType) {
+
+		CustType res = new CustType();
+		Info info = new Info();
+
+		try {
+
+			res = custTypeRepo.findByCustTypeNameAndDelStatus(custType.getCustTypeName(), 1);
+
+			if (res == null) {l
+
+				res = custTypeRepo.saveAndFlush(custType);
+				info.setError(false);
+				info.setMessage("save Successfully");
+				System.out.println("In If");
+			} else {
+				info.setError(true);
+				info.setMessage("Measurement Unit Name Already Exist");
+				System.out.println("In else");
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage(" In Exception");
+
+		}
+		return info;
+
+	}*/
+
 	@RequestMapping(value = { "/getCustTypeByCustTypeId" }, method = RequestMethod.POST)
 	public @ResponseBody CustType getCustTypeByCustTypeId(@RequestParam("custTypeId") int custTypeId) {
 
@@ -981,6 +1014,39 @@ public class MasterApiController {
 
 	}
 
+	@RequestMapping(value = { "/saveUniqueUom" }, method = RequestMethod.POST)
+	public @ResponseBody Info saveUniqueUom(@RequestBody Uom uom) {
+
+		Uom res = new Uom();
+		Info info = new Info();
+
+		try {
+
+			res = uomRepo.findByUomNameAndDelStatus(uom.getUomName(), 1);
+
+			if (res == null) {
+
+				res = uomRepo.saveAndFlush(uom);
+				info.setError(false);
+				info.setMessage("save Successfully");
+				System.out.println("In If");
+			} else {
+				info.setError(true);
+				info.setMessage("Measurement Unit Name Already Exist");
+				System.out.println("In else");
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage(" In Exception");
+
+		}
+		return info;
+
+	}
+
 	@RequestMapping(value = { "/getUomByUomId" }, method = RequestMethod.POST)
 	public @ResponseBody Uom getUomByUomId(@RequestParam("uomId") int uomId) {
 
@@ -1087,6 +1153,39 @@ public class MasterApiController {
 
 		}
 		return res;
+
+	}
+
+	@RequestMapping(value = { "/saveUserByMobileNo" }, method = RequestMethod.POST)
+	public @ResponseBody Info saveUserByMobileNo(@RequestBody User user) {
+
+		User res = new User();
+		Info info = new Info();
+
+		try {
+
+			res = userRepo.findByUsrMobAndDelStatus(user.getUsrMob(), 1);
+
+			if (res == null) {
+
+				res = userRepo.saveAndFlush(user);
+				info.setError(false);
+				info.setMessage("save Successfully");
+				System.out.println("In If");
+			} else {
+				info.setError(true);
+				info.setMessage("User Mobile No Already Exist");
+				System.out.println("In else");
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage(" In Exception");
+
+		}
+		return info;
 
 	}
 
@@ -1242,6 +1341,40 @@ public class MasterApiController {
 
 		}
 		return res;
+
+	}
+	
+	
+	@RequestMapping(value = { "/saveUniqueCustomer" }, method = RequestMethod.POST)
+	public @ResponseBody Info saveUniqueCustomer(@RequestBody Cust cust) {
+
+		Cust res = new Cust();
+		Info info = new Info();
+
+		try {
+
+		//	res = deptRepo.findByDeptNameAndDelStatus(cust.getCustMobNo(), 1);
+
+			if (res == null) {
+
+				res = custRepo.saveAndFlush(cust);
+				info.setError(false);
+				info.setMessage("save Successfully");
+				System.out.println("In If");
+			} else {
+				info.setError(true);
+				info.setMessage("Customer Mobiile no Already Exist");
+				System.out.println("In else");
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage(" In Exception");
+
+		}
+		return info;
 
 	}
 
@@ -1526,8 +1659,8 @@ public class MasterApiController {
 
 	}
 
-	@RequestMapping(value = { "/saveExistingDept" }, method = RequestMethod.POST)
-	public @ResponseBody Info saveExistingDept(@RequestBody Dept dept) {
+	@RequestMapping(value = { "/saveUniqueDept" }, method = RequestMethod.POST)
+	public @ResponseBody Info saveUniqueDept(@RequestBody Dept dept) {
 
 		Dept res = new Dept();
 		Info info = new Info();
