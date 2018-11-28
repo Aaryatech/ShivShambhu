@@ -1526,6 +1526,39 @@ public class MasterApiController {
 
 	}
 
+	@RequestMapping(value = { "/saveExistingDept" }, method = RequestMethod.POST)
+	public @ResponseBody Info saveExistingDept(@RequestBody Dept dept) {
+
+		Dept res = new Dept();
+		Info info = new Info();
+
+		try {
+
+			res = deptRepo.findByDeptNameAndDelStatus(dept.getDeptName(), 1);
+
+			if (res == null) {
+
+				res = deptRepo.saveAndFlush(dept);
+				info.setError(false);
+				info.setMessage("save Successfully");
+				System.out.println("In If");
+			} else {
+				info.setError(true);
+				info.setMessage("Department Name Already Exist");
+				System.out.println("In else");
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage(" In Exception");
+
+		}
+		return info;
+
+	}
+
 	@RequestMapping(value = { "/getDeptByDeptId" }, method = RequestMethod.POST)
 	public @ResponseBody Dept getDeptByDeptId(@RequestParam("deptId") int deptId) {
 
