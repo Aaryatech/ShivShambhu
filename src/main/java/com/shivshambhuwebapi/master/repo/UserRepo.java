@@ -28,4 +28,9 @@ public interface UserRepo extends JpaRepository<User, Integer> {
 	@Query("UPDATE User SET delStatus=0  WHERE user_id IN(:userIds)")
 	int deleteMultiUser(@Param("userIds") List<Integer> userIds);
 
+	@Transactional
+	@Modifying
+	@Query("UPDATE User SET deviceToken=:token  WHERE user_id=:userId")
+	int updatetoken(@Param("userId") int userId, @Param("token") String token);
+
 }

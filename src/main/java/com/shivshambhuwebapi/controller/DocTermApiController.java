@@ -174,4 +174,31 @@ public class DocTermApiController {
 
 	}
 
+	@RequestMapping(value = { "/deleteMultiDocHeader" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteMultiDocHeader(@RequestParam("termIds") List<Integer> termIds) {
+
+		Info info = new Info();
+
+		try {
+			int delete = docTermHeaderRepo.deleteMultiDocHeader(termIds);
+
+			if (delete >= 1) {
+				info.setError(false);
+				info.setMessage("successfully Multiple Deleted");
+			} else {
+				info.setError(true);
+				info.setMessage(" Deleted to Delete");
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage(" Deleted to Delete");
+
+		}
+		return info;
+
+	}
+
 }

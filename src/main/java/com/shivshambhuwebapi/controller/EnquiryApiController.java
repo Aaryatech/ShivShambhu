@@ -39,9 +39,9 @@ public class EnquiryApiController {
 
 			for (int i = 0; i < enqHeader.getEnqDetailList().size(); i++) {
 				enqHeader.getEnqDetailList().get(i).setEnqHeadId(enquiryHeader.getEnqHeadId());
-				
+
 			}
-			
+
 			List<EnqDetail> enqDetailsList = enqDetailRepo.saveAll(enqHeader.getEnqDetailList());
 			enquiryHeader.setEnqDetailList(enqDetailsList);
 
@@ -77,9 +77,6 @@ public class EnquiryApiController {
 
 	}
 
-	
-	
-	
 	@RequestMapping(value = { "/getEnqHeaderByEnqHeadId" }, method = RequestMethod.POST)
 	public @ResponseBody EnqHeader getEnqHeaderByEnqHeadId(@RequestParam("enqHeadId") int enqHeadId) {
 
@@ -96,6 +93,34 @@ public class EnquiryApiController {
 
 		}
 		return enqHeader;
+
+	}
+
+	@RequestMapping(value = { "/updateEnquiry" }, method = RequestMethod.POST)
+	public @ResponseBody Info updateEnquiry(@RequestParam("enqHeadId") int enqHeadId,
+			@RequestParam("enqHRemark") String enqHRemark, @RequestParam("enqDate") String enqDate) {
+
+		Info info = new Info();
+
+		try {
+			int delete = enqHeaderRepo.updateEnquiry(enqHeadId, enqHRemark, enqDate);
+
+			if (delete == 1) {
+				info.setError(false);
+				info.setMessage("successfully Updated");
+			} else {
+				info.setError(true);
+				info.setMessage(" Deleted to Delete");
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage(" Deleted to Delete");
+
+		}
+		return info;
 
 	}
 

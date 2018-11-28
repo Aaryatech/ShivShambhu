@@ -1171,6 +1171,33 @@ public class MasterApiController {
 
 	}
 
+	@RequestMapping(value = { "/updateUserToken" }, method = RequestMethod.POST)
+	public @ResponseBody Info updateUserToken(@RequestParam("userId") int userId, @RequestParam("token") String token) {
+
+		Info info = new Info();
+
+		try {
+			int delete = userRepo.updatetoken(userId, token);
+
+			if (delete == 1) {
+				info.setError(false);
+				info.setMessage("successfully Updated");
+			} else {
+				info.setError(true);
+				info.setMessage(" Deleted to Delete");
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage(" Deleted to Delete");
+
+		}
+		return info;
+
+	}
+
 	@RequestMapping(value = { "/deleteMultiUser" }, method = RequestMethod.POST)
 	public @ResponseBody Info deleteMultiUser(@RequestParam("userIds") List<Integer> userIds) {
 
