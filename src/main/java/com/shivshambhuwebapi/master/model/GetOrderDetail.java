@@ -35,6 +35,16 @@ public class GetOrderDetail {
 	private float remOrdQty;
 	
 	private String uomName;
+	private int uomId;
+	
+
+	public int getUomId() {
+		return uomId;
+	}
+
+	public void setUomId(int uomId) {
+		this.uomId = uomId;
+	}
 
 	public String getUomName() {
 		return uomName;
@@ -347,8 +357,8 @@ public class GetOrderDetail {
 		return "GetOrderDetail [orderDetId=" + orderDetId + ", orderId=" + orderId + ", poId=" + poId + ", itemId="
 				+ itemId + ", poDetailId=" + poDetailId + ", orderQty=" + orderQty + ", orderRate=" + orderRate
 				+ ", total=" + total + ", delStatus=" + delStatus + ", remOrdQty=" + remOrdQty + ", uomName=" + uomName
-				+ ", exInt1=" + exInt1 + ", exInt2=" + exInt2 + ", exInt3=" + exInt3 + ", exVar1=" + exVar1
-				+ ", exVar2=" + exVar2 + ", exVar3=" + exVar3 + ", exDate1=" + exDate1 + ", exDate2=" + exDate2
+				+ ", uomId=" + uomId + ", exInt1=" + exInt1 + ", exInt2=" + exInt2 + ", exInt3=" + exInt3 + ", exVar1="
+				+ exVar1 + ", exVar2=" + exVar2 + ", exVar3=" + exVar3 + ", exDate1=" + exDate1 + ", exDate2=" + exDate2
 				+ ", exBool1=" + exBool1 + ", exBool2=" + exBool2 + ", exBool3=" + exBool3 + ", status=" + status
 				+ ", poRate=" + poRate + ", poQty=" + poQty + ", poConsumeQty=" + poConsumeQty + ", poTotal=" + poTotal
 				+ ", poRemainingQty=" + poRemainingQty + ", itemName=" + itemName + ", itemCode=" + itemCode

@@ -27,7 +27,7 @@ public class GetPoForOrder {
  
 	private int status;
 
-	private float remark;
+	private String remark;
 
 	private float taxAmt;
 	
@@ -129,11 +129,11 @@ public class GetPoForOrder {
 		this.status = status;
 	}
 
-	public float getRemark() {
+	public String getRemark() {
 		return remark;
 	}
 
-	public void setRemark(float remark) {
+	public void setRemark(String remark) {
 		this.remark = remark;
 	}
 

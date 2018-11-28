@@ -110,11 +110,13 @@ public class OrderApiController {
 	public @ResponseBody List<GetOrderDetail> getOrderDetailList(@RequestParam("orderHeaderId") int orderHeaderId) {
 
 		List<GetOrderDetail> getOrderDetailList = new ArrayList<>();
+System.err.println("orderHeaderId for getOrderDetailList  " +orderHeaderId);
 
 		try {
 			getOrderDetailList = getOrderDetailRepo.getOrderDtailList(orderHeaderId);
 
 		} catch (Exception e) {
+			System.err.println("Exce in  getOrderDetailList by  orderHeaderId " +e.getMessage());
 
 			e.printStackTrace();
 		}

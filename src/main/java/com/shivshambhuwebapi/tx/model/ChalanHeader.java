@@ -64,6 +64,16 @@ public class ChalanHeader {
 	private String exDate1;
 	
 	
+	public String getCostSegment() {
+		return costSegment;
+	}
+
+	public void setCostSegment(String costSegment) {
+		this.costSegment = costSegment;
+	}
+
+	private String costSegment;
+	
 	@javax.persistence.Transient
 	List<ChalanDetail> chalanDetailList;
 	
@@ -269,7 +279,8 @@ public class ChalanHeader {
 				+ ", vehInDate=" + vehInDate + ", outKm=" + outKm + ", inKm=" + inKm + ", sitePersonName="
 				+ sitePersonName + ", sitePersonMob=" + sitePersonMob + ", orderId=" + orderId + ", orderNo=" + orderNo
 				+ ", chalanRemark=" + chalanRemark + ", exInt1=" + exInt1 + ", exFloat1=" + exFloat1 + ", exVar1="
-				+ exVar1 + ", exDate1=" + exDate1 + ", chalanDetailList=" + chalanDetailList + "]";
+				+ exVar1 + ", exDate1=" + exDate1 + ", costSegment=" + costSegment + ", chalanDetailList="
+				+ chalanDetailList + "]";
 	}
 
 	
