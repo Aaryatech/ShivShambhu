@@ -25,4 +25,6 @@ public interface EnqGenFactRepo extends JpaRepository<EnqGenFact, Integer> {
 	@Query("UPDATE EnqGenFact SET delStatus=0  WHERE enqGenId IN(:enqGenIds)")
 	int deleteMultiEnqGenFact(@Param("enqGenIds") List<Integer> enqGenIds);
 
+	EnqGenFact findByEnqGenByAndDelStatus(String enqGenBy, int i);
+
 }
