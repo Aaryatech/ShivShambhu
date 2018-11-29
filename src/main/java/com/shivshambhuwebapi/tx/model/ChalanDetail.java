@@ -55,6 +55,15 @@ public class ChalanDetail {
 	private String exVar1;
 	private String exVar2;
 	private String exDate1;
+	
+	private int orderDetailId;
+	
+	public int getOrderDetailId() {
+		return orderDetailId;
+	}
+	public void setOrderDetailId(int orderDetailId) {
+		this.orderDetailId = orderDetailId;
+	}
 	public int getChalanDetailId() {
 		return chalanDetailId;
 	}
@@ -180,7 +189,7 @@ public class ChalanDetail {
 				+ itemTotalPlant + ", itemLengthSite=" + itemLengthSite + ", itemWidthSite=" + itemWidthSite
 				+ ", itemHeightSite=" + itemHeightSite + ", itemTotalSite=" + itemTotalSite + ", status=" + status
 				+ ", delStatus=" + delStatus + ", exInt1=" + exInt1 + ", exFloat1=" + exFloat1 + ", exVar1=" + exVar1
-				+ ", exVar2=" + exVar2 + ", exDate1=" + exDate1 + "]";
+				+ ", exVar2=" + exVar2 + ", exDate1=" + exDate1 + ", orderDetailId=" + orderDetailId + "]";
 	}
 	
 }
