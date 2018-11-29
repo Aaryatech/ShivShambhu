@@ -38,7 +38,7 @@ public class QuotHeader {
 	private int companyId;
 
 	@Column(name = "plant_ids")
-	private String plantIds;
+	private int plantIds;
 
 	@Column(name = "status")
 	private int status;
@@ -213,11 +213,11 @@ public class QuotHeader {
 		this.companyId = companyId;
 	}
 
-	public String getPlantIds() {
+	public int getPlantIds() {
 		return plantIds;
 	}
 
-	public void setPlantIds(String plantIds) {
+	public void setPlantIds(int plantIds) {
 		this.plantIds = plantIds;
 	}
 

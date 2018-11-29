@@ -131,12 +131,13 @@ public class EnquiryApiController {
 
 	@RequestMapping(value = { "/updateEnquiry" }, method = RequestMethod.POST)
 	public @ResponseBody Info updateEnquiry(@RequestParam("enqHeadId") int enqHeadId,
-			@RequestParam("enqHRemark") String enqHRemark, @RequestParam("enqDate") String enqDate) {
+			@RequestParam("enqHRemark") String enqHRemark, @RequestParam("enqDate") String enqDate,
+			@RequestParam("enqGenId") int enqGenId, @RequestParam("enqPriority") int enqPriority) {
 
 		Info info = new Info();
 
 		try {
-			int delete = enqHeaderRepo.updateEnquiry(enqHeadId, enqHRemark, enqDate);
+			int delete = enqHeaderRepo.updateEnquiry(enqHeadId, enqHRemark, enqDate, enqGenId, enqPriority);
 
 			if (delete == 1) {
 				info.setError(false);

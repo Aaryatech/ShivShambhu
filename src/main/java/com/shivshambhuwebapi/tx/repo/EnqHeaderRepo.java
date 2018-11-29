@@ -14,8 +14,8 @@ public interface EnqHeaderRepo extends JpaRepository<EnqHeader, Integer> {
 
 	@Transactional
 	@Modifying
-	@Query("UPDATE EnqHeader SET enqHRemark=:enqHRemark, enqDate=:enqDate WHERE enqHeadId=:enqHeadId")
+	@Query("UPDATE EnqHeader SET enqHRemark=:enqHRemark, enqDate=:enqDate ,enqGenId=:enqGenId, enqPriority=:enqPriority WHERE enqHeadId=:enqHeadId")
 	int updateEnquiry(@Param("enqHeadId") int enqHeadId, @Param("enqHRemark") String enqHRemark,
-			@Param("enqDate") String enqDate);
+			@Param("enqDate") String enqDate, @Param("enqGenId") int enqGenId, @Param("enqPriority") int enqPriority);
 
 }
