@@ -10,9 +10,16 @@ import com.shivshambhuwebapi.tx.model.GetEnqHeader;
 
 public interface GetEnqHeaderRepo extends JpaRepository<GetEnqHeader, Integer> {
 
-	@Query(value = " SELECT h.*,c.cust_name,p.plant_name,e.enq_gen_by FROM  t_enq_header h ,m_customer c,m_plant p,enq_gen_fact "
-			+ "e WHERE c.cust_id=h.cust_id AND p.plant_id=h.plant_id AND e.enq_gen_id=h.enq_gen_id  AND h.plant_id=:plantId", nativeQuery = true)
+	@Query(value = " SELECT h.*,c.cust_name,p.plant_name,e.enq_gen_by FROM  t_enq_header h ,m_customer c,m_plant p,enq_gen_fact e "
+			+ "WHERE c.cust_id=h.cust_id AND p.plant_id=h.plant_id AND e.enq_gen_id=h.enq_gen_id  AND h.plant_id=:plantId "
+			+ "AND h.enq_date BETWEEN :fromDate AND :toDate ", nativeQuery = true)
+	List<GetEnqHeader> getEnqHeaderByPlantId(@Param("plantId") int plantId, @Param("fromDate") String fromDate,
+			@Param("toDate") String toDate);
 
-	List<GetEnqHeader> getEnqHeaderByPlantId(@Param("plantId") int plantId);
+	@Query(value = " SELECT h.*,c.cust_name,p.plant_name,e.enq_gen_by FROM  t_enq_header h ,m_customer c,m_plant p,enq_gen_fact e "
+			+ "WHERE c.cust_id=h.cust_id AND p.plant_id=h.plant_id AND e.enq_gen_id=h.enq_gen_id  AND h.plant_id=:plantId AND h.cust_id=:custId"
+			+ "AND h.enq_date BETWEEN :fromDate AND :toDate ", nativeQuery = true)
+	List<GetEnqHeader> getEnqHeaderByPlantIdAndCustId(@Param("plantId") int plantId, @Param("custId") int custId,
+			@Param("fromDate") String fromDate, @Param("toDate") String toDate);
 
 }

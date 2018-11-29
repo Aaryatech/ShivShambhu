@@ -88,19 +88,31 @@ public class EnquiryApiController {
 	}
 
 	@RequestMapping(value = { "/getEnqListByPlantId" }, method = RequestMethod.POST)
-	public @ResponseBody List<GetEnqHeader> getEnqListByPlantId(@RequestParam("plantId") int plantId) {
+	public @ResponseBody List<GetEnqHeader> getEnqListByPlantId(@RequestParam("plantId") int plantId,
+			@RequestParam("fromDate") String fromDate, @RequestParam("toDate") String toDate,
+			@RequestParam("custId") int custId) {
 
 		List<GetEnqHeader> enquiryHeaderList = new ArrayList<GetEnqHeader>();
 
 		try {
 
-			enquiryHeaderList = getEnqHeaderRepo.getEnqHeaderByPlantId(plantId);
-			for (int i = 0; i < enquiryHeaderList.size(); i++) {
-				List<GetEnqDetail> enqDetailList = getEnqDetailRepo
-						.getEnqDetailByEnqHeadId(enquiryHeaderList.get(i).getEnqHeadId());
-				enquiryHeaderList.get(i).setEnqDetailList(enqDetailList);
-			}
+			if (custId == 0) {
 
+				enquiryHeaderList = getEnqHeaderRepo.getEnqHeaderByPlantId(plantId, fromDate, toDate);
+				for (int i = 0; i < enquiryHeaderList.size(); i++) {
+					List<GetEnqDetail> enqDetailList = getEnqDetailRepo
+							.getEnqDetailByEnqHeadId(enquiryHeaderList.get(i).getEnqHeadId());
+					enquiryHeaderList.get(i).setEnqDetailList(enqDetailList);
+				}
+			} else {
+				enquiryHeaderList = getEnqHeaderRepo.getEnqHeaderByPlantIdAndCustId(plantId, custId, fromDate, toDate);
+				for (int i = 0; i < enquiryHeaderList.size(); i++) {
+					List<GetEnqDetail> enqDetailList = getEnqDetailRepo
+							.getEnqDetailByEnqHeadId(enquiryHeaderList.get(i).getEnqHeadId());
+					enquiryHeaderList.get(i).setEnqDetailList(enqDetailList);
+				}
+
+			}
 		} catch (Exception e) {
 
 			e.printStackTrace();
