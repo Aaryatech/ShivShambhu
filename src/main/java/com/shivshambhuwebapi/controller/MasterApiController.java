@@ -616,6 +616,38 @@ public class MasterApiController {
 
 	}
 
+	@RequestMapping(value = { "/saveUniqueEnqGenFact" }, method = RequestMethod.POST)
+	public @ResponseBody Info saveUniqueEnqGenFact(@RequestParam("enqGenBy") String enqGenBy) {
+
+		EnqGenFact res = new EnqGenFact();
+		Info info = new Info();
+
+		try {
+
+			res = enqGenFactRepo.findByEnqGenByAndDelStatus(enqGenBy, 1);
+
+			if (res == null) {
+
+				info.setError(false);
+				info.setMessage("New Enquiry Source");
+				System.out.println("In If");
+			} else {
+				info.setError(true);
+				info.setMessage("Measurement Unit Name Already Exist");
+				System.out.println("In else");
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage(" In Exception");
+
+		}
+		return info;
+
+	}
+
 	@RequestMapping(value = { "/getAllEGFList" }, method = RequestMethod.GET)
 	public @ResponseBody List<EnqGenFact> getAllEGFList() {
 
@@ -1749,29 +1781,6 @@ public class MasterApiController {
 		return res;
 
 	}
-
-	/*
-	 * @RequestMapping(value = { "/getCustomerByMobileNo" }, method =
-	 * RequestMethod.POST) public @ResponseBody Info
-	 * getCustomerByMobileNo(@RequestParam("custMobile") String custMobile) {
-	 * 
-	 * Info info = new Info();
-	 * 
-	 * Cust cust = new Cust();
-	 * 
-	 * try { cust = custRepo.findByCustMobileAndIsUsed(custMobile, 1);
-	 * 
-	 * if (cust == null) { info.setError(false); info.setMessage("New Customer"); }
-	 * else { info.setError(true); info.setMessage(" Mobile No Already Exist"); }
-	 * 
-	 * } catch (Exception e) {
-	 * 
-	 * e.printStackTrace(); info.setError(true); info.setMessage(" Exception ");
-	 * 
-	 * } return info;
-	 * 
-	 * }
-	 */
 
 	@RequestMapping(value = { "/saveUniqueDept" }, method = RequestMethod.POST)
 	public @ResponseBody Info saveUniqueDept(@RequestParam("deptName") String deptName) {
