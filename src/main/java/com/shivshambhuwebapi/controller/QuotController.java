@@ -257,6 +257,8 @@ public class QuotController {
 		try {
 
 			if (custId == 0) {
+				
+				
 
 				quotHeaderList = getQuotHeaderRepo.getQuotHeaderByPlantId(plantId, fromDate, toDate);
 				for (int i = 0; i < quotHeaderList.size(); i++) {
