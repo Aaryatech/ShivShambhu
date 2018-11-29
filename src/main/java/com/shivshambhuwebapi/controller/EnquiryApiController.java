@@ -14,8 +14,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.shivshambhuwebapi.tx.model.EnqDetail;
 import com.shivshambhuwebapi.tx.model.EnqHeader;
+import com.shivshambhuwebapi.tx.model.GetEnqDetail;
+import com.shivshambhuwebapi.tx.model.GetEnqHeader;
 import com.shivshambhuwebapi.tx.repo.EnqDetailRepo;
 import com.shivshambhuwebapi.tx.repo.EnqHeaderRepo;
+import com.shivshambhuwebapi.tx.repo.GetEnqDetailRepo;
+import com.shivshambhuwebapi.tx.repo.GetEnqHeaderRepo;
 
 @RestController
 
@@ -26,6 +30,12 @@ public class EnquiryApiController {
 
 	@Autowired
 	EnqDetailRepo enqDetailRepo;
+
+	@Autowired
+	GetEnqHeaderRepo getEnqHeaderRepo;
+
+	@Autowired
+	GetEnqDetailRepo getEnqDetailRepo;
 
 	@RequestMapping(value = { "/saveEnqHeaderAndDetail" }, method = RequestMethod.POST)
 	public @ResponseBody EnqHeader saveEnquiryHeaderAndDetail(@RequestBody EnqHeader enqHeader) {
@@ -67,6 +77,29 @@ public class EnquiryApiController {
 		try {
 
 			enquiryHeaderList = enqHeaderRepo.findAll();
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return enquiryHeaderList;
+
+	}
+
+	@RequestMapping(value = { "/getEnqListByPlantId" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetEnqHeader> getEnqListByPlantId(@RequestParam("plantId") int plantId) {
+
+		List<GetEnqHeader> enquiryHeaderList = new ArrayList<GetEnqHeader>();
+
+		try {
+
+			enquiryHeaderList = getEnqHeaderRepo.getEnqHeaderByPlantId(plantId);
+			for (int i = 0; i < enquiryHeaderList.size(); i++) {
+				List<GetEnqDetail> enqDetailList = getEnqDetailRepo
+						.getEnqDetailByEnqHeadId(enquiryHeaderList.get(i).getEnqHeadId());
+				enquiryHeaderList.get(i).setEnqDetailList(enqDetailList);
+			}
 
 		} catch (Exception e) {
 
