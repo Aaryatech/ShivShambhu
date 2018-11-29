@@ -41,7 +41,7 @@ public class GetQuotHeader {
 	private String compName;
 
 	@Column(name = "plant_ids")
-	private String plantIds;
+	private int plantIds;
 
 	@Column(name = "status")
 	private int status;
@@ -246,11 +246,11 @@ public class GetQuotHeader {
 		this.compName = compName;
 	}
 
-	public String getPlantIds() {
+	public int getPlantIds() {
 		return plantIds;
 	}
 
-	public void setPlantIds(String plantIds) {
+	public void setPlantIds(int plantIds) {
 		this.plantIds = plantIds;
 	}
 
