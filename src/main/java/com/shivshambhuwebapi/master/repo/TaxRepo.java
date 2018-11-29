@@ -26,4 +26,6 @@ public interface TaxRepo extends JpaRepository<Tax, Integer> {
 	@Query("UPDATE Tax SET delStatus=0  WHERE tax_id IN(:taxIds)")
 	int deleteMultiTax(@Param("taxIds") List<Integer> taxIds);
 
+	Tax findByHsnCodeAndDelStatus(String hsnCode, int i);
+
 }

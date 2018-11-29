@@ -316,6 +316,38 @@ public class MasterApiController {
 
 	}
 
+	@RequestMapping(value = { "/saveUniqueBankDetail" }, method = RequestMethod.POST)
+	public @ResponseBody Info saveUniqueBankDetail(@RequestParam("accNo") String accNo) {
+
+		BankDetail res = new BankDetail();
+		Info info = new Info();
+
+		try {
+
+			res = bankDetailRepo.findByAccNoAndDelStatus(accNo, 1);
+
+			if (res == null) {
+
+				info.setError(false);
+				info.setMessage("New BankDetail");
+
+			} else {
+				info.setError(true);
+				info.setMessage("Account No Already Exist");
+
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage(" In Exception");
+
+		}
+		return info;
+
+	}
+
 	@RequestMapping(value = { "/getBankDetailByBankDetailId" }, method = RequestMethod.POST)
 	public @ResponseBody BankDetail getBankDetailByBankDetailId(@RequestParam("bankDetId") int bankDetId) {
 
@@ -443,33 +475,37 @@ public class MasterApiController {
 
 	}
 
-	/*
-	 * @RequestMapping(value = { "/saveUniqueCustType" }, method =
-	 * RequestMethod.POST) public @ResponseBody Info saveUniqueCustType(@RequestBody
-	 * CustType custType) {
-	 * 
-	 * CustType res = new CustType(); Info info = new Info();
-	 * 
-	 * try {
-	 * 
-	 * res = custTypeRepo.findByCustTypeNameAndDelStatus(custType.getCustTypeName(),
-	 * 1);
-	 * 
-	 * if (res == null) {l
-	 * 
-	 * res = custTypeRepo.saveAndFlush(custType); info.setError(false);
-	 * info.setMessage("save Successfully"); System.out.println("In If"); } else {
-	 * info.setError(true); info.setMessage("Measurement Unit Name Already Exist");
-	 * System.out.println("In else"); }
-	 * 
-	 * } catch (Exception e) {
-	 * 
-	 * e.printStackTrace(); info.setError(true); info.setMessage(" In Exception");
-	 * 
-	 * } return info;
-	 * 
-	 * }
-	 */
+	@RequestMapping(value = { "/saveUniqueCustType" }, method = RequestMethod.POST)
+	public @ResponseBody Info saveUniqueCustType(@RequestParam("custTypeName") String custTypeName) {
+
+		CustType res = new CustType();
+		Info info = new Info();
+
+		try {
+
+			res = custTypeRepo.findByCustTypeNameAndDelStatus(custTypeName, 1);
+
+			if (res == null) {
+
+				info.setError(false);
+				info.setMessage("New CustType");
+				System.out.println("In If");
+			} else {
+				info.setError(true);
+				info.setMessage("Measurement Unit Name Already Exist");
+				System.out.println("In else");
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage(" In Exception");
+
+		}
+		return info;
+
+	}
 
 	@RequestMapping(value = { "/getCustTypeByCustTypeId" }, method = RequestMethod.POST)
 	public @ResponseBody CustType getCustTypeByCustTypeId(@RequestParam("custTypeId") int custTypeId) {
@@ -883,6 +919,38 @@ public class MasterApiController {
 
 	}
 
+	@RequestMapping(value = { "/saveUniqueVendor" }, method = RequestMethod.POST)
+	public @ResponseBody Info saveUniqueVendor(@RequestParam("vendGst") String vendGst,
+			@RequestParam("vendContact1") String vendContact1) {
+		Vendor res = new Vendor();
+		Info info = new Info();
+
+		try {
+
+			res = vendorRepo.findByVendGstAndVendContact1AndDelStatus(vendGst, vendContact1, 1);
+
+			if (res == null) {
+
+				info.setError(false);
+				info.setMessage("New Vendor");
+
+			} else {
+				info.setError(true);
+				info.setMessage("Vendor Already Exist");
+
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage(" In Exception");
+
+		}
+		return info;
+
+	}
+
 	@RequestMapping(value = { "/getVendorByVendorId" }, method = RequestMethod.POST)
 	public @ResponseBody Vendor getVendorByVendorId(@RequestParam("vendId") int vendId) {
 
@@ -1011,20 +1079,19 @@ public class MasterApiController {
 	}
 
 	@RequestMapping(value = { "/saveUniqueUom" }, method = RequestMethod.POST)
-	public @ResponseBody Info saveUniqueUom(@RequestBody Uom uom) {
+	public @ResponseBody Info saveUniqueUom(@RequestParam("uomName") String uomName) {
 
 		Uom res = new Uom();
 		Info info = new Info();
 
 		try {
 
-			res = uomRepo.findByUomNameAndDelStatus(uom.getUomName(), 1);
+			res = uomRepo.findByUomNameAndDelStatus(uomName, 1);
 
 			if (res == null) {
 
-				res = uomRepo.saveAndFlush(uom);
 				info.setError(false);
-				info.setMessage("save Successfully");
+				info.setMessage("New UOM");
 				System.out.println("In If");
 			} else {
 				info.setError(true);
@@ -1152,21 +1219,18 @@ public class MasterApiController {
 
 	}
 
-	@RequestMapping(value = { "/saveUserByMobileNo" }, method = RequestMethod.POST)
-	public @ResponseBody Info saveUserByMobileNo(@RequestBody User user) {
+	@RequestMapping(value = { "/saveUniqueUser" }, method = RequestMethod.POST)
+	public @ResponseBody Info saveUniqueUser(@RequestParam("usrMob") String usrMob) {
 
 		User res = new User();
 		Info info = new Info();
 
 		try {
-
-			res = userRepo.findByUsrMobAndDelStatus(user.getUsrMob(), 1);
-
+			res = userRepo.findByUsrMobAndDelStatus(usrMob, 1);
 			if (res == null) {
 
-				res = userRepo.saveAndFlush(user);
 				info.setError(false);
-				info.setMessage("save Successfully");
+				info.setMessage("New User");
 				System.out.println("In If");
 			} else {
 				info.setError(true);
@@ -1341,18 +1405,17 @@ public class MasterApiController {
 	}
 
 	@RequestMapping(value = { "/saveUniqueCustomer" }, method = RequestMethod.POST)
-	public @ResponseBody Info saveUniqueCustomer(@RequestBody Cust cust) {
+	public @ResponseBody Info saveUniqueCustomer(@RequestParam("custMobNo") String custMobNo) {
 
 		Cust res = new Cust();
 		Info info = new Info();
 
 		try {
 
-			// res = deptRepo.findByDeptNameAndDelStatus(cust.getCustMobNo(), 1);
+			res = custRepo.findByCustMobNoAndDelStatus(custMobNo, 1);
 
 			if (res == null) {
 
-				res = custRepo.saveAndFlush(cust);
 				info.setError(false);
 				info.setMessage("save Successfully");
 				System.out.println("In If");
@@ -1539,6 +1602,39 @@ public class MasterApiController {
 
 	}
 
+	@RequestMapping(value = { "/saveUniqueCompany" }, method = RequestMethod.POST)
+	public @ResponseBody Info saveUniqueCompany(@RequestParam("compGstNo") String compGstNo) {
+
+		Company res = new Company();
+
+		Info info = new Info();
+
+		try {
+
+			res = companyRepo.findByCompGstNoAndDelStatus(compGstNo, 1);
+
+			if (res == null) {
+
+				info.setError(false);
+				info.setMessage("New Company");
+
+			} else {
+				info.setError(true);
+				info.setMessage("GST No Already Exist");
+
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage(" In Exception");
+
+		}
+		return info;
+
+	}
+
 	@RequestMapping(value = { "/getCompByCompanyId" }, method = RequestMethod.POST)
 	public @ResponseBody Company getCompByCompanyId(@RequestParam("companyId") int companyId) {
 
@@ -1653,36 +1749,29 @@ public class MasterApiController {
 		return res;
 
 	}
-	
 
-/*	@RequestMapping(value = { "/getCustomerByMobileNo" }, method = RequestMethod.POST)
-	public @ResponseBody Info getCustomerByMobileNo(@RequestParam("custMobile") String custMobile) {
-
-		Info info = new Info();
-
-		Cust cust = new Cust();
-
-		try {
-			cust = custRepo.findByCustMobileAndIsUsed(custMobile, 1);
-
-			if (cust == null) {
-				info.setError(false);
-				info.setMessage("New Customer");
-			} else {
-				info.setError(true);
-				info.setMessage(" Mobile No Already Exist");
-			}
-
-		} catch (Exception e) {
-
-			e.printStackTrace();
-			info.setError(true);
-			info.setMessage(" Exception ");
-
-		}
-		return info;
-
-	}*/
+	/*
+	 * @RequestMapping(value = { "/getCustomerByMobileNo" }, method =
+	 * RequestMethod.POST) public @ResponseBody Info
+	 * getCustomerByMobileNo(@RequestParam("custMobile") String custMobile) {
+	 * 
+	 * Info info = new Info();
+	 * 
+	 * Cust cust = new Cust();
+	 * 
+	 * try { cust = custRepo.findByCustMobileAndIsUsed(custMobile, 1);
+	 * 
+	 * if (cust == null) { info.setError(false); info.setMessage("New Customer"); }
+	 * else { info.setError(true); info.setMessage(" Mobile No Already Exist"); }
+	 * 
+	 * } catch (Exception e) {
+	 * 
+	 * e.printStackTrace(); info.setError(true); info.setMessage(" Exception ");
+	 * 
+	 * } return info;
+	 * 
+	 * }
+	 */
 
 	@RequestMapping(value = { "/saveUniqueDept" }, method = RequestMethod.POST)
 	public @ResponseBody Info saveUniqueDept(@RequestParam("deptName") String deptName) {
@@ -2433,6 +2522,38 @@ public class MasterApiController {
 
 		}
 		return objTAx;
+
+	}
+
+	@RequestMapping(value = { "/saveUniqueTax" }, method = RequestMethod.POST)
+	public @ResponseBody Info saveUniqueTax(@RequestParam("hsnCode") String hsnCode) {
+		Tax res = new Tax();
+
+		Info info = new Info();
+
+		try {
+
+			res = objTaxrepo.findByHsnCodeAndDelStatus(hsnCode, 1);
+
+			if (res == null) {
+
+				info.setError(false);
+				info.setMessage("New Tax");
+
+			} else {
+				info.setError(true);
+				info.setMessage("Tax Already Exist");
+
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage(" In Exception");
+
+		}
+		return info;
 
 	}
 
