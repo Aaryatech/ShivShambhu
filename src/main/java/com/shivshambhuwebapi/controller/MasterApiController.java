@@ -442,38 +442,33 @@ public class MasterApiController {
 
 	}
 
-/*	@RequestMapping(value = { "/saveUniqueCustType" }, method = RequestMethod.POST)
-	public @ResponseBody Info saveUniqueCustType(@RequestBody CustType custType) {
-
-		CustType res = new CustType();
-		Info info = new Info();
-
-		try {
-
-			res = custTypeRepo.findByCustTypeNameAndDelStatus(custType.getCustTypeName(), 1);
-
-			if (res == null) {l
-
-				res = custTypeRepo.saveAndFlush(custType);
-				info.setError(false);
-				info.setMessage("save Successfully");
-				System.out.println("In If");
-			} else {
-				info.setError(true);
-				info.setMessage("Measurement Unit Name Already Exist");
-				System.out.println("In else");
-			}
-
-		} catch (Exception e) {
-
-			e.printStackTrace();
-			info.setError(true);
-			info.setMessage(" In Exception");
-
-		}
-		return info;
-
-	}*/
+	/*
+	 * @RequestMapping(value = { "/saveUniqueCustType" }, method =
+	 * RequestMethod.POST) public @ResponseBody Info saveUniqueCustType(@RequestBody
+	 * CustType custType) {
+	 * 
+	 * CustType res = new CustType(); Info info = new Info();
+	 * 
+	 * try {
+	 * 
+	 * res = custTypeRepo.findByCustTypeNameAndDelStatus(custType.getCustTypeName(),
+	 * 1);
+	 * 
+	 * if (res == null) {l
+	 * 
+	 * res = custTypeRepo.saveAndFlush(custType); info.setError(false);
+	 * info.setMessage("save Successfully"); System.out.println("In If"); } else {
+	 * info.setError(true); info.setMessage("Measurement Unit Name Already Exist");
+	 * System.out.println("In else"); }
+	 * 
+	 * } catch (Exception e) {
+	 * 
+	 * e.printStackTrace(); info.setError(true); info.setMessage(" In Exception");
+	 * 
+	 * } return info;
+	 * 
+	 * }
+	 */
 
 	@RequestMapping(value = { "/getCustTypeByCustTypeId" }, method = RequestMethod.POST)
 	public @ResponseBody CustType getCustTypeByCustTypeId(@RequestParam("custTypeId") int custTypeId) {
@@ -1343,8 +1338,7 @@ public class MasterApiController {
 		return res;
 
 	}
-	
-	
+
 	@RequestMapping(value = { "/saveUniqueCustomer" }, method = RequestMethod.POST)
 	public @ResponseBody Info saveUniqueCustomer(@RequestBody Cust cust) {
 
@@ -1353,7 +1347,7 @@ public class MasterApiController {
 
 		try {
 
-		//	res = deptRepo.findByDeptNameAndDelStatus(cust.getCustMobNo(), 1);
+			// res = deptRepo.findByDeptNameAndDelStatus(cust.getCustMobNo(), 1);
 
 			if (res == null) {
 
@@ -1671,7 +1665,6 @@ public class MasterApiController {
 
 			if (res == null) {
 
-				res = deptRepo.saveAndFlush(dept);
 				info.setError(false);
 				info.setMessage("save Successfully");
 				System.out.println("In If");
