@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.shivshambhuwebapi.master.model.CustType;
+import com.shivshambhuwebapi.tx.model.GetEnqDetail;
+import com.shivshambhuwebapi.tx.model.GetEnqHeader;
 import com.shivshambhuwebapi.tx.model.GetItemWithEnq;
 import com.shivshambhuwebapi.tx.model.GetQuotDetail;
 import com.shivshambhuwebapi.tx.model.GetQuotHeader;
@@ -242,6 +244,42 @@ public class QuotController {
 
 		}
 		return getQuotHeaderList;
+
+	}
+
+	@RequestMapping(value = { "/getQuotListByPlantIdAndCustId" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetQuotHeader> getQuotListByPlantIdAndCustId(@RequestParam("plantId") int plantId,
+			@RequestParam("fromDate") String fromDate, @RequestParam("toDate") String toDate,
+			@RequestParam("custId") int custId) {
+
+		List<GetQuotHeader> quotHeaderList = new ArrayList<GetQuotHeader>();
+
+		try {
+
+			if (custId == 0) {
+
+				quotHeaderList = getQuotHeaderRepo.getQuotHeaderByPlantId(plantId, fromDate, toDate);
+				for (int i = 0; i < quotHeaderList.size(); i++) {
+					List<GetQuotDetail> quotDetailList = getQuotDetailRepo
+							.getQuotDetailByQuotHeadId(quotHeaderList.get(i).getQuotHeadId());
+					quotHeaderList.get(i).setGetQuotDetailList(quotDetailList);
+				}
+			} else {
+				quotHeaderList = getQuotHeaderRepo.getQuotHeaderByPlantIdAndCustId(plantId, custId, fromDate, toDate);
+				for (int i = 0; i < quotHeaderList.size(); i++) {
+					List<GetQuotDetail> quotDetailList = getQuotDetailRepo
+							.getQuotDetailByQuotHeadId(quotHeaderList.get(i).getQuotHeadId());
+
+					quotHeaderList.get(i).setGetQuotDetailList(quotDetailList);
+				}
+
+			}
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return quotHeaderList;
 
 	}
 

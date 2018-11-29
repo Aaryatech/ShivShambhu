@@ -87,8 +87,8 @@ public class EnquiryApiController {
 
 	}
 
-	@RequestMapping(value = { "/getEnqListByPlantId" }, method = RequestMethod.POST)
-	public @ResponseBody List<GetEnqHeader> getEnqListByPlantId(@RequestParam("plantId") int plantId,
+	@RequestMapping(value = { "/getEnqListByPlantIdAndCustId" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetEnqHeader> getEnqListByPlantIdAndCustId(@RequestParam("plantId") int plantId,
 			@RequestParam("fromDate") String fromDate, @RequestParam("toDate") String toDate,
 			@RequestParam("custId") int custId) {
 
@@ -167,16 +167,6 @@ public class EnquiryApiController {
 
 		}
 		return info;
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 
 	}
 
