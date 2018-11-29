@@ -1,6 +1,7 @@
 package com.shivshambhuwebapi.controller;
 
 import java.text.DateFormat;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -1652,21 +1653,51 @@ public class MasterApiController {
 		return res;
 
 	}
+	
+
+/*	@RequestMapping(value = { "/getCustomerByMobileNo" }, method = RequestMethod.POST)
+	public @ResponseBody Info getCustomerByMobileNo(@RequestParam("custMobile") String custMobile) {
+
+		Info info = new Info();
+
+		Cust cust = new Cust();
+
+		try {
+			cust = custRepo.findByCustMobileAndIsUsed(custMobile, 1);
+
+			if (cust == null) {
+				info.setError(false);
+				info.setMessage("New Customer");
+			} else {
+				info.setError(true);
+				info.setMessage(" Mobile No Already Exist");
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage(" Exception ");
+
+		}
+		return info;
+
+	}*/
 
 	@RequestMapping(value = { "/saveUniqueDept" }, method = RequestMethod.POST)
-	public @ResponseBody Info saveUniqueDept(@RequestBody Dept dept) {
+	public @ResponseBody Info saveUniqueDept(@RequestParam("deptName") String deptName) {
 
 		Dept res = new Dept();
 		Info info = new Info();
 
 		try {
 
-			res = deptRepo.findByDeptNameAndDelStatus(dept.getDeptName(), 1);
+			res = deptRepo.findByDeptNameAndDelStatus(deptName, 1);
 
 			if (res == null) {
 
 				info.setError(false);
-				info.setMessage("save Successfully");
+				info.setMessage("New Department");
 				System.out.println("In If");
 			} else {
 				info.setError(true);
