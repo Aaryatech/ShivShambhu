@@ -364,6 +364,7 @@ public class ChalanApiController {
 							ordDetailList.get(j).setStatus(status);
 
 							orderDetailRepo.save(ordDetailList.get(j));
+							System.err.println("order detail saved ");
 
 						}
 
@@ -385,6 +386,8 @@ public class ChalanApiController {
 							poDetList.get(k).setStatus(status);
 
 							poDetailRepository.save(poDetList.get(k));
+							System.err.println("Po Detail Saved ");
+							
 
 						}
 
