@@ -28,4 +28,6 @@ public interface PlantRepo extends JpaRepository<Plant, Integer> {
 	@Query("UPDATE Plant SET delStatus=0  WHERE plant_id IN(:plantIds)")
 	int deleteMultiPlant(@Param("plantIds") List<Integer> plantIds);
 
+	Plant findByPlantNameAndDelStatus(String plantName, int i);
+
 }

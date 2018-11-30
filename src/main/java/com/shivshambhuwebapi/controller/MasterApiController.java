@@ -756,6 +756,38 @@ public class MasterApiController {
 
 	}
 
+	@RequestMapping(value = { "/saveUniquePaymentTerm" }, method = RequestMethod.POST)
+	public @ResponseBody Info saveUniquePaymentTerm(@RequestParam("payTerm") String payTerm) {
+		PaymentTerm res = new PaymentTerm();
+
+		Info info = new Info();
+
+		try {
+
+			res = paymentTermRepo.findByPayTermAndDelStatus(payTerm, 1);
+
+			if (res == null) {
+
+				info.setError(false);
+				info.setMessage("New Payment term");
+
+			} else {
+				info.setError(true);
+				info.setMessage("Payment Term Already Exist");
+
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage(" In Exception");
+
+		}
+		return info;
+
+	}
+
 	@RequestMapping(value = { "/getPTByPaymentTermId" }, method = RequestMethod.POST)
 	public @ResponseBody PaymentTerm getPTByPaymentTermId(@RequestParam("payTermId") int payTermId) {
 
@@ -1920,6 +1952,37 @@ public class MasterApiController {
 
 		}
 		return res;
+
+	}
+
+	@RequestMapping(value = { "/saveUniquePlant" }, method = RequestMethod.POST)
+	public @ResponseBody Info saveUniquePlant(@RequestParam("plantName") String plantName) {
+		Plant res = new Plant();
+		Info info = new Info();
+
+		try {
+
+			res = plantRepo.findByPlantNameAndDelStatus(plantName, 1);
+
+			if (res == null) {
+
+				info.setError(false);
+				info.setMessage("New Plant");
+
+			} else {
+				info.setError(true);
+				info.setMessage("Plant Already Exist");
+
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage(" In Exception");
+
+		}
+		return info;
 
 	}
 
