@@ -257,8 +257,6 @@ public class QuotController {
 		try {
 
 			if (custId == 0) {
-				
-				
 
 				quotHeaderList = getQuotHeaderRepo.getQuotHeaderByPlantId(plantId, fromDate, toDate);
 				for (int i = 0; i < quotHeaderList.size(); i++) {
@@ -282,6 +280,37 @@ public class QuotController {
 
 		}
 		return quotHeaderList;
+
+	}
+
+	@RequestMapping(value = { "/updateQuotation" }, method = RequestMethod.POST)
+	public @ResponseBody Info updateQuotation(@RequestParam("quotHeadId") int quotHeadId,
+			@RequestParam("payTermId") int payTermId, @RequestParam("quotDate") String quotDate,
+			@RequestParam("otherRemark1") String otherRemark1, @RequestParam("projId") int projId,
+			@RequestParam("quotTermId") int quotTermId) {
+
+		Info info = new Info();
+
+		try {
+			int delete = quotHeaderRepo.updateQuotation(quotHeadId, payTermId, quotDate, otherRemark1, projId,
+					quotTermId);
+
+			if (delete == 1) {
+				info.setError(false);
+				info.setMessage("successfully Updated");
+			} else {
+				info.setError(true);
+				info.setMessage(" Deleted to Delete");
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage(" Deleted to Delete");
+
+		}
+		return info;
 
 	}
 
