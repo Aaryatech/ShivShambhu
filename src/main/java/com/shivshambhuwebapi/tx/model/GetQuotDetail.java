@@ -88,6 +88,8 @@ public class GetQuotDetail {
 	private float noOfKm;
 
 	private String itemName;
+	
+	private String uomName;
 
 	public int getQuotDetailId() {
 		return quotDetailId;
@@ -408,6 +410,16 @@ public class GetQuotDetail {
 	public void setItemName(String itemName) {
 		this.itemName = itemName;
 	}
+	
+	
+
+	public String getUomName() {
+		return uomName;
+	}
+
+	public void setUomName(String uomName) {
+		this.uomName = uomName;
+	}
 
 	@Override
 	public String toString() {
@@ -422,7 +434,7 @@ public class GetQuotDetail {
 				+ quotUomId + ", igstPer=" + igstPer + ", igstValue=" + igstValue + ", total=" + total + ", tollCost="
 				+ tollCost + ", transCost=" + transCost + ", otherCostBeforeTax=" + otherCostBeforeTax
 				+ ", otherCostAfterTax=" + otherCostAfterTax + ", royaltyRate=" + royaltyRate + ", noOfKm=" + noOfKm
-				+ ", itemName=" + itemName + "]";
+				+ ", itemName=" + itemName + ", uomName=" + uomName + "]";
 	}
 
 }
