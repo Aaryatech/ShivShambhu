@@ -14,11 +14,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.shivshambhuwebapi.master.model.Contractor;
 import com.shivshambhuwebapi.master.model.GetItemTax;
 import com.shivshambhuwebapi.master.model.ItemCategory;
+import com.shivshambhuwebapi.master.model.RawMatItem;
 import com.shivshambhuwebapi.master.model.Subplant;
 import com.shivshambhuwebapi.master.model.VehicleType;
 import com.shivshambhuwebapi.master.repo.ContractorRepo;
 import com.shivshambhuwebapi.master.repo.GetItemTaxRepo;
 import com.shivshambhuwebapi.master.repo.ItemCategoryRepo;
+import com.shivshambhuwebapi.master.repo.RawMatItemRepo;
 import com.shivshambhuwebapi.master.repo.SubplantRepo;
 import com.shivshambhuwebapi.master.repo.VehicleTypeRepo;
 
@@ -39,6 +41,9 @@ public class MstApiController {
 
 	@Autowired
 	ItemCategoryRepo itemCategoryRepo;
+
+	@Autowired
+	RawMatItemRepo rawMatItemRepo;
 
 	@RequestMapping(value = { "/getAllItemTaxList" }, method = RequestMethod.POST)
 	public @ResponseBody List<GetItemTax> getAllItemTaxList(@RequestParam("plantId") int plantId) {
@@ -138,14 +143,14 @@ public class MstApiController {
 
 	}
 
-	@RequestMapping(value = { "/getCatListByCatId" }, method = RequestMethod.POST)
-	public @ResponseBody List<ItemCategory> getCatListByCatId(@RequestParam("itemCatId") int itemCatId) {
+	@RequestMapping(value = { "/getRawItemListByCatId" }, method = RequestMethod.POST)
+	public @ResponseBody List<RawMatItem> getRawItemListByCatId(@RequestParam("catId") int catId) {
 
-		List<ItemCategory> itemList = new ArrayList<ItemCategory>();
+		List<RawMatItem> itemList = new ArrayList<RawMatItem>();
 
 		try {
 
-			itemList = itemCategoryRepo.getItemListByItemCatId(itemCatId);
+			itemList = rawMatItemRepo.findByCatIdAndDelStatus(catId, 1);
 
 		} catch (Exception e) {
 
@@ -153,6 +158,24 @@ public class MstApiController {
 
 		}
 		return itemList;
+
+	}
+
+	@RequestMapping(value = { "/getRawItemLByItemId" }, method = RequestMethod.POST)
+	public @ResponseBody RawMatItem getRawItemLByItemId(@RequestParam("rmId") int rmId) {
+
+		RawMatItem item = new RawMatItem();
+
+		try {
+
+			item = rawMatItemRepo.findByRmIdAndDelStatus(rmId, 1);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return item;
 
 	}
 
