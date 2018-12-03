@@ -46,6 +46,26 @@ public class GetChalanDetail {
 	private String itemCode;
 	private String uomName;
 	private String uomShortName;
+	
+	
+	
+	private float remOrdQty;//new 
+	private float orderQty;//new 
+
+	
+	
+	public float getRemOrdQty() {
+		return remOrdQty;
+	}
+	public void setRemOrdQty(float remOrdQty) {
+		this.remOrdQty = remOrdQty;
+	}
+	public float getOrderQty() {
+		return orderQty;
+	}
+	public void setOrderQty(float orderQty) {
+		this.orderQty = orderQty;
+	}
 	public int getChalanDetailId() {
 		return chalanDetailId;
 	}
@@ -205,7 +225,8 @@ public class GetChalanDetail {
 				+ ", itemHeightSite=" + itemHeightSite + ", itemTotalSite=" + itemTotalSite + ", status=" + status
 				+ ", delStatus=" + delStatus + ", exInt1=" + exInt1 + ", exFloat1=" + exFloat1 + ", exVar1=" + exVar1
 				+ ", exVar2=" + exVar2 + ", exDate1=" + exDate1 + ", orderDetailId=" + orderDetailId + ", itemName="
-				+ itemName + ", itemCode=" + itemCode + ", uomName=" + uomName + ", uomShortName=" + uomShortName + "]";
+				+ itemName + ", itemCode=" + itemCode + ", uomName=" + uomName + ", uomShortName=" + uomShortName
+				+ ", remOrdQty=" + remOrdQty + ", orderQty=" + orderQty + "]";
 	}
 	
 
