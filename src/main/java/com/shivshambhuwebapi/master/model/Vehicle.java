@@ -73,6 +73,9 @@ public class Vehicle {
 	@Column(name = "ex_bool2")
 	private int exBool2;
 
+	@Column(name = "vehicle_type")
+	private int vehicleType;
+
 	public int getVehicleId() {
 		return vehicleId;
 	}
@@ -233,6 +236,14 @@ public class Vehicle {
 		this.exBool2 = exBool2;
 	}
 
+	public int getVehicleType() {
+		return vehicleType;
+	}
+
+	public void setVehicleType(int vehicleType) {
+		this.vehicleType = vehicleType;
+	}
+
 	@Override
 	public String toString() {
 		return "Vehicle [vehicleId=" + vehicleId + ", vehicleName=" + vehicleName + ", vehCompName=" + vehCompName
@@ -240,11 +251,7 @@ public class Vehicle {
 				+ ", vehDoc2=" + vehDoc2 + ", vehDoc3=" + vehDoc3 + ", vehDoc4=" + vehDoc4 + ", delStatus=" + delStatus
 				+ ", exInt1=" + exInt1 + ", exInt2=" + exInt2 + ", exInt3=" + exInt3 + ", exVar1=" + exVar1
 				+ ", exVar2=" + exVar2 + ", exDate1=" + exDate1 + ", exDate2=" + exDate2 + ", exBool1=" + exBool1
-				+ ", exBool2=" + exBool2 + "]";
+				+ ", exBool2=" + exBool2 + ", vehicleType=" + vehicleType + "]";
 	}
-	
-	
-	
-	
 
 }
