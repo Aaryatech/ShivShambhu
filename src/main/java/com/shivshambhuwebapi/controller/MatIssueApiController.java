@@ -1,6 +1,7 @@
 package com.shivshambhuwebapi.controller;
 
 import java.util.ArrayList;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.shivshambhuwebapi.common.DateConvertor;
 import com.shivshambhuwebapi.tx.model.EnqDetail;
 import com.shivshambhuwebapi.tx.model.EnqHeader;
 import com.shivshambhuwebapi.tx.model.GetMatIssueDetail;
@@ -69,14 +71,17 @@ public class MatIssueApiController {
 	}
 
 	@RequestMapping(value = { "/getMatIssueContrHeaderList" }, method = RequestMethod.GET)
-	public @ResponseBody List<GetMatIssueHeader> getMatIssueContrHeaderList(
-			@RequestParam("matHeaderId") int matHeaderId) {
+	public @ResponseBody List<GetMatIssueHeader> getMatIssueContrHeaderList() {
 
 		List<GetMatIssueHeader> headerList = new ArrayList<GetMatIssueHeader>();
 
 		try {
 
 			headerList = getMatIssueHeaderRepo.getMatIssueHeadeList();
+
+			for (int i = 0; i < headerList.size(); i++) {
+				headerList.get(i).setDate(DateConvertor.convertToDMY(headerList.get(i).getDate()));
+			}
 
 		} catch (Exception e) {
 
@@ -95,7 +100,7 @@ public class MatIssueApiController {
 		try {
 
 			header = getMatIssueHeaderRepo.getMatIssueHeaderByHeaderId(matHeaderId);
-
+			header.setDate(DateConvertor.convertToDMY(header.getDate()));
 			List<GetMatIssueDetail> matDetailList = getMatIssueDetailRepo
 					.getMatIssueHeaderByHeaderId(header.getMatHeaderId());
 			header.setMatIssueDetailList(matDetailList);
@@ -106,6 +111,60 @@ public class MatIssueApiController {
 
 		}
 		return header;
+
+	}
+
+	@RequestMapping(value = { "/deleteMatIssueHeader" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteMatIssueHeader(@RequestParam("matHeaderId") int matHeaderId) {
+
+		Info info = new Info();
+
+		try {
+			int delete = matIssueHeaderRepo.deleteMatIssueHeader(matHeaderId);
+
+			if (delete == 1) {
+				info.setError(false);
+				info.setMessage("successfully Deleted");
+			} else {
+				info.setError(true);
+				info.setMessage(" Deleted to Delete");
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage(" Deleted to Delete");
+
+		}
+		return info;
+
+	}
+
+	@RequestMapping(value = { "/deleteMultiMatIssueHeader" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteMultiMatIssueHeader(@RequestParam("matHeaderIds") List<Integer> matHeaderIds) {
+
+		Info info = new Info();
+
+		try {
+			int delete = matIssueHeaderRepo.deleteMultiMatIssueHeader(matHeaderIds);
+
+			if (delete >= 1) {
+				info.setError(false);
+				info.setMessage("successfully Multiple Deleted");
+			} else {
+				info.setError(true);
+				info.setMessage(" Deleted to Delete");
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage(" Deleted to Delete");
+
+		}
+		return info;
 
 	}
 
