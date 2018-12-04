@@ -8,8 +8,6 @@ import com.shivshambhuwebapi.master.model.ItemCategory;
 
 public interface ItemCategoryRepo extends JpaRepository<ItemCategory, Integer> {
 
-	List<ItemCategory> findByDelStatusOrderByItemCatIdDesc(int i);
-
-	List<ItemCategory> getItemListByItemCatId(int itemCatId);
+	List<ItemCategory> findByIsUsedOrderByCatIdDesc(int i);
 
 }

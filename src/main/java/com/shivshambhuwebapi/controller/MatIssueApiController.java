@@ -1,16 +1,24 @@
 package com.shivshambhuwebapi.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.shivshambhuwebapi.tx.model.EnqDetail;
+import com.shivshambhuwebapi.tx.model.EnqHeader;
+import com.shivshambhuwebapi.tx.model.GetMatIssueDetail;
+import com.shivshambhuwebapi.tx.model.GetMatIssueHeader;
 import com.shivshambhuwebapi.tx.model.MatIssueDetail;
 import com.shivshambhuwebapi.tx.model.MatIssueHeader;
+import com.shivshambhuwebapi.tx.repo.GetMatIssueDetailRepo;
+import com.shivshambhuwebapi.tx.repo.GetMatIssueHeaderRepo;
 import com.shivshambhuwebapi.tx.repo.MatIssueDetailRepo;
 import com.shivshambhuwebapi.tx.repo.MatIssueHeaderRepo;
 
@@ -22,6 +30,12 @@ public class MatIssueApiController {
 
 	@Autowired
 	MatIssueDetailRepo matIssueDetailRepo;
+
+	@Autowired
+	GetMatIssueHeaderRepo getMatIssueHeaderRepo;
+
+	@Autowired
+	GetMatIssueDetailRepo getMatIssueDetailRepo;
 
 	@RequestMapping(value = { "/saveMatIssueHeaderAndDetail" }, method = RequestMethod.POST)
 	public @ResponseBody MatIssueHeader saveMatIssueHeaderAndDetail(@RequestBody MatIssueHeader matHeader) {
@@ -51,6 +65,47 @@ public class MatIssueApiController {
 
 		}
 		return matIssueHeader;
+
+	}
+
+	@RequestMapping(value = { "/getMatIssueContrHeaderList" }, method = RequestMethod.GET)
+	public @ResponseBody List<GetMatIssueHeader> getMatIssueContrHeaderList(
+			@RequestParam("matHeaderId") int matHeaderId) {
+
+		List<GetMatIssueHeader> headerList = new ArrayList<GetMatIssueHeader>();
+
+		try {
+
+			headerList = getMatIssueHeaderRepo.getMatIssueHeadeList();
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return headerList;
+
+	}
+
+	@RequestMapping(value = { "/getMatIssueContrByHeaderId" }, method = RequestMethod.POST)
+	public @ResponseBody GetMatIssueHeader getMatIssueContrByHeaderId(@RequestParam("matHeaderId") int matHeaderId) {
+
+		GetMatIssueHeader header = new GetMatIssueHeader();
+
+		try {
+
+			header = getMatIssueHeaderRepo.getMatIssueHeaderByHeaderId(matHeaderId);
+
+			List<GetMatIssueDetail> matDetailList = getMatIssueDetailRepo
+					.getMatIssueHeaderByHeaderId(header.getMatHeaderId());
+			header.setMatIssueDetailList(matDetailList);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return header;
 
 	}
 

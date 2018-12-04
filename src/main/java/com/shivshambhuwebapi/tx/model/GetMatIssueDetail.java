@@ -1,59 +1,46 @@
 package com.shivshambhuwebapi.tx.model;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
 
 @Entity
-@Table(name = "t_mat_issue_contra_detail")
-public class MatIssueDetail {
-
+public class GetMatIssueDetail {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "mat_detail_id")
 	private int matDetailId;
 
-	@Column(name = "mat_header_id")
 	private int matHeaderId;
 
-	@Column(name = "quantity")
-	private float quantity;
-
-	@Column(name = "item_id")
 	private int itemId;
 
-	@Column(name = "item_rate")
+	private float quantity;
+
 	private float itemRate;
 
-	@Column(name = "value")
 	private float value;
 
-	@Column(name = "uom_id")
 	private int uomId;
 
-	@Column(name = "del_status")
 	private int delStatus;
 
-	@Column(name = "ex_int1")
 	private int exInt1;
 
-	@Column(name = "ex_int2")
 	private int exInt2;
 
-	@Column(name = "ex_var1")
 	private String exVar1;
 
-	@Column(name = "ex_var2")
 	private String exVar2;
 
-	@Column(name = "ex_date1")
 	private String exDate1;
 
-	@Column(name = "ex_bool1")
 	private int exBool1;
+
+	private String itemDesc;
+	private String itemCode;
+
+	private String uomName;
 
 	public int getMatDetailId() {
 		return matDetailId;
@@ -69,6 +56,14 @@ public class MatIssueDetail {
 
 	public void setMatHeaderId(int matHeaderId) {
 		this.matHeaderId = matHeaderId;
+	}
+
+	public int getItemId() {
+		return itemId;
+	}
+
+	public void setItemId(int itemId) {
+		this.itemId = itemId;
 	}
 
 	public float getQuantity() {
@@ -159,20 +154,37 @@ public class MatIssueDetail {
 		this.exBool1 = exBool1;
 	}
 
-	public int getItemId() {
-		return itemId;
+	public String getItemDesc() {
+		return itemDesc;
 	}
 
-	public void setItemId(int itemId) {
-		this.itemId = itemId;
+	public void setItemDesc(String itemDesc) {
+		this.itemDesc = itemDesc;
+	}
+
+	public String getItemCode() {
+		return itemCode;
+	}
+
+	public void setItemCode(String itemCode) {
+		this.itemCode = itemCode;
+	}
+
+	public String getUomName() {
+		return uomName;
+	}
+
+	public void setUomName(String uomName) {
+		this.uomName = uomName;
 	}
 
 	@Override
 	public String toString() {
-		return "MatIssueDetail [matDetailId=" + matDetailId + ", matHeaderId=" + matHeaderId + ", quantity=" + quantity
-				+ ", itemId=" + itemId + ", itemRate=" + itemRate + ", value=" + value + ", uomId=" + uomId
+		return "GetMatIssueDetail [matDetailId=" + matDetailId + ", matHeaderId=" + matHeaderId + ", itemId=" + itemId
+				+ ", quantity=" + quantity + ", itemRate=" + itemRate + ", value=" + value + ", uomId=" + uomId
 				+ ", delStatus=" + delStatus + ", exInt1=" + exInt1 + ", exInt2=" + exInt2 + ", exVar1=" + exVar1
-				+ ", exVar2=" + exVar2 + ", exDate1=" + exDate1 + ", exBool1=" + exBool1 + "]";
+				+ ", exVar2=" + exVar2 + ", exDate1=" + exDate1 + ", exBool1=" + exBool1 + ", itemDesc=" + itemDesc
+				+ ", itemCode=" + itemCode + ", uomName=" + uomName + "]";
 	}
 
 }

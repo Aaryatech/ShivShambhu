@@ -123,7 +123,7 @@ public class MstApiController {
 
 	}
 
-	// ----------------Itemcategory Master-------------------------------
+	// ----------------Category Master-------------------------------
 
 	@RequestMapping(value = { "/getAllItemCategoryList" }, method = RequestMethod.GET)
 	public @ResponseBody List<ItemCategory> getAllItemCategoryList() {
@@ -132,7 +132,7 @@ public class MstApiController {
 
 		try {
 
-			itemCatList = itemCategoryRepo.findByDelStatusOrderByItemCatIdDesc(1);
+			itemCatList = itemCategoryRepo.findByIsUsedOrderByCatIdDesc(1);
 
 		} catch (Exception e) {
 
@@ -150,7 +150,7 @@ public class MstApiController {
 
 		try {
 
-			itemList = rawMatItemRepo.findByCatIdAndDelStatus(catId, 1);
+			itemList = rawMatItemRepo.findByCatIdAndIsUsed(catId, 1);
 
 		} catch (Exception e) {
 
@@ -162,13 +162,13 @@ public class MstApiController {
 	}
 
 	@RequestMapping(value = { "/getRawItemLByItemId" }, method = RequestMethod.POST)
-	public @ResponseBody RawMatItem getRawItemLByItemId(@RequestParam("rmId") int rmId) {
+	public @ResponseBody RawMatItem getRawItemLByItemId(@RequestParam("itemId") int itemId) {
 
 		RawMatItem item = new RawMatItem();
 
 		try {
 
-			item = rawMatItemRepo.findByRmIdAndDelStatus(rmId, 1);
+			item = rawMatItemRepo.findByItemIdAndIsUsed(itemId, 1);
 
 		} catch (Exception e) {
 

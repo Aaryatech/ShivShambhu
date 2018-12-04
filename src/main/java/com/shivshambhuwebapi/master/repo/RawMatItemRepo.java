@@ -8,8 +8,8 @@ import com.shivshambhuwebapi.master.model.RawMatItem;
 
 public interface RawMatItemRepo extends JpaRepository<RawMatItem, Integer> {
 
-	List<RawMatItem> findByCatIdAndDelStatus(int catId, int i);
+	List<RawMatItem> findByCatIdAndIsUsed(int catId, int i);
 
-	RawMatItem findByRmIdAndDelStatus(int rmId, int i);
+	RawMatItem findByItemIdAndIsUsed(int itemId, int i);
 
 }
