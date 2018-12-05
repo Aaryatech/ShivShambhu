@@ -25,4 +25,6 @@ public interface MatIssueHeaderRepo extends JpaRepository<MatIssueHeader, Intege
 	@Query("UPDATE MatIssueHeader SET delStatus=0  WHERE matHeaderId IN(:matHeaderIds)")
 	int deleteMultiMatIssueHeader(@Param("matHeaderIds") List<Integer> matHeaderIds);
 
+	MatIssueHeader findByMatHeaderIdAndDelStatus(int matHeaderId, int i);
+
 }

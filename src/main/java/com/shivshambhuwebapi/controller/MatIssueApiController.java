@@ -49,7 +49,7 @@ public class MatIssueApiController {
 
 			matIssueHeader = matIssueHeaderRepo.save(matHeader);
 
-			for (int i = 0; i < matIssueHeader.getMatIssueDetailList().size(); i++) {
+			for (int i = 0; i < matHeader.getMatIssueDetailList().size(); i++) {
 				matHeader.getMatIssueDetailList().get(i).setMatHeaderId(matIssueHeader.getMatHeaderId());
 
 			}
@@ -113,6 +113,30 @@ public class MatIssueApiController {
 		return header;
 
 	}
+	
+	
+	@RequestMapping(value = { "/getMatIssueByHeaderId" }, method = RequestMethod.POST)
+	public @ResponseBody MatIssueHeader getMatIssueByHeaderId(@RequestParam("matHeaderId") int matHeaderId) {
+
+		MatIssueHeader header = new MatIssueHeader();
+
+		try {
+
+			header = matIssueHeaderRepo.findByMatHeaderIdAndDelStatus(matHeaderId,1);
+			header.setDate(DateConvertor.convertToDMY(header.getDate()));
+			List<MatIssueDetail> matDetailList = matIssueDetailRepo
+					.findByMatHeaderIdAndDelStatus(header.getMatHeaderId(),1);
+			header.setMatIssueDetailList(matDetailList);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return header;
+
+	}
+
 
 	@RequestMapping(value = { "/deleteMatIssueHeader" }, method = RequestMethod.POST)
 	public @ResponseBody Info deleteMatIssueHeader(@RequestParam("matHeaderId") int matHeaderId) {
