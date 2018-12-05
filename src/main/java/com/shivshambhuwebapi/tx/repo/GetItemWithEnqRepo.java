@@ -18,35 +18,35 @@ public interface GetItemWithEnqRepo extends JpaRepository<GetItemWithEnq, Intege
 
 			" COALESCE((SELECT t_quot_detail.other_cost_after_tax from t_quot_detail,t_quot_header "
 			+ " WHERE t_quot_detail.quot_head_id=t_quot_header.quot_head_id AND t_quot_header.enq_head_id=:enqHeadId "
-			+ " AND t_quot_detail.item_id=i.item_id),0) AS other_cost_after_tax," +
+			+ " AND t_quot_detail.item_id=i.item_id AND t_quot_detail.del_status=1),0) AS other_cost_after_tax," +
 
 			" COALESCE((SELECT t_quot_detail.trans_cost from t_quot_detail,t_quot_header "
 			+ " WHERE t_quot_detail.quot_head_id=t_quot_header.quot_head_id AND t_quot_header.enq_head_id=:enqHeadId "
-			+ " AND t_quot_detail.item_id=i.item_id),0) AS trans_cost," +
+			+ " AND t_quot_detail.item_id=i.item_id AND t_quot_detail.del_status=1),0) AS trans_cost," +
 
 			" COALESCE((SELECT t_quot_detail.other_cost from t_quot_detail,t_quot_header "
 			+ " WHERE t_quot_detail.quot_head_id=t_quot_header.quot_head_id AND t_quot_header.enq_head_id=:enqHeadId "
-			+ " AND t_quot_detail.item_id=i.item_id),0) AS other_cost," +
+			+ " AND t_quot_detail.item_id=i.item_id AND t_quot_detail.del_status=1),0) AS other_cost," +
 
 			//
 
 			" COALESCE((SELECT t_quot_detail.tax_value from t_quot_detail,t_quot_header "
 			+ " WHERE t_quot_detail.quot_head_id=t_quot_header.quot_head_id AND t_quot_header.enq_head_id=:enqHeadId "
-			+ " AND t_quot_detail.item_id=i.item_id),0) AS tax_value," +
+			+ " AND t_quot_detail.item_id=i.item_id AND t_quot_detail.del_status=1),0) AS tax_value," +
 
 			" COALESCE((SELECT t_quot_detail.taxable_value from t_quot_detail,t_quot_header "
 			+ " WHERE t_quot_detail.quot_head_id=t_quot_header.quot_head_id AND t_quot_header.enq_head_id=:enqHeadId "
-			+ " AND t_quot_detail.item_id=i.item_id),0) AS taxable_value," +
+			+ " AND t_quot_detail.item_id=i.item_id AND t_quot_detail.del_status=1),0) AS taxable_value," +
 
 			" COALESCE((SELECT t_quot_detail.total from t_quot_detail,t_quot_header "
 			+ " WHERE t_quot_detail.quot_head_id=t_quot_header.quot_head_id AND t_quot_header.enq_head_id=:enqHeadId "
-			+ " AND t_quot_detail.item_id=i.item_id),0) AS final_total," +
+			+ " AND t_quot_detail.item_id=i.item_id AND t_quot_detail.del_status=1),0) AS final_total," +
 
 			//
 
 			" COALESCE((SELECT t_quot_detail.quot_qty from t_quot_detail,t_quot_header "
 			+ " WHERE t_quot_detail.quot_head_id=t_quot_header.quot_head_id AND t_quot_header.enq_head_id=:enqHeadId "
-			+ " AND t_quot_detail.item_id=i.item_id),0) AS quot_qty," +
+			+ " AND t_quot_detail.item_id=i.item_id AND t_quot_detail.del_status=1),0) AS quot_qty," +
 
 			" COALESCE((SELECT t_enq_detail.enq_uom_id FROM t_enq_detail,t_enq_header "
 			+ " WHERE t_enq_detail.enq_head_id=t_enq_header.enq_head_id AND t_enq_header.plant_id=p.plant_id "

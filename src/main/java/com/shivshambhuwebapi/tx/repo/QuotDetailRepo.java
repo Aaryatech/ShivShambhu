@@ -9,13 +9,14 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.shivshambhuwebapi.tx.model.QuotDetail;
+import com.sun.org.glassfish.gmbal.ParameterNames;
 
 public interface QuotDetailRepo extends JpaRepository<QuotDetail, Integer> {
 
 	@Transactional
 	@Modifying
-	@Query("UPDATE QuotDetail SET delStatus=0  WHERE quot_detail_id=:quotDetailId")
-	int deleteQuotDetail(@Param("quotDetailId") int quotDetailId);
+	@Query("UPDATE QuotDetail SET delStatus=0  WHERE quotHeadId=:quotHeadId AND itemId=:itemId")
+	int deleteQuotDetail(@Param("quotHeadId") int quotHeadId,@Param("itemId")int itemId);
 
 	List<QuotDetail> findByQuotHeadId(int quotHeadId);
 

@@ -103,12 +103,13 @@ public class QuotController {
 	}
 
 	@RequestMapping(value = { "/deleteQuotDetail" }, method = RequestMethod.POST)
-	public @ResponseBody Info deleteQuotDetail(@RequestParam("quotDetailId") int quotDetailId) {
+	public @ResponseBody Info deleteQuotDetail(@RequestParam("quotHeadId") int quotHeadId,
+			@RequestParam("itemId") int itemId) {
 
 		Info info = new Info();
 
 		try {
-			int delete = quotDetailRepo.deleteQuotDetail(quotDetailId);
+			int delete = quotDetailRepo.deleteQuotDetail(quotHeadId,itemId);
 
 			if (delete == 1) {
 				info.setError(false);
