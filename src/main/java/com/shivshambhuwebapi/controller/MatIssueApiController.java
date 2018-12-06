@@ -86,6 +86,33 @@ public class MatIssueApiController {
 
 	}
 
+	@RequestMapping(value = { "/deleteMatVehDetail" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteMatVehDetail(@RequestParam("matVehDetailId") int matVehDetailId) {
+
+		Info info = new Info();
+
+		try {
+			int delete = matIssueVehDetailRepo.deleteMatVehDetail(matVehDetailId);
+
+			if (delete == 1) {
+				info.setError(false);
+				info.setMessage("successfully Deleted");
+			} else {
+				info.setError(true);
+				info.setMessage(" Deleted to Delete");
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage(" Deleted to Delete");
+
+		}
+		return info;
+
+	}
+
 	@RequestMapping(value = { "/deleteMultiMatVehHeader" }, method = RequestMethod.POST)
 	public @ResponseBody Info deleteMultiMatVehHeader(@RequestParam("matVehHeaderIds") List<Integer> matVehHeaderIds) {
 
@@ -322,6 +349,33 @@ public class MatIssueApiController {
 			if (delete >= 1) {
 				info.setError(false);
 				info.setMessage("successfully Multiple Deleted");
+			} else {
+				info.setError(true);
+				info.setMessage(" Deleted to Delete");
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage(" Deleted to Delete");
+
+		}
+		return info;
+
+	}
+
+	@RequestMapping(value = { "/deleteMatContraDetail" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteMatContraDetail(@RequestParam("matDetailId") int matDetailId) {
+
+		Info info = new Info();
+
+		try {
+			int delete = matIssueDetailRepo.deleteMatIssueDetail(matDetailId);
+
+			if (delete == 1) {
+				info.setError(false);
+				info.setMessage("successfully Deleted");
 			} else {
 				info.setError(true);
 				info.setMessage(" Deleted to Delete");
