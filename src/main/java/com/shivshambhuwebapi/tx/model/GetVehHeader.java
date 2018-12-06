@@ -75,7 +75,7 @@ public class GetVehHeader {
 	private String vehCompName;
 
 	@Transient
-	List<MatIssueVehDetail> vehDetailList;
+	List<GetVehDetail> vehDetailList;
 
 	public int getMatVehHeaderId() {
 		return matVehHeaderId;
@@ -245,11 +245,11 @@ public class GetVehHeader {
 		this.vehCompName = vehCompName;
 	}
 
-	public List<MatIssueVehDetail> getVehDetailList() {
+	public List<GetVehDetail> getVehDetailList() {
 		return vehDetailList;
 	}
 
-	public void setVehDetailList(List<MatIssueVehDetail> vehDetailList) {
+	public void setVehDetailList(List<GetVehDetail> vehDetailList) {
 		this.vehDetailList = vehDetailList;
 	}
 

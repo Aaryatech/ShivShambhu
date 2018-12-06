@@ -17,12 +17,16 @@ import com.shivshambhuwebapi.tx.model.EnqDetail;
 import com.shivshambhuwebapi.tx.model.EnqHeader;
 import com.shivshambhuwebapi.tx.model.GetMatIssueDetail;
 import com.shivshambhuwebapi.tx.model.GetMatIssueHeader;
+import com.shivshambhuwebapi.tx.model.GetVehDetail;
+import com.shivshambhuwebapi.tx.model.GetVehHeader;
 import com.shivshambhuwebapi.tx.model.MatIssueDetail;
 import com.shivshambhuwebapi.tx.model.MatIssueHeader;
 import com.shivshambhuwebapi.tx.model.MatIssueVehDetail;
 import com.shivshambhuwebapi.tx.model.MatIssueVehHeader;
 import com.shivshambhuwebapi.tx.repo.GetMatIssueDetailRepo;
 import com.shivshambhuwebapi.tx.repo.GetMatIssueHeaderRepo;
+import com.shivshambhuwebapi.tx.repo.GetVehDetailRepo;
+import com.shivshambhuwebapi.tx.repo.GetVehHeaderRepo;
 import com.shivshambhuwebapi.tx.repo.MatIssueDetailRepo;
 import com.shivshambhuwebapi.tx.repo.MatIssueHeaderRepo;
 import com.shivshambhuwebapi.tx.repo.MatIssueVehDetailRepo;
@@ -48,6 +52,66 @@ public class MatIssueApiController {
 
 	@Autowired
 	MatIssueVehDetailRepo matIssueVehDetailRepo;
+
+	@Autowired
+	GetVehHeaderRepo getVehHeaderRepo;
+
+	@Autowired
+	GetVehDetailRepo getVehDetailRepo;
+
+	@RequestMapping(value = { "/deleteMatVehHeader" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteMatVehHeader(@RequestParam("matVehHeaderId") int matVehHeaderId) {
+
+		Info info = new Info();
+
+		try {
+			int delete = matIssueVehHeaderRepo.deleteMatVehHeader(matVehHeaderId);
+
+			if (delete == 1) {
+				info.setError(false);
+				info.setMessage("successfully Deleted");
+			} else {
+				info.setError(true);
+				info.setMessage(" Deleted to Delete");
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage(" Deleted to Delete");
+
+		}
+		return info;
+
+	}
+
+	@RequestMapping(value = { "/deleteMultiMatVehHeader" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteMultiMatVehHeader(@RequestParam("matVehHeaderIds") List<Integer> matVehHeaderIds) {
+
+		Info info = new Info();
+
+		try {
+			int delete = matIssueVehHeaderRepo.deleteMultiMatVehHeader(matVehHeaderIds);
+
+			if (delete >= 1) {
+				info.setError(false);
+				info.setMessage("successfully Multiple Deleted");
+			} else {
+				info.setError(true);
+				info.setMessage(" Deleted to Delete");
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage(" Deleted to Delete");
+
+		}
+		return info;
+
+	}
 
 	@RequestMapping(value = { "/saveMatIssueVehicle" }, method = RequestMethod.POST)
 	public @ResponseBody MatIssueVehHeader saveMatIssueVehicle(@RequestBody MatIssueVehHeader matHeader) {
@@ -77,6 +141,49 @@ public class MatIssueApiController {
 
 		}
 		return matIssueHeader;
+
+	}
+
+	@RequestMapping(value = { "/getMatIssueVehHeaderList" }, method = RequestMethod.GET)
+	public @ResponseBody List<GetVehHeader> getMatIssueVehHeaderList() {
+
+		List<GetVehHeader> headerList = new ArrayList<GetVehHeader>();
+
+		try {
+
+			headerList = getVehHeaderRepo.getMatIssueHeadeList();
+
+			for (int i = 0; i < headerList.size(); i++) {
+				headerList.get(i).setDate(DateConvertor.convertToDMY(headerList.get(i).getDate()));
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return headerList;
+
+	}
+
+	@RequestMapping(value = { "/getMatIssueVehicleByHeaderId" }, method = RequestMethod.POST)
+	public @ResponseBody GetVehHeader getMatIssueVehicleByHeaderId(@RequestParam("matVehHeaderId") int matVehHeaderId) {
+
+		GetVehHeader header = new GetVehHeader();
+
+		try {
+
+			header = getVehHeaderRepo.getMatIssueByHeaderId(matVehHeaderId);
+			header.setDate(DateConvertor.convertToDMY(header.getDate()));
+			List<GetVehDetail> vehDetailList = getVehDetailRepo.getMatIssueByHeaderId(header.getMatVehHeaderId());
+			header.setVehDetailList(vehDetailList);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return header;
 
 	}
 
