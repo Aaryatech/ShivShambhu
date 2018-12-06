@@ -19,10 +19,14 @@ import com.shivshambhuwebapi.tx.model.GetMatIssueDetail;
 import com.shivshambhuwebapi.tx.model.GetMatIssueHeader;
 import com.shivshambhuwebapi.tx.model.MatIssueDetail;
 import com.shivshambhuwebapi.tx.model.MatIssueHeader;
+import com.shivshambhuwebapi.tx.model.MatIssueVehDetail;
+import com.shivshambhuwebapi.tx.model.MatIssueVehHeader;
 import com.shivshambhuwebapi.tx.repo.GetMatIssueDetailRepo;
 import com.shivshambhuwebapi.tx.repo.GetMatIssueHeaderRepo;
 import com.shivshambhuwebapi.tx.repo.MatIssueDetailRepo;
 import com.shivshambhuwebapi.tx.repo.MatIssueHeaderRepo;
+import com.shivshambhuwebapi.tx.repo.MatIssueVehDetailRepo;
+import com.shivshambhuwebapi.tx.repo.MatIssueVehHeaderRepo;
 
 @RestController
 public class MatIssueApiController {
@@ -38,6 +42,43 @@ public class MatIssueApiController {
 
 	@Autowired
 	GetMatIssueDetailRepo getMatIssueDetailRepo;
+
+	@Autowired
+	MatIssueVehHeaderRepo matIssueVehHeaderRepo;
+
+	@Autowired
+	MatIssueVehDetailRepo matIssueVehDetailRepo;
+
+	@RequestMapping(value = { "/saveMatIssueVehicle" }, method = RequestMethod.POST)
+	public @ResponseBody MatIssueVehHeader saveMatIssueVehicle(@RequestBody MatIssueVehHeader matHeader) {
+
+		Info errorMessage = new Info();
+		MatIssueVehHeader matIssueHeader = new MatIssueVehHeader();
+
+		try {
+
+			matIssueHeader = matIssueVehHeaderRepo.save(matHeader);
+
+			for (int i = 0; i < matHeader.getVehDetailList().size(); i++) {
+				matHeader.getVehDetailList().get(i).setMatVehHeaderId(matIssueHeader.getMatVehHeaderId());
+
+			}
+
+			List<MatIssueVehDetail> matDetailsList = matIssueVehDetailRepo.saveAll(matHeader.getVehDetailList());
+			matIssueHeader.setVehDetailList(matDetailsList);
+			errorMessage.setError(false);
+			errorMessage.setMessage("successfully Saved ");
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			errorMessage.setError(true);
+			errorMessage.setMessage("failed to Save ");
+
+		}
+		return matIssueHeader;
+
+	}
 
 	@RequestMapping(value = { "/saveMatIssueHeaderAndDetail" }, method = RequestMethod.POST)
 	public @ResponseBody MatIssueHeader saveMatIssueHeaderAndDetail(@RequestBody MatIssueHeader matHeader) {
@@ -113,8 +154,7 @@ public class MatIssueApiController {
 		return header;
 
 	}
-	
-	
+
 	@RequestMapping(value = { "/getMatIssueByHeaderId" }, method = RequestMethod.POST)
 	public @ResponseBody MatIssueHeader getMatIssueByHeaderId(@RequestParam("matHeaderId") int matHeaderId) {
 
@@ -122,10 +162,10 @@ public class MatIssueApiController {
 
 		try {
 
-			header = matIssueHeaderRepo.findByMatHeaderIdAndDelStatus(matHeaderId,1);
+			header = matIssueHeaderRepo.findByMatHeaderIdAndDelStatus(matHeaderId, 1);
 			header.setDate(DateConvertor.convertToDMY(header.getDate()));
 			List<MatIssueDetail> matDetailList = matIssueDetailRepo
-					.findByMatHeaderIdAndDelStatus(header.getMatHeaderId(),1);
+					.findByMatHeaderIdAndDelStatus(header.getMatHeaderId(), 1);
 			header.setMatIssueDetailList(matDetailList);
 
 		} catch (Exception e) {
@@ -136,7 +176,6 @@ public class MatIssueApiController {
 		return header;
 
 	}
-
 
 	@RequestMapping(value = { "/deleteMatIssueHeader" }, method = RequestMethod.POST)
 	public @ResponseBody Info deleteMatIssueHeader(@RequestParam("matHeaderId") int matHeaderId) {
