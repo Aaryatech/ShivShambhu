@@ -15,7 +15,7 @@ public interface GetQuotHeadsRepo extends JpaRepository<GetQuotHeads, Integer> {
 			" FROM t_quot_header,m_customer,m_user,m_company,m_plant,t_enq_header " + 
 			" WHERE t_quot_header.enq_head_id=t_enq_header.enq_head_id and m_customer.cust_id=t_enq_header.cust_id AND " + 
 			" t_enq_header.plant_id=m_plant.plant_id AND m_company.company_id=m_plant.company_id AND t_quot_header.user_id=m_user.user_id AND " + 
-			"  t_quot_header.status IN (:statusList) ", nativeQuery = true)
+			"  t_quot_header.status IN (:statusList)   ORDER BY t_quot_header.quot_head_id DESC ", nativeQuery = true)
 	
 	List<GetQuotHeads> getQuotHeads(@Param("statusList") List<String> statusList);
 
