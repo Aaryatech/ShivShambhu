@@ -14,7 +14,7 @@ public interface DeptRepo extends JpaRepository<Dept, Integer> {
 
 	@Transactional
 	@Modifying
-	@Query("UPDATE Dept SET delStatus=0  WHERE dept_id=:deptId")
+	@Query("UPDATE Dept SET delStatus=0,deptId=0  WHERE dept_id=:deptId")
 	int deleteDept(@Param("deptId") int deptId);
 
 	@Transactional
@@ -27,6 +27,5 @@ public interface DeptRepo extends JpaRepository<Dept, Integer> {
 	List<Dept> findByDelStatusOrderByDeptIdDesc(int i);
 
 	Dept findByDeptNameAndDelStatus(String deptName, int i);
-
 
 }
