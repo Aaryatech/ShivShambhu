@@ -42,7 +42,6 @@ import com.shivshambhuwebapi.master.model.Task;
 import com.shivshambhuwebapi.master.model.Tax;
 import com.shivshambhuwebapi.master.model.Uom;
 import com.shivshambhuwebapi.master.model.User;
-import com.shivshambhuwebapi.master.model.Vehicle;
 import com.shivshambhuwebapi.master.model.Vendor;
 import com.shivshambhuwebapi.master.repo.BankDetailRepo;
 import com.shivshambhuwebapi.master.repo.CompanyRepo;
@@ -59,7 +58,6 @@ import com.shivshambhuwebapi.master.repo.GetProjectRepo;
 import com.shivshambhuwebapi.master.repo.GetUserRepo;
 import com.shivshambhuwebapi.master.repo.GetVendorRepo;
 import com.shivshambhuwebapi.master.repo.ItemRepo;
-import com.shivshambhuwebapi.master.repo.ItemTypeRepo;
 import com.shivshambhuwebapi.master.repo.MarketingUserRepo;
 import com.shivshambhuwebapi.master.repo.PaymentTermRepo;
 import com.shivshambhuwebapi.master.repo.PlantRepo;
@@ -69,14 +67,10 @@ import com.shivshambhuwebapi.master.repo.TaskRepo;
 import com.shivshambhuwebapi.master.repo.TaxRepo;
 import com.shivshambhuwebapi.master.repo.UomRepo;
 import com.shivshambhuwebapi.master.repo.UserRepo;
-import com.shivshambhuwebapi.master.repo.VehicleRepo;
 import com.shivshambhuwebapi.master.repo.VendorRepo;
 
 @RestController
 public class MasterApiController {
-
-	@Autowired
-	VehicleRepo vehicleRepo;
 
 	@Autowired
 	EnqGenFactRepo enqGenFactRepo;
@@ -86,9 +80,6 @@ public class MasterApiController {
 
 	@Autowired
 	GetBankDetailRepo getBankDetailRepo;
-
-	@Autowired
-	ItemTypeRepo itemTypeRepo;
 
 	@Autowired
 	GetUserRepo getUserRepo;
@@ -149,63 +140,6 @@ public class MasterApiController {
 
 	@Autowired
 	GetProjectRepo getProjectRepo;
-
-	// ----------------Vehicle Master-------------------------------
-
-	@RequestMapping(value = { "/getAllVehicleList" }, method = RequestMethod.GET)
-	public @ResponseBody List<Vehicle> getAllVehicleList() {
-
-		List<Vehicle> vehList = new ArrayList<Vehicle>();
-
-		try {
-
-			vehList = vehicleRepo.findByDelStatusOrderByVehicleIdDesc(1);
-
-		} catch (Exception e) {
-
-			e.printStackTrace();
-
-		}
-		return vehList;
-
-	}
-
-	// ----------------Item Type-------------------------------
-
-	@RequestMapping(value = { "/getAllItemTypeList" }, method = RequestMethod.GET)
-	public @ResponseBody List<ItemType> getAllItemTypeList() {
-
-		List<ItemType> itemTypeList = new ArrayList<ItemType>();
-
-		try {
-
-			itemTypeList = itemTypeRepo.findByDelStatusOrderByItemTypeIdDesc(1);
-
-		} catch (Exception e) {
-
-			e.printStackTrace();
-
-		}
-		return itemTypeList;
-
-	}
-
-	@RequestMapping(value = { "/getItemTypeByItemTypeId" }, method = RequestMethod.POST)
-	public @ResponseBody ItemType getItemTypeByItemTypeId(@RequestParam("itemTypeId") int itemTypeId) {
-
-		ItemType itemType = new ItemType();
-
-		try {
-			itemType = itemTypeRepo.findByItemTypeIdAndDelStatus(itemTypeId, 1);
-
-		} catch (Exception e) {
-
-			e.printStackTrace();
-
-		}
-		return itemType;
-
-	}
 
 	// --------------------------------------Document-------------------------
 

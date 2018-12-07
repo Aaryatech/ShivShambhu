@@ -10,4 +10,6 @@ public interface VehicleRepo extends JpaRepository<Vehicle, Integer> {
 
 	List<Vehicle> findByDelStatusOrderByVehicleIdDesc(int i);
 
+	List<Vehicle> findByVehicleTypeAndDelStatus(int vehicleType, int i);
+
 }

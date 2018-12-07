@@ -14,14 +14,18 @@ import org.springframework.web.bind.annotation.RestController;
 import com.shivshambhuwebapi.master.model.Contractor;
 import com.shivshambhuwebapi.master.model.GetItemTax;
 import com.shivshambhuwebapi.master.model.ItemCategory;
+import com.shivshambhuwebapi.master.model.ItemType;
 import com.shivshambhuwebapi.master.model.RawMatItem;
 import com.shivshambhuwebapi.master.model.Subplant;
+import com.shivshambhuwebapi.master.model.Vehicle;
 import com.shivshambhuwebapi.master.model.VehicleType;
 import com.shivshambhuwebapi.master.repo.ContractorRepo;
 import com.shivshambhuwebapi.master.repo.GetItemTaxRepo;
 import com.shivshambhuwebapi.master.repo.ItemCategoryRepo;
+import com.shivshambhuwebapi.master.repo.ItemTypeRepo;
 import com.shivshambhuwebapi.master.repo.RawMatItemRepo;
 import com.shivshambhuwebapi.master.repo.SubplantRepo;
+import com.shivshambhuwebapi.master.repo.VehicleRepo;
 import com.shivshambhuwebapi.master.repo.VehicleTypeRepo;
 
 @RestController
@@ -44,6 +48,86 @@ public class MstApiController {
 
 	@Autowired
 	RawMatItemRepo rawMatItemRepo;
+
+	@Autowired
+	VehicleRepo vehicleRepo;
+
+	@Autowired
+	ItemTypeRepo itemTypeRepo;
+
+	// ----------------Vehicle Master-------------------------------
+
+	@RequestMapping(value = { "/getAllVehicleList" }, method = RequestMethod.GET)
+	public @ResponseBody List<Vehicle> getAllVehicleList() {
+
+		List<Vehicle> vehList = new ArrayList<Vehicle>();
+
+		try {
+
+			vehList = vehicleRepo.findByDelStatusOrderByVehicleIdDesc(1);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return vehList;
+
+	}
+
+	@RequestMapping(value = { "/getVehListByVehicleType" }, method = RequestMethod.POST)
+	public @ResponseBody List<Vehicle> getVehListByVehicleType(@RequestParam("vehicleType") int vehicleType) {
+
+		List<Vehicle> vehicleList = new ArrayList<Vehicle>();
+
+		try {
+			vehicleList = vehicleRepo.findByVehicleTypeAndDelStatus(vehicleType, 1);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return vehicleList;
+
+	}
+
+	// ----------------Item Type-------------------------------
+
+	@RequestMapping(value = { "/getAllItemTypeList" }, method = RequestMethod.GET)
+	public @ResponseBody List<ItemType> getAllItemTypeList() {
+
+		List<ItemType> itemTypeList = new ArrayList<ItemType>();
+
+		try {
+
+			itemTypeList = itemTypeRepo.findByDelStatusOrderByItemTypeIdDesc(1);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return itemTypeList;
+
+	}
+
+	@RequestMapping(value = { "/getItemTypeByItemTypeId" }, method = RequestMethod.POST)
+	public @ResponseBody ItemType getItemTypeByItemTypeId(@RequestParam("itemTypeId") int itemTypeId) {
+
+		ItemType itemType = new ItemType();
+
+		try {
+			itemType = itemTypeRepo.findByItemTypeIdAndDelStatus(itemTypeId, 1);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return itemType;
+
+	}
 
 	@RequestMapping(value = { "/getAllItemTaxList" }, method = RequestMethod.POST)
 	public @ResponseBody List<GetItemTax> getAllItemTaxList(@RequestParam("plantId") int plantId) {
