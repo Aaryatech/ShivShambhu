@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.shivshambhuwebapi.common.DateConvertor;
 import com.shivshambhuwebapi.master.model.Setting;
 import com.shivshambhuwebapi.master.repo.SettingRepo;
 import com.shivshambhuwebapi.tx.model.GetWeighing;
@@ -43,8 +44,8 @@ public class TxApiController {
 
 	// ------------------------------------PoklenReadingRepo----------------------------------------------------
 
-	@RequestMapping(value = { "/savePoklenReadingRepo" }, method = RequestMethod.POST)
-	public @ResponseBody PoklenReading savePoklenReadingRepo(@RequestBody PoklenReading poklenReading) {
+	@RequestMapping(value = { "/savePoklenReading" }, method = RequestMethod.POST)
+	public @ResponseBody PoklenReading savePoklenReading(@RequestBody PoklenReading poklenReading) {
 
 		PoklenReading res = new PoklenReading();
 
@@ -150,6 +151,7 @@ public class TxApiController {
 
 		try {
 			weighing = weighingRepo.findByWeighIdAndDelStatus(weighId, 1);
+			weighing.setDate(DateConvertor.convertToDMY(weighing.getDate()));
 
 		} catch (Exception e) {
 
@@ -240,6 +242,10 @@ public class TxApiController {
 		try {
 
 			wList = getWeighingRepo.getWeighingList();
+
+			for (int i = 0; i < wList.size(); i++) {
+				wList.get(i).setDate(DateConvertor.convertToDMY(wList.get(i).getDate()));
+			}
 
 		} catch (Exception e) {
 

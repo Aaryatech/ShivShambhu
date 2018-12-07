@@ -186,6 +186,24 @@ public class MstApiController {
 		return conList;
 
 	}
+	
+	@RequestMapping(value = { "/getContractorById" }, method = RequestMethod.POST)
+	public @ResponseBody Contractor getContractorById(@RequestParam("contrId") int contrId) {
+
+		Contractor res=new Contractor();
+
+		try {
+
+			res = contractorRepo.findByContrIdAndDelStatus(contrId,1);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return res;
+
+	}
 
 	// ----------------Subplant Master-------------------------------
 
