@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.shivshambhuwebapi.master.model.Setting;
 import com.shivshambhuwebapi.master.repo.SettingRepo;
+import com.shivshambhuwebapi.tx.model.GetWeighing;
 import com.shivshambhuwebapi.tx.model.MarketingTravel;
 import com.shivshambhuwebapi.tx.model.PoklenReading;
 import com.shivshambhuwebapi.tx.model.Weighing;
+import com.shivshambhuwebapi.tx.repo.GetWeighingRepo;
 import com.shivshambhuwebapi.tx.repo.MarketingTravelRepo;
 import com.shivshambhuwebapi.tx.repo.PoklenReadingRepo;
 import com.shivshambhuwebapi.tx.repo.WeighingRepo;
@@ -29,6 +31,9 @@ public class TxApiController {
 
 	@Autowired
 	WeighingRepo weighingRepo;
+
+	@Autowired
+	GetWeighingRepo getWeighingRepo;
 
 	@Autowired
 	SettingRepo settingRepo;
@@ -224,6 +229,41 @@ public class TxApiController {
 
 		}
 		return info;
+
+	}
+
+	@RequestMapping(value = { "/getWeighList" }, method = RequestMethod.GET)
+	public @ResponseBody List<GetWeighing> getWeighList() {
+
+		List<GetWeighing> wList = new ArrayList<GetWeighing>();
+
+		try {
+
+			wList = getWeighingRepo.getWeighingList();
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return wList;
+
+	}
+
+	@RequestMapping(value = { "/getWeighByWeighId" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetWeighing> getWeighByWeighId(@RequestParam("weighId") int weighId) {
+
+		List<GetWeighing> wList = new ArrayList<GetWeighing>();
+
+		try {
+			wList = getWeighingRepo.getWeighingByWeighId(weighId);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return wList;
 
 	}
 
