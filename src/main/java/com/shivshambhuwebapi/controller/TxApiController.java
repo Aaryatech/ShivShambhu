@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.shivshambhuwebapi.master.model.Setting;
 import com.shivshambhuwebapi.master.repo.SettingRepo;
 import com.shivshambhuwebapi.tx.model.MarketingTravel;
+import com.shivshambhuwebapi.tx.model.PoklenReading;
 import com.shivshambhuwebapi.tx.model.Weighing;
 import com.shivshambhuwebapi.tx.repo.MarketingTravelRepo;
 import com.shivshambhuwebapi.tx.repo.PoklenReadingRepo;
@@ -34,6 +35,88 @@ public class TxApiController {
 
 	@Autowired
 	PoklenReadingRepo poklenReadingRepo;
+
+	// ------------------------------------PoklenReadingRepo----------------------------------------------------
+
+	@RequestMapping(value = { "/savePoklenReadingRepo" }, method = RequestMethod.POST)
+	public @ResponseBody PoklenReading savePoklenReadingRepo(@RequestBody PoklenReading poklenReading) {
+
+		PoklenReading res = new PoklenReading();
+
+		try {
+
+			res = poklenReadingRepo.saveAndFlush(poklenReading);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return res;
+
+	}
+
+	@RequestMapping(value = { "/getPoklenReadingById" }, method = RequestMethod.POST)
+	public @ResponseBody PoklenReading getPoklenReadingById(@RequestParam("pokId") int pokId) {
+
+		PoklenReading res = new PoklenReading();
+
+		try {
+			res = poklenReadingRepo.findByPokIdAndDelStatus(pokId, 1);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return res;
+
+	}
+
+	@RequestMapping(value = { "/getAllPoklenReadingList" }, method = RequestMethod.GET)
+	public @ResponseBody List<PoklenReading> getAllPoklenReadingList() {
+
+		List<PoklenReading> wList = new ArrayList<PoklenReading>();
+
+		try {
+
+			wList = poklenReadingRepo.findByDelStatusOrderByPokIdDesc(1);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return wList;
+
+	}
+
+	@RequestMapping(value = { "/deletePoklenReading" }, method = RequestMethod.POST)
+	public @ResponseBody Info deletePoklenReading(@RequestParam("pokId") int pokId) {
+
+		Info info = new Info();
+
+		try {
+			int delete = poklenReadingRepo.deletePoklenReading(pokId);
+
+			if (delete == 1) {
+				info.setError(false);
+				info.setMessage("successfully Deleted");
+			} else {
+				info.setError(true);
+				info.setMessage(" Deleted to Delete");
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage(" Deleted to Delete");
+
+		}
+		return info;
+
+	}
 
 	// ------------------------------------Weighing----------------------------------------------------
 
