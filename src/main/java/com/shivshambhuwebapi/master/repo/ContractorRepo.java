@@ -10,4 +10,6 @@ public interface ContractorRepo extends JpaRepository<Contractor, Integer> {
 
 	List<Contractor> findByDelStatusOrderByContrIdDesc(int i);
 
+	Contractor findByContrIdAndDelStatus(int contrId, int i);
+
 }

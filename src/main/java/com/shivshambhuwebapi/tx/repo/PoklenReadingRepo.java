@@ -20,7 +20,7 @@ public interface PoklenReadingRepo extends JpaRepository<PoklenReading, Integer>
 	@Transactional
 	@Modifying
 	@Query("UPDATE PoklenReading SET delStatus=0  WHERE pokId IN(:pokIds)")
-	int deletePoklenReading(@Param("pokIds") List<Integer> pokIds);
+	int deleteMultiPoklenReading(@Param("pokIds") List<Integer> pokIds);
 
 	PoklenReading findByPokIdAndDelStatus(int pokId, int i);
 

@@ -88,6 +88,11 @@ public class TxApiController {
 
 			wList = poklenReadingRepo.findByDelStatusOrderByPokIdDesc(1);
 
+			for (int i = 0; i < wList.size(); i++) {
+				wList.get(i).setEndDate(DateConvertor.convertToDMY(wList.get(i).getEndDate()));
+				wList.get(i).setStartDate(DateConvertor.convertToDMY(wList.get(i).getStartDate()));
+			}
+
 		} catch (Exception e) {
 
 			e.printStackTrace();
@@ -108,6 +113,33 @@ public class TxApiController {
 			if (delete == 1) {
 				info.setError(false);
 				info.setMessage("successfully Deleted");
+			} else {
+				info.setError(true);
+				info.setMessage(" Deleted to Delete");
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage(" Deleted to Delete");
+
+		}
+		return info;
+
+	}
+
+	@RequestMapping(value = { "/deleteMultiPReading" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteMultiPReading(@RequestParam("pokIds") List<Integer> pokIds) {
+
+		Info info = new Info();
+
+		try {
+			int delete = poklenReadingRepo.deleteMultiPoklenReading(pokIds);
+
+			if (delete >= 1) {
+				info.setError(false);
+				info.setMessage("successfully Multiple Deleted");
 			} else {
 				info.setError(true);
 				info.setMessage(" Deleted to Delete");
