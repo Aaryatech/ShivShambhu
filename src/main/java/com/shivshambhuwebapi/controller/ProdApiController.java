@@ -11,10 +11,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.shivshambhuwebapi.model.prodrm.GetItemDetail;
 import com.shivshambhuwebapi.model.prodrm.GetProdPlanDetail;
 import com.shivshambhuwebapi.model.prodrm.GetProdPlanHeader;
 import com.shivshambhuwebapi.model.prodrm.ProdPlanDetail;
 import com.shivshambhuwebapi.model.prodrm.ProdPlanHeader;
+import com.shivshambhuwebapi.repository.prodrm.GetItemDetailRepo;
 import com.shivshambhuwebapi.repository.prodrm.GetProdPlanDetailRepo;
 import com.shivshambhuwebapi.repository.prodrm.GetProdPlanHeaderRepo;
 import com.shivshambhuwebapi.repository.prodrm.ProdPlanDetailRepo;
@@ -37,6 +39,9 @@ public class ProdApiController {
 	@Autowired
 	GetProdPlanDetailRepo getProdPlanDetailRepo;
 
+	
+	@Autowired GetItemDetailRepo getItemDetailRepo;//for auto bill of material 
+	
 	@RequestMapping(value = { "/saveProdPlanHeaderDetail" }, method = RequestMethod.POST)
 	public @ResponseBody ProdPlanHeader saveProdPlanHeaderDetail(@RequestBody ProdPlanHeader planHeader) {
 
@@ -160,5 +165,25 @@ public class ProdApiController {
 		return info;
 	}
 	
+	
+	@RequestMapping(value = { "/getItemDetailForBOM" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetItemDetail> getItemDetailForBOM(@RequestParam("prodHeaderId") int prodHeaderId) {
+
+		List<GetItemDetail> itemDetList = new ArrayList<>();
+
+		try {
+			itemDetList=getItemDetailRepo.getGetItemDetail(prodHeaderId);
+			
+		} catch (Exception e) {
+			System.err.println("exce in getItemDetailForBOM " + e.getMessage());
+			itemDetList = null;
+			e.printStackTrace();
+
+		}
+
+		return itemDetList;
+
+	}
+
 
 }
