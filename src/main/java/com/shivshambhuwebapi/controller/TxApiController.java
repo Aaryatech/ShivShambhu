@@ -69,6 +69,8 @@ public class TxApiController {
 
 		try {
 			res = poklenReadingRepo.findByPokIdAndDelStatus(pokId, 1);
+			res.setEndDate(DateConvertor.convertToDMY(res.getEndDate()));
+			res.setStartDate(DateConvertor.convertToDMY(res.getStartDate()));
 
 		} catch (Exception e) {
 

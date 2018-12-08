@@ -16,4 +16,11 @@ public interface GetMatIssueHeaderRepo extends JpaRepository<GetMatIssueHeader, 
 	@Query(value = "SELECT c.*,n.contr_name ,n.contr_mob  FROM t_mat_issue_contra_header c,m_contractor n WHERE c.del_status=1 AND c.contr_id=n.contr_id AND c.mat_header_id=:matHeaderId", nativeQuery = true)
 	GetMatIssueHeader getMatIssueHeaderByHeaderId(@Param("matHeaderId") int matHeaderId);
 
+	@Query(value = "SELECT c.mat_header_id,c.issue_no,c.contr_id,c.date,c.user_id,SUM(c.total)as total,SUM(c.qty_total) as qty_total,"
+			+ "c.del_status,n.contr_name ,n.contr_mob,c.ex_int1,c.ex_int2,c.ex_int3,c.ex_var1,c.ex_var2,c.ex_var3,c.ex_date1,"
+			+ "c.ex_date2,c.ex_bool1, c.ex_bool2  FROM t_mat_issue_contra_header c,m_contractor n WHERE c.del_status=1 AND "
+			+ "c.contr_id=n.contr_id AND  c.date  BETWEEN  :fromDate AND :toDate GROUP BY c.contr_id", nativeQuery = true)
+	List<GetMatIssueHeader> getContractorBetweenDate(@Param("fromDate") String fromDate,
+			@Param("toDate") String toDate);
+
 }
