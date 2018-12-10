@@ -290,6 +290,23 @@ public class TxApiController {
 
 	}
 
+	@RequestMapping(value = { "/getWeighByContraId" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetWeighing> getWeighByContraId(@RequestParam("contrId") int contrId) {
+
+		List<GetWeighing> wList = new ArrayList<GetWeighing>();
+
+		try {
+			wList = getWeighingRepo.getWeighingByContrId(contrId);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return wList;
+
+	}
+
 	@RequestMapping(value = { "/getWeighByWeighId" }, method = RequestMethod.POST)
 	public @ResponseBody List<GetWeighing> getWeighByWeighId(@RequestParam("weighId") int weighId) {
 
