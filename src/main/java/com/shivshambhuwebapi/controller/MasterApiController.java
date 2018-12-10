@@ -1731,16 +1731,29 @@ public class MasterApiController {
 	// ----------------------------------------Dept----------------------------------------------------
 
 	@RequestMapping(value = { "/saveDept" }, method = RequestMethod.POST)
-	public @ResponseBody Dept saveDept(@RequestBody Dept dept) {
+	public @ResponseBody Info saveDept(@RequestBody Dept dept) {
 
-		Dept res = new Dept();
-
+		Info res = new Info();
 		try {
-
-			res = deptRepo.saveAndFlush(dept);
-
-		} catch (Exception e) {
-
+			Dept isDeptPresent=null;
+			
+			if(dept.getDeptId()==0) {
+	                isDeptPresent=deptRepo.findByDeptNameAndDelStatus(dept.getDeptName(),1);
+			}
+			if(isDeptPresent!=null)
+			{
+					res.setError(true);
+					res.setMessage("Duplicate Department Name");
+			}else {
+					Dept deptRes= deptRepo.saveAndFlush(dept);
+					res.setError(false);
+					res.setMessage("Department Saved Successfully");
+			}
+        
+		}
+		catch (Exception e) {
+			 res.setError(true);
+	         res.setMessage("Department Failed to Save");
 			e.printStackTrace();
 
 		}
