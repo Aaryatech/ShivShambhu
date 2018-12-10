@@ -16,11 +16,15 @@ import com.shivshambhuwebapi.model.prodrm.GetProdPlanDetail;
 import com.shivshambhuwebapi.model.prodrm.GetProdPlanHeader;
 import com.shivshambhuwebapi.model.prodrm.ProdPlanDetail;
 import com.shivshambhuwebapi.model.prodrm.ProdPlanHeader;
+import com.shivshambhuwebapi.model.prodrm.ProdReportDetail;
+import com.shivshambhuwebapi.model.prodrm.ProdReportHeader;
 import com.shivshambhuwebapi.repository.prodrm.GetItemDetailRepo;
 import com.shivshambhuwebapi.repository.prodrm.GetProdPlanDetailRepo;
 import com.shivshambhuwebapi.repository.prodrm.GetProdPlanHeaderRepo;
 import com.shivshambhuwebapi.repository.prodrm.ProdPlanDetailRepo;
 import com.shivshambhuwebapi.repository.prodrm.ProdPlanHeaderRepo;
+import com.shivshambhuwebapi.repository.prodrm.ProdReportDetailRepo;
+import com.shivshambhuwebapi.repository.prodrm.ProdReportHeaderRepo;
 import com.shivshambhuwebapi.tx.model.ChalanDetail;
 import com.shivshambhuwebapi.tx.model.ChalanHeader;
 
@@ -41,6 +45,12 @@ public class ProdApiController {
 
 	
 	@Autowired GetItemDetailRepo getItemDetailRepo;//for auto bill of material 
+	
+	@Autowired	ProdReportHeaderRepo getProdReportHeaderRepo;
+	
+	@Autowired ProdReportDetailRepo getProdReportDetailRepo;
+	
+	
 	
 	@RequestMapping(value = { "/saveProdPlanHeaderDetail" }, method = RequestMethod.POST)
 	public @ResponseBody ProdPlanHeader saveProdPlanHeaderDetail(@RequestBody ProdPlanHeader planHeader) {
@@ -185,5 +195,58 @@ public class ProdApiController {
 
 	}
 
+//Report Prod Header
+	
+	//getProdReportHeaderRepo
+	
+	
+	@RequestMapping(value = { "/getProdReportHeader" }, method = RequestMethod.POST)
+	public @ResponseBody List<ProdReportHeader> getProdReportHeader(@RequestParam("fromDate") String fromDate,
+			@RequestParam("toDate") String toDate, @RequestParam("plantId") int plantId) {
 
+		List<ProdReportHeader> prodReportHeader = new ArrayList<>();
+
+		try {
+
+			prodReportHeader = getProdReportHeaderRepo.getProdReportHeader(plantId, fromDate, toDate);
+			System.err.println("prodHeadList  /getProdReportHeader " + prodReportHeader.toString());
+
+		} catch (Exception e) {
+			System.err.println("exce in getProdReportHeader " + e.getMessage());
+			prodReportHeader = null;
+			e.printStackTrace();
+
+		}
+
+		return prodReportHeader;
+
+	}
+	
+	//ProdReportDetailRepo
+	
+	@RequestMapping(value = { "/getProdReportDetail" }, method = RequestMethod.POST)
+	public @ResponseBody List<ProdReportDetail> getProdReportDetail(@RequestParam("fromDate") String fromDate,
+			@RequestParam("toDate") String toDate, @RequestParam("plantId") int plantId,
+			@RequestParam("itemId") int itemId) {
+
+		List<ProdReportDetail> prodDetailReport = new ArrayList<>();
+
+		try {
+
+			prodDetailReport = getProdReportDetailRepo.getProdReportDetail(plantId, fromDate, toDate, itemId);
+			System.err.println("getProdReportDetail  /getProdReportDetail " + prodDetailReport.toString());
+
+		} catch (Exception e) {
+			System.err.println("exce in getProdReportDetail " + e.getMessage());
+			prodDetailReport = null;
+			e.printStackTrace();
+
+		}
+
+		return prodDetailReport;
+
+	}
+	
+	
+	
 }
