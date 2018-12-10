@@ -33,4 +33,14 @@ public interface GetWeighingRepo extends JpaRepository<GetWeighing, Integer> {
 
 	List<GetWeighing> getWeighingByContrId(@Param("contrId") int contrId);
 
+	@Query(value = " SELECT t_weighing.*,c.contr_name, coalesce((SELECT m_vehicle.vehicle_name  from m_vehicle WHERE"
+			+ " t_weighing.veh_id=m_vehicle.vehicle_id),'NA') as vehicle_name,coalesce((SELECT m_vehicle.veh_no  "
+			+ "from m_vehicle WHERE t_weighing.veh_id=m_vehicle.vehicle_id),'NA') as vehicle_no,coalesce((SELECT"
+			+ " m_vehicle.vehicle_name from m_vehicle WHERE t_weighing.poklen_id=m_vehicle.vehicle_id),'Na') "
+			+ "as poke_name,coalesce((SELECT m_vehicle.veh_no  from m_vehicle WHERE t_weighing.poklen_id=m_vehicle.vehicle_id),'NA') "
+			+ "as poke_no from t_weighing,m_contractor c WHERE  t_weighing.del_status=1 AND c.contr_id=t_weighing.contra_id "
+			+ " AND t_weighing.veh_id=:vehicleId", nativeQuery = true)
+
+	List<GetWeighing> getWeighingByVehicleId(@Param("vehicleId") int vehicleId);
+
 }
