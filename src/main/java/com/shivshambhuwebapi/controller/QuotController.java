@@ -314,5 +314,35 @@ public class QuotController {
 		return info;
 
 	}
+	
+	
+	@RequestMapping(value = { "/deleteMultiQuot" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteMultiQuot(@RequestParam("quotIds") List<Integer> quotIds) {
+
+		Info info = new Info();
+
+		try {
+			int delete = quotHeaderRepo.deleteMultiQuotDetail(quotIds);
+
+			if (delete >= 1) {
+				info.setError(false);
+				info.setMessage("successfully Multiple Deleted");
+			} else {
+				info.setError(true);
+				info.setMessage(" Deleted to Delete");
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage(" Deleted to Delete");
+
+		}
+		return info;
+
+	}
+
+
 
 }

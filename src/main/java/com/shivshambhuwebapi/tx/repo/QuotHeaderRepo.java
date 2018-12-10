@@ -1,5 +1,7 @@
 package com.shivshambhuwebapi.tx.repo;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -29,5 +31,10 @@ public interface QuotHeaderRepo extends JpaRepository<QuotHeader, Integer> {
 	int updateQuotation(@Param("quotHeadId") int quotHeadId, @Param("payTermId") int payTermId,
 			@Param("quotDate") String quotDate, @Param("otherRemark1") String otherRemark1, @Param("projId") int projId,
 			@Param("quotTermId") int quotTermId);
+	
+	@Transactional
+	@Modifying
+	@Query("UPDATE QuotHeader  SET delStatus=0  WHERE quot_head_id IN(:quotIds)")
+	int deleteMultiQuotDetail(@Param("quotIds") List<Integer> quotIds);
 
 }
