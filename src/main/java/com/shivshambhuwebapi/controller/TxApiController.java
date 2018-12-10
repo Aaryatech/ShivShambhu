@@ -15,10 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.shivshambhuwebapi.common.DateConvertor;
 import com.shivshambhuwebapi.master.model.Setting;
 import com.shivshambhuwebapi.master.repo.SettingRepo;
+import com.shivshambhuwebapi.tx.model.GetPoklenReading;
 import com.shivshambhuwebapi.tx.model.GetWeighing;
 import com.shivshambhuwebapi.tx.model.MarketingTravel;
 import com.shivshambhuwebapi.tx.model.PoklenReading;
 import com.shivshambhuwebapi.tx.model.Weighing;
+import com.shivshambhuwebapi.tx.repo.GetPoklenReadingRepo;
 import com.shivshambhuwebapi.tx.repo.GetWeighingRepo;
 import com.shivshambhuwebapi.tx.repo.MarketingTravelRepo;
 import com.shivshambhuwebapi.tx.repo.PoklenReadingRepo;
@@ -29,6 +31,9 @@ public class TxApiController {
 
 	@Autowired
 	MarketingTravelRepo marketingTravelRepo;
+
+	@Autowired
+	GetPoklenReadingRepo getPoklenReadingRepo;
 
 	@Autowired
 	WeighingRepo weighingRepo;
@@ -95,6 +100,24 @@ public class TxApiController {
 				wList.get(i).setStartDate(DateConvertor.convertToDMY(wList.get(i).getStartDate()));
 			}
 
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return wList;
+
+	}
+
+	@RequestMapping(value = { "/getPokReadingListBetweenDate" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetPoklenReading> getPokReadingListBetweenDate(@RequestParam("fromDate") String fromDate,
+			@RequestParam("toDate") String toDate) {
+
+		List<GetPoklenReading> wList = new ArrayList<GetPoklenReading>();
+
+		try {
+
+			wList = getPoklenReadingRepo.getPoklenReadingListBetDate(fromDate, toDate);
 		} catch (Exception e) {
 
 			e.printStackTrace();
