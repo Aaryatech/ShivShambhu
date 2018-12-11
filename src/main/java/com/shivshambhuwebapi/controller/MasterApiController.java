@@ -391,23 +391,67 @@ public class MasterApiController {
 
 	// ----------------------------------------Cust Type-------------------------
 
+	
+	
+	
+
 	@RequestMapping(value = { "/saveCustType" }, method = RequestMethod.POST)
-	public @ResponseBody CustType saveCustType(@RequestBody CustType custType) {
+	public @ResponseBody Info saveCustType(@RequestBody CustType cust) {
 
-		CustType res = new CustType();
-
+		Info res = new Info();
 		try {
+			
+			if ( cust.getCustTypeId()== 0) {
+				// new dept insert
+				System.err.println("a");
+				List<CustType> custList =  custTypeRepo.findByDelStatusAndCustTypeNameContains(1, cust.getCustTypeName());
+				if (custList.size() < 1) {
+					 CustType custRes = custTypeRepo.saveAndFlush(cust);
+					res.setError(false);
+					res.setMessage("customer Saved Successfully");
+				} else {
+					System.err.println("c");
+					// save dept
+					res.setError(true);
+					res.setMessage("cust name already exist");
+					System.err.println("b");
+					
+				}
 
-			res = custTypeRepo.saveAndFlush(custType);
+			} else if (cust.getCustTypeId() > 0) {
+				System.err.println("d");
+				// its edit call
+				List<CustType> custList = custTypeRepo.findBydelStatusAndCustTypeIdNotInAndCustTypeNameContains(1,cust.getCustTypeId() ,
+						cust.getCustTypeName());
+
+				if (!custList.isEmpty()) {
+					// dont save some other dept have same name
+
+					res.setError(true);
+					res.setMessage("Duplicate Customer Type");
+					System.err.println("e");
+				} else {
+
+					 CustType custRes = custTypeRepo.saveAndFlush(cust);
+						res.setError(false);
+						res.setMessage("customer Saved Successfully");
+
+					// save dept..
+					System.err.println("f");
+				}
+
+			}
 
 		} catch (Exception e) {
-
+			res.setError(true);
+			res.setMessage("Customer type Failed to Save");
 			e.printStackTrace();
 
 		}
 		return res;
 
 	}
+
 
 	@RequestMapping(value = { "/saveUniqueCustType" }, method = RequestMethod.POST)
 	public @ResponseBody Info saveUniqueCustType(@RequestParam("custTypeName") String custTypeName) {
@@ -549,6 +593,69 @@ public class MasterApiController {
 		return res;
 
 	}
+	
+	
+	/*@RequestMapping(value = { "/saveEnqGenFact" }, method = RequestMethod.POST)
+	public @ResponseBody Info saveDept(@RequestBody EnqGenFact enqGenFact) {
+
+		Info res = new Info();
+		try {
+			
+			if (enqGenFact.getEnqGenId()==0) {
+				// new dept insert
+				System.err.println("a");
+				List<EnqGenFact> genList =  enqGenFactRepo.findByDelStatusAndEnqGenByContains(1, enqGenFact.getEnqGenBy());
+
+				if (genList.size() < 1) {
+					EnqGenFact  deptRes = enqGenFactRepo.saveAndFlush(enqGenFact);
+					res.setError(false);
+					res.setMessage("enq src Saved Successfully");
+				} else {
+					System.err.println("c");
+					// save dept
+					res.setError(true);
+					res.setMessage("enq src already exist");
+					System.err.println("b");
+					
+				}
+
+			} else if (enqGenFact.getEnqGenId() > 0) {
+				System.err.println("d");
+				// its edit call
+				List<EnqGenFact> enqList =  enqGenFactRepo.findByDelStatusAndEnqGenIdNotInAndEnqGenByContains(1,  enqGenFact.getEnqGenId());
+						enqGenFact.getEnqGenBy();
+
+				if (!enqList .isEmpty()) {
+					// dont save some other dept have same name
+
+					res.setError(true);
+					res.setMessage("Duplicate Enquiry Source");
+					System.err.println("e");
+				} else {
+
+					EnqGenFact deptRes = enqGenFactRepo.saveAndFlush(enqGenFact);
+					res.setError(false);
+					res.setMessage("Enquiry source Saved Successfully");
+
+					// save dept..
+					System.err.println("f");
+				}
+
+			}
+
+		} catch (Exception e) {
+			res.setError(true);
+			res.setMessage(" Failed to Save");
+			e.printStackTrace();
+
+		}
+		return res;
+
+	}
+*/
+	
+	
+	
 
 	@RequestMapping(value = { "/saveUniqueEnqGenFact" }, method = RequestMethod.POST)
 	public @ResponseBody Info saveUniqueEnqGenFact(@RequestParam("enqGenBy") String enqGenBy) {
@@ -1770,7 +1877,7 @@ public class MasterApiController {
 				List<Dept> deptList = deptRepo.findBydelStatusAndDeptIdNotInAndDeptNameContains(1, dept.getDeptId(),
 						dept.getDeptName());
 
-				if (deptList.isEmpty()) {
+				if (!deptList.isEmpty()) {
 					// dont save some other dept have same name
 
 					res.setError(true);

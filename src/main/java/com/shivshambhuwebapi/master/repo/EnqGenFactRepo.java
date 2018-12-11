@@ -26,5 +26,10 @@ public interface EnqGenFactRepo extends JpaRepository<EnqGenFact, Integer> {
 	int deleteMultiEnqGenFact(@Param("enqGenIds") List<Integer> enqGenIds);
 
 	EnqGenFact findByEnqGenByAndDelStatus(String enqGenBy, int i);
+/*
+	List<EnqGenFact> findByDelStatusAndEnqGenByContains(int i, String enqGenBy);
 
+	List<EnqGenFact> findByDelStatusAndEnqGenIdNotInAndEnqGenByContains(int i, int enqGenId);*/
+
+	
 }

@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.shivshambhuwebapi.master.model.CustType;
+import com.shivshambhuwebapi.master.model.Dept;
 
 public interface CustTypeRepo extends JpaRepository<CustType, Integer> {
 	@Transactional
@@ -26,5 +27,14 @@ public interface CustTypeRepo extends JpaRepository<CustType, Integer> {
 	int deleteMultiCustType(@Param("custTypeIds") List<Integer> custTypeIds);
 
 	CustType findByCustTypeNameAndDelStatus(String custTypeName, int i);
+
+	List<CustType> findByDelStatusAndCustTypeNameContains(int i, String custTypeName);
+
+	List<CustType> findBydelStatusAndCustTypeIdNotInAndCustTypeNameContains(int i, int custTypeId, String custTypeName);
+
+	
+	
+	
+
 
 }
