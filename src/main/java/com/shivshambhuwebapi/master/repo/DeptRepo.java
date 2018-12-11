@@ -27,5 +27,9 @@ public interface DeptRepo extends JpaRepository<Dept, Integer> {
 	List<Dept> findByDelStatusOrderByDeptIdDesc(int i);
 
 	Dept findByDeptNameAndDelStatus(String deptName, int i);
+	
+	List<Dept> findByDelStatusAndDeptNameContains(int delStatus,String deptName);
+	
+	List<Dept> findBydelStatusAndDeptIdNotInAndDeptNameContains(int delStatus,int deptId,String deptName);
 
 }

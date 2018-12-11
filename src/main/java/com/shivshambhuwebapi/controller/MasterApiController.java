@@ -1735,25 +1735,62 @@ public class MasterApiController {
 
 		Info res = new Info();
 		try {
-			Dept isDeptPresent=null;
-			
-			if(dept.getDeptId()==0) {
-	                isDeptPresent=deptRepo.findByDeptNameAndDelStatus(dept.getDeptName(),1);
-			}
-			if(isDeptPresent!=null)
-			{
-					res.setError(true);
-					res.setMessage("Duplicate Department Name");
-			}else {
-					Dept deptRes= deptRepo.saveAndFlush(dept);
+			/*
+			 * Dept isDeptPresent=null;
+			 * 
+			 * if(dept.getDeptId()==0) {
+			 * isDeptPresent=deptRepo.findByDeptNameAndDelStatus(dept.getDeptName(),1); }
+			 * if(isDeptPresent!=null) { res.setError(true);
+			 * res.setMessage("Duplicate Department Name"); }else { Dept deptRes=
+			 * deptRepo.saveAndFlush(dept); res.setError(false);
+			 * res.setMessage("Department Saved Successfully"); }
+			 */
+
+			if (dept.getDeptId() == 0) {
+				// new dept insert
+				System.err.println("a");
+				List<Dept> deptList = deptRepo.findByDelStatusAndDeptNameContains(1, dept.getDeptName());
+
+				if (deptList.size() < 1) {
+					Dept deptRes = deptRepo.saveAndFlush(dept);
 					res.setError(false);
 					res.setMessage("Department Saved Successfully");
+				} else {
+					System.err.println("c");
+					// save dept
+					res.setError(true);
+					res.setMessage("dept name already exist");
+					System.err.println("b");
+					
+				}
+
+			} else if (dept.getDeptId() > 0) {
+				System.err.println("d");
+				// its edit call
+				List<Dept> deptList = deptRepo.findBydelStatusAndDeptIdNotInAndDeptNameContains(1, dept.getDeptId(),
+						dept.getDeptName());
+
+				if (deptList.isEmpty()) {
+					// dont save some other dept have same name
+
+					res.setError(true);
+					res.setMessage("Duplicate Department Name");
+					System.err.println("e");
+				} else {
+
+					Dept deptRes = deptRepo.saveAndFlush(dept);
+					res.setError(false);
+					res.setMessage("Department Saved Successfully");
+
+					// save dept..
+					System.err.println("f");
+				}
+
 			}
-        
-		}
-		catch (Exception e) {
-			 res.setError(true);
-	         res.setMessage("Department Failed to Save");
+
+		} catch (Exception e) {
+			res.setError(true);
+			res.setMessage("Department Failed to Save");
 			e.printStackTrace();
 
 		}
