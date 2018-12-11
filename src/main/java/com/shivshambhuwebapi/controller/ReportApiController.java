@@ -13,37 +13,41 @@ import org.springframework.web.bind.annotation.RestController;
 import com.shivshambhuwebapi.common.DateConvertor;
 import com.shivshambhuwebapi.tx.model.GetMatIssueDetail;
 import com.shivshambhuwebapi.tx.model.GetMatIssueHeader;
+import com.shivshambhuwebapi.tx.model.GetMatIssueReport;
 import com.shivshambhuwebapi.tx.model.GetVehDetail;
 import com.shivshambhuwebapi.tx.model.GetVehHeader;
+import com.shivshambhuwebapi.tx.model.GetVehReport;
 import com.shivshambhuwebapi.tx.repo.GetMatIssueDetailRepo;
 import com.shivshambhuwebapi.tx.repo.GetMatIssueHeaderRepo;
+import com.shivshambhuwebapi.tx.repo.GetMatIssueReportRepo;
 import com.shivshambhuwebapi.tx.repo.GetVehDetailRepo;
 import com.shivshambhuwebapi.tx.repo.GetVehHeaderRepo;
+import com.shivshambhuwebapi.tx.repo.GetVehReportRepo;
 
 @RestController
 public class ReportApiController {
 
 	@Autowired
-	GetMatIssueHeaderRepo getMatIssueHeaderRepo;
+	GetMatIssueReportRepo getMatIssueReportrepo;
 
 	@Autowired
 	GetMatIssueDetailRepo getMatIssueDetailRepo;
 
 	@Autowired
-	GetVehHeaderRepo getVehHeaderRepo;
+	GetVehReportRepo getVehReportRepo;
 
 	@Autowired
 	GetVehDetailRepo getVehDetailRepo;
 
 	@RequestMapping(value = { "/getContractorBetweenDate" }, method = RequestMethod.POST)
-	public @ResponseBody List<GetMatIssueHeader> getContractorBetweenDate(@RequestParam("fromDate") String fromDate,
+	public @ResponseBody List<GetMatIssueReport> getContractorBetweenDate(@RequestParam("fromDate") String fromDate,
 			@RequestParam("toDate") String toDate) {
 
-		List<GetMatIssueHeader> headerList = new ArrayList<GetMatIssueHeader>();
+		List<GetMatIssueReport> headerList = new ArrayList<GetMatIssueReport>();
 
 		try {
 
-			headerList = getMatIssueHeaderRepo.getContractorBetweenDate(fromDate, toDate);
+			headerList = getMatIssueReportrepo.getContrBetweenDate(fromDate, toDate);
 
 			for (int i = 0; i < headerList.size(); i++) {
 				headerList.get(i).setDate(DateConvertor.convertToDMY(headerList.get(i).getDate()));
@@ -60,14 +64,14 @@ public class ReportApiController {
 	}
 
 	@RequestMapping(value = { "/getVehicleBetweenDate" }, method = RequestMethod.POST)
-	public @ResponseBody List<GetVehHeader> getVehicleBetweenDate(@RequestParam("fromDate") String fromDate,
+	public @ResponseBody List<GetVehReport> getVehicleBetweenDate(@RequestParam("fromDate") String fromDate,
 			@RequestParam("toDate") String toDate) {
 
-		List<GetVehHeader> headerList = new ArrayList<GetVehHeader>();
+		List<GetVehReport> headerList = new ArrayList<GetVehReport>();
 
 		try {
 
-			headerList = getVehHeaderRepo.getVehicleBetweenDate(fromDate, toDate);
+			headerList = getVehReportRepo.getVehicleBetweenDate(fromDate, toDate);
 
 			for (int i = 0; i < headerList.size(); i++) {
 				headerList.get(i).setDate(DateConvertor.convertToDMY(headerList.get(i).getDate()));
