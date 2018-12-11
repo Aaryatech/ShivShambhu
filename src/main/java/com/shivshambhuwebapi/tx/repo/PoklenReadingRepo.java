@@ -14,16 +14,16 @@ public interface PoklenReadingRepo extends JpaRepository<PoklenReading, Integer>
 
 	@Transactional
 	@Modifying
-	@Query("UPDATE PoklenReading SET del_status=0  WHERE pokId=:pokId")
-	int deletePoklenReading(@Param("pokId") int pokId);
+	@Query("UPDATE PoklenReading SET del_status=0  WHERE readingId=:readingId")
+	int deletePoklenReading(@Param("readingId") int readingId);
 
 	@Transactional
 	@Modifying
-	@Query("UPDATE PoklenReading SET delStatus=0  WHERE pokId IN(:pokIds)")
-	int deleteMultiPoklenReading(@Param("pokIds") List<Integer> pokIds);
+	@Query("UPDATE PoklenReading SET delStatus=0  WHERE readingId IN(:readingIds)")
+	int deleteMultiPoklenReading(@Param("readingIds") List<Integer> readingIds);
 
-	PoklenReading findByPokIdAndDelStatus(int pokId, int i);
+	PoklenReading findByReadingIdAndDelStatus(int pokId, int i);
 
-	List<PoklenReading> findByDelStatusOrderByPokIdDesc(int i);
+	List<PoklenReading> findByDelStatusOrderByReadingIdDesc(int i);
 
 }

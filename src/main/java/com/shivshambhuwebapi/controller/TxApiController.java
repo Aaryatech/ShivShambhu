@@ -68,12 +68,12 @@ public class TxApiController {
 	}
 
 	@RequestMapping(value = { "/getPoklenReadingById" }, method = RequestMethod.POST)
-	public @ResponseBody PoklenReading getPoklenReadingById(@RequestParam("pokId") int pokId) {
+	public @ResponseBody PoklenReading getPoklenReadingById(@RequestParam("readingId") int readingId) {
 
 		PoklenReading res = new PoklenReading();
 
 		try {
-			res = poklenReadingRepo.findByPokIdAndDelStatus(pokId, 1);
+			res = poklenReadingRepo.findByReadingIdAndDelStatus(readingId, 1);
 			res.setEndDate(DateConvertor.convertToDMY(res.getEndDate()));
 			res.setStartDate(DateConvertor.convertToDMY(res.getStartDate()));
 
@@ -93,7 +93,7 @@ public class TxApiController {
 
 		try {
 
-			wList = poklenReadingRepo.findByDelStatusOrderByPokIdDesc(1);
+			wList = poklenReadingRepo.findByDelStatusOrderByReadingIdDesc(1);
 
 			for (int i = 0; i < wList.size(); i++) {
 				wList.get(i).setEndDate(DateConvertor.convertToDMY(wList.get(i).getEndDate()));
@@ -128,12 +128,12 @@ public class TxApiController {
 	}
 
 	@RequestMapping(value = { "/deletePoklenReading" }, method = RequestMethod.POST)
-	public @ResponseBody Info deletePoklenReading(@RequestParam("pokId") int pokId) {
+	public @ResponseBody Info deletePoklenReading(@RequestParam("readingId") int readingId) {
 
 		Info info = new Info();
 
 		try {
-			int delete = poklenReadingRepo.deletePoklenReading(pokId);
+			int delete = poklenReadingRepo.deletePoklenReading(readingId);
 
 			if (delete == 1) {
 				info.setError(false);
@@ -155,12 +155,12 @@ public class TxApiController {
 	}
 
 	@RequestMapping(value = { "/deleteMultiPReading" }, method = RequestMethod.POST)
-	public @ResponseBody Info deleteMultiPReading(@RequestParam("pokIds") List<Integer> pokIds) {
+	public @ResponseBody Info deleteMultiPReading(@RequestParam("readingIds") List<Integer> readingIds) {
 
 		Info info = new Info();
 
 		try {
-			int delete = poklenReadingRepo.deleteMultiPoklenReading(pokIds);
+			int delete = poklenReadingRepo.deleteMultiPoklenReading(readingIds);
 
 			if (delete >= 1) {
 				info.setError(false);
