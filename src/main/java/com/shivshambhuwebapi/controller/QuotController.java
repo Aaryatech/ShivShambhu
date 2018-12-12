@@ -248,6 +248,9 @@ public class QuotController {
 
 	}
 
+	
+	
+	
 	@RequestMapping(value = { "/getQuotListByPlantIdAndCustId" }, method = RequestMethod.POST)
 	public @ResponseBody List<GetQuotHeader> getQuotListByPlantIdAndCustId(@RequestParam("plantId") int plantId,
 			@RequestParam("fromDate") String fromDate, @RequestParam("toDate") String toDate,
@@ -343,6 +346,36 @@ public class QuotController {
 
 	}
 
+	
+	/*@RequestMapping(value = { "/getAllQuotHeaderListDesc" }, method = RequestMethod.GET)
+	public @ResponseBody List<GetQuotHeader>getAllQuotHeaderListDesc() {
+
+		List<GetQuotHeader> getQuotHeaderList = new ArrayList<GetQuotHeader>();
+
+		try {
+
+			getQuotHeaderList = getQuotHeaderRepo.getQuotHeaderList();
+			for (int i = 0; i < getQuotHeaderList.size(); i++) {
+
+				List<GetQuotDetail> quotDetailList = getQuotDetailRepo
+						.getQuotDetailOrderByQuotHeadIdDesc(getQuotHeaderList.get(i).getQuotHeadId());
+
+				getQuotHeaderList.get(i).setGetQuotDetailList(quotDetailList);
+			}
+
+			System.err.println("head " + getQuotHeaderList.toString());
+		} catch (Exception e) {
+
+			System.err.println("Exce in getting  getQuotHeaderList" + getQuotHeaderList.toString());
+
+			e.printStackTrace();
+
+		}
+		return getQuotHeaderList;
+
+	}
+
+	*/
 
 
 }

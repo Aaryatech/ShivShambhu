@@ -18,4 +18,6 @@ public interface GetQuotDetailRepo extends JpaRepository<GetQuotDetail, Integer>
 
 	List<GetQuotDetail> getQuotDetailList();
 
+	
+
 }
