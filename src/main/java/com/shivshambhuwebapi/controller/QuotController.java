@@ -286,6 +286,71 @@ public class QuotController {
 		return quotHeaderList;
 
 	}
+	
+	
+	
+	
+	@RequestMapping(value = { "/getQuotListByPlantIdAndCustIdStatus" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetQuotHeader> getQuotListByPlantIdAndCustIdStatus(@RequestParam("plantId") int plantId,
+			@RequestParam("fromDate") String fromDate, @RequestParam("toDate") String toDate,
+			@RequestParam("custId") int custId,@RequestParam("status") int status) {
+
+		List<GetQuotHeader> quotHeaderList = new ArrayList<GetQuotHeader>();
+
+		try {
+
+			if (custId == 0 && status == -1) {
+
+				quotHeaderList = getQuotHeaderRepo.getQuotHeaderByPlantId(plantId, fromDate, toDate);
+				for (int i = 0; i < quotHeaderList.size(); i++) {
+					List<GetQuotDetail> quotDetailList = getQuotDetailRepo
+							.getQuotDetailByQuotHeadId(quotHeaderList.get(i).getQuotHeadId());
+					quotHeaderList.get(i).setGetQuotDetailList(quotDetailList);
+				}
+			} else if(custId == 0 && status != -1 ) {
+				quotHeaderList = getQuotHeaderRepo.getQuotHeaderByPlantIdAndCustId(plantId,fromDate, toDate,status);
+				for (int i = 0; i < quotHeaderList.size(); i++) {
+					List<GetQuotDetail> quotDetailList = getQuotDetailRepo
+							.getQuotDetailByQuotHeadId(quotHeaderList.get(i).getQuotHeadId());
+
+					quotHeaderList.get(i).setGetQuotDetailList(quotDetailList);
+				}
+				
+			}
+			else if(status== -1   && custId!= 0 ){
+				
+				quotHeaderList = getQuotHeaderRepo.getQuotHeaderByPlantIdAndCustId(plantId,custId, fromDate, toDate);
+				for (int i = 0; i < quotHeaderList.size(); i++) {
+					List<GetQuotDetail> quotDetailList = getQuotDetailRepo
+							.getQuotDetailByQuotHeadId(quotHeaderList.get(i).getQuotHeadId());
+					quotHeaderList.get(i).setGetQuotDetailList(quotDetailList);
+				}
+			
+			}
+			else if(status!=-1 && custId!= 0 ){
+				
+				quotHeaderList = getQuotHeaderRepo.getQuotHeaderByPlantId(plantId,custId, fromDate, toDate,status);
+				for (int i = 0; i < quotHeaderList.size(); i++) {
+					List<GetQuotDetail> quotDetailList = getQuotDetailRepo
+							.getQuotDetailByQuotHeadId(quotHeaderList.get(i).getQuotHeadId());
+					quotHeaderList.get(i).setGetQuotDetailList(quotDetailList);
+				}
+			
+			}
+			
+else {
+	
+}
+			
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return quotHeaderList;
+
+	}
+
 
 	@RequestMapping(value = { "/updateQuotation" }, method = RequestMethod.POST)
 	public @ResponseBody Info updateQuotation(@RequestParam("quotHeadId") int quotHeadId,
