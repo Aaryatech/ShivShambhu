@@ -19,7 +19,7 @@ public interface GetQuotHeaderRepo extends JpaRepository<GetQuotHeader, Integer>
 	@Query(value = "SELECT h.*, c.cust_name ,u.usr_name,o.comp_name,p.proj_name,t.pay_term FROM t_quot_header h,m_customer c ,"
 			+ "m_user u,m_company o ,m_project p ,m_payment_term t WHERE h.del_status=1 AND h.cust_id=c.cust_id AND "
 			+ "u.user_id=h.user_id AND h.company_id=o.company_id AND p.proj_id=h.proj_id AND t.pay_term_id=h.pay_term_id "
-			+ "ORDER BY h.quot_head_id DESC ", nativeQuery = true)
+			+ " ORDER BY h.quot_head_id DESC ", nativeQuery = true)
 
 	List<GetQuotHeader> getQuotHeaderList();
 
@@ -65,7 +65,7 @@ public interface GetQuotHeaderRepo extends JpaRepository<GetQuotHeader, Integer>
 			+ "t.pay_term_id=h.pay_term_id ),'NULL') as pay_term,pn.plant_name FROM t_quot_header h,m_customer c ,"
 			+ "m_user u,m_company o  ,m_plant pn WHERE h.del_status=1 AND h.cust_id=c.cust_id AND u.user_id=h.user_id"
 			+ " AND h.company_id=o.company_id AND h.plant_ids=:plantId AND h.quot_date BETWEEN :fromDate AND :toDate"
-			+ " AND pn.plant_id=h.plant_ids AND h.status=:status "+" h.cust_id=:custId " +" ORDER BY h.quot_head_id DESC "
+			+ " AND pn.plant_id=h.plant_ids AND h.status=:status "+" AND h.cust_id=:custId " +" ORDER BY h.quot_head_id DESC "
 			, nativeQuery = true)
 	List<GetQuotHeader> getQuotHeaderByPlantId(@Param("plantId") int plantId, @Param("custId") int custId,
 			@Param("fromDate") String fromDate, @Param("toDate") String toDate,@Param("status") int status);
