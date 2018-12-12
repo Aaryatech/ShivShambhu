@@ -17,12 +17,14 @@ import com.shivshambhuwebapi.tx.model.GetMatIssueReport;
 import com.shivshambhuwebapi.tx.model.GetVehDetail;
 import com.shivshambhuwebapi.tx.model.GetVehHeader;
 import com.shivshambhuwebapi.tx.model.GetVehReport;
+import com.shivshambhuwebapi.tx.model.PoklenReport;
 import com.shivshambhuwebapi.tx.repo.GetMatIssueDetailRepo;
 import com.shivshambhuwebapi.tx.repo.GetMatIssueHeaderRepo;
 import com.shivshambhuwebapi.tx.repo.GetMatIssueReportRepo;
 import com.shivshambhuwebapi.tx.repo.GetVehDetailRepo;
 import com.shivshambhuwebapi.tx.repo.GetVehHeaderRepo;
 import com.shivshambhuwebapi.tx.repo.GetVehReportRepo;
+import com.shivshambhuwebapi.tx.repo.PoklenReportRepo;
 
 @RestController
 public class ReportApiController {
@@ -38,6 +40,9 @@ public class ReportApiController {
 
 	@Autowired
 	GetVehDetailRepo getVehDetailRepo;
+
+	@Autowired
+	PoklenReportRepo poklenReportRepo;
 
 	@RequestMapping(value = { "/getContractorBetweenDate" }, method = RequestMethod.POST)
 	public @ResponseBody List<GetMatIssueReport> getContractorBetweenDate(@RequestParam("fromDate") String fromDate,
@@ -76,6 +81,25 @@ public class ReportApiController {
 			for (int i = 0; i < headerList.size(); i++) {
 				headerList.get(i).setDate(DateConvertor.convertToDMY(headerList.get(i).getDate()));
 			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return headerList;
+
+	}
+
+	@RequestMapping(value = { "/getPoklenReportBetweenDate" }, method = RequestMethod.POST)
+	public @ResponseBody List<PoklenReport> getPoklenReportBetweenDate(@RequestParam("fromDate") String fromDate,
+			@RequestParam("toDate") String toDate) {
+
+		List<PoklenReport> headerList = new ArrayList<PoklenReport>();
+
+		try {
+
+			headerList = poklenReportRepo.getPoklenReportBetweenDate(fromDate, toDate);
 
 		} catch (Exception e) {
 
