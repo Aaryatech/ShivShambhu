@@ -74,12 +74,12 @@ public class OrderApiController {
 	@RequestMapping(value = { "/getOrderListBetDate" }, method = RequestMethod.POST)
 	public @ResponseBody List<GetOrder> getOrderListBetDate(@RequestParam("plantId") int plantId,
 			@RequestParam("custId") int custId, @RequestParam("fromDate") String fromDate,
-			@RequestParam("toDate") String toDate,@RequestParam("status") int status) {
+			@RequestParam("toDate") String toDate) {
 
 		List<GetOrder> getOrderList = new ArrayList<>();
 
 		try {
-			getOrderList = getOrderRepo.getOrderBetweenDate(plantId, custId, fromDate, toDate,status);
+			getOrderList = getOrderRepo.getOrderBetweenDate(plantId, custId, fromDate, toDate);
 
 		} catch (Exception e) {
 
@@ -165,6 +165,34 @@ System.err.println("orderHeaderId for getOrderDetailList  " +orderHeaderId);
 		}
 		
 		return orderResList;
+
+	}
+	
+	
+	@RequestMapping(value = { "/deleteMultiOrder" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteMultiQuot(@RequestParam("orderIds") List<Integer> orderIds) {
+
+		Info info = new Info();
+
+		try {
+			int delete =  orderHeaderRepo.deleteMultiOrderDetail(orderIds);
+
+			if (delete >= 1) {
+				info.setError(false);
+				info.setMessage("successfully Multiple Deleted");
+			} else {
+				info.setError(true);
+				info.setMessage(" failed to Delete");
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage(" Deleted to Delete");
+
+		}
+		return info;
 
 	}
 }
