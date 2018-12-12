@@ -127,6 +127,28 @@ public class TxApiController {
 
 	}
 
+	@RequestMapping(value = { "/getByPoklenId" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetPoklenReading> getByPoklenId(@RequestParam("poklenId") int poklenId) {
+
+		List<GetPoklenReading> wList = new ArrayList<GetPoklenReading>();
+
+		try {
+
+			wList = getPoklenReadingRepo.getPoklenReadingListByPoklenId(poklenId);
+			for (int i = 0; i < wList.size(); i++) {
+				wList.get(i).setStartDate(DateConvertor.convertToDMY(wList.get(i).getStartDate()));
+				wList.get(i).setEndDate(DateConvertor.convertToDMY(wList.get(i).getEndDate()));
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return wList;
+
+	}
+
 	@RequestMapping(value = { "/deletePoklenReading" }, method = RequestMethod.POST)
 	public @ResponseBody Info deletePoklenReading(@RequestParam("readingId") int readingId) {
 

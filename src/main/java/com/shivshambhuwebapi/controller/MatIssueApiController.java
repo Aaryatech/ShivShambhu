@@ -392,4 +392,22 @@ public class MatIssueApiController {
 
 	}
 
+	@RequestMapping(value = { "/getMatIssueVehicleByVehicleId" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetVehDetail> getMatIssueVehicleByVehicleId(@RequestParam("vehicleId") int vehicleId) {
+
+		List<GetVehDetail> detail = new ArrayList<GetVehDetail>();
+
+		try {
+
+			detail = getVehDetailRepo.getMatIssueByVehicleId(vehicleId);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return detail;
+
+	}
+
 }
