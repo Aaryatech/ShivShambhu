@@ -12,8 +12,8 @@ public interface ProdReportDetailRepo extends JpaRepository<ProdReportDetail, In
 	
 	
 	@Query(value = " SELECT " + 
-			"t_production_plan_detail.production_detail_id," + 
-			"t_production_plan_header.production_date," + 
+			" t_production_plan_detail.production_detail_id," + 
+			" t_production_plan_header.production_date," + 
 			"        t_production_plan_detail.item_id," + 
 			"        m_item_fg.item_name," + 
 			"        m_item_fg.item_code," + 
