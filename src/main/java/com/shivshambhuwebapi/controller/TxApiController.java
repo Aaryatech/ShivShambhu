@@ -335,6 +335,53 @@ public class TxApiController {
 
 	}
 
+	@RequestMapping(value = { "/getWeighListBetweenDate" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetWeighing> getWeighListBetweenDate(@RequestParam("contrId") int contrId,
+			@RequestParam("vehicleId") int vehicleId, @RequestParam("fromDate") String fromDate,
+			@RequestParam("toDate") String toDate) {
+
+		List<GetWeighing> wList = new ArrayList<GetWeighing>();
+
+		try {
+
+			if (contrId != 0 && vehicleId != 0) {
+				wList = getWeighingRepo.getWeighingBetDateAndById(fromDate, toDate, contrId, vehicleId);
+
+				for (int i = 0; i < wList.size(); i++) {
+					wList.get(i).setDate(DateConvertor.convertToDMY(wList.get(i).getDate()));
+				}
+			} else if (contrId == 0 && vehicleId != 0) {
+				wList = getWeighingRepo.getWeighingBetDateAndByVehicleId(fromDate, toDate, vehicleId);
+
+				for (int i = 0; i < wList.size(); i++) {
+					wList.get(i).setDate(DateConvertor.convertToDMY(wList.get(i).getDate()));
+				}
+			}
+
+			else if (contrId != 0 && vehicleId == 0) {
+				wList = getWeighingRepo.getWeighingBetDateAndByContrd(fromDate, toDate, contrId);
+
+				for (int i = 0; i < wList.size(); i++) {
+					wList.get(i).setDate(DateConvertor.convertToDMY(wList.get(i).getDate()));
+				}
+			} else if (contrId == 0 && vehicleId == 0) {
+
+				wList = getWeighingRepo.getWeighingBetDate(fromDate, toDate);
+
+				for (int i = 0; i < wList.size(); i++) {
+					wList.get(i).setDate(DateConvertor.convertToDMY(wList.get(i).getDate()));
+				}
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return wList;
+
+	}
+
 	@RequestMapping(value = { "/getWeighByContraId" }, method = RequestMethod.POST)
 	public @ResponseBody List<GetWeighing> getWeighByContraId(@RequestParam("contrId") int contrId) {
 
