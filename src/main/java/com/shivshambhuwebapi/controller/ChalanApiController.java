@@ -54,6 +54,8 @@ public class ChalanApiController {
 		ChalanHeader chHeaderRes = new ChalanHeader();
 
 		try {
+			
+			chHead.setExInt1(1);
 
 			chHeaderRes = chalanHeaderRepo.save(chHead);
 
@@ -505,6 +507,34 @@ public class ChalanApiController {
 		}
 
 		return info;
+	}
+	
+	
+	@RequestMapping(value = { "/deleteMultiChalan" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteMultiQuot(@RequestParam("chalanIds") List<Integer> chalanIds) {
+
+		Info info = new Info();
+
+		try {
+			int delete = chalanHeaderRepo. deleteMultiChalanDetail(chalanIds);
+
+			if (delete >= 1) {
+				info.setError(false);
+				info.setMessage("successfully Multiple Deleted");
+			} else {
+				info.setError(true);
+				info.setMessage(" failed to Delete");
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage(" Failed to Delete");
+
+		}
+		return info;
+
 	}
 	
 } 

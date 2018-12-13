@@ -16,7 +16,7 @@ public interface GetChalanHeaderRepo extends JpaRepository<GetChalanHeader, Inte
 			"  WHERE m_vehicle.vehicle_id=t_chalan_header.vehicle_id AND t_chalan_header.plant_id=m_plant.plant_id "
 			+  " AND m_company.company_id=m_plant.company_id AND m_customer.cust_id=t_chalan_header.cust_id"
 			+ " AND m_project.proj_id=t_chalan_header.proj_id AND m_user.user_id=t_chalan_header.driver_id "
-			+ "AND t_chalan_header.plant_id=:plantId  AND t_chalan_header.status=:chalanStatus ", nativeQuery = true)
+			+ "AND t_chalan_header.plant_id=:plantId  AND t_chalan_header.status=:chalanStatus AND t_chalan_header.ex_int1=1 ", nativeQuery = true)
 
 	List<GetChalanHeader> getGetChalanHeaderByPlantId(@Param("plantId") int plantId,@Param("chalanStatus") int chalanStatus);
 	
