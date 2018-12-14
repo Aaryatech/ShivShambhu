@@ -201,6 +201,24 @@ public class MasterApiController {
 		return doc;
 
 	}
+	@RequestMapping(value = { "/getBankDetailByBankId" }, method = RequestMethod.POST)
+	public @ResponseBody BankDetail getBankDetailByBankId(@RequestParam("companyId") int companyId) {
+
+		BankDetail bankDetail = new BankDetail();
+
+		try {
+			bankDetail = bankDetailRepo.findByCompanyIdAndDelStatus(companyId, 1);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return bankDetail;
+
+	}
+
+
 
 	@RequestMapping(value = { "/updateDocSrNo" }, method = RequestMethod.POST)
 	public @ResponseBody Info updateDocSrNo(@RequestParam("docCode") int docCode, @RequestParam("srNo") int srNo) {
