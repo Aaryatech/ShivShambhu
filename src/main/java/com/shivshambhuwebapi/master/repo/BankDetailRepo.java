@@ -28,6 +28,6 @@ public interface BankDetailRepo extends JpaRepository<BankDetail, Integer> {
 
 	BankDetail findByAccNoAndDelStatus(String accNo, int i);
 
-	BankDetail findByCompanyIdAndDelStatus(int companyId, int i);
+	BankDetail findFirstByCompanyIdAndDelStatus(int companyId, int i);
 
 }

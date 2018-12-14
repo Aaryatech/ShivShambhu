@@ -208,7 +208,7 @@ public class MasterApiController {
 		BankDetail bankDetail = new BankDetail();
 
 		try {
-			bankDetail = bankDetailRepo.findByCompanyIdAndDelStatus(companyId, 1);
+			bankDetail = bankDetailRepo.findFirstByCompanyIdAndDelStatus(companyId, 1);
 
 		} catch (Exception e) {
 
@@ -218,6 +218,7 @@ public class MasterApiController {
 		return bankDetail;
 
 	}
+
 
 	@RequestMapping(value = { "/updateDocSrNo" }, method = RequestMethod.POST)
 	public @ResponseBody Info updateDocSrNo(@RequestParam("docCode") int docCode, @RequestParam("srNo") int srNo) {
