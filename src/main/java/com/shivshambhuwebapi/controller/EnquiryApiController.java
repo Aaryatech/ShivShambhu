@@ -86,6 +86,9 @@ public class EnquiryApiController {
 		return enquiryHeaderList;
 
 	}
+	
+	
+	///
 
 	@RequestMapping(value = { "/getEnqListByPlantIdAndCustId" }, method = RequestMethod.POST)
 	public @ResponseBody List<GetEnqHeader> getEnqListByPlantIdAndCustId(@RequestParam("plantId") int plantId,
@@ -154,6 +157,36 @@ public class EnquiryApiController {
 			if (delete == 1) {
 				info.setError(false);
 				info.setMessage("successfully Updated");
+			} else {
+				info.setError(true);
+				info.setMessage(" Deleted to Delete");
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage(" Deleted to Delete");
+
+		}
+		return info;
+
+		
+		
+	}
+
+	
+	@RequestMapping(value = { "/deleteMultiEnq" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteMultiQuot(@RequestParam("enqIds") List<Integer> enqIds) {
+
+		Info info = new Info();
+
+		try {
+			int delete = enqHeaderRepo.deleteMultiEnqDetail(enqIds);
+
+			if (delete >= 1) {
+				info.setError(false);
+				info.setMessage("successfully Multiple Deleted");
 			} else {
 				info.setError(true);
 				info.setMessage(" Deleted to Delete");

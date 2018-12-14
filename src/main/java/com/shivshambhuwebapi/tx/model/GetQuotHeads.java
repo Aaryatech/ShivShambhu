@@ -10,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 @Entity
 public class GetQuotHeads {
 
-	@Id
+	@Id	
 	private int quotHeadId;
 
 	private String quotNo;
