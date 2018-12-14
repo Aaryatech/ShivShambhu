@@ -57,11 +57,20 @@ private int chalanId;
 	
 	private String costSegment;
 	
-	private String userName;
+private String userName;
 	
 	
 	//extra data
 	
+	public String getUserName() {
+	return userName;
+}
+public void setUserName(String userName) {
+	this.userName = userName;
+}
+
+
+
 	private String vehNo;
 	private String vehicleName;
 	private String plantName;
@@ -275,12 +284,7 @@ private int chalanId;
 	}
 
 	
-	public String getUserName() {
-		return userName;
-	}
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
+	
 	@Override
 	public String toString() {
 		return "GetChalanHeader [chalanId=" + chalanId + ", chalanNo=" + chalanNo + ", status=" + status
@@ -289,10 +293,10 @@ private int chalanId;
 				+ ", vehTimeIn=" + vehTimeIn + ", vehInDate=" + vehInDate + ", outKm=" + outKm + ", inKm=" + inKm
 				+ ", sitePersonName=" + sitePersonName + ", sitePersonMob=" + sitePersonMob + ", orderId=" + orderId
 				+ ", orderNo=" + orderNo + ", chalanRemark=" + chalanRemark + ", exInt1=" + exInt1 + ", exFloat1="
-				+ exFloat1 + ", exVar1=" + exVar1 + ", exDate1=" + exDate1 + ", costSegment=" + costSegment + ", vehNo="
-				+ vehNo + ", vehicleName=" + vehicleName + ", plantName=" + plantName + ", compName=" + compName
-				+ ", custName=" + custName + ", custMobNo=" + custMobNo + ", projName=" + projName + ", projAddress="
-				+ projAddress + ", driverName=" + driverName + "]";
+				+ exFloat1 + ", exVar1=" + exVar1 + ", exDate1=" + exDate1 + ", costSegment=" + costSegment
+				+ ", userName=" + userName + ", vehNo=" + vehNo + ", vehicleName=" + vehicleName + ", plantName="
+				+ plantName + ", compName=" + compName + ", custName=" + custName + ", custMobNo=" + custMobNo
+				+ ", projName=" + projName + ", projAddress=" + projAddress + ", driverName=" + driverName + "]";
 	}
 	
 	
