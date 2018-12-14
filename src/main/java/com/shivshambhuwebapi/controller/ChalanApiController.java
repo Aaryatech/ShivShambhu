@@ -231,7 +231,7 @@ public class ChalanApiController {
 
 	@Autowired
 	GetChalanHeaderRepo getGetChalanHeaderRepo;
-
+//
 	@RequestMapping(value = { "/getChalanHeadersByPlantAndStatus" }, method = RequestMethod.POST)
 	public @ResponseBody List<GetChalanHeader> getGetChalanHeaderByPlantAndStatus(@RequestParam("plantId") int plantId,
 			@RequestParam("chalanStatus") int chalanStatus) {
@@ -241,6 +241,7 @@ public class ChalanApiController {
 		try {
 
 			chList = getGetChalanHeaderRepo.getGetChalanHeaderByPlantId(plantId, chalanStatus);
+			System.out.println("chalan details::"+chList);
 
 		} catch (Exception e) {
 
