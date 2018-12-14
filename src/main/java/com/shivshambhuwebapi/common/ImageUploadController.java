@@ -16,27 +16,14 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.shivshambhuwebapi.controller.Info;
 
-import javassist.bytecode.stackmap.BasicBlock.Catch;
-
-
 @RestController
 public class ImageUploadController {
 
-	private static String SUGGESTION_URL = "/opt/tomcat-latest/webapps/uploads/SUGGESTION/";
-	private static String COMPLAINT_URL = "/opt/tomcat-latest/webapps/uploads/COMPLAINT/";
-	private static String NOTIFICATION_URL = "/opt/tomcat-latest/webapps/uploads/NOTIFICATION/";
-	private static String FEEDBACK_URL = "/opt/tomcat-latest/webapps/uploads/FEEDBACK/";
-
-	private static String SP_PRODAPP_IMAGE="/opt/tomcat-latest/webapps/uploads/SPPRODAPPIMAGE/";
-	
-	private static String REG_SP_PRODAPP_IMAGE="/opt/tomcat-latest/webapps/uploads/REGSPPRODAPPIMAGE/";
-
-	//private static String BILL_FOLDER ="/home/maxadmin/Desktop/photos/";
-	
-	
+	private static String WEIGHING_URL = "/home/lenovo/Desktop/weighing_image";
 
 	@RequestMapping(value = { "/photoUpload" }, method = RequestMethod.POST)
-	public @ResponseBody Info getFarmerContract(@RequestParam("file") MultipartFile uploadfile , @RequestParam("imageName") String imageName,@RequestParam("type") String type) {
+	public @ResponseBody Info photoUpload(@RequestParam("file") MultipartFile uploadfile,
+			@RequestParam("imageName") String imageName, @RequestParam("type") String type) {
 
 		Info info = new Info();
 
@@ -44,7 +31,7 @@ public class ImageUploadController {
 
 		try {
 
-			saveUploadedFiles(Arrays.asList(uploadfile) ,  imageName,type);
+			saveUploadedFiles(Arrays.asList(uploadfile), imageName, type);
 
 			info.setError(false);
 			info.setMessage("File uploaded successfully");
@@ -60,61 +47,27 @@ public class ImageUploadController {
 	}
 
 	// save file
-	private void saveUploadedFiles(List<MultipartFile> files,  String imageName,String type) throws IOException {
+	private void saveUploadedFiles(List<MultipartFile> files, String imageName, String type) throws IOException {
 
 		try {
-		for (MultipartFile file : files) {
-			Path path=null;
-			if (file.isEmpty()) {
-				continue; 
+			for (MultipartFile file : files) {
+				Path path = null;
+				if (file.isEmpty()) {
+					continue;
+				}
+				if (type.equalsIgnoreCase("w")) {
+					path = Paths.get(WEIGHING_URL + imageName);
+				}
+
+				byte[] bytes = file.getBytes();
+
+				Files.write(path, bytes);
+
 			}
-            if(type.equalsIgnoreCase("s"))
-            {
-			 path =Paths.get(SUGGESTION_URL + imageName);
-            }
-            else if(type.equalsIgnoreCase("c"))
-            {
-   			 path =Paths.get(COMPLAINT_URL + imageName);
 
-            }
-            else if(type.equalsIgnoreCase("nf"))	
-            {
-   			 path =Paths.get(NOTIFICATION_URL + imageName);
-
-            }
-            else if(type.equalsIgnoreCase("f"))
-            {
-   			 path =Paths.get(FEEDBACK_URL + imageName);
-
-            }
-            
-            
-            else if(type.equalsIgnoreCase("spprodapp"))
-            {
-   			 path =Paths.get(SP_PRODAPP_IMAGE + imageName);
-
-            }
-            
-            
-            else if(type.equalsIgnoreCase("regspprodapp"))
-            {
-   			 path =Paths.get(REG_SP_PRODAPP_IMAGE + imageName);
-
-            }
-            
-            
-			byte[] bytes = file.getBytes();
-			
-			Files.write(path, bytes);
-
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 
-	
 	}
-	catch(Exception e)
-	{
-		e.printStackTrace();
-	}
-
-}
 }

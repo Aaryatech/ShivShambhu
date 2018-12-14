@@ -1,5 +1,7 @@
 package com.shivshambhuwebapi.tx.repo;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -21,5 +23,10 @@ public interface ChalanDetailRepo extends JpaRepository<ChalanDetail, Integer> {
 			@Param("itemQty") float itemQty,@Param("itemLengthSite") float itemLengthSite,
 			@Param("itemWidthSite") float itemWidthSite,@Param("itemHeightSite") float itemHeightSite,
 			@Param("itemTotalSite") float itemTotalSite);
+
+	@Transactional
+	@Modifying
+	@Query(" UPDATE ChalanDetail SET status=2 WHERE chalanDetailId IN(:chalanDetailId)")
+	int updateChalanStatus(@Param("chalanDetailId")List<Integer> chalanDetailId);
 
 }
