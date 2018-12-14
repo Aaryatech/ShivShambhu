@@ -2,9 +2,11 @@ package com.shivshambhuwebapi.controller;
 
 import java.util.ArrayList;
 
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,12 +17,15 @@ import com.shivshambhuwebapi.master.model.Contractor;
 import com.shivshambhuwebapi.master.model.GetItemTax;
 import com.shivshambhuwebapi.master.model.ItemCategory;
 import com.shivshambhuwebapi.master.model.ItemType;
+import com.shivshambhuwebapi.master.model.OrderDetail;
+import com.shivshambhuwebapi.master.model.OrderHeader;
 import com.shivshambhuwebapi.master.model.RawMatItem;
 import com.shivshambhuwebapi.master.model.Subplant;
 import com.shivshambhuwebapi.master.model.Vehicle;
 import com.shivshambhuwebapi.master.model.VehicleType;
 import com.shivshambhuwebapi.master.repo.ContractorRepo;
 import com.shivshambhuwebapi.master.repo.GetItemTaxRepo;
+import com.shivshambhuwebapi.master.repo.GetOrderDetailRepo;
 import com.shivshambhuwebapi.master.repo.ItemCategoryRepo;
 import com.shivshambhuwebapi.master.repo.ItemTypeRepo;
 import com.shivshambhuwebapi.master.repo.RawMatItemRepo;
@@ -58,9 +63,121 @@ public class MstApiController {
 
 	@Autowired
 	ItemTypeRepo itemTypeRepo;
+	
+	
+	
+	
 
+	// ----------------Contractor Master-------------------------------
+	
+	
+	
+	@Autowired
+	GetOrderDetailRepo getOrderDetailRepo;
+
+	@RequestMapping(value = { "/saveContractor" }, method = RequestMethod.POST)
+	public @ResponseBody Contractor saveContractor(@RequestBody Contractor con) {
+		return contractorRepo.save( con);
+	}
+
+	@RequestMapping(value = { "/getAllContractorList" }, method = RequestMethod.GET)
+	public @ResponseBody List<Contractor> getAllContractorList() {
+
+		List<Contractor> conList = new ArrayList<Contractor>();
+
+		try {
+
+			conList = contractorRepo.findByDelStatusOrderByContrIdDesc(1);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return conList;
+
+	}
+	
+	
+	@RequestMapping(value = { "/getContractorById" }, method = RequestMethod.POST)
+	public @ResponseBody Contractor getContractorById(@RequestParam("contrId") int contrId) {
+
+		Contractor res=new Contractor();
+
+		try {
+
+			res = contractorRepo.findByContrIdAndDelStatus(contrId,1);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return res;
+
+	}
+	
+	
+	@RequestMapping(value = { "/deleteContractor" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteContractor(@RequestParam("contrId") int contrId) {
+
+		int isDeleted = contractorRepo.deleteContractor(contrId);
+		Info infoRes=new Info();
+		if(isDeleted>=1)
+		{
+			infoRes.setError(false);
+			infoRes.setMessage("Contractor Deleted Successfully");
+		}
+		else
+		{
+			infoRes.setError(true);
+			infoRes.setMessage("Contractor Deletion Failed");
+		}
+		return infoRes;
+	}
+	
+	
+	@RequestMapping(value = { "/deleteMultiContractor" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteMultiQuot(@RequestParam("contrIds") List<Integer> contrIds) {
+
+		Info info = new Info();
+
+		try {
+			int delete =  contractorRepo.deleteMultiContDetail(contrIds);
+
+			if (delete >= 1) {
+				info.setError(false);
+				info.setMessage("successfully Multiple Deleted");
+			} else {
+				info.setError(true);
+				info.setMessage(" Failed to Delete");
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage(" Failed to Delete");
+
+		}
+		return info;
+
+	}
+
+	
+	
+	
 	// ----------------Vehicle Master-------------------------------
 
+	
+	@RequestMapping(value = { "/saveVehicle" }, method = RequestMethod.POST)
+	public @ResponseBody Vehicle saveVehicle(@RequestBody Vehicle  veh) {
+		return vehicleRepo.save(veh);
+	}
+
+	
+	
+	
 	@RequestMapping(value = { "/getAllVehicleList" }, method = RequestMethod.GET)
 	public @ResponseBody List<Vehicle> getAllVehicleList() {
 
@@ -96,60 +213,133 @@ public class MstApiController {
 
 	}
 
-	// ----------------Item Type-------------------------------
+	
+	@RequestMapping(value = { "/deleteVehicle" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteVehicle(@RequestParam("vehId") int vehId) {
 
-	@RequestMapping(value = { "/getAllItemTypeList" }, method = RequestMethod.GET)
-	public @ResponseBody List<ItemType> getAllItemTypeList() {
+		int isDeleted = vehicleRepo.deleteVehicle(vehId);
+		Info infoRes=new Info();
+		if(isDeleted>=1)
+		{
+			infoRes.setError(false);
+			infoRes.setMessage("Vehicle Deleted Successfully");
+		}
+		else
+		{
+			infoRes.setError(true);
+			infoRes.setMessage("Vehicle Deletion Failed");
+		}
+		return infoRes;
+	}
+	
+	
 
-		List<ItemType> itemTypeList = new ArrayList<ItemType>();
+	@RequestMapping(value = { "/deleteMultiVehicle" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteMultiVehicle(@RequestParam("vehIds") List<Integer> vehIds) {
+
+		Info info = new Info();
+
+		try {
+			int delete =  contractorRepo.deleteMultiContDetail(vehIds);
+
+			if (delete >= 1) {
+				info.setError(false);
+				info.setMessage("successfully Multiple Deleted");
+			} else {
+				info.setError(true);
+				info.setMessage(" Failed to Delete");
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage(" Failed to Delete");
+
+		}
+		return info;
+
+	}
+
+	
+	
+
+	// ----------------Subplant Master-------------------------------
+	
+
+	@RequestMapping(value = { "/saveSubPlant" }, method = RequestMethod.POST)
+	public @ResponseBody Subplant saveSubPlant(@RequestBody Subplant sp) {
+		return subplantRepo.save(sp);
+	}
+
+
+	@RequestMapping(value = { "/getAllSubPlantList" }, method = RequestMethod.GET)
+	public @ResponseBody List<Subplant> getAllSubPlantList() {
+
+		List<Subplant> subplantList = new ArrayList<Subplant>();
 
 		try {
 
-			itemTypeList = itemTypeRepo.findByDelStatusOrderByItemTypeIdDesc(1);
+			subplantList = subplantRepo.findByDelStatusOrderBySubplantIdDesc(1);
 
 		} catch (Exception e) {
 
 			e.printStackTrace();
 
 		}
-		return itemTypeList;
+		return subplantList;
 
 	}
+	
+	
+	@RequestMapping(value = { "/deleteSubPlant" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteSubPlant(@RequestParam("spId") int spId) {
 
-	@RequestMapping(value = { "/getItemTypeByItemTypeId" }, method = RequestMethod.POST)
-	public @ResponseBody ItemType getItemTypeByItemTypeId(@RequestParam("itemTypeId") int itemTypeId) {
+		int isDeleted = subplantRepo.deleteSubPlant(spId);
+		Info infoRes=new Info();
+		if(isDeleted>=1)
+		{
+			infoRes.setError(false);
+			infoRes.setMessage("subplant Deleted Successfully");
+		}
+		else
+		{
+			infoRes.setError(true);
+			infoRes.setMessage("subplant Deletion Failed");
+		}
+		return infoRes;
+	}
+	
+	
 
-		ItemType itemType = new ItemType();
+	@RequestMapping(value = { "/deleteMultiSubPlant" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteMultiSubPlant(@RequestParam("spIds") List<Integer> spIds) {
+
+		Info info = new Info();
 
 		try {
-			itemType = itemTypeRepo.findByItemTypeIdAndDelStatus(itemTypeId, 1);
+			int delete = subplantRepo.deleteMultiSubPlantDetail(spIds);
+
+			if (delete >= 1) {
+				info.setError(false);
+				info.setMessage("successfully Multiple Deleted");
+			} else {
+				info.setError(true);
+				info.setMessage(" Failed to Delete");
+			}
 
 		} catch (Exception e) {
 
 			e.printStackTrace();
+			info.setError(true);
+			info.setMessage(" Failed to Delete");
 
 		}
-		return itemType;
+		return info;
 
 	}
 
-	@RequestMapping(value = { "/getAllItemTaxList" }, method = RequestMethod.POST)
-	public @ResponseBody List<GetItemTax> getAllItemTaxList(@RequestParam("plantId") int plantId) {
-
-		List<GetItemTax> itemList = new ArrayList<GetItemTax>();
-
-		try {
-
-			itemList = getItemTaxRepo.getItemListByPlantId(plantId);
-
-		} catch (Exception e) {
-
-			e.printStackTrace();
-
-		}
-		return itemList;
-
-	}
+	
 
 	// ----------------Vehicle Type Master-------------------------------
 
@@ -171,63 +361,7 @@ public class MstApiController {
 
 	}
 
-	// ----------------Contractor Master-------------------------------
-
-	@RequestMapping(value = { "/getAllContractorList" }, method = RequestMethod.GET)
-	public @ResponseBody List<Contractor> getAllContractorList() {
-
-		List<Contractor> conList = new ArrayList<Contractor>();
-
-		try {
-
-			conList = contractorRepo.findByDelStatusOrderByContrIdDesc(1);
-
-		} catch (Exception e) {
-
-			e.printStackTrace();
-
-		}
-		return conList;
-
-	}
 	
-	@RequestMapping(value = { "/getContractorById" }, method = RequestMethod.POST)
-	public @ResponseBody Contractor getContractorById(@RequestParam("contrId") int contrId) {
-
-		Contractor res=new Contractor();
-
-		try {
-
-			res = contractorRepo.findByContrIdAndDelStatus(contrId,1);
-
-		} catch (Exception e) {
-
-			e.printStackTrace();
-
-		}
-		return res;
-
-	}
-
-	// ----------------Subplant Master-------------------------------
-
-	@RequestMapping(value = { "/getAllSubPlantList" }, method = RequestMethod.GET)
-	public @ResponseBody List<Subplant> getAllSubPlantList() {
-
-		List<Subplant> subplantList = new ArrayList<Subplant>();
-
-		try {
-
-			subplantList = subplantRepo.findByDelStatusOrderBySubplantIdDesc(1);
-
-		} catch (Exception e) {
-
-			e.printStackTrace();
-
-		}
-		return subplantList;
-
-	}
 
 	// ----------------Category Master-------------------------------
 
@@ -284,5 +418,60 @@ public class MstApiController {
 		return item;
 
 	}
+	
+	// ----------------Item Type-------------------------------
+
+		@RequestMapping(value = { "/getAllItemTypeList" }, method = RequestMethod.GET)
+		public @ResponseBody List<ItemType> getAllItemTypeList() {
+
+			List<ItemType> itemTypeList = new ArrayList<ItemType>();
+
+			try {
+
+				itemTypeList = itemTypeRepo.findByDelStatusOrderByItemTypeIdDesc(1);
+
+			} catch (Exception e) {
+
+				e.printStackTrace();
+
+			}
+			return itemTypeList;
+
+		}
+
+		@RequestMapping(value = { "/getItemTypeByItemTypeId" }, method = RequestMethod.POST)
+		public @ResponseBody ItemType getItemTypeByItemTypeId(@RequestParam("itemTypeId") int itemTypeId) {
+
+			ItemType itemType = new ItemType();
+
+			try {
+				itemType = itemTypeRepo.findByItemTypeIdAndDelStatus(itemTypeId, 1);
+
+			} catch (Exception e) {
+
+				e.printStackTrace();
+
+			}
+			return itemType;
+
+		}
+
+		@RequestMapping(value = { "/getAllItemTaxList" }, method = RequestMethod.POST)
+		public @ResponseBody List<GetItemTax> getAllItemTaxList(@RequestParam("plantId") int plantId) {
+
+			List<GetItemTax> itemList = new ArrayList<GetItemTax>();
+
+			try {
+
+				itemList = getItemTaxRepo.getItemListByPlantId(plantId);
+
+			} catch (Exception e) {
+
+				e.printStackTrace();
+
+			}
+			return itemList;
+
+		}
 
 }
