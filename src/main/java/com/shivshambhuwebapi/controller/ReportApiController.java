@@ -120,7 +120,8 @@ public class ReportApiController {
 	public @ResponseBody List<GetBillReport> getBillwiseReport(@RequestParam("plantIdList") List<Integer> plantIdList,
 			@RequestParam("companyIdList") List<Integer> companyIdList, @RequestParam("fromDate") String fromDate,
 			@RequestParam("toDate") String toDate) {
-System.err.println("plantIdList " +plantIdList + "companyIdList " +companyIdList + "fromDate" +fromDate + "toDate" +toDate);
+		System.err.println("plantIdList " + plantIdList + "companyIdList " + companyIdList + "fromDate" + fromDate
+				+ "toDate" + toDate);
 		List<GetBillReport> billHeaderRes = new ArrayList<>();
 
 		try {
@@ -129,7 +130,7 @@ System.err.println("plantIdList " +plantIdList + "companyIdList " +companyIdList
 
 				billHeaderRes = getBillReportRepo.getBillHeadersBetDate(fromDate, toDate);
 
-				System.err.println("billHeaderRes" +billHeaderRes.toString());
+				System.err.println("billHeaderRes" + billHeaderRes.toString());
 				System.out.println("billHeaderRes" + billHeaderRes.toString());
 
 			} else if (!plantIdList.contains(0) && companyIdList.contains(0)) {
@@ -145,6 +146,71 @@ System.err.println("plantIdList " +plantIdList + "companyIdList " +companyIdList
 						toDate);
 				System.out.println("billHeaderRes" + billHeaderRes.toString());
 			}
+
+			for (int i = 0; i < billHeaderRes.size(); i++) {
+				billHeaderRes.get(i).setBillDate(DateConvertor.convertToDMY(billHeaderRes.get(i).getBillDate()));
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+
+		return billHeaderRes;
+
+	}
+
+	@RequestMapping(value = { "/getCustomerwiseReport" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetBillReport> getCustomerwiseReport(
+			@RequestParam("plantIdList") List<Integer> plantIdList,
+			@RequestParam("custIdList") List<Integer> custIdList, @RequestParam("fromDate") String fromDate,
+			@RequestParam("toDate") String toDate) {
+		System.err.println(
+				"plantIdList " + plantIdList + "custIdList " + custIdList + "fromDate" + fromDate + "toDate" + toDate);
+		List<GetBillReport> billHeaderRes = new ArrayList<>();
+
+		try {
+
+			if (plantIdList.contains(0) && custIdList.contains(0)) {
+
+				billHeaderRes = getBillReportRepo.getBillCustBetDate(fromDate, toDate);
+
+			} else if (!plantIdList.contains(0) && custIdList.contains(0)) {
+				billHeaderRes = getBillReportRepo.getBillCustBetDateAndPlantIdList(plantIdList, fromDate, toDate);
+
+			} else if (plantIdList.contains(0) && !custIdList.contains(0)) {
+				billHeaderRes = getBillReportRepo.getBillCustBetDateANdCustIdList(custIdList, fromDate, toDate);
+
+			} else {
+
+				billHeaderRes = getBillReportRepo.getBillHeadersBetDateANdCustIdList(plantIdList, custIdList, fromDate,
+						toDate);
+
+			}
+
+			for (int i = 0; i < billHeaderRes.size(); i++) {
+				billHeaderRes.get(i).setBillDate(DateConvertor.convertToDMY(billHeaderRes.get(i).getBillDate()));
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+
+		return billHeaderRes;
+
+	}
+
+	@RequestMapping(value = { "/getBillDetailByCustId" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetBillReport> getBillDetailByCustId(@RequestParam("custId") int custId) {
+
+		List<GetBillReport> billHeaderRes = new ArrayList<>();
+
+		try {
+
+			billHeaderRes = getBillReportRepo.getBillHeaderByCustId(custId);
 
 			for (int i = 0; i < billHeaderRes.size(); i++) {
 				billHeaderRes.get(i).setBillDate(DateConvertor.convertToDMY(billHeaderRes.get(i).getBillDate()));
