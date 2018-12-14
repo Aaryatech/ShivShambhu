@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.shivshambhuwebapi.common.DateConvertor;
+import com.shivshambhuwebapi.model.bill.GetBillHeader;
+import com.shivshambhuwebapi.model.bill.GetBillReport;
+import com.shivshambhuwebapi.repository.GetBillReportRepo;
 import com.shivshambhuwebapi.tx.model.GetMatIssueDetail;
 import com.shivshambhuwebapi.tx.model.GetMatIssueHeader;
 import com.shivshambhuwebapi.tx.model.GetMatIssueReport;
@@ -43,6 +46,9 @@ public class ReportApiController {
 
 	@Autowired
 	PoklenReportRepo poklenReportRepo;
+
+	@Autowired
+	GetBillReportRepo getBillReportRepo;
 
 	@RequestMapping(value = { "/getContractorBetweenDate" }, method = RequestMethod.POST)
 	public @ResponseBody List<GetMatIssueReport> getContractorBetweenDate(@RequestParam("fromDate") String fromDate,
@@ -107,6 +113,50 @@ public class ReportApiController {
 
 		}
 		return headerList;
+
+	}
+
+	@RequestMapping(value = { "/getBillwiseReport" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetBillReport> getBillwiseReport(@RequestParam("plantIdList") List<Integer> plantIdList,
+			@RequestParam("companyIdList") List<Integer> companyIdList, @RequestParam("fromDate") String fromDate,
+			@RequestParam("toDate") String toDate) {
+System.err.println("plantIdList " +plantIdList + "companyIdList " +companyIdList + "fromDate" +fromDate + "toDate" +toDate);
+		List<GetBillReport> billHeaderRes = new ArrayList<>();
+
+		try {
+
+			if (plantIdList.contains(0) && companyIdList.contains(0)) {
+
+				billHeaderRes = getBillReportRepo.getBillHeadersBetDate(fromDate, toDate);
+
+				System.err.println("billHeaderRes" +billHeaderRes.toString());
+				System.out.println("billHeaderRes" + billHeaderRes.toString());
+
+			} else if (!plantIdList.contains(0) && companyIdList.contains(0)) {
+				billHeaderRes = getBillReportRepo.getBillHeadersBetDateANdPlantIdList(plantIdList, fromDate, toDate);
+
+				System.out.println("billHeaderRes" + billHeaderRes.toString());
+			} else if (plantIdList.contains(0) && !companyIdList.contains(0)) {
+				billHeaderRes = getBillReportRepo.getBillHeadersBetDateANdCompIdList(companyIdList, fromDate, toDate);
+				System.out.println("billHeaderRes" + billHeaderRes.toString());
+			} else {
+
+				billHeaderRes = getBillReportRepo.getBillHeadersBetDateANdIdList(plantIdList, companyIdList, fromDate,
+						toDate);
+				System.out.println("billHeaderRes" + billHeaderRes.toString());
+			}
+
+			for (int i = 0; i < billHeaderRes.size(); i++) {
+				billHeaderRes.get(i).setBillDate(DateConvertor.convertToDMY(billHeaderRes.get(i).getBillDate()));
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+
+		return billHeaderRes;
 
 	}
 

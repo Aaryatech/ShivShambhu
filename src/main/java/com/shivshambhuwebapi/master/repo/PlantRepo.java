@@ -30,4 +30,6 @@ public interface PlantRepo extends JpaRepository<Plant, Integer> {
 
 	Plant findByPlantNameAndDelStatus(String plantName, int i);
 
+	List<Plant> findByDelStatus(int i);
+
 }

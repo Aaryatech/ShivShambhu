@@ -1,5 +1,5 @@
 package com.shivshambhuwebapi.controller;
- 
+
 import java.text.DateFormat;
 
 import java.text.SimpleDateFormat;
@@ -201,6 +201,7 @@ public class MasterApiController {
 		return doc;
 
 	}
+
 	@RequestMapping(value = { "/getBankDetailByBankId" }, method = RequestMethod.POST)
 	public @ResponseBody BankDetail getBankDetailByBankId(@RequestParam("companyId") int companyId) {
 
@@ -217,8 +218,6 @@ public class MasterApiController {
 		return bankDetail;
 
 	}
-
-
 
 	@RequestMapping(value = { "/updateDocSrNo" }, method = RequestMethod.POST)
 	public @ResponseBody Info updateDocSrNo(@RequestParam("docCode") int docCode, @RequestParam("srNo") int srNo) {
@@ -409,22 +408,19 @@ public class MasterApiController {
 
 	// ----------------------------------------Cust Type-------------------------
 
-	
-	
-	
-
 	@RequestMapping(value = { "/saveCustType" }, method = RequestMethod.POST)
 	public @ResponseBody Info saveCustType(@RequestBody CustType cust) {
 
 		Info res = new Info();
 		try {
-			
-			if ( cust.getCustTypeId()== 0) {
+
+			if (cust.getCustTypeId() == 0) {
 				// new dept insert
 				System.err.println("a");
-				List<CustType> custList =  custTypeRepo.findByDelStatusAndCustTypeNameContains(1, cust.getCustTypeName());
+				List<CustType> custList = custTypeRepo.findByDelStatusAndCustTypeNameContains(1,
+						cust.getCustTypeName());
 				if (custList.size() < 1) {
-					 CustType custRes = custTypeRepo.saveAndFlush(cust);
+					CustType custRes = custTypeRepo.saveAndFlush(cust);
 					res.setError(false);
 					res.setMessage("customer Saved Successfully");
 				} else {
@@ -433,14 +429,14 @@ public class MasterApiController {
 					res.setError(true);
 					res.setMessage("cust name already exist");
 					System.err.println("b");
-					
+
 				}
 
 			} else if (cust.getCustTypeId() > 0) {
 				System.err.println("d");
 				// its edit call
-				List<CustType> custList = custTypeRepo.findBydelStatusAndCustTypeIdNotInAndCustTypeNameContains(1,cust.getCustTypeId() ,
-						cust.getCustTypeName());
+				List<CustType> custList = custTypeRepo.findBydelStatusAndCustTypeIdNotInAndCustTypeNameContains(1,
+						cust.getCustTypeId(), cust.getCustTypeName());
 
 				if (!custList.isEmpty()) {
 					// dont save some other dept have same name
@@ -450,9 +446,9 @@ public class MasterApiController {
 					System.err.println("e");
 				} else {
 
-					 CustType custRes = custTypeRepo.saveAndFlush(cust);
-						res.setError(false);
-						res.setMessage("customer Saved Successfully");
+					CustType custRes = custTypeRepo.saveAndFlush(cust);
+					res.setError(false);
+					res.setMessage("customer Saved Successfully");
 
 					// save dept..
 					System.err.println("f");
@@ -469,7 +465,6 @@ public class MasterApiController {
 		return res;
 
 	}
-
 
 	@RequestMapping(value = { "/saveUniqueCustType" }, method = RequestMethod.POST)
 	public @ResponseBody Info saveUniqueCustType(@RequestParam("custTypeName") String custTypeName) {
@@ -611,69 +606,50 @@ public class MasterApiController {
 		return res;
 
 	}
-	
-	
-	/*@RequestMapping(value = { "/saveEnqGenFact" }, method = RequestMethod.POST)
-	public @ResponseBody Info saveDept(@RequestBody EnqGenFact enqGenFact) {
 
-		Info res = new Info();
-		try {
-			
-			if (enqGenFact.getEnqGenId()==0) {
-				// new dept insert
-				System.err.println("a");
-				List<EnqGenFact> genList =  enqGenFactRepo.findByDelStatusAndEnqGenByContains(1, enqGenFact.getEnqGenBy());
-
-				if (genList.size() < 1) {
-					EnqGenFact  deptRes = enqGenFactRepo.saveAndFlush(enqGenFact);
-					res.setError(false);
-					res.setMessage("enq src Saved Successfully");
-				} else {
-					System.err.println("c");
-					// save dept
-					res.setError(true);
-					res.setMessage("enq src already exist");
-					System.err.println("b");
-					
-				}
-
-			} else if (enqGenFact.getEnqGenId() > 0) {
-				System.err.println("d");
-				// its edit call
-				List<EnqGenFact> enqList =  enqGenFactRepo.findByDelStatusAndEnqGenIdNotInAndEnqGenByContains(1,  enqGenFact.getEnqGenId());
-						enqGenFact.getEnqGenBy();
-
-				if (!enqList .isEmpty()) {
-					// dont save some other dept have same name
-
-					res.setError(true);
-					res.setMessage("Duplicate Enquiry Source");
-					System.err.println("e");
-				} else {
-
-					EnqGenFact deptRes = enqGenFactRepo.saveAndFlush(enqGenFact);
-					res.setError(false);
-					res.setMessage("Enquiry source Saved Successfully");
-
-					// save dept..
-					System.err.println("f");
-				}
-
-			}
-
-		} catch (Exception e) {
-			res.setError(true);
-			res.setMessage(" Failed to Save");
-			e.printStackTrace();
-
-		}
-		return res;
-
-	}
-*/
-	
-	
-	
+	/*
+	 * @RequestMapping(value = { "/saveEnqGenFact" }, method = RequestMethod.POST)
+	 * public @ResponseBody Info saveDept(@RequestBody EnqGenFact enqGenFact) {
+	 * 
+	 * Info res = new Info(); try {
+	 * 
+	 * if (enqGenFact.getEnqGenId()==0) { // new dept insert
+	 * System.err.println("a"); List<EnqGenFact> genList =
+	 * enqGenFactRepo.findByDelStatusAndEnqGenByContains(1,
+	 * enqGenFact.getEnqGenBy());
+	 * 
+	 * if (genList.size() < 1) { EnqGenFact deptRes =
+	 * enqGenFactRepo.saveAndFlush(enqGenFact); res.setError(false);
+	 * res.setMessage("enq src Saved Successfully"); } else {
+	 * System.err.println("c"); // save dept res.setError(true);
+	 * res.setMessage("enq src already exist"); System.err.println("b");
+	 * 
+	 * }
+	 * 
+	 * } else if (enqGenFact.getEnqGenId() > 0) { System.err.println("d"); // its
+	 * edit call List<EnqGenFact> enqList =
+	 * enqGenFactRepo.findByDelStatusAndEnqGenIdNotInAndEnqGenByContains(1,
+	 * enqGenFact.getEnqGenId()); enqGenFact.getEnqGenBy();
+	 * 
+	 * if (!enqList .isEmpty()) { // dont save some other dept have same name
+	 * 
+	 * res.setError(true); res.setMessage("Duplicate Enquiry Source");
+	 * System.err.println("e"); } else {
+	 * 
+	 * EnqGenFact deptRes = enqGenFactRepo.saveAndFlush(enqGenFact);
+	 * res.setError(false); res.setMessage("Enquiry source Saved Successfully");
+	 * 
+	 * // save dept.. System.err.println("f"); }
+	 * 
+	 * }
+	 * 
+	 * } catch (Exception e) { res.setError(true);
+	 * res.setMessage(" Failed to Save"); e.printStackTrace();
+	 * 
+	 * } return res;
+	 * 
+	 * }
+	 */
 
 	@RequestMapping(value = { "/saveUniqueEnqGenFact" }, method = RequestMethod.POST)
 	public @ResponseBody Info saveUniqueEnqGenFact(@RequestParam("enqGenBy") String enqGenBy) {
@@ -1886,7 +1862,7 @@ public class MasterApiController {
 					res.setError(true);
 					res.setMessage("dept name already exist");
 					System.err.println("b");
-					
+
 				}
 
 			} else if (dept.getDeptId() > 0) {
@@ -2156,6 +2132,28 @@ public class MasterApiController {
 
 		try {
 			plantList = plantRepo.findByCompanyIdAndDelStatus(companyId, 1);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return plantList;
+
+	}
+
+	@RequestMapping(value = { "/getPlantListByCompId" }, method = RequestMethod.POST)
+	public @ResponseBody List<Plant> getPlantListByCompId(@RequestParam("companyId") int companyId) {
+
+		List<Plant> plantList = new ArrayList<>();
+
+		try {
+
+			if (companyId == 0) {
+				plantList = plantRepo.findByDelStatus(1);
+			} else {
+				plantList = plantRepo.findByCompanyIdAndDelStatus(companyId, 1);
+			}
 
 		} catch (Exception e) {
 
@@ -2923,9 +2921,5 @@ public class MasterApiController {
 
 		return loginResponse;
 	}
-
-	
-	
-
 
 }
