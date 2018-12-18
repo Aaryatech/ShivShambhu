@@ -21,5 +21,7 @@ public interface ProdPlanHeaderRepo  extends JpaRepository<ProdPlanHeader, Integ
 	
 	
 	ProdPlanHeader save(ProdPlanHeader planHeader);
+	
+	ProdPlanHeader findByProductionHeaderId(int prodHeaderId);
 
 }

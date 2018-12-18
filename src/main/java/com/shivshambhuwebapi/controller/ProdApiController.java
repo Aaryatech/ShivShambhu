@@ -110,7 +110,7 @@ public class ProdApiController {
 	@RequestMapping(value = { "/getProdPlanDetail" }, method = RequestMethod.POST)
 	public @ResponseBody GetProdPlanHeader getProdPlanDetail(@RequestParam("prodHeaderId") int prodHeaderId) {
 
-		List<GetProdPlanDetail> prodDetailList = new ArrayList<>();
+		List<GetProdPlanDetail> prodDetailList = new ArrayList<GetProdPlanDetail>();
 		GetProdPlanHeader planHeader = new GetProdPlanHeader();
 
 		try {
@@ -122,8 +122,7 @@ public class ProdApiController {
 			planHeader.setGetProdPlanDetList(prodDetailList);
 		} catch (Exception e) {
 			System.err.println("exce in getProdPlanDetail " + e.getMessage());
-			prodDetailList = null;
-			planHeader = null;
+			
 			e.printStackTrace();
 
 		}

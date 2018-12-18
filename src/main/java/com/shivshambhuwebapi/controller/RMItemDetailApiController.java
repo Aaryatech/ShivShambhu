@@ -15,6 +15,7 @@ import com.shivshambhuwebapi.master.model.OrderDetail;
 import com.shivshambhuwebapi.master.model.OrderHeader;
 import com.shivshambhuwebapi.model.prodrm.FgItemWiseRMReport;
 import com.shivshambhuwebapi.model.prodrm.ItemDetail;
+import com.shivshambhuwebapi.model.prodrm.ProdPlanHeader;
 import com.shivshambhuwebapi.model.prodrm.ProdReportDetail;
 import com.shivshambhuwebapi.model.prodrm.ProdReportHeader;
 import com.shivshambhuwebapi.model.prodrm.ReqBomDetail;
@@ -23,6 +24,8 @@ import com.shivshambhuwebapi.model.prodrm.RmReportDetail;
 import com.shivshambhuwebapi.model.prodrm.RmReportHeader;
 import com.shivshambhuwebapi.repository.prodrm.FgItemWiseRMReportRepo;
 import com.shivshambhuwebapi.repository.prodrm.ItemDetailRepo;
+import com.shivshambhuwebapi.repository.prodrm.ProdPlanDetailRepo;
+import com.shivshambhuwebapi.repository.prodrm.ProdPlanHeaderRepo;
 import com.shivshambhuwebapi.repository.prodrm.ReqBomDetailRepo;
 import com.shivshambhuwebapi.repository.prodrm.ReqBomHeaderRepo;
 import com.shivshambhuwebapi.repository.prodrm.RmReportDetailRepo;
@@ -61,7 +64,12 @@ public class RMItemDetailApiController {
 	
 	
 	//insert saveBomHeaderDetail
-	
+	@Autowired
+	ProdPlanHeaderRepo prodPlanHeaderRepo;
+
+	@Autowired
+	ProdPlanDetailRepo prodPlanDetailRepo;
+
 	@RequestMapping(value = { "/saveBomHeaderDetail" }, method = RequestMethod.POST)
 	public @ResponseBody ReqBomHeader saveOrder(@RequestBody ReqBomHeader bomHeader) {
 
@@ -82,6 +90,17 @@ public class RMItemDetailApiController {
 			List<ReqBomDetail> bomDetList = reqBomDetailRepo.saveAll(bomHeader.getReqBomDetailsList());
 
 			bomRes.setReqBomDetailsList(bomDetList);
+			
+			if(bomHeader!=null) {
+				
+				ProdPlanHeader header=prodPlanHeaderRepo.findByProductionHeaderId(bomRes.getProductionId());
+				header.setProductionStatus(2);
+				header=prodPlanHeaderRepo.save(header);
+			}
+			
+			
+			
+			
 
 		} catch (Exception e) {
 
