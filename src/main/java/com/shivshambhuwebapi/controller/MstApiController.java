@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.shivshambhuwebapi.master.model.Contractor;
 import com.shivshambhuwebapi.master.model.GetItemTax;
+import com.shivshambhuwebapi.master.model.GetsubplantData;
 import com.shivshambhuwebapi.master.model.ItemCategory;
 import com.shivshambhuwebapi.master.model.ItemType;
 import com.shivshambhuwebapi.master.model.OrderDetail;
@@ -176,7 +177,7 @@ public class MstApiController {
 	}
 
 	
-	
+
 	
 	@RequestMapping(value = { "/getAllVehicleList" }, method = RequestMethod.GET)
 	public @ResponseBody List<Vehicle> getAllVehicleList() {
@@ -195,6 +196,28 @@ public class MstApiController {
 		return vehList;
 
 	}
+	
+	
+	@RequestMapping(value = { "/getVehicleById" }, method = RequestMethod.POST)
+	public @ResponseBody Vehicle getVehicleById(@RequestParam("vehId") int vehId) {
+
+		Vehicle res=new Vehicle();
+
+		try {
+
+			res = vehicleRepo.findByVehicleIdAndDelStatus(vehId,1);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return res;
+
+	}
+	
+	
+	
 
 	@RequestMapping(value = { "/getVehListByVehicleType" }, method = RequestMethod.POST)
 	public @ResponseBody List<Vehicle> getVehListByVehicleType(@RequestParam("vehicleType") int vehicleType) {
@@ -240,7 +263,7 @@ public class MstApiController {
 		Info info = new Info();
 
 		try {
-			int delete =  contractorRepo.deleteMultiContDetail(vehIds);
+			int delete =  vehicleRepo.deleteMultiVehicleDetail(vehIds);
 
 			if (delete >= 1) {
 				info.setError(false);
@@ -290,6 +313,48 @@ public class MstApiController {
 		return subplantList;
 
 	}
+	
+	
+	/*@RequestMapping(value = { "/getAllSubPlant" }, method = RequestMethod.GET)
+	public @ResponseBody List<GetsubplantData> getAllSubPlant() {
+
+		List<GetsubplantData> subplantList = new ArrayList<GetsubplantData>();
+
+		try {
+
+			subplantList = subplantRepo.findByDelStatusOrderBySubplantIdDesc(1);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return subplantList;
+
+	}
+	
+	*/
+
+	@RequestMapping(value = { "/getSubPlantById" }, method = RequestMethod.POST)
+	public @ResponseBody Subplant getSubPlantById(@RequestParam("spId") int spId) {
+
+		Subplant res=new Subplant();
+
+		try {
+
+			res =  subplantRepo.findBysubplantIdAndDelStatus(spId,1);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return res;
+
+	}
+	
+	
+	
 	
 	
 	@RequestMapping(value = { "/deleteSubPlant" }, method = RequestMethod.POST)

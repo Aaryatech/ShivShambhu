@@ -29,6 +29,10 @@ public interface SubplantRepo extends JpaRepository<Subplant, Integer> {
 
 
 
+	Subplant findBysubplantIdAndDelStatus(int spId, int i);
+
+
+
 	
 	
 
