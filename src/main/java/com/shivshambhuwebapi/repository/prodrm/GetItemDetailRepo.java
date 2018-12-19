@@ -29,7 +29,7 @@ public interface GetItemDetailRepo extends JpaRepository<GetItemDetail, Integer>
 			" m_item.item_code as rm_item_code,m_item.item_desc as rm_name,m_uom.uom_name as rm_uom_name,"
 			+ " m_item.cat_id," + 
 			" m_category.cat_desc, " + 
-			" (t_production_plan_detail.plan_qty *m_item_detail.rm_qty) AS item_rm_qty "+
+			" SUM(t_production_plan_detail.plan_qty *m_item_detail.rm_qty) AS item_rm_qty "+
 			" FROM  m_item_detail,m_item,m_category,m_uom,t_production_plan_header,t_production_plan_detail " + 
 			" WHERE m_item_detail.rm_id=m_item.item_id " + 
 			" AND m_item.cat_id=m_category.cat_id AND m_item.item_uom2=m_uom.uom_id " + 
@@ -38,7 +38,7 @@ public interface GetItemDetailRepo extends JpaRepository<GetItemDetail, Integer>
 			" AND t_production_plan_detail.production_header_id=t_production_plan_header.production_header_id "
 			+ " "
 			+ " AND t_production_plan_detail.item_id=m_item_detail.item_id AND "
-			+ " t_production_plan_detail.del_status=1 " + 
+			+ " t_production_plan_detail.del_status=1 GROUP BY m_item.item_id " + 
 			" ORDER by m_item_detail.item_detail_id ", nativeQuery = true)
 	
 	List<GetItemDetail> getGetItemDetail(@Param("prodHeaderId") int prodHeaderId);
