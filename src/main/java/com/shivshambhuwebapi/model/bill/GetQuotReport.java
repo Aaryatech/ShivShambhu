@@ -153,6 +153,8 @@ public class GetQuotReport {
 
 	private String custMobNo;
 	private String plantName;
+	private String enqDate;
+	private String enqNo;
 
 	public int getQuotHeadId() {
 		return quotHeadId;
@@ -545,6 +547,24 @@ public class GetQuotReport {
 	public void setPlantName(String plantName) {
 		this.plantName = plantName;
 	}
+	
+	
+
+	public String getEnqDate() {
+		return enqDate;
+	}
+
+	public void setEnqDate(String enqDate) {
+		this.enqDate = enqDate;
+	}
+
+	public String getEnqNo() {
+		return enqNo;
+	}
+
+	public void setEnqNo(String enqNo) {
+		this.enqNo = enqNo;
+	}
 
 	@Override
 	public String toString() {
@@ -563,7 +583,7 @@ public class GetQuotReport {
 				+ ", exDate2=" + exDate2 + ", exBool1=" + exBool1 + ", exBool2=" + exBool2 + ", exBool3=" + exBool3
 				+ ", quotValue=" + quotValue + ", taxValue=" + taxValue + ", taxableValue=" + taxableValue
 				+ ", quotTermId=" + quotTermId + ", noOfKm=" + noOfKm + ", custName=" + custName + ", custMobNo="
-				+ custMobNo + ", plantName=" + plantName + "]";
+				+ custMobNo + ", plantName=" + plantName + ", enqDate=" + enqDate + ", enqNo=" + enqNo + "]";
 	}
 
 }
