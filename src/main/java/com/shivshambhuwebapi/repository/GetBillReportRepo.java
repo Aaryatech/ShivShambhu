@@ -82,5 +82,8 @@ public interface GetBillReportRepo extends JpaRepository<GetBillReport, Integer>
 			+ ",m_plant l WHERE h.del_status=1 AND p.proj_id=h.proj_id AND c.cust_id=h.cust_id AND l.plant_id=h.ex_int1  AND h.cust_id=:custId", nativeQuery = true)
 
 	List<GetBillReport> getBillHeaderByCustId(@Param("custId") int custId);
-
+	////////////////////////////
+	
+	
+//SELECT i.item_code,i.item_name,sum(d.tax_amt) as tax_amt,sum(b.taxable_amt) as taxable_amt,sum(b.total_amt) as total_amt,sum(b.cgst_amt) as cgst_amt,sum(b.sgst_amt) as sgst_amt,sum(b.igst_amt) as igst_amt FROM m_item_fg i,t_bill_detail b where i.item_id=1, i.item_id=b.item_id;
 }
