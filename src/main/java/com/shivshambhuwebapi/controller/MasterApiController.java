@@ -2167,6 +2167,15 @@ public class MasterApiController {
 
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	@RequestMapping(value = { "/getCustListByPlantId" }, method = RequestMethod.POST)
 	public @ResponseBody List<Cust> getCustListByPlantId(@RequestParam("plantId") int plantId) {
 
