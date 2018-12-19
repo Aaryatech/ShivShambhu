@@ -30,4 +30,8 @@ public interface CustRepo extends JpaRepository<Cust, Integer> {
 
 	Cust findByCustMobNoAndDelStatus(String custMobNo, int i);
 
+	List<Cust> findByDelStatus(int i);
+
+	List<Cust> findByPlantIdAndDelStatus(int plantId, int i);
+
 }

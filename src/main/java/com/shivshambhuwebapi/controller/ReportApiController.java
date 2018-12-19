@@ -16,7 +16,9 @@ import com.shivshambhuwebapi.master.repo.ItemWiseBill;
 import com.shivshambhuwebapi.master.repo.TaxWiseBillRepo;
 import com.shivshambhuwebapi.model.bill.GetBillHeader;
 import com.shivshambhuwebapi.model.bill.GetBillReport;
+import com.shivshambhuwebapi.model.bill.GetDatewiseReport;
 import com.shivshambhuwebapi.repository.GetBillReportRepo;
+import com.shivshambhuwebapi.repository.GetDatewiseReportRepo;
 import com.shivshambhuwebapi.tx.model.GetMatIssueDetail;
 import com.shivshambhuwebapi.tx.model.GetMatIssueHeader;
 import com.shivshambhuwebapi.tx.model.GetMatIssueReport;
@@ -53,12 +55,15 @@ public class ReportApiController {
 
 	@Autowired
 	GetBillReportRepo getBillReportRepo;
-	
+
 	@Autowired
 	ItemWiseBill itemwiseRepo;
-	
+
 	@Autowired
 	TaxWiseBillRepo taxwiseRepo;
+
+	@Autowired
+	GetDatewiseReportRepo getDatewiseReportRepo;
 
 	@RequestMapping(value = { "/getContractorBetweenDate" }, method = RequestMethod.POST)
 	public @ResponseBody List<GetMatIssueReport> getContractorBetweenDate(@RequestParam("fromDate") String fromDate,
@@ -236,41 +241,39 @@ public class ReportApiController {
 
 	}
 
-	
-	
-	//******************************************Itemwise****************************************
-	
+	// ******************************************Itemwise****************************************
+
 	@RequestMapping(value = { "/getItemwiseReport" }, method = RequestMethod.POST)
-	public @ResponseBody List<GetItenwiseBillReport> getItemwiseReport(@RequestParam("plantIdList") List<Integer> plantIdList,
-			 @RequestParam("fromDate") String fromDate,
+	public @ResponseBody List<GetItenwiseBillReport> getItemwiseReport(
+			@RequestParam("plantIdList") List<Integer> plantIdList, @RequestParam("fromDate") String fromDate,
 			@RequestParam("toDate") String toDate) {
-		System.err.println("plantIdList " + plantIdList +  "fromDate" + fromDate
-				+ "toDate" + toDate);
+		System.err.println("plantIdList " + plantIdList + "fromDate" + fromDate + "toDate" + toDate);
 		List<GetItenwiseBillReport> billHeaderRes = new ArrayList<>();
 
 		try {
 
-			if (plantIdList.contains(0) ) {
+			if (plantIdList.contains(0)) {
 
 				billHeaderRes = itemwiseRepo.getBillDetail(fromDate, toDate);
 
 				System.err.println("billHeaderRes" + billHeaderRes.toString());
 				System.out.println("billHeaderRes" + billHeaderRes.toString());
 
-			} else if (!plantIdList.contains(0) ) {
-				billHeaderRes = itemwiseRepo. getBillDetailByPlantId(plantIdList, fromDate, toDate);
+			} else if (!plantIdList.contains(0)) {
+				billHeaderRes = itemwiseRepo.getBillDetailByPlantId(plantIdList, fromDate, toDate);
 
 				System.out.println("billHeaderRes" + billHeaderRes.toString());
-			}  else {
+			} else {
 
-				billHeaderRes = itemwiseRepo. getBillDetailByPlantId(plantIdList, fromDate, toDate);
+				billHeaderRes = itemwiseRepo.getBillDetailByPlantId(plantIdList, fromDate, toDate);
 				System.out.println("billHeaderRes" + billHeaderRes.toString());
 			}
 
-			/*for (int i = 0; i < billHeaderRes.size(); i++) {
-				billHeaderRes.get(i).setBillDate(DateConvertor.convertToDMY(billHeaderRes.get(i).getBillDate()));
-			}
-*/
+			/*
+			 * for (int i = 0; i < billHeaderRes.size(); i++) {
+			 * billHeaderRes.get(i).setBillDate(DateConvertor.convertToDMY(billHeaderRes.get
+			 * (i).getBillDate())); }
+			 */
 		} catch (Exception e) {
 
 			e.printStackTrace();
@@ -280,15 +283,14 @@ public class ReportApiController {
 		return billHeaderRes;
 
 	}
-	
-	
+
 	@RequestMapping(value = { "/getTaxwiseReport" }, method = RequestMethod.POST)
 	public @ResponseBody List<TaxWiseBill> getTaxwiseReport(@RequestParam("plantIdList") List<Integer> plantIdList,
 			@RequestParam("custIdList") List<Integer> custIdList, @RequestParam("fromDate") String fromDate,
 			@RequestParam("toDate") String toDate) {
-		
-		
-		System.err.println("plantIdList " + plantIdList + "custIdList " + custIdList + "fromDate" + fromDate + "toDate" + toDate);
+
+		System.err.println(
+				"plantIdList " + plantIdList + "custIdList " + custIdList + "fromDate" + fromDate + "toDate" + toDate);
 		List<TaxWiseBill> billHeaderRes = new ArrayList<>();
 
 		try {
@@ -305,11 +307,71 @@ public class ReportApiController {
 
 			} else {
 
-				billHeaderRes =taxwiseRepo.getBillHeadersBetDateANdCustIdList(plantIdList, custIdList, fromDate,toDate);
+				billHeaderRes = taxwiseRepo.getBillHeadersBetDateANdCustIdList(plantIdList, custIdList, fromDate,
+						toDate);
 
 			}
 
-			
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+
+		return billHeaderRes;
+
+	}
+
+	@RequestMapping(value = { "/getDatewiseBillReport" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetDatewiseReport> getDatewiseBillReport(@RequestParam("plantId") int plantId,
+			@RequestParam("custId") int custId, @RequestParam("fromDate") String fromDate,
+			@RequestParam("toDate") String toDate) {
+
+		List<GetDatewiseReport> billHeaderRes = new ArrayList<>();
+
+		try {
+
+			if (plantId != 0 && custId != 0) {
+
+				billHeaderRes = getDatewiseReportRepo.getBillById(fromDate, toDate, plantId, custId);
+
+			} else if (plantId != 0 && custId == 0) {
+				billHeaderRes = getDatewiseReportRepo.getBillBetDateAndPlantId(fromDate, toDate, plantId);
+
+			} else if (plantId == 0 && custId != 0) {
+				billHeaderRes = getDatewiseReportRepo.getBillByCustId(fromDate, toDate, custId);
+
+			} else {
+
+				billHeaderRes = getDatewiseReportRepo.getBillBetdate(fromDate, toDate);
+
+			}
+			for (int i = 0; i < billHeaderRes.size(); i++) {
+				billHeaderRes.get(i).setBillDate(DateConvertor.convertToDMY(billHeaderRes.get(i).getBillDate()));
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+
+		return billHeaderRes;
+
+	}
+
+	@RequestMapping(value = { "/getDatewiseDetailBillReport" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetDatewiseReport> getDatewiseDetailBillReport(@RequestParam("billDate") String billDate,
+			@RequestParam("billHeadId") int billHeadId) {
+
+		List<GetDatewiseReport> billHeaderRes = new ArrayList<>();
+
+		try {
+			billHeaderRes = getDatewiseReportRepo.getBillByBillHeadId(billDate, billHeadId);
+			for (int i = 0; i < billHeaderRes.size(); i++) {
+				billHeaderRes.get(i).setBillDate(DateConvertor.convertToDMY(billHeaderRes.get(i).getBillDate()));
+			}
+
 		} catch (Exception e) {
 
 			e.printStackTrace();

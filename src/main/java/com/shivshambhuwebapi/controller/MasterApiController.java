@@ -2165,6 +2165,30 @@ public class MasterApiController {
 
 	}
 
+	
+	
+	@RequestMapping(value = { "/getCustListByPlantId" }, method = RequestMethod.POST)
+	public @ResponseBody List<Cust> getCustListByPlantId(@RequestParam("plantId") int plantId) {
+
+		List<Cust> custList = new ArrayList<>();
+
+		try {
+
+			if (plantId == 0) {
+				custList = custRepo.findByDelStatus(1);
+			} else {
+				custList = custRepo.findByPlantIdAndDelStatus(plantId, 1);
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return custList;
+
+	}
+
 	@RequestMapping(value = { "/getPlantCompanyByPlantId" }, method = RequestMethod.POST)
 	public @ResponseBody GetPlant getPlantCompanyByPlantId(@RequestParam("plantId") int plantId) {
 
