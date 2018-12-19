@@ -1,4 +1,4 @@
-package com.shivshambhuwebapi.master.model;
+package com.shivshambhuwebapi.tx.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -7,21 +7,24 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class GetItenwiseBillReport {
+public class TaxWiseBill {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int item_id;
-
-	private String itemName;
+	@Column(name="bill_head_id")
+	private int billHeadId;
 	
-	private String itemCode;
+	private int custId;
 	
 	private float qty;
 	
-	//private String hsnCode;
+	private String cust_gst_no;
 	
-	private float rate;
+	private String billNo;
+
+	private String custName;
+	
+	private int projId;
 	
 	private float cgstPer;
 	
@@ -48,38 +51,14 @@ public class GetItenwiseBillReport {
 	
 	private float totalAmt;
 
-	
-	private int delStatus;
-	
-	public int getItem_id() {
-		return item_id;
+
+	public int getCustId() {
+		return custId;
 	}
 
 
-	public void setItem_id(int item_id) {
-		this.item_id = item_id;
-	}
-
-	
-	
-
-	public String getItemName() {
-		return itemName;
-	}
-
-
-	public void setItemName(String itemName) {
-		this.itemName = itemName;
-	}
-
-
-	public String getItemCode() {
-		return itemCode;
-	}
-
-
-	public void setItemCode(String itemCode) {
-		this.itemCode = itemCode;
+	public void setCustId(int custId) {
+		this.custId = custId;
 	}
 
 
@@ -93,14 +72,43 @@ public class GetItenwiseBillReport {
 	}
 
 
-
-	public float getRate() {
-		return rate;
+	public String getCust_gst_no() {
+		return cust_gst_no;
 	}
 
 
-	public void setRate(float rate) {
-		this.rate = rate;
+	public void setCust_gst_no(String cust_gst_no) {
+		this.cust_gst_no = cust_gst_no;
+	}
+
+
+	public String getBillNo() {
+		return billNo;
+	}
+
+
+	public void setBillNo(String billNo) {
+		this.billNo = billNo;
+	}
+
+
+	public String getCustName() {
+		return custName;
+	}
+
+
+	public void setCustName(String custName) {
+		this.custName = custName;
+	}
+
+
+	public int getProjId() {
+		return projId;
+	}
+
+
+	public void setProjId(int projId) {
+		this.projId = projId;
 	}
 
 
@@ -160,7 +168,6 @@ public class GetItenwiseBillReport {
 
 
 	public void setIgstAmt(float igstAmt) {
-		
 		this.igstAmt = igstAmt;
 	}
 
@@ -214,37 +221,28 @@ public class GetItenwiseBillReport {
 		this.totalAmt = totalAmt;
 	}
 
+	
 
-	public int getDelStatus() {
-		return delStatus;
+	public int getBillHeadId() {
+		return billHeadId;
 	}
 
 
-	public void setDelStatus(int delStatus) {
-		this.delStatus = delStatus;
+	public void setBillHeadId(int billHeadId) {
+		this.billHeadId = billHeadId;
 	}
 
 
-	/*@Override
+	@Override
 	public String toString() {
-		return "GetItenwiseBillReport [ itemId="
-				+  " itemName=" + itemName + ", itemCode=" + itemCode + ", qty=" + qty + ", hsnCode=" + hsnCode
-				+ ", rate=" + rate + ", cgstPer=" + cgstPer + ", sgstPer=" + sgstPer + ", igstPer=" + igstPer
-				+ ", cgstAmt=" + cgstAmt + ", sgstAmt=" + sgstAmt + ", igstAmt=" + igstAmt + ", taxAmt=" + taxAmt
-				+ ", discPer=" + discPer + ", discAmt=" + discAmt + ", taxableAmt=" + taxableAmt + ", totalAmt="
-				+ totalAmt + ", delStatus=" + delStatus + 
-				 + ", getItemId()="  + ", getItemName()="
-				+ getItemName() + ", getItemCode()=" + getItemCode() + ", getQty()=" + getQty() + ", getHsnCode()="
-				+ getHsnCode() + ", getRate()=" + getRate() + ", getCgstPer()=" + getCgstPer() + ", getSgstPer()="
-				+ getSgstPer() + ", getIgstPer()=" + getIgstPer() + ", getCgstAmt()=" + getCgstAmt() + ", getSgstAmt()="
-				+ getSgstAmt() + ", getIgstAmt()=" + getIgstAmt() + ", getTaxAmt()=" + getTaxAmt() + ", getDiscPer()="
-				+ getDiscPer() + ", getDiscAmt()=" + getDiscAmt() + ", getTaxableAmt()=" + getTaxableAmt()
-				+ ", getTotalAmt()=" + getTotalAmt() + ", getDelStatus()=" + getDelStatus() + ", getClass()="
-				+ getClass() + ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
+		return "TaxWiseBill [custId=" + custId + ", qty=" + qty + ", cust_gst_no=" + cust_gst_no + ", billNo=" + billNo
+				+ ", custName=" + custName + ", projId=" + projId + ", cgstPer=" + cgstPer + ", sgstPer=" + sgstPer
+				+ ", igstPer=" + igstPer + ", cgstAmt=" + cgstAmt + ", sgstAmt=" + sgstAmt + ", igstAmt=" + igstAmt
+				+ ", taxAmt=" + taxAmt + ", discPer=" + discPer + ", discAmt=" + discAmt + ", taxableAmt=" + taxableAmt
+				+ ", totalAmt=" + totalAmt + "]";
 	}
-
 
 	
-	*/
+	
 
 }

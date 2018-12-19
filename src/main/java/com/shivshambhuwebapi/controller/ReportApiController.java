@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.shivshambhuwebapi.common.DateConvertor;
 import com.shivshambhuwebapi.master.model.GetItenwiseBillReport;
 import com.shivshambhuwebapi.master.repo.ItemWiseBill;
+import com.shivshambhuwebapi.master.repo.TaxWiseBillRepo;
 import com.shivshambhuwebapi.model.bill.GetBillHeader;
 import com.shivshambhuwebapi.model.bill.GetBillReport;
 import com.shivshambhuwebapi.repository.GetBillReportRepo;
@@ -23,6 +24,7 @@ import com.shivshambhuwebapi.tx.model.GetVehDetail;
 import com.shivshambhuwebapi.tx.model.GetVehHeader;
 import com.shivshambhuwebapi.tx.model.GetVehReport;
 import com.shivshambhuwebapi.tx.model.PoklenReport;
+import com.shivshambhuwebapi.tx.model.TaxWiseBill;
 import com.shivshambhuwebapi.tx.repo.GetMatIssueDetailRepo;
 import com.shivshambhuwebapi.tx.repo.GetMatIssueHeaderRepo;
 import com.shivshambhuwebapi.tx.repo.GetMatIssueReportRepo;
@@ -54,6 +56,9 @@ public class ReportApiController {
 	
 	@Autowired
 	ItemWiseBill itemwiseRepo;
+	
+	@Autowired
+	TaxWiseBillRepo taxwiseRepo;
 
 	@RequestMapping(value = { "/getContractorBetweenDate" }, method = RequestMethod.POST)
 	public @ResponseBody List<GetMatIssueReport> getContractorBetweenDate(@RequestParam("fromDate") String fromDate,
@@ -266,6 +271,45 @@ public class ReportApiController {
 				billHeaderRes.get(i).setBillDate(DateConvertor.convertToDMY(billHeaderRes.get(i).getBillDate()));
 			}
 */
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+
+		return billHeaderRes;
+
+	}
+	
+	
+	@RequestMapping(value = { "/getTaxwiseReport" }, method = RequestMethod.POST)
+	public @ResponseBody List<TaxWiseBill> getTaxwiseReport(@RequestParam("plantIdList") List<Integer> plantIdList,
+			@RequestParam("custIdList") List<Integer> custIdList, @RequestParam("fromDate") String fromDate,
+			@RequestParam("toDate") String toDate) {
+		
+		
+		System.err.println("plantIdList " + plantIdList + "custIdList " + custIdList + "fromDate" + fromDate + "toDate" + toDate);
+		List<TaxWiseBill> billHeaderRes = new ArrayList<>();
+
+		try {
+
+			if (plantIdList.contains(0) && custIdList.contains(0)) {
+
+				billHeaderRes = taxwiseRepo.getBillDetail(fromDate, toDate);
+
+			} else if (!plantIdList.contains(0) && custIdList.contains(0)) {
+				billHeaderRes = taxwiseRepo.getBillTaxBetDateAndPlantIdList(plantIdList, fromDate, toDate);
+
+			} else if (plantIdList.contains(0) && !custIdList.contains(0)) {
+				billHeaderRes = taxwiseRepo.getBillCustDetail(custIdList, fromDate, toDate);
+
+			} else {
+
+				billHeaderRes =taxwiseRepo.getBillHeadersBetDateANdCustIdList(plantIdList, custIdList, fromDate,toDate);
+
+			}
+
+			
 		} catch (Exception e) {
 
 			e.printStackTrace();
