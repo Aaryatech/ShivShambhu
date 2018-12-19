@@ -18,7 +18,7 @@ public class TaxWiseBill {
 	
 	private float qty;
 	
-	private String cust_gst_no;
+	private String custGstNo;
 	
 	private String billNo;
 
@@ -72,13 +72,14 @@ public class TaxWiseBill {
 	}
 
 
-	public String getCust_gst_no() {
-		return cust_gst_no;
+
+	public String getCustGstNo() {
+		return custGstNo;
 	}
 
 
-	public void setCust_gst_no(String cust_gst_no) {
-		this.cust_gst_no = cust_gst_no;
+	public void setCustGstNo(String custGstNo) {
+		this.custGstNo = custGstNo;
 	}
 
 
@@ -232,17 +233,21 @@ public class TaxWiseBill {
 		this.billHeadId = billHeadId;
 	}
 
-
 	@Override
 	public String toString() {
-		return "TaxWiseBill [custId=" + custId + ", qty=" + qty + ", cust_gst_no=" + cust_gst_no + ", billNo=" + billNo
-				+ ", custName=" + custName + ", projId=" + projId + ", cgstPer=" + cgstPer + ", sgstPer=" + sgstPer
-				+ ", igstPer=" + igstPer + ", cgstAmt=" + cgstAmt + ", sgstAmt=" + sgstAmt + ", igstAmt=" + igstAmt
-				+ ", taxAmt=" + taxAmt + ", discPer=" + discPer + ", discAmt=" + discAmt + ", taxableAmt=" + taxableAmt
-				+ ", totalAmt=" + totalAmt + "]";
+		return "TaxWiseBill [billHeadId=" + billHeadId + ", custId=" + custId + ", qty=" + qty + ", custGstNo="
+				+ custGstNo + ", billNo=" + billNo + ", custName=" + custName + ", projId=" + projId + ", cgstPer="
+				+ cgstPer + ", sgstPer=" + sgstPer + ", igstPer=" + igstPer + ", cgstAmt=" + cgstAmt + ", sgstAmt="
+				+ sgstAmt + ", igstAmt=" + igstAmt + ", taxAmt=" + taxAmt + ", discPer=" + discPer + ", discAmt="
+				+ discAmt + ", taxableAmt=" + taxableAmt + ", totalAmt=" + totalAmt + ", getCustId()=" + getCustId()
+				+ ", getQty()=" + getQty() + ", getBillNo()=" + getBillNo() + ", getCustGstNo()=" + getCustGstNo()
+				+ ", getCustName()=" + getCustName() + ", getProjId()=" + getProjId() + ", getCgstPer()=" + getCgstPer()
+				+ ", getSgstPer()=" + getSgstPer() + ", getIgstPer()=" + getIgstPer() + ", getCgstAmt()=" + getCgstAmt()
+				+ ", getSgstAmt()=" + getSgstAmt() + ", getIgstAmt()=" + getIgstAmt() + ", getTaxAmt()=" + getTaxAmt()
+				+ ", getDiscPer()=" + getDiscPer() + ", getDiscAmt()=" + getDiscAmt() + ", getTaxableAmt()="
+				+ getTaxableAmt() + ", getTotalAmt()=" + getTotalAmt() + ", getBillHeadId()=" + getBillHeadId()
+				+ ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()=" + super.toString()
+				+ "]";
 	}
-
-	
-	
 
 }
