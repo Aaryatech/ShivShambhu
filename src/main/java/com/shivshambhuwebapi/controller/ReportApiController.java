@@ -12,11 +12,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.shivshambhuwebapi.common.DateConvertor;
 import com.shivshambhuwebapi.master.model.GetItenwiseBillReport;
+import com.shivshambhuwebapi.master.repo.GetMonthwiseReportRepo;
 import com.shivshambhuwebapi.master.repo.ItemWiseBill;
 import com.shivshambhuwebapi.master.repo.TaxWiseBillRepo;
 import com.shivshambhuwebapi.model.bill.GetBillHeader;
 import com.shivshambhuwebapi.model.bill.GetBillReport;
 import com.shivshambhuwebapi.model.bill.GetDatewiseReport;
+import com.shivshambhuwebapi.model.bill.MonthWiseBill;
 import com.shivshambhuwebapi.repository.GetBillReportRepo;
 import com.shivshambhuwebapi.repository.GetDatewiseReportRepo;
 import com.shivshambhuwebapi.tx.model.GetMatIssueDetail;
@@ -64,6 +66,9 @@ public class ReportApiController {
 
 	@Autowired
 	GetDatewiseReportRepo getDatewiseReportRepo;
+
+	@Autowired
+	GetMonthwiseReportRepo getMonthwiseReportRepo;
 
 	@RequestMapping(value = { "/getContractorBetweenDate" }, method = RequestMethod.POST)
 	public @ResponseBody List<GetMatIssueReport> getContractorBetweenDate(@RequestParam("fromDate") String fromDate,
@@ -361,13 +366,13 @@ public class ReportApiController {
 	}
 
 	@RequestMapping(value = { "/getDatewiseDetailBillReport" }, method = RequestMethod.POST)
-	public @ResponseBody List<GetDatewiseReport> getDatewiseDetailBillReport(@RequestParam("billDate") String billDate,
-			@RequestParam("billHeadId") int billHeadId) {
+	public @ResponseBody List<GetDatewiseReport> getDatewiseDetailBillReport(
+			@RequestParam("billDate") String billDate) {
 
 		List<GetDatewiseReport> billHeaderRes = new ArrayList<>();
 
 		try {
-			billHeaderRes = getDatewiseReportRepo.getBillByBillHeadId(billDate, billHeadId);
+			billHeaderRes = getDatewiseReportRepo.getBillByBillHeadId(billDate);
 			for (int i = 0; i < billHeaderRes.size(); i++) {
 				billHeaderRes.get(i).setBillDate(DateConvertor.convertToDMY(billHeaderRes.get(i).getBillDate()));
 			}
@@ -382,4 +387,53 @@ public class ReportApiController {
 
 	}
 
+	@RequestMapping(value = { "/getMonthwiseBillReport" }, method = RequestMethod.POST)
+	public @ResponseBody List<MonthWiseBill> getMonthwiseBillReport(
+			@RequestParam("plantIdList") List<Integer> plantIdList,
+			@RequestParam("custIdList") List<Integer> custIdList, @RequestParam("fromDate") String fromDate,
+			@RequestParam("toDate") String toDate) {
+
+		List<MonthWiseBill> billHeaderRes = new ArrayList<>();
+
+		try {
+
+			if (!plantIdList.contains(0) && !custIdList.contains(0)) {
+
+				billHeaderRes = getMonthwiseReportRepo.getBillById(fromDate, toDate, plantIdList, custIdList);
+
+			} else if (!plantIdList.contains(0) && custIdList.contains(0)) {
+				billHeaderRes = getMonthwiseReportRepo.getBillByPlantId(fromDate, toDate, plantIdList);
+
+			} else if (plantIdList.contains(0) && !custIdList.contains(0)) {
+				billHeaderRes = getMonthwiseReportRepo.getBillByCustId(fromDate, toDate, custIdList);
+
+			} else {
+
+				billHeaderRes = getMonthwiseReportRepo.getBillBetdate(fromDate, toDate);
+
+			}
+			/*
+			 * for (int i = 0; i < billHeaderRes.size(); i++) {
+			 * billHeaderRes.get(i).setBillDate(DateConvertor.convertToDMY(billHeaderRes.get
+			 * (i).getBillDate())); }
+			 */
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+
+		return billHeaderRes;
+
+	}
+
 }
+/*
+ * SELECT monthname(h.bill_date) as month_name,SUM(d.cgst_amt) as
+ * cgst_amt,SUM(d.sgst_amt) as sgst_amt,SUM(d.igst_amt) as
+ * igst_amt,SUM(d.tax_amt) as tax_amt,SUM(d.taxable_amt) as
+ * taxable_amt,SUM(d.total_amt) as total_amt FROM t_bill_header h, t_bill_detail
+ * d WHERE h.cust_id=47 and h.ex_int1=51 and d.bill_head_id=h.bill_head_id and
+ * bill_date BETWEEN '2018-12-1' AND '2019-01-30' GROUP by month(h.bill_date)
+ */

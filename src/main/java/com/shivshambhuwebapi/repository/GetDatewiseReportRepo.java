@@ -45,11 +45,12 @@ public interface GetDatewiseReportRepo extends JpaRepository<GetDatewiseReport, 
 			+ "   group by  h.bill_date", nativeQuery = true)
 	List<GetDatewiseReport> getBillBetdate(@Param("fromDate") String fromDate, @Param("toDate") String toDate);
 
+	///
+
 	@Query(value = " select h.bill_head_id,h.bill_no,h.bill_date,h.cust_id,c.cust_name,c.cust_gst_no,d.qty,d.sgst_per,d.cgst_per,"
-			+ "d.igst_per,d.sgst_amt,d.cgst_amt,d.igst_amt,d.tax_amt,d.disc_per,d.disc_amt,d.taxable_amt,d.total_amt  from"
+			+ " d.igst_per,d.sgst_amt,d.cgst_amt,d.igst_amt,d.tax_amt,d.disc_per,d.disc_amt,d.taxable_amt,d.total_amt  from"
 			+ " t_bill_header h,t_bill_detail d,m_customer c where h.bill_head_id=d.bill_head_id and c.cust_id=h.cust_id AND "
-			+ "h.bill_date=:billDate AND d.bill_head_id=:billHeadId", nativeQuery = true)
-	List<GetDatewiseReport> getBillByBillHeadId(@Param("billDate") String billDate,
-			@Param("billHeadId") int billHeadId);
+			+ "h.bill_date=:billDate", nativeQuery = true)
+	List<GetDatewiseReport> getBillByBillHeadId(@Param("billDate") String billDate);
 
 }
