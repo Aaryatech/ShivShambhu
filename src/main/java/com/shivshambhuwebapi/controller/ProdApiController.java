@@ -66,6 +66,7 @@ public class ProdApiController {
 			for (int i = 0; i < planHeader.getProdPlanDetailList().size(); i++) {
 
 				planHeader.getProdPlanDetailList().get(i).setProductionHeaderId((planHeadRes.getProductionHeaderId()));
+				planHeader.getProdPlanDetailList().get(i).setProductionBatch(""+planHeadRes.getProductionHeaderId()+"-"+planHeader.getProdPlanDetailList().get(i).getItemId());
 
 			}
 
@@ -73,6 +74,9 @@ public class ProdApiController {
 
 			planHeadRes.setProdPlanDetailList(prodPlanDetails);
 			System.err.println("saveProdPlanHeaderDetail body " + planHeadRes.toString());
+			planHeadRes.setProductionBatch(""+planHeadRes.getProductionHeaderId()+"-"+planHeadRes.getProductionDate());
+			planHeadRes = prodPlanHeaderRepo.save(planHeadRes);
+
 
 		} catch (Exception e) {
 			System.err.println("exce in saving saveProdPlanHeaderDetail " + e.getMessage());

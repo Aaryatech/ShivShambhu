@@ -12,11 +12,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.shivshambhuwebapi.common.DateConvertor;
 import com.shivshambhuwebapi.master.model.GetItenwiseBillReport;
+import com.shivshambhuwebapi.master.repo.GetDatewiseDetailReportRepo;
 import com.shivshambhuwebapi.master.repo.GetMonthwiseReportRepo;
 import com.shivshambhuwebapi.master.repo.ItemWiseBill;
 import com.shivshambhuwebapi.master.repo.TaxWiseBillRepo;
 import com.shivshambhuwebapi.model.bill.GetBillHeader;
 import com.shivshambhuwebapi.model.bill.GetBillReport;
+import com.shivshambhuwebapi.model.bill.GetDateWiseDetailBill;
 import com.shivshambhuwebapi.model.bill.GetDatewiseReport;
 import com.shivshambhuwebapi.model.bill.MonthWiseBill;
 import com.shivshambhuwebapi.repository.GetBillReportRepo;
@@ -69,6 +71,9 @@ public class ReportApiController {
 
 	@Autowired
 	GetMonthwiseReportRepo getMonthwiseReportRepo;
+	
+	@Autowired
+	GetDatewiseDetailReportRepo getDatewiseDetailReportRepo;
 
 	@RequestMapping(value = { "/getContractorBetweenDate" }, method = RequestMethod.POST)
 	public @ResponseBody List<GetMatIssueReport> getContractorBetweenDate(@RequestParam("fromDate") String fromDate,
@@ -366,13 +371,13 @@ public class ReportApiController {
 	}
 
 	@RequestMapping(value = { "/getDatewiseDetailBillReport" }, method = RequestMethod.POST)
-	public @ResponseBody List<GetDatewiseReport> getDatewiseDetailBillReport(
+	public @ResponseBody List<GetDateWiseDetailBill> getDatewiseDetailBillReport(
 			@RequestParam("billDate") String billDate) {
 
-		List<GetDatewiseReport> billHeaderRes = new ArrayList<>();
+		List<GetDateWiseDetailBill> billHeaderRes = new ArrayList<>();
 
 		try {
-			billHeaderRes = getDatewiseReportRepo.getBillByBillHeadId(billDate);
+			billHeaderRes = getDatewiseDetailReportRepo.getBillByBillHeadId(billDate);
 			for (int i = 0; i < billHeaderRes.size(); i++) {
 				billHeaderRes.get(i).setBillDate(DateConvertor.convertToDMY(billHeaderRes.get(i).getBillDate()));
 			}

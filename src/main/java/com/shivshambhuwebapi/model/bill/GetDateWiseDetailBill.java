@@ -10,14 +10,11 @@ public class GetDateWiseDetailBill {
 	
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	private int billDetailId;
+	
 	private String billDate;
 
 	private int custId;
-
-	
-
-	private float qty;
 
 	private String billNo;
 
@@ -48,6 +45,20 @@ public class GetDateWiseDetailBill {
 	
 	
 
+	public int getBillDetailId() {
+		return billDetailId;
+	}
+
+
+
+
+	public void setBillDetailId(int billDetailId) {
+		this.billDetailId = billDetailId;
+	}
+
+
+
+
 	public String getBillDate() {
 		return billDate;
 	}
@@ -75,7 +86,7 @@ public class GetDateWiseDetailBill {
 
 
 
-
+/*
 	public float getQty() {
 		return qty;
 	}
@@ -86,7 +97,7 @@ public class GetDateWiseDetailBill {
 	public void setQty(float qty) {
 		this.qty = qty;
 	}
-
+*/
 
 
 
@@ -274,13 +285,20 @@ public class GetDateWiseDetailBill {
 
 	@Override
 	public String toString() {
-		return "GetDateWiseDetailBill [billDate=" + billDate + ", custId=" + custId + ", qty=" + qty + ", billNo="
-				+ billNo + ", custName=" + custName + ", cgstPer=" + cgstPer + ", sgstPer=" + sgstPer + ", igstPer="
-				+ igstPer + ", cgstAmt=" + cgstAmt + ", sgstAmt=" + sgstAmt + ", igstAmt=" + igstAmt + ", taxAmt="
-				+ taxAmt + ", discPer=" + discPer + ", discAmt=" + discAmt + ", taxableAmt=" + taxableAmt
-				+ ", totalAmt=" + totalAmt + "]";
+		return "GetDateWiseDetailBill [billDetailId=" + billDetailId + ", billDate=" + billDate + ", custId=" + custId
+				+ ", billNo=" + billNo + ", custName=" + custName + ", cgstPer=" + cgstPer + ", sgstPer=" + sgstPer
+				+ ", igstPer=" + igstPer + ", cgstAmt=" + cgstAmt + ", sgstAmt=" + sgstAmt + ", igstAmt=" + igstAmt
+				+ ", taxAmt=" + taxAmt + ", discPer=" + discPer + ", discAmt=" + discAmt + ", taxableAmt=" + taxableAmt
+				+ ", totalAmt=" + totalAmt + ", getBillDate()=" + getBillDate() + ", getCustId()=" + getCustId()
+				+ ", getBillNo()=" + getBillNo() + ", getBillDetailId()=" + getBillDetailId() + ", getCustName()="
+				+ getCustName() + ", getCgstPer()=" + getCgstPer() + ", getSgstPer()=" + getSgstPer()
+				+ ", getIgstPer()=" + getIgstPer() + ", getCgstAmt()=" + getCgstAmt() + ", getSgstAmt()=" + getSgstAmt()
+				+ ", getIgstAmt()=" + getIgstAmt() + ", getTaxAmt()=" + getTaxAmt() + ", getDiscPer()=" + getDiscPer()
+				+ ", getDiscAmt()=" + getDiscAmt() + ", getTaxableAmt()=" + getTaxableAmt() + ", getTotalAmt()="
+				+ getTotalAmt() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()="
+				+ super.toString() + "]";
 	}
 
-	
+
 	
 }
