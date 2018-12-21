@@ -35,4 +35,15 @@ public interface UserRepo extends JpaRepository<User, Integer> {
 
 	User findByUsrMobAndDelStatus(String usrMob, int i);
 
+	List<User> findByDelStatus(int i);
+
+	@Transactional
+	@Modifying
+	@Query("UPDATE User SET role_id=:roleId WHERE user_id=:id")
+	int updateRoleIdByEmpId(@Param("id") int id, @Param("roleId") int roleId);
+
+	User findByUsrName(String usrName);
+
+	User findByUsrNameAndDelStatus(String username, int i);
+
 }
