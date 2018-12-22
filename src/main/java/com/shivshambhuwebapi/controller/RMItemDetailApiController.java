@@ -98,9 +98,6 @@ public class RMItemDetailApiController {
 				header=prodPlanHeaderRepo.save(header);
 			}
 			
-			
-			
-			
 
 		} catch (Exception e) {
 
