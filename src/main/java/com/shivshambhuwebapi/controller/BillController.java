@@ -133,6 +133,7 @@ public class BillController {
 	public @ResponseBody List<GetItemsForBill> getItemsForBill(@RequestParam("chalanId") List<Integer> chalanId) {
 
 		try {
+			System.err.println("exce in  getChalanHeadersByPlantAndStatus " +chalanId.toString());
 			chList = getItemsForBillRepository.getItemsForBill(chalanId);
 			System.err.println("exce in  getChalanHeadersByPlantAndStatus " +chList.toString());
 
