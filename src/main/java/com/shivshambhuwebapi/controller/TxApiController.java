@@ -118,6 +118,10 @@ public class TxApiController {
 		try {
 
 			wList = getPoklenReadingRepo.getPoklenReadingListBetDate(fromDate, toDate);
+			for (int i = 0; i < wList.size(); i++) {
+				wList.get(i).setStartDate(DateConvertor.convertToDMY(wList.get(i).getStartDate()));
+				wList.get(i).setEndDate(DateConvertor.convertToDMY(wList.get(i).getEndDate()));
+			}
 		} catch (Exception e) {
 
 			e.printStackTrace();
@@ -135,6 +139,28 @@ public class TxApiController {
 		try {
 
 			wList = getPoklenReadingRepo.getPoklenReadingListByPoklenId(poklenId);
+			for (int i = 0; i < wList.size(); i++) {
+				wList.get(i).setStartDate(DateConvertor.convertToDMY(wList.get(i).getStartDate()));
+				wList.get(i).setEndDate(DateConvertor.convertToDMY(wList.get(i).getEndDate()));
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return wList;
+
+	}
+
+	@RequestMapping(value = { "/getPokleByStatus" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetPoklenReading> getPokleByStatus(@RequestParam("status") int status) {
+
+		List<GetPoklenReading> wList = new ArrayList<GetPoklenReading>();
+
+		try {
+
+			wList = getPoklenReadingRepo.getPoklenReadingListByStatus(status);
 			for (int i = 0; i < wList.size(); i++) {
 				wList.get(i).setStartDate(DateConvertor.convertToDMY(wList.get(i).getStartDate()));
 				wList.get(i).setEndDate(DateConvertor.convertToDMY(wList.get(i).getEndDate()));
@@ -202,7 +228,7 @@ public class TxApiController {
 		return info;
 
 	}
-
+//
 	// ------------------------------------Weighing----------------------------------------------------
 
 	@RequestMapping(value = { "/saveWeighing" }, method = RequestMethod.POST)
