@@ -44,15 +44,27 @@ public class AddItemDetail {
 	@Column(name="del_status")
 	private int delStatus;
 	
-	@Column(name="int1")
+	@Column(name="ex_int1")
 	private int int1;
 	
-	@Column(name="int2")
+	@Column(name="ex_int2")
 	private int int2;
 	
-	@Column(name="varchar1")
-	private String varchar1;
+	@Column(name="ex_var1")
+	private String exVar1;
 	
+	
+
+	
+
+	public String getExVar1() {
+		return exVar1;
+	}
+
+	public void setExVar1(String exVar1) {
+		this.exVar1 = exVar1;
+	}
+
 	@Column(name="boll1")
 	private int boll1;
 	
@@ -155,13 +167,7 @@ public class AddItemDetail {
 		this.int2 = int2;
 	}
 
-	public String getVarchar1() {
-		return varchar1;
-	}
-
-	public void setVarchar1(String varchar1) {
-		this.varchar1 = varchar1;
-	}
+	
 
 	public int getBoll1() {
 		return boll1;
@@ -184,11 +190,8 @@ public class AddItemDetail {
 		return "AddItemDetail [itemDetailId=" + itemDetailId + ", itemId=" + itemId + ", rmType=" + rmType + ", rmId="
 				+ rmId + ", rmName=" + rmName + ", rmUomId=" + rmUomId + ", rmQty=" + rmQty + ", rmWeight=" + rmWeight
 				+ ", noPiecesPerItem=" + noPiecesPerItem + ", delStatus=" + delStatus + ", int1=" + int1 + ", int2="
-				+ int2 + ", varchar1=" + varchar1 + ", boll1=" + boll1 + ", boll2=" + boll2 + "]";
+				+ int2 + ", exVar1=" + exVar1 + ", boll1=" + boll1 + ", boll2=" + boll2 + "]";
 	}
-	
-	
-	
 	
 	
 
