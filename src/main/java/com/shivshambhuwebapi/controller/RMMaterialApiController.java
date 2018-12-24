@@ -48,7 +48,7 @@ public class RMMaterialApiController {
 	}
 	
 	
-	@RequestMapping(value = { "/getItemDetailByItemId" }, method = RequestMethod.POST)
+	@RequestMapping(value = { "/getItemDetailByItemDetailId" }, method = RequestMethod.POST)
 	public @ResponseBody List<GetExistingItemDetail> getBillDetailByCustId(@RequestParam("itemId") int itemId) {
 
 		List<GetExistingItemDetail> billHeaderRes = new ArrayList<>();
@@ -67,6 +67,7 @@ public class RMMaterialApiController {
 		return billHeaderRes;
 
 	}
+	
 	
 	
 	

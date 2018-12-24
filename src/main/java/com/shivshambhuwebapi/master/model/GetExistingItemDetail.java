@@ -9,19 +9,13 @@ public class GetExistingItemDetail {
 	@Id
 	private int itemDetailId;
 
-	private int itemId;
-
-	private int rmId;
-
 	private String rmName;
-
-	private int rmUomId;
 	
-	private String  uom;
+	private String  uomName;
 	
-	private float qty;
+	private float rmQty;
 	
-	private String catName;
+	private String catDesc;
 
 	public int getItemDetailId() {
 		return itemDetailId;
@@ -31,21 +25,7 @@ public class GetExistingItemDetail {
 		this.itemDetailId = itemDetailId;
 	}
 
-	public int getItemId() {
-		return itemId;
-	}
-
-	public void setItemId(int itemId) {
-		this.itemId = itemId;
-	}
-
-	public int getRmId() {
-		return rmId;
-	}
-
-	public void setRmId(int rmId) {
-		this.rmId = rmId;
-	}
+	
 
 	public String getRmName() {
 		return rmName;
@@ -55,36 +35,38 @@ public class GetExistingItemDetail {
 		this.rmName = rmName;
 	}
 
-	public int getRmUomId() {
-		return rmUomId;
+	public String getUomName() {
+		return uomName;
 	}
 
-	public void setRmUomId(int rmUomId) {
-		this.rmUomId = rmUomId;
+	public void setUomName(String uomName) {
+		this.uomName = uomName;
 	}
 
-	public String getUom() {
-		return uom;
+
+	public String getCatDesc() {
+		return catDesc;
 	}
 
-	public void setUom(String uom) {
-		this.uom = uom;
+	public void setCatDesc(String catDesc) {
+		this.catDesc = catDesc;
 	}
 
-	public float getQty() {
-		return qty;
+	public float getRmQty() {
+		return rmQty;
 	}
 
-	public void setQty(float qty) {
-		this.qty = qty;
+	public void setRmQty(float rmQty) {
+		this.rmQty = rmQty;
 	}
 
-	public String getCatName() {
-		return catName;
-	}
-
-	public void setCatName(String catName) {
-		this.catName = catName;
+	@Override
+	public String toString() {
+		return "GetExistingItemDetail [itemDetailId=" + itemDetailId + ", rmName=" + rmName + ", uomName=" + uomName
+				+ ", rmQty=" + rmQty + ", catDesc=" + catDesc + ", getItemDetailId()=" + getItemDetailId()
+				+ ", getRmName()=" + getRmName() + ", getUomName()=" + getUomName() + ", getCatDesc()=" + getCatDesc()
+				+ ", getRmQty()=" + getRmQty() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
+				+ ", toString()=" + super.toString() + "]";
 	}
 
 	

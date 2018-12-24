@@ -16,7 +16,9 @@ public interface GetItemExistingDetailRepo extends JpaRepository<GetExistingItem
 	
 	
 	
-	@Query(value = "SELECT d.rm_name,d. ,n.contr_mob  FROM t_mat_issue_contra_header c,m_contractor n WHERE c.del_status=1 AND c.contr_id=n.contr_id AND c.mat_header_id=:matHeaderId ORDER BY c.mat_header_id DESC", nativeQuery = true)
+	@Query(value = "select d.item_detail_id,d.rm_name,d.rm_qty,u.uom_name,c.cat_desc FROM m_item_detail d,m_category c,"
+			+ "m_uom u,m_item i WHERE d.item_id=:itemId and d.rm_uom_id=u.uom_id AND d.rm_id=i.item_id and "
+			+ "c.cat_id=i.cat_id", nativeQuery = true)
 
 	List<GetExistingItemDetail> getItemDetailByItemId(@Param("itemId") int itemId);
 	
