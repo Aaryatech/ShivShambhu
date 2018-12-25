@@ -144,6 +144,23 @@ public class BillController {
 
 		return chList;
 	}
+	
+	
+	@RequestMapping(value = { "/getItemsForRmcBill" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetItemsForBill> getItemsForRmcBill(@RequestParam("chalanId") List<Integer> chalanId) {
+		List<GetItemsForBill> chList = new ArrayList<>();
+		try {
+			System.err.println("exce in  getChalanHeadersByPlantAndStatus " +chalanId.toString());
+			chList = getItemsForBillRepository.getItemsForRmcBill(chalanId);
+			System.err.println("exce in  getChalanHeadersByPlantAndStatus " +chList.toString());
+
+		} catch (Exception e) {
+			System.err.println("exce in  getChalanHeadersByPlantAndStatus " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return chList;
+	}
 	@RequestMapping(value = { "/getBillHeadersByDate" }, method = RequestMethod.POST)
 	public @ResponseBody List<GetBillHeader> getBillHeadersByDate(@RequestParam("plantId")int plantId,@RequestParam("custId")int custId,@RequestParam("fromDate") String fromDate,@RequestParam("toDate") String toDate) {
 

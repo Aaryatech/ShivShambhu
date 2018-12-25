@@ -20,5 +20,7 @@ public interface GetOrderDetailRepo extends JpaRepository<GetOrderDetail, Intege
 			+ " t_order_header.po_id=t_cust_po_header.po_id AND t_order_header.order_id=:orderHeaderId AND m_uom.uom_id=m_item_fg.uom_id "
 			+ " ", nativeQuery = true)
 	List<GetOrderDetail> getOrderDtailList(@Param("orderHeaderId") int orderHeaderId);
+	
+	
 
 }

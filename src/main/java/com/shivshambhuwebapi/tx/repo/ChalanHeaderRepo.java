@@ -18,7 +18,7 @@ public interface ChalanHeaderRepo extends JpaRepository<ChalanHeader, Integer> {
 	@Modifying
 	@Query(" UPDATE ChalanHeader SET vehTimeIn=:inTime,inKm=:inKm, chalanRemark=:chalanRemark,"
 			+ "costSegment=:costSegment,sitePersonName=:sitePersonName,sitePersonMob=:sitePersonMob,"
-			+ "status=:status"
+			+ "status=:status,exFloat1=1"
 			+ "   WHERE chalanId=:chalanId")
 	int closeChalanHeader(@Param("chalanId") int chalanId,@Param("status") int status,
 			@Param("inKm") float inKm,@Param("inTime") String inTime,
