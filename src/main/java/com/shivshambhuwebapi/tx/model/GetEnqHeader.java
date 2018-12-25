@@ -59,6 +59,11 @@ public class GetEnqHeader {
 	private int exBool3;
 
 	private int enqGenId;
+	
+	private String quotNo;
+	
+	private String quotDate;	
+	
 
 	@Column(name = "enq_h_remark")
 	private String enqHRemark;
@@ -71,9 +76,19 @@ public class GetEnqHeader {
 	private String plantName;
 
 	private String enqGenBy;
+	
+	private String custMobNo;
 
 	public int getEnqHeadId() {
 		return enqHeadId;
+	}
+
+	public String getCustMobNo() {
+		return custMobNo;
+	}
+
+	public void setCustMobNo(String custMobNo) {
+		this.custMobNo = custMobNo;
 	}
 
 	public void setEnqHeadId(int enqHeadId) {
@@ -296,6 +311,24 @@ public class GetEnqHeader {
 		this.enqGenBy = enqGenBy;
 	}
 
+	
+	
+	public String getQuotNo() {
+		return quotNo;
+	}
+
+	public void setQuotNo(String quotNo) {
+		this.quotNo = quotNo;
+	}
+
+	public String getQuotDate() {
+		return quotDate;
+	}
+
+	public void setQuotDate(String quotDate) {
+		this.quotDate = quotDate;
+	}
+
 	@Override
 	public String toString() {
 		return "GetEnqHeader [enqHeadId=" + enqHeadId + ", enqNo=" + enqNo + ", enqUsrId=" + enqUsrId + ", enqDate="
@@ -304,8 +337,10 @@ public class GetEnqHeader {
 				+ quotId + ", exInt1=" + exInt1 + ", exInt2=" + exInt2 + ", exInt3=" + exInt3 + ", exVar1=" + exVar1
 				+ ", exVar2=" + exVar2 + ", exVar3=" + exVar3 + ", exDate1=" + exDate1 + ", exDate2=" + exDate2
 				+ ", exBool1=" + exBool1 + ", exBool2=" + exBool2 + ", exBool3=" + exBool3 + ", enqGenId=" + enqGenId
-				+ ", enqHRemark=" + enqHRemark + ", enqDetailList=" + enqDetailList + ", custName=" + custName
-				+ ", plantName=" + plantName + ", enqGenBy=" + enqGenBy + "]";
+				+ ", quotNo=" + quotNo + ", quotDate=" + quotDate + ", enqHRemark=" + enqHRemark + ", enqDetailList="
+				+ enqDetailList + ", custName=" + custName + ", plantName=" + plantName + ", enqGenBy=" + enqGenBy
+				+ ", custMobNo=" + custMobNo + "]";
 	}
 
+	
 }

@@ -86,7 +86,7 @@ public class GetOrder {
 	
 	
 	private int status;
-	
+	private String custMobNo;
 	private String plantName;
 	private String compName;
 	private String custName;
@@ -269,6 +269,14 @@ public class GetOrder {
 	}
 	public void setAddress(String address) {
 		this.address = address;
+	}
+	
+	
+	public String getCustMobNo() {
+		return custMobNo;
+	}
+	public void setCustMobNo(String custMobNo) {
+		this.custMobNo = custMobNo;
 	}
 	@Override
 	public String toString() {

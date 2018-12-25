@@ -79,7 +79,16 @@ public class OrderApiController {
 		List<GetOrder> getOrderList = new ArrayList<>();
 
 		try {
-			getOrderList = getOrderRepo.getOrderBetweenDate(plantId, custId, fromDate, toDate);
+			
+			
+			if(custId==0) {
+			getOrderList = getOrderRepo.getOrderBetweenDateCust(plantId,fromDate, toDate);
+			}
+			else {
+				getOrderList = getOrderRepo.getOrderBetweenDate(plantId, custId, fromDate, toDate);
+				
+			}
+			
 
 		} catch (Exception e) {
 
