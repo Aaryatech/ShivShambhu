@@ -1384,6 +1384,24 @@ public class MasterApiController {
 		return userList;
 
 	}
+//get driver list for adding chalan -26-Dec-2018
+	@RequestMapping(value = { "/getDriverList" }, method = RequestMethod.GET)
+	public @ResponseBody List<User> getDriverList() {
+
+		List<User> userList = new ArrayList<User>();
+
+		try {
+
+			userList = userRepo.findByDeptIdAndDelStatusOrderByUserIdDesc(10,1);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return userList;
+
+	}
 
 	@RequestMapping(value = { "/getUserList" }, method = RequestMethod.GET)
 	public @ResponseBody List<GetUser> getUserList() {
