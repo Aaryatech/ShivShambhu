@@ -18,9 +18,9 @@ public interface PayRecoveryHeadRepo extends JpaRepository<PayRecoveryHead, Inte
 	@Query("UPDATE PayRecoveryHead SET delStatus=0  WHERE payHeadId IN(:payHeadIds)")
 	int deleteMultiPayRecoveryHead(@Param("payHeadIds") List<Integer> payHeadIds);
 
+	@Transactional
+	@Modifying
+	@Query("UPDATE PayRecoveryHead SET status=1  WHERE payHeadId=:payHeadId")
+	int updateStatus(@Param("payHeadId") int payHeadId);
+
 }
-
-
-
-
-

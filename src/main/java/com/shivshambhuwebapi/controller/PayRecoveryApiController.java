@@ -117,6 +117,30 @@ public class PayRecoveryApiController {
 
 	}
 
+	@RequestMapping(value = { "/getPayRecoveryByStatus" }, method = RequestMethod.GET)
+	public @ResponseBody List<GetPayRecoveryHead> getPayRecoveryByStatus() {
+
+		List<GetPayRecoveryHead> wList = new ArrayList<GetPayRecoveryHead>();
+
+		try {
+
+			wList = getPayRecoveryHeadRepo.getPayRecByStatus();
+			for (int i = 0; i < wList.size(); i++) {
+				wList.get(i).setCreditDate1(DateConvertor.convertToDMY(wList.get(i).getCreditDate1()));
+				wList.get(i).setCreditDate2(DateConvertor.convertToDMY(wList.get(i).getCreditDate2()));
+				wList.get(i).setCreditDate3(DateConvertor.convertToDMY(wList.get(i).getCreditDate3()));
+				wList.get(i).setBillDate(DateConvertor.convertToDMY(wList.get(i).getBillDate()));
+
+			}
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return wList;
+
+	}
+
 	@RequestMapping(value = { "/getPayRecoveryByPayHeadId" }, method = RequestMethod.POST)
 	public @ResponseBody GetPayRecoveryHead getPayRecoveryByPayHeadId(@RequestParam("payHeadId") int payHeadId) {
 
@@ -169,6 +193,33 @@ public class PayRecoveryApiController {
 			e.printStackTrace();
 			info.setError(true);
 			info.setMessage(" Deleted to Delete");
+
+		}
+		return info;
+
+	}
+
+	@RequestMapping(value = { "/updatePayRecStatus" }, method = RequestMethod.POST)
+	public @ResponseBody Info updatePayRecStatus(@RequestParam("payHeadId") int payHeadId) {
+
+		Info info = new Info();
+
+		try {
+			int delete = payRecoveryHeadRepo.updateStatus(payHeadId);
+
+			if (delete >= 1) {
+				info.setError(false);
+				info.setMessage("successfully Updated");
+			} else {
+				info.setError(true);
+				info.setMessage(" not update");
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage(" Not Update");
 
 		}
 		return info;

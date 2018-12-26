@@ -23,7 +23,7 @@ public interface GetQuotHeaderRepo extends JpaRepository<GetQuotHeader, Integer>
 
 	List<GetQuotHeader> getQuotHeaderList();
 
-	//1
+	// 1
 	@Query(value = " SELECT h.*, c.cust_name ,u.usr_name,o.comp_name,COALESCE((SELECT p.proj_name FROM m_project p WHERE "
 			+ " p.proj_id=h.proj_id ),'NULL') as proj_name,COALESCE((SELECT t.pay_term FROM  m_payment_term t WHERE "
 			+ "t.pay_term_id=h.pay_term_id ),'NULL') as pay_term,pn.plant_name FROM t_quot_header h,m_customer c ,m_user u,"
@@ -33,46 +33,59 @@ public interface GetQuotHeaderRepo extends JpaRepository<GetQuotHeader, Integer>
 	List<GetQuotHeader> getQuotHeaderByPlantId(@Param("plantId") int plantId, @Param("fromDate") String fromDate,
 			@Param("toDate") String toDate);
 
-	
-	
 	@Query(value = "SELECT h.*, c.cust_name ,u.usr_name,o.comp_name,COALESCE((SELECT p.proj_name FROM m_project p WHERE "
 			+ " p.proj_id=h.proj_id ),'NULL') as proj_name,COALESCE((SELECT t.pay_term FROM  m_payment_term t WHERE "
 			+ "t.pay_term_id=h.pay_term_id ),'NULL') as pay_term,pn.plant_name FROM t_quot_header h,m_customer c ,"
 			+ "m_user u,m_company o  ,m_plant pn WHERE h.del_status=1 AND h.cust_id=c.cust_id AND u.user_id=h.user_id"
 			+ " AND h.company_id=o.company_id AND h.plant_ids=:plantId AND h.quot_date BETWEEN :fromDate AND :toDate"
-			+ " AND pn.plant_id=h.plant_ids AND h.cust_id=:custId "+" ORDER BY h.quot_head_id DESC "
-			, nativeQuery = true)
+			+ " AND pn.plant_id=h.plant_ids AND h.cust_id=:custId "
+			+ " ORDER BY h.quot_head_id DESC ", nativeQuery = true)
 	List<GetQuotHeader> getQuotHeaderByPlantIdAndCustId(@Param("plantId") int plantId, @Param("custId") int custId,
 			@Param("fromDate") String fromDate, @Param("toDate") String toDate);
-	
-	//2
+
+	// 2
 	@Query(value = "SELECT h.*, c.cust_name ,u.usr_name,o.comp_name,COALESCE((SELECT p.proj_name FROM m_project p WHERE "
 			+ " p.proj_id=h.proj_id ),'NULL') as proj_name,COALESCE((SELECT t.pay_term FROM  m_payment_term t WHERE "
 			+ "t.pay_term_id=h.pay_term_id ),'NULL') as pay_term,pn.plant_name FROM t_quot_header h,m_customer c ,"
 			+ "m_user u,m_company o  ,m_plant pn WHERE h.del_status=1 AND h.cust_id=c.cust_id AND u.user_id=h.user_id"
 			+ " AND h.company_id=o.company_id AND h.plant_ids=:plantId AND h.quot_date BETWEEN :fromDate AND :toDate"
-			+ " AND pn.plant_id=h.plant_ids AND h.status=:status "+" ORDER BY h.quot_head_id DESC "
-			, nativeQuery = true)
+			+ " AND pn.plant_id=h.plant_ids AND h.status=:status "
+			+ " ORDER BY h.quot_head_id DESC ", nativeQuery = true)
 
 	List<GetQuotHeader> getQuotHeaderByPlantIdAndCustId(@Param("plantId") int plantId,
-			@Param("fromDate") String fromDate, @Param("toDate") String toDate,@Param("status") int status);
+			@Param("fromDate") String fromDate, @Param("toDate") String toDate, @Param("status") int status);
 
-	
-	
-	//4
+	// 4
 	@Query(value = "SELECT h.*, c.cust_name ,u.usr_name,o.comp_name,COALESCE((SELECT p.proj_name FROM m_project p WHERE "
 			+ " p.proj_id=h.proj_id ),'NULL') as proj_name,COALESCE((SELECT t.pay_term FROM  m_payment_term t WHERE "
 			+ "t.pay_term_id=h.pay_term_id ),'NULL') as pay_term,pn.plant_name FROM t_quot_header h,m_customer c ,"
 			+ "m_user u,m_company o  ,m_plant pn WHERE h.del_status=1 AND h.cust_id=c.cust_id AND u.user_id=h.user_id"
 			+ " AND h.company_id=o.company_id AND h.plant_ids=:plantId AND h.quot_date BETWEEN :fromDate AND :toDate"
-			+ " AND pn.plant_id=h.plant_ids AND h.status=:status "+" AND h.cust_id=:custId " +" ORDER BY h.quot_head_id DESC "
-			, nativeQuery = true)
+			+ " AND pn.plant_id=h.plant_ids AND h.status=:status " + " AND h.cust_id=:custId "
+			+ " ORDER BY h.quot_head_id DESC ", nativeQuery = true)
 	List<GetQuotHeader> getQuotHeaderByPlantId(@Param("plantId") int plantId, @Param("custId") int custId,
-			@Param("fromDate") String fromDate, @Param("toDate") String toDate,@Param("status") int status);
+			@Param("fromDate") String fromDate, @Param("toDate") String toDate, @Param("status") int status);
 
+	// 3
 
+	// Android-26-12-2018 -> 1
+	@Query(value = " SELECT h.*, c.cust_name ,u.usr_name,o.comp_name,COALESCE((SELECT p.proj_name FROM m_project p WHERE "
+			+ "p.proj_id=h.proj_id ),'NULL') as proj_name,COALESCE((SELECT t.pay_term FROM  m_payment_term t WHERE "
+			+ "t.pay_term_id=h.pay_term_id ),'NULL') as pay_term,pn.plant_name FROM "
+			+ "t_quot_header h,m_customer c ,m_user u,m_company o  ,m_plant pn WHERE h.status IN (:statusList) "
+			+ "AND h.del_status=1 AND h.cust_id=c.cust_id AND u.user_id=h.user_id AND h.company_id=o.company_id "
+			+ "AND h.plant_ids=:plantId AND pn.plant_id=h.plant_ids ORDER BY h.quot_head_id DESC ", nativeQuery = true)
+	List<GetQuotHeader> getQuotHeaderByPlantIdAndStatusAndAllCust(@Param("plantId") int plantId,
+			@Param("statusList") List<String> statusList);
 	
-	//3
+	// Android-26-12-2018 -> 2
+	@Query(value = " SELECT h.*, c.cust_name ,u.usr_name,o.comp_name,COALESCE((SELECT p.proj_name FROM m_project p WHERE "
+			+ "p.proj_id=h.proj_id ),'NULL') as proj_name,COALESCE((SELECT t.pay_term FROM  m_payment_term t WHERE "
+			+ "t.pay_term_id=h.pay_term_id ),'NULL') as pay_term,pn.plant_name FROM "
+			+ "t_quot_header h,m_customer c ,m_user u,m_company o  ,m_plant pn WHERE h.status IN (:statusList) "
+			+ "AND h.del_status=1 AND h.cust_id=c.cust_id AND u.user_id=h.user_id AND h.company_id=o.company_id "
+			+ "AND h.plant_ids=:plantId AND pn.plant_id=h.plant_ids AND h.cust_id=:custId ORDER BY h.quot_head_id DESC ", nativeQuery = true)
+	List<GetQuotHeader> getQuotHeaderByPlantIdAndStatusAndCust(@Param("plantId") int plantId,
+			@Param("statusList") List<String> statusList,@Param("custId") int custId);
 
-	
 }

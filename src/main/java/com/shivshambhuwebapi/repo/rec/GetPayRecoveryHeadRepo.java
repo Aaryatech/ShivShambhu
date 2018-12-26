@@ -18,4 +18,7 @@ public interface GetPayRecoveryHeadRepo extends JpaRepository<GetPayRecoveryHead
 			+ " AND h.pay_head_id=:payHeadId AND c.cust_id=h.cust_id", nativeQuery = true)
 	GetPayRecoveryHead getPayRecByHeadId(@Param("payHeadId") int payHeadId);
 
+	@Query(value = "SELECT h.*,c.cust_name,c.cust_mob_no FROM t_pay_recovery_header h ,m_customer c WHERE h.del_status=1 AND h.status=0"
+			+ "  AND c.cust_id=h.cust_id", nativeQuery = true)
+	List<GetPayRecoveryHead> getPayRecByStatus();
 }

@@ -330,8 +330,6 @@ public class QuotController {
 
 			}
 
-			
-
 		} catch (Exception e) {
 
 			e.printStackTrace();
@@ -396,6 +394,43 @@ public class QuotController {
 
 		}
 		return info;
+
+	}
+
+	// Android_26-12-2018
+	@RequestMapping(value = { "/getQuotListByPlantIdAndCustIdAndStatusList" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetQuotHeader> getQuotListByPlantIdAndCustIdAndStatus(
+			@RequestParam("plantId") int plantId, @RequestParam("custId") int custId,
+			@RequestParam("statusList") List<String> statusList) {
+
+		List<GetQuotHeader> quotHeaderList = new ArrayList<GetQuotHeader>();
+
+		try {
+
+			if (custId == 0) {
+
+				quotHeaderList = getQuotHeaderRepo.getQuotHeaderByPlantIdAndStatusAndAllCust(plantId, statusList);
+				for (int i = 0; i < quotHeaderList.size(); i++) {
+					List<GetQuotDetail> quotDetailList = getQuotDetailRepo
+							.getQuotDetailByQuotHeadId(quotHeaderList.get(i).getQuotHeadId());
+					quotHeaderList.get(i).setGetQuotDetailList(quotDetailList);
+				}
+			} else {
+				quotHeaderList = getQuotHeaderRepo.getQuotHeaderByPlantIdAndStatusAndCust(plantId, statusList, custId);
+				for (int i = 0; i < quotHeaderList.size(); i++) {
+					List<GetQuotDetail> quotDetailList = getQuotDetailRepo
+							.getQuotDetailByQuotHeadId(quotHeaderList.get(i).getQuotHeadId());
+
+					quotHeaderList.get(i).setGetQuotDetailList(quotDetailList);
+				}
+
+			}
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return quotHeaderList;
 
 	}
 
