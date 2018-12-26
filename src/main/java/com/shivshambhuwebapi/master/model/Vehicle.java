@@ -18,6 +18,8 @@ public class Vehicle {
 
 	@Column(name = "vehicle_name")
 	private String vehicleName;
+	
+
 
 	@Column(name = "veh_comp_name")
 	private String vehCompName;
