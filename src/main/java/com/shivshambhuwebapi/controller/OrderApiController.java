@@ -98,6 +98,34 @@ public class OrderApiController {
 
 	}
 	
+	
+	@RequestMapping(value = { "/getPendingOrderListBetDate" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetOrder> getPendingOrderListBetDate(@RequestParam("plantId") int plantId,
+			@RequestParam("custId") int custId, @RequestParam("fromDate") String fromDate,
+			@RequestParam("toDate") String toDate) {
+
+		List<GetOrder> getOrderList = new ArrayList<>();
+
+		try {
+			
+			
+			if(custId==0) {
+			getOrderList = getOrderRepo.getPendingOrderBetweenDate(plantId,fromDate, toDate);
+			}
+			else {
+				getOrderList = getOrderRepo.getPendingOrderBetweenDateCust(plantId, custId, fromDate, toDate);
+				
+			}
+			
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+		return getOrderList;
+
+	}
+	
 	@RequestMapping(value = { "/getOrderHeaderById" }, method = RequestMethod.POST)
 	public @ResponseBody GetOrder getOrderHeaderById(@RequestParam("orderId") int orderId) {
 

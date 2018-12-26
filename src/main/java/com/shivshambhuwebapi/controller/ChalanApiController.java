@@ -252,6 +252,28 @@ public class ChalanApiController {
 		return chList;
 	}
 
+	
+	
+	@RequestMapping(value = { "/getOpenChalanHeadersByPlantAndStatus" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetChalanHeader> getGetOpenChalanHeaderByPlantAndStatus(@RequestParam("plantId") int plantId) {
+
+		List<GetChalanHeader> chList = new ArrayList<>();
+
+		try {
+
+			chList = getGetChalanHeaderRepo.getGetOpenChalanHeaderByPlantId(plantId);
+			System.out.println("chalan details::"+chList);
+
+		} catch (Exception e) {
+
+			System.err.println("exce in  getChalanHeadersByPlantAndStatus " + e.getMessage());
+			e.printStackTrace();
+
+		}
+
+		return chList;
+	}
+
 	@RequestMapping(value = { "/getChalanHeadersByChalanId" }, method = RequestMethod.POST)
 	public @ResponseBody GetChalanHeader getChalanHeadersByChalanId(@RequestParam("chalanId") int chalanId) {
 
