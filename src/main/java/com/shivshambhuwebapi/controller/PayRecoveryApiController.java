@@ -94,13 +94,23 @@ public class PayRecoveryApiController {
 
 	@RequestMapping(value = { "/getPayRecoveryBetDate" }, method = RequestMethod.POST)
 	public @ResponseBody List<GetPayRecoveryHead> getPayRecoveryBetDate(@RequestParam("fromDate") String fromDate,
-			@RequestParam("toDate") String toDate) {
+			@RequestParam("toDate") String toDate,@RequestParam("plantId") int plantId) {
 
 		List<GetPayRecoveryHead> wList = new ArrayList<GetPayRecoveryHead>();
 
 		try {
+			
+			//all
+			if(plantId==0) {
+				wList = getPayRecoveryHeadRepo.getPayRecBetDate(fromDate, toDate);
+				
+			}
+			else {
+				//specific plant
+				wList = getPayRecoveryHeadRepo.getPayRecBetDatePlantId(fromDate, toDate,plantId);
+			}
 
-			wList = getPayRecoveryHeadRepo.getPayRecBetDate(fromDate, toDate);
+			
 			for (int i = 0; i < wList.size(); i++) {
 				wList.get(i).setCreditDate1(DateConvertor.convertToDMY(wList.get(i).getCreditDate1()));
 				wList.get(i).setCreditDate2(DateConvertor.convertToDMY(wList.get(i).getCreditDate2()));
@@ -123,7 +133,7 @@ public class PayRecoveryApiController {
 		List<GetPayRecoveryHead> wList = new ArrayList<GetPayRecoveryHead>();
 
 		try {
-
+			
 			wList = getPayRecoveryHeadRepo.getPayRecByStatus();
 			for (int i = 0; i < wList.size(); i++) {
 				wList.get(i).setCreditDate1(DateConvertor.convertToDMY(wList.get(i).getCreditDate1()));
@@ -139,8 +149,43 @@ public class PayRecoveryApiController {
 		}
 		return wList;
 
+		
+		
+		
 	}
 
+	
+	@RequestMapping(value = { "/getPayRecoveryByStatus1" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetPayRecoveryHead> getPayRecoveryByStatus1(@RequestParam("plantId") int plantId) {
+
+		List<GetPayRecoveryHead> wList = new ArrayList<GetPayRecoveryHead>();
+
+		try {
+
+			
+			if(plantId!=0) {
+				wList = getPayRecoveryHeadRepo.getPayRecByStatusPlantId(plantId);
+			}
+			else {
+				wList = getPayRecoveryHeadRepo.getPayRecByStatusNoPlantId();
+			}
+
+			
+			for (int i = 0; i < wList.size(); i++) {
+				wList.get(i).setCreditDate1(DateConvertor.convertToDMY(wList.get(i).getCreditDate1()));
+				wList.get(i).setCreditDate2(DateConvertor.convertToDMY(wList.get(i).getCreditDate2()));
+				wList.get(i).setCreditDate3(DateConvertor.convertToDMY(wList.get(i).getCreditDate3()));
+				wList.get(i).setBillDate(DateConvertor.convertToDMY(wList.get(i).getBillDate()));
+
+			}
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return wList;
+
+	}
 	@RequestMapping(value = { "/getPayRecoveryByPayHeadId" }, method = RequestMethod.POST)
 	public @ResponseBody GetPayRecoveryHead getPayRecoveryByPayHeadId(@RequestParam("payHeadId") int payHeadId) {
 
