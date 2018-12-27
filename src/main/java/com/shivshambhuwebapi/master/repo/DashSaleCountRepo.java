@@ -17,6 +17,7 @@ public interface DashSaleCountRepo extends JpaRepository<DashSaleCount, Integer>
 			+ "\n"
 			+ "coalesce (( SELECT COUNT(*)  FROM t_cust_po_header WHERE status=0 AND del_status=1 AND plant_id=:plantId AND po_date BETWEEN :fromDate AND :toDate),'0') AS total_po_pending,\n"
 			+ "\n"
+			+ "coalesce (( SELECT COUNT(*)  FROM t_cust_po_header WHERE status=1 AND del_status=1 AND plant_id=:plantId AND po_date BETWEEN :fromDate AND :toDate),'0') AS po_generated,\n"
 			+ "coalesce (( SELECT SUM(total)  FROM t_order_header WHERE status=1 AND del_status=1 AND plant_id=:plantId AND order_date BETWEEN :fromDate AND :toDate),'0') AS total_order_amount,\n"
 			+ "\n"
 			+ "coalesce (( SELECT SUM(total_amt)  FROM t_bill_header WHERE  del_status=1 AND ex_int1=:plantId AND bill_date BETWEEN :fromDate AND :toDate),'0') AS total_bill_amount,\n"
@@ -31,11 +32,7 @@ public interface DashSaleCountRepo extends JpaRepository<DashSaleCount, Integer>
 			+ "", nativeQuery = true)
 	DashSaleCount getDashboardCountByPlantId(@Param("fromDate") String fromDate, @Param("toDate") String toDate,
 			@Param("plantId") int plantId);
-	
-	
-	
-	
-	
+
 	@Query(value = "SELECT \n"
 			+ "coalesce (( SELECT COUNT(*)  FROM t_enq_header WHERE enq_status=0 AND ex_int1=1  AND enq_date BETWEEN :fromDate AND :toDate),'0') AS total_enq,\n"
 			+ "\n"
@@ -45,6 +42,7 @@ public interface DashSaleCountRepo extends JpaRepository<DashSaleCount, Integer>
 			+ "\n"
 			+ "coalesce (( SELECT COUNT(*)  FROM t_cust_po_header WHERE status=0 AND del_status=1  AND po_date BETWEEN :fromDate AND :toDate),'0') AS total_po_pending,\n"
 			+ "\n"
+			+ "coalesce (( SELECT COUNT(*)  FROM t_cust_po_header WHERE status=1 AND del_status=1 AND  po_date BETWEEN :fromDate AND :toDate),'0') AS po_generated,\n"
 			+ "coalesce (( SELECT SUM(total)  FROM t_order_header WHERE status=1 AND del_status=1 AND order_date BETWEEN :fromDate AND :toDate),'0') AS total_order_amount,\n"
 			+ "\n"
 			+ "coalesce (( SELECT SUM(total_amt)  FROM t_bill_header WHERE  del_status=1 AND bill_date BETWEEN :fromDate AND :toDate),'0') AS total_bill_amount,\n"
