@@ -196,5 +196,42 @@ public class EnquiryApiController {
 		return info;
 
 	}
+	
+	
+	//Anmol
+		@RequestMapping(value = { "/getEnqListByPlantIdAndCustIdForApp" }, method = RequestMethod.POST)
+		public @ResponseBody List<GetEnqHeader> getEnqListByPlantIdAndCustIdForApp(@RequestParam("plantId") int plantId,
+				@RequestParam("fromDate") String fromDate, @RequestParam("toDate") String toDate,
+				@RequestParam("custId") int custId) {
+
+			List<GetEnqHeader> enquiryHeaderList = new ArrayList<GetEnqHeader>();
+
+			try {
+
+				if (custId == 0) {
+
+					enquiryHeaderList = getEnqHeaderRepo.getEnqHeaderByPlantIdForApp(plantId, fromDate, toDate);
+					for (int i = 0; i < enquiryHeaderList.size(); i++) {
+						List<GetEnqDetail> enqDetailList = getEnqDetailRepo
+								.getEnqDetailByEnqHeadId(enquiryHeaderList.get(i).getEnqHeadId());
+						enquiryHeaderList.get(i).setEnqDetailList(enqDetailList);
+					}
+				} else {
+					enquiryHeaderList = getEnqHeaderRepo.getEnqHeaderByPlantIdAndCustIdForApp(plantId, custId, fromDate, toDate);
+					for (int i = 0; i < enquiryHeaderList.size(); i++) {
+						List<GetEnqDetail> enqDetailList = getEnqDetailRepo
+								.getEnqDetailByEnqHeadId(enquiryHeaderList.get(i).getEnqHeadId());
+						enquiryHeaderList.get(i).setEnqDetailList(enqDetailList);
+					}
+
+				}
+			} catch (Exception e) {
+
+				e.printStackTrace();
+
+			}
+			return enquiryHeaderList;
+
+		}
 
 }
