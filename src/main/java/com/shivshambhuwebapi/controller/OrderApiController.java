@@ -33,7 +33,7 @@ public class OrderApiController {
 
 	@Autowired
 	OrderDetailRepo orderDetailRepo;
-	
+
 	@Autowired
 	GetOrderDetailRepo getOrderDetailRepo;
 
@@ -79,16 +79,13 @@ public class OrderApiController {
 		List<GetOrder> getOrderList = new ArrayList<>();
 
 		try {
-			
-			
-			if(custId==0) {
-			getOrderList = getOrderRepo.getOrderBetweenDateCust(plantId,fromDate, toDate);
-			}
-			else {
+
+			if (custId == 0) {
+				getOrderList = getOrderRepo.getOrderBetweenDateCust(plantId, fromDate, toDate);
+			} else {
 				getOrderList = getOrderRepo.getOrderBetweenDate(plantId, custId, fromDate, toDate);
-				
+
 			}
-			
 
 		} catch (Exception e) {
 
@@ -97,8 +94,43 @@ public class OrderApiController {
 		return getOrderList;
 
 	}
-	
-	
+
+	// 27-12-2018
+	@RequestMapping(value = { "/getOrderListBetDateAndStatus" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetOrder> getOrderListBetDateAndStatus(@RequestParam("plantId") int plantId,
+			@RequestParam("custId") int custId, @RequestParam("fromDate") String fromDate,
+			@RequestParam("toDate") String toDate, @RequestParam("statusList") List<Integer> statusList) {
+
+		List<GetOrder> getOrderList = new ArrayList<>();
+
+		if (statusList.contains(-1)) {
+			statusList.clear();
+			statusList.add(0);
+			statusList.add(1);
+			statusList.add(2);
+		}
+
+		try {
+
+			if (custId == 0 && plantId == 0) {
+				getOrderList = getOrderRepo.getOrderBetweenDateAll(fromDate, toDate, statusList);
+			} else if (custId != 0 && plantId == 0) {
+				getOrderList = getOrderRepo.getOrderBetweenDateAndCust(fromDate, toDate, custId, statusList);
+			} else if (custId == 0 && plantId != 0) {
+				getOrderList = getOrderRepo.getOrderBetweenDateAndPlant(fromDate, toDate, plantId, statusList);
+			} else if (custId != 0 && plantId != 0) {
+				getOrderList = getOrderRepo.getOrderBetweenDateAndPlantAndCust(fromDate, toDate, plantId, custId,
+						statusList);
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+		return getOrderList;
+
+	}
+
 	@RequestMapping(value = { "/getPendingOrderListBetDate" }, method = RequestMethod.POST)
 	public @ResponseBody List<GetOrder> getPendingOrderListBetDate(@RequestParam("plantId") int plantId,
 			@RequestParam("custId") int custId, @RequestParam("fromDate") String fromDate,
@@ -107,16 +139,13 @@ public class OrderApiController {
 		List<GetOrder> getOrderList = new ArrayList<>();
 
 		try {
-			
-			
-			if(custId==0) {
-			getOrderList = getOrderRepo.getPendingOrderBetweenDate(plantId,fromDate, toDate);
-			}
-			else {
+
+			if (custId == 0) {
+				getOrderList = getOrderRepo.getPendingOrderBetweenDate(plantId, fromDate, toDate);
+			} else {
 				getOrderList = getOrderRepo.getPendingOrderBetweenDateCust(plantId, custId, fromDate, toDate);
-				
+
 			}
-			
 
 		} catch (Exception e) {
 
@@ -125,94 +154,90 @@ public class OrderApiController {
 		return getOrderList;
 
 	}
-	
+
 	@RequestMapping(value = { "/getOrderHeaderById" }, method = RequestMethod.POST)
 	public @ResponseBody GetOrder getOrderHeaderById(@RequestParam("orderId") int orderId) {
 
-		GetOrder getOrder =new GetOrder();
+		GetOrder getOrder = new GetOrder();
 		try {
 			getOrder = getOrderRepo.getOrderHeaderById(orderId);
 		} catch (Exception e) {
-			
-			System.err.println("exc in getting  getOrderHeaderById " +e.getMessage());
+
+			System.err.println("exc in getting  getOrderHeaderById " + e.getMessage());
 
 			e.printStackTrace();
 		}
 		return getOrder;
 
 	}
-	
-	
+
 	@RequestMapping(value = { "/getOrderDetailList" }, method = RequestMethod.POST)
 	public @ResponseBody List<GetOrderDetail> getOrderDetailList(@RequestParam("orderHeaderId") int orderHeaderId) {
 
 		List<GetOrderDetail> getOrderDetailList = new ArrayList<>();
-System.err.println("orderHeaderId for getOrderDetailList  " +orderHeaderId);
+		System.err.println("orderHeaderId for getOrderDetailList  " + orderHeaderId);
 
 		try {
 			getOrderDetailList = getOrderDetailRepo.getOrderDtailList(orderHeaderId);
 
 		} catch (Exception e) {
-			System.err.println("Exce in  getOrderDetailList by  orderHeaderId " +e.getMessage());
+			System.err.println("Exce in  getOrderDetailList by  orderHeaderId " + e.getMessage());
 
 			e.printStackTrace();
 		}
 		return getOrderDetailList;
 
 	}
-	
+
 	@RequestMapping(value = { "/getOrdHeaderByOrdId" }, method = RequestMethod.POST)
-	public @ResponseBody OrderHeader getOrdHeaderByOrdId (@RequestParam("orderHeaderId") int orderHeaderId) {
+	public @ResponseBody OrderHeader getOrdHeaderByOrdId(@RequestParam("orderHeaderId") int orderHeaderId) {
 
 		OrderHeader orderRes = null;
 
 		try {
 
 			orderRes = orderHeaderRepo.findByOrderId(orderHeaderId);
-		}catch (Exception e) {
-			System.err.println("exce in getting getOrdHeaderByOrdId " +e.getMessage());
+		} catch (Exception e) {
+			System.err.println("exce in getting getOrdHeaderByOrdId " + e.getMessage());
 			e.printStackTrace();
 		}
 		return orderRes;
 
 	}
-	
-	
-	@RequestMapping(value = { "/getOrdHeaderForChalan" }, method = RequestMethod.POST)
-	public @ResponseBody List<OrderHeader> getOrdHeaderForChalan (@RequestParam("custId") int custId,
-			@RequestParam("projId") int projId,@RequestParam("statusList") List<Integer> statusList) {
 
-		 List<OrderHeader> orderResList = new ArrayList<>();
+	@RequestMapping(value = { "/getOrdHeaderForChalan" }, method = RequestMethod.POST)
+	public @ResponseBody List<OrderHeader> getOrdHeaderForChalan(@RequestParam("custId") int custId,
+			@RequestParam("projId") int projId, @RequestParam("statusList") List<Integer> statusList) {
+
+		List<OrderHeader> orderResList = new ArrayList<>();
 
 		try {
 
-			if(projId==-1) {
-				
-			orderResList = orderHeaderRepo.findByCustIdAndStatusIn(custId, statusList);
-			
-			}
-			else {
-				
+			if (projId == -1) {
+
+				orderResList = orderHeaderRepo.findByCustIdAndStatusIn(custId, statusList);
+
+			} else {
+
 				orderResList = orderHeaderRepo.findByProjIdAndStatusIn(projId, statusList);
 			}
-		}catch (Exception e) {
-			
-			System.err.println("exce in getting getOrdHeaderForChalan " +e.getMessage());
+		} catch (Exception e) {
+
+			System.err.println("exce in getting getOrdHeaderForChalan " + e.getMessage());
 			e.printStackTrace();
 		}
-		
+
 		return orderResList;
 
 	}
-	
-	
+
 	@RequestMapping(value = { "/deleteMultiOrder" }, method = RequestMethod.POST)
 	public @ResponseBody Info deleteMultiQuot(@RequestParam("orderIds") List<Integer> orderIds) {
 
 		Info info = new Info();
 
 		try {
-			int delete =  orderHeaderRepo.deleteMultiOrderDetail(orderIds);
+			int delete = orderHeaderRepo.deleteMultiOrderDetail(orderIds);
 
 			if (delete >= 1) {
 				info.setError(false);
