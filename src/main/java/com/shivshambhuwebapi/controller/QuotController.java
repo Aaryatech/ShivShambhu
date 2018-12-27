@@ -280,7 +280,7 @@ public class QuotController {
 
 	}
 
-//status=0
+	// status=0
 	@RequestMapping(value = { "/getQuotListDashById" }, method = RequestMethod.POST)
 	public @ResponseBody List<GetQuotHeader> getQuotListDashById(@RequestParam("plantId") int plantId,
 			@RequestParam("fromDate") String fromDate, @RequestParam("toDate") String toDate) {
@@ -516,26 +516,60 @@ public class QuotController {
 
 		List<GetQuotHeader> quotHeaderList = new ArrayList<GetQuotHeader>();
 
+		if (statusList.contains(-1)) {
+			statusList.clear();
+			statusList.add(0);
+			statusList.add(1);
+			statusList.add(2);
+		}
+
 		try {
 
-			if (custId == 0 && plantId != 0 && !statusList.contains(0)) {
+			if (custId == 0 && plantId != 0) {
 
 				quotHeaderList = getQuotHeaderRepo.getQuotHeaderByPlantIdAndStatus(fromDate, toDate, plantId,
 						statusList);
 
-			} else if (custId != 0 && plantId == 0 && !statusList.contains(0)) {
+			} else if (custId != 0 && plantId == 0) {
 
 				quotHeaderList = getQuotHeaderRepo.getQuotHeaderByCustIdAndStatus(fromDate, toDate, custId, statusList);
 
-			} else if (custId != 0 && plantId != 0 && !statusList.contains(0)) {
+			} else if (custId != 0 && plantId != 0) {
 
-				quotHeaderList = getQuotHeaderRepo.getQuotHeaderByCustIdAndCustIdStatus(fromDate, toDate, plantId,
-						custId, statusList);
+				System.out.println("--------------------------------------------- custId : " + custId
+						+ "        plantID : " + plantId);
 
-			} else {
-				quotHeaderList = getQuotHeaderRepo.getQuotHeaderByStatus(fromDate, toDate);
+				quotHeaderList = getQuotHeaderRepo.getQuotHeaderByCustIdAndCustIdStatus(fromDate, toDate, custId,
+						plantId, statusList);
+
+			} else if (custId == 0 && plantId == 0) {
+				quotHeaderList = getQuotHeaderRepo.getQuotHeaderByDateAndStatus(fromDate, toDate, statusList);
 
 			}
+
+			/*
+			 * if (custId == 0 && plantId != 0 && !statusList.contains(0)) {
+			 * 
+			 * quotHeaderList = getQuotHeaderRepo.getQuotHeaderByPlantIdAndStatus(fromDate,
+			 * toDate, plantId, statusList);
+			 * 
+			 * } else if (custId != 0 && plantId == 0 && !statusList.contains(0)) {
+			 * 
+			 * quotHeaderList = getQuotHeaderRepo.getQuotHeaderByCustIdAndStatus(fromDate,
+			 * toDate, custId, statusList);
+			 * 
+			 * } else if (custId != 0 && plantId != 0 && !statusList.contains(0)) {
+			 * 
+			 * quotHeaderList =
+			 * getQuotHeaderRepo.getQuotHeaderByCustIdAndCustIdStatus(fromDate, toDate,
+			 * plantId, custId, statusList);
+			 * 
+			 * } else { quotHeaderList = getQuotHeaderRepo.getQuotHeaderByStatus(fromDate,
+			 * toDate);
+			 * 
+			 * }
+			 */
+
 		} catch (Exception e) {
 
 			e.printStackTrace();
