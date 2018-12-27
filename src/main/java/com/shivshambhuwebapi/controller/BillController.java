@@ -47,34 +47,34 @@ public class BillController {
 
 	@Autowired
 	BillHeaderRepository billHeaderRepository;
-	
+
 	@Autowired
 	BillDetailRepository billDetailRepository;
-	
+
 	@Autowired
 	GetChalanHeaderRepo getGetChalanHeaderRepo;
-	
+
 	@Autowired
 	GetItemsForBillRepository getItemsForBillRepository;
-	
+
 	@Autowired
 	GetBillHeaderRepository getBillHeaderRepository;
-	
+
 	@Autowired
 	GetBillDetailRepository getBillDetailRepository;
-	
+
 	@Autowired
 	GetBillHeaderPdfRepository getBillHeaderPdfRepository;
-	
+
 	@Autowired
 	BankDetailRepo bankDetailRepository;
-	
+
 	@Autowired
 	ChalanHeaderRepo chalanHeaderRepo;
-	
+
 	@Autowired
 	ChalanDetailRepo chalanDetailRepo;
-	
+
 	@RequestMapping(value = { "/saveBills" }, method = RequestMethod.POST)
 	public @ResponseBody BillHeader saveBills(@RequestBody BillHeader billHeader) {
 
@@ -111,13 +111,14 @@ public class BillController {
 
 	@RequestMapping(value = { "/getChalanHeadersByCustAndStatus" }, method = RequestMethod.POST)
 	public @ResponseBody List<GetChalanHeader> getChalanHeadersByCustAndStatus(@RequestParam("poId") int poId,
-			@RequestParam("chalanStatus") List<Integer> chalanStatus,@RequestParam("billStatus") List<Integer> billStatus) {
+			@RequestParam("chalanStatus") List<Integer> chalanStatus,
+			@RequestParam("billStatus") List<Integer> billStatus) {
 
 		List<GetChalanHeader> chList = new ArrayList<>();
 
 		try {
 
-			chList = getGetChalanHeaderRepo.getGetChalanHeaderByCustId(poId,chalanStatus, billStatus);
+			chList = getGetChalanHeaderRepo.getGetChalanHeaderByCustId(poId, chalanStatus, billStatus);
 
 		} catch (Exception e) {
 
@@ -128,14 +129,16 @@ public class BillController {
 
 		return chList;
 	}
+
 	List<GetItemsForBill> chList = new ArrayList<>();
+
 	@RequestMapping(value = { "/getItemsForBill" }, method = RequestMethod.POST)
 	public @ResponseBody List<GetItemsForBill> getItemsForBill(@RequestParam("chalanId") List<Integer> chalanId) {
 
 		try {
-			System.err.println("exce in  getChalanHeadersByPlantAndStatus " +chalanId.toString());
+			System.err.println("exce in  getChalanHeadersByPlantAndStatus " + chalanId.toString());
 			chList = getItemsForBillRepository.getItemsForBill(chalanId);
-			System.err.println("exce in  getChalanHeadersByPlantAndStatus " +chList.toString());
+			System.err.println("exce in  getChalanHeadersByPlantAndStatus " + chList.toString());
 
 		} catch (Exception e) {
 			System.err.println("exce in  getChalanHeadersByPlantAndStatus " + e.getMessage());
@@ -144,15 +147,14 @@ public class BillController {
 
 		return chList;
 	}
-	
-	
+
 	@RequestMapping(value = { "/getItemsForRmcBill" }, method = RequestMethod.POST)
 	public @ResponseBody List<GetItemsForBill> getItemsForRmcBill(@RequestParam("chalanId") List<Integer> chalanId) {
 		List<GetItemsForBill> chList = new ArrayList<>();
 		try {
-			System.err.println("exce in  getChalanHeadersByPlantAndStatus " +chalanId.toString());
+			System.err.println("exce in  getChalanHeadersByPlantAndStatus " + chalanId.toString());
 			chList = getItemsForBillRepository.getItemsForRmcBill(chalanId);
-			System.err.println("exce in  getChalanHeadersByPlantAndStatus " +chList.toString());
+			System.err.println("exce in  getChalanHeadersByPlantAndStatus " + chList.toString());
 
 		} catch (Exception e) {
 			System.err.println("exce in  getChalanHeadersByPlantAndStatus " + e.getMessage());
@@ -161,15 +163,17 @@ public class BillController {
 
 		return chList;
 	}
-	@RequestMapping(value = { "/getBillHeadersByDate" }, method = RequestMethod.POST)
-	public @ResponseBody List<GetBillHeader> getBillHeadersByDate(@RequestParam("plantId")int plantId,@RequestParam("custId")int custId,@RequestParam("fromDate") String fromDate,@RequestParam("toDate") String toDate) {
 
+	@RequestMapping(value = { "/getBillHeadersByDate" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetBillHeader> getBillHeadersByDate(@RequestParam("plantId") int plantId,
+			@RequestParam("custId") int custId, @RequestParam("fromDate") String fromDate,
+			@RequestParam("toDate") String toDate) {
 
 		List<GetBillHeader> billHeaderRes = null;
 
 		try {
 
-			billHeaderRes = getBillHeaderRepository.getBillHeadersByDate(plantId,custId,fromDate,toDate);
+			billHeaderRes = getBillHeaderRepository.getBillHeadersByDate(plantId, custId, fromDate, toDate);
 
 		} catch (Exception e) {
 
@@ -180,9 +184,39 @@ public class BillController {
 		return billHeaderRes;
 
 	}
-	@RequestMapping(value = { "/getBillHeaderById" }, method = RequestMethod.POST)
-	public @ResponseBody GetBillHeader getBillHeaderById(@RequestParam("billHeadId")int billHeadId) {
 
+	@RequestMapping(value = { "/getBillHeadersByDateAndCustAndPlant" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetBillHeader> getBillHeadersByDateAndCustAndPlant(@RequestParam("plantId") int plantId,
+			@RequestParam("custId") int custId, @RequestParam("fromDate") String fromDate,
+			@RequestParam("toDate") String toDate) {
+
+		List<GetBillHeader> billHeaderRes = null;
+
+		try {
+
+			if (plantId == 0 && custId == 0) {
+				billHeaderRes = getBillHeaderRepository.getBillHeadersByDateByAll(fromDate, toDate);
+			} else if (plantId == 0 && custId != 0) {
+				billHeaderRes = getBillHeaderRepository.getBillHeadersByDateByCust(custId, fromDate, toDate);
+			} else if (plantId != 0 && custId == 0) {
+				billHeaderRes = getBillHeaderRepository.getBillHeadersByDateByPlant(plantId, fromDate, toDate);
+			} else if (plantId != 0 && custId != 0) {
+				billHeaderRes = getBillHeaderRepository.getBillHeadersByDateByCustByPlant(plantId, custId, fromDate,
+						toDate);
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+
+		return billHeaderRes;
+
+	}
+
+	@RequestMapping(value = { "/getBillHeaderById" }, method = RequestMethod.POST)
+	public @ResponseBody GetBillHeader getBillHeaderById(@RequestParam("billHeadId") int billHeadId) {
 
 		GetBillHeader billHeaderRes = null;
 
@@ -200,44 +234,44 @@ public class BillController {
 
 	}
 
+	@RequestMapping(value = { "/findBillsByHeaderId" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetBillHeaderPdf> findBillsByHeaderId(
+			@RequestParam("billTempIds") List<Integer> billHeadIdList) {
 
-@RequestMapping(value = { "/findBillsByHeaderId" }, method = RequestMethod.POST)
-public @ResponseBody List<GetBillHeaderPdf> findBillsByHeaderId(@RequestParam("billTempIds")List<Integer> billHeadIdList) {
+		List<GetBillHeaderPdf> billHeaderRes = null;
 
+		try {
 
-	List<GetBillHeaderPdf> billHeaderRes = null;
+			billHeaderRes = getBillHeaderPdfRepository.findBillsByHeaderId(billHeadIdList);
 
-	try {
-		
-		billHeaderRes = getBillHeaderPdfRepository.findBillsByHeaderId(billHeadIdList);
-		
-		for(int i=0;i<billHeaderRes.size();i++)
-		{
-			BankDetail bankDetail=bankDetailRepository.findByBankDetIdAndDelStatus(billHeaderRes.get(i).getAccId(),1);
-			List<GetBillDetail>	billDetailList = getBillDetailRepository.getBillDetailsById(billHeaderRes.get(i).getBillHeadId());
-		   System.err.println(billDetailList+"billDetailList");
-		   billHeaderRes.get(i).setBankDetail(bankDetail);
-			billHeaderRes.get(i).setGetBillDetails(billDetailList);
+			for (int i = 0; i < billHeaderRes.size(); i++) {
+				BankDetail bankDetail = bankDetailRepository
+						.findByBankDetIdAndDelStatus(billHeaderRes.get(i).getAccId(), 1);
+				List<GetBillDetail> billDetailList = getBillDetailRepository
+						.getBillDetailsById(billHeaderRes.get(i).getBillHeadId());
+				System.err.println(billDetailList + "billDetailList");
+				billHeaderRes.get(i).setBankDetail(bankDetail);
+				billHeaderRes.get(i).setGetBillDetails(billDetailList);
+			}
+			System.err.println(billHeaderRes.toString() + "billHeaderRes");
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
 		}
-		 System.err.println(billHeaderRes.toString()+"billHeaderRes");
-	} catch (Exception e) {
 
-		e.printStackTrace();
+		return billHeaderRes;
 
 	}
 
-	return billHeaderRes;
-
-}
 	@RequestMapping(value = { "/getBillHeaderByBillHeadId" }, method = RequestMethod.POST)
-	public @ResponseBody BillHeader getBillHeaderByBillHeadId(@RequestParam("billHeadId")int billHeadId) {
-
+	public @ResponseBody BillHeader getBillHeaderByBillHeadId(@RequestParam("billHeadId") int billHeadId) {
 
 		BillHeader billHeaderRes = null;
 
 		try {
 
-			billHeaderRes = billHeaderRepository.findByBillHeadIdAndDelStatus(billHeadId,1);
+			billHeaderRes = billHeaderRepository.findByBillHeadIdAndDelStatus(billHeadId, 1);
 
 		} catch (Exception e) {
 
@@ -248,9 +282,9 @@ public @ResponseBody List<GetBillHeaderPdf> findBillsByHeaderId(@RequestParam("b
 		return billHeaderRes;
 
 	}
-	@RequestMapping(value = { "/getBillDetailsById" }, method = RequestMethod.POST)
-	public @ResponseBody List<GetBillDetail> getBillDetailsById(@RequestParam("billHeadId")int billHeadId) {
 
+	@RequestMapping(value = { "/getBillDetailsById" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetBillDetail> getBillDetailsById(@RequestParam("billHeadId") int billHeadId) {
 
 		List<GetBillDetail> billDetailList = null;
 
@@ -267,36 +301,31 @@ public @ResponseBody List<GetBillHeaderPdf> findBillsByHeaderId(@RequestParam("b
 		return billDetailList;
 
 	}
-	
-	@RequestMapping(value = { "/updateChalanStatus" }, method = RequestMethod.POST)
-	public @ResponseBody Info updateChalanStatus(@RequestParam("chalanDetailId")List<Integer> chalanDetailId) {
 
+	@RequestMapping(value = { "/updateChalanStatus" }, method = RequestMethod.POST)
+	public @ResponseBody Info updateChalanStatus(@RequestParam("chalanDetailId") List<Integer> chalanDetailId) {
 
 		Info info = null;
 
 		try {
 
 			int isUpdated = chalanDetailRepo.updateChalanStatus(chalanDetailId);
-			if(isUpdated>=1)
-			{
-				List<Integer> chalanIds=getBillDetailRepository.getDistinctChalanIds(chalanDetailId);
+			if (isUpdated >= 1) {
+				List<Integer> chalanIds = getBillDetailRepository.getDistinctChalanIds(chalanDetailId);
 				System.err.println(chalanIds.toString());
-				for(int i=0;i<chalanIds.size();i++)
-				{
+				for (int i = 0; i < chalanIds.size(); i++) {
 					int cnt = getBillDetailRepository.getStatusCnt(chalanIds.get(i));
 					System.err.println(cnt);
-					if(cnt==0)
-					{
+					if (cnt == 0) {
 						chalanHeaderRepo.updateChalanHeaderStatus(chalanIds.get(i));
 						System.err.println(chalanIds.get(i));
 					}
 				}
-				info=new Info();
+				info = new Info();
 				info.setError(false);
 				info.setMessage("Chalan Updated Successfully.");
-			}else
-			{
-				info=new Info();
+			} else {
+				info = new Info();
 				info.setError(true);
 				info.setMessage("Chalan Not Updated.");
 			}
