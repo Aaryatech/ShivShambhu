@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.shivshambhuwebapi.common.DateConvertor;
 import com.shivshambhuwebapi.tx.model.EnqDetail;
 import com.shivshambhuwebapi.tx.model.EnqHeader;
 import com.shivshambhuwebapi.tx.model.GetEnqDetail;
@@ -108,11 +109,12 @@ public class EnquiryApiController {
 				enquiryHeaderList = getEnqHeaderRepo.getEnqHeaderByPlantIdAndCustId(plantId, custId, fromDate, toDate);
 			}
 
-			/*for (int i = 0; i < enquiryHeaderList.size(); i++) {
-				List<GetEnqDetail> enqDetailList = getEnqDetailRepo
-						.getEnqDetailByEnqHeadId(enquiryHeaderList.get(i).getEnqHeadId());
-				enquiryHeaderList.get(i).setEnqDetailList(enqDetailList);
-			}*/
+			/*
+			 * for (int i = 0; i < enquiryHeaderList.size(); i++) { List<GetEnqDetail>
+			 * enqDetailList = getEnqDetailRepo
+			 * .getEnqDetailByEnqHeadId(enquiryHeaderList.get(i).getEnqHeadId());
+			 * enquiryHeaderList.get(i).setEnqDetailList(enqDetailList); }
+			 */
 		} catch (Exception e) {
 
 			e.printStackTrace();
@@ -196,42 +198,81 @@ public class EnquiryApiController {
 		return info;
 
 	}
-	
-	
-	//Anmol
-		@RequestMapping(value = { "/getEnqListByPlantIdAndCustIdForApp" }, method = RequestMethod.POST)
-		public @ResponseBody List<GetEnqHeader> getEnqListByPlantIdAndCustIdForApp(@RequestParam("plantId") int plantId,
-				@RequestParam("fromDate") String fromDate, @RequestParam("toDate") String toDate,
-				@RequestParam("custId") int custId) {
 
-			List<GetEnqHeader> enquiryHeaderList = new ArrayList<GetEnqHeader>();
+	// Anmol
+	@RequestMapping(value = { "/getEnqListByPlantIdAndCustIdForApp" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetEnqHeader> getEnqListByPlantIdAndCustIdForApp(@RequestParam("plantId") int plantId,
+			@RequestParam("fromDate") String fromDate, @RequestParam("toDate") String toDate,
+			@RequestParam("custId") int custId) {
 
-			try {
+		List<GetEnqHeader> enquiryHeaderList = new ArrayList<GetEnqHeader>();
 
-				if (custId == 0) {
+		try {
 
-					enquiryHeaderList = getEnqHeaderRepo.getEnqHeaderByPlantIdForApp(plantId, fromDate, toDate);
-					for (int i = 0; i < enquiryHeaderList.size(); i++) {
-						List<GetEnqDetail> enqDetailList = getEnqDetailRepo
-								.getEnqDetailByEnqHeadId(enquiryHeaderList.get(i).getEnqHeadId());
-						enquiryHeaderList.get(i).setEnqDetailList(enqDetailList);
-					}
-				} else {
-					enquiryHeaderList = getEnqHeaderRepo.getEnqHeaderByPlantIdAndCustIdForApp(plantId, custId, fromDate, toDate);
-					for (int i = 0; i < enquiryHeaderList.size(); i++) {
-						List<GetEnqDetail> enqDetailList = getEnqDetailRepo
-								.getEnqDetailByEnqHeadId(enquiryHeaderList.get(i).getEnqHeadId());
-						enquiryHeaderList.get(i).setEnqDetailList(enqDetailList);
-					}
+			if (custId == 0) {
 
+				enquiryHeaderList = getEnqHeaderRepo.getEnqHeaderByPlantIdForApp(plantId, fromDate, toDate);
+				for (int i = 0; i < enquiryHeaderList.size(); i++) {
+					List<GetEnqDetail> enqDetailList = getEnqDetailRepo
+							.getEnqDetailByEnqHeadId(enquiryHeaderList.get(i).getEnqHeadId());
+					enquiryHeaderList.get(i).setEnqDetailList(enqDetailList);
 				}
-			} catch (Exception e) {
-
-				e.printStackTrace();
+			} else {
+				enquiryHeaderList = getEnqHeaderRepo.getEnqHeaderByPlantIdAndCustIdForApp(plantId, custId, fromDate,
+						toDate);
+				for (int i = 0; i < enquiryHeaderList.size(); i++) {
+					List<GetEnqDetail> enqDetailList = getEnqDetailRepo
+							.getEnqDetailByEnqHeadId(enquiryHeaderList.get(i).getEnqHeadId());
+					enquiryHeaderList.get(i).setEnqDetailList(enqDetailList);
+				}
 
 			}
-			return enquiryHeaderList;
+		} catch (Exception e) {
+
+			e.printStackTrace();
 
 		}
+		return enquiryHeaderList;
+
+	}
+
+	// 28-12-2018
+	@RequestMapping(value = { "/getEnqListByPlantAndCust" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetEnqHeader> getEnqListByPlantAndCust(@RequestParam("plantId") int plantId,
+			@RequestParam("fromDate") String fromDate, @RequestParam("toDate") String toDate,
+			@RequestParam("custId") int custId) {
+
+		List<GetEnqHeader> enquiryHeaderList = new ArrayList<GetEnqHeader>();
+
+		try {
+
+			if (custId == 0 && plantId == 0) {
+				enquiryHeaderList = getEnqHeaderRepo.getEnqHeaderByDate(fromDate, toDate);
+			} else if (custId != 0 && plantId == 0) {
+				enquiryHeaderList = getEnqHeaderRepo.getEnqHeaderByCust(custId, fromDate, toDate);
+			} else if (custId == 0 && plantId != 0) {
+				enquiryHeaderList = getEnqHeaderRepo.getEnqHeaderByPlant(plantId, fromDate, toDate);
+			} else if (custId != 0 && plantId != 0) {
+				enquiryHeaderList = getEnqHeaderRepo.getEnqHeaderByCustAndPlant(plantId, custId, fromDate, toDate);
+			}
+
+			for (int i = 0; i < enquiryHeaderList.size(); i++) {
+				enquiryHeaderList.get(i).setEnqDate(DateConvertor.convertToDMY(enquiryHeaderList.get(i).getEnqDate()));
+			}
+
+			/*
+			 * for (int i = 0; i < enquiryHeaderList.size(); i++) { List<GetEnqDetail>
+			 * enqDetailList = getEnqDetailRepo
+			 * .getEnqDetailByEnqHeadId(enquiryHeaderList.get(i).getEnqHeadId());
+			 * enquiryHeaderList.get(i).setEnqDetailList(enqDetailList); }
+			 */
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return enquiryHeaderList;
+
+	}
 
 }
