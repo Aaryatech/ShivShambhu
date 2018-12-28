@@ -10,6 +10,7 @@ public class DashPlant {
 	private float totalBillAmount;
 	private float contrExpenses;
 	private float vehExpenses;
+	private float totalBillAmtRubber;
 
 	public float getTotalBillAmount() {
 		return totalBillAmount;
@@ -35,10 +36,18 @@ public class DashPlant {
 		this.vehExpenses = vehExpenses;
 	}
 
+	public float getTotalBillAmtRubber() {
+		return totalBillAmtRubber;
+	}
+
+	public void setTotalBillAmtRubber(float totalBillAmtRubber) {
+		this.totalBillAmtRubber = totalBillAmtRubber;
+	}
+
 	@Override
 	public String toString() {
 		return "DashPlant [totalBillAmount=" + totalBillAmount + ", contrExpenses=" + contrExpenses + ", vehExpenses="
-				+ vehExpenses + "]";
+				+ vehExpenses + ", totalBillAmtRubber=" + totalBillAmtRubber + "]";
 	}
 
 }
