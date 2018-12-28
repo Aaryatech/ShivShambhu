@@ -33,5 +33,9 @@ public interface CustRepo extends JpaRepository<Cust, Integer> {
 	List<Cust> findByDelStatus(int i);
 
 	List<Cust> findByPlantIdAndDelStatus(int plantId, int i);
-
+	
+	//Sachin 27 Dec 2018
+		@Query(value = ""
+				+ "SELECT m_customer.* FROM m_customer,t_quot_header WHERE m_customer.cust_id=t_quot_header.cust_id AND t_quot_header.quot_head_id=:quotIdList  ", nativeQuery = true)
+	Cust getCustByQuotIdList(@Param("quotIdList") int quotIdList);
 }

@@ -27,5 +27,14 @@ public interface PaymentTermRepo extends JpaRepository<PaymentTerm, Integer> {
 	int deleteMultiPaymentTerm(@Param("payTermIds") List<Integer> payTermIds);
 
 	PaymentTerm findByPayTermAndDelStatus(String payTerm, int i);
+	
+	//sachin 27-12-2018
+	@Query(value = ""
+			+ " SELECT m_payment_term.* FROM m_payment_term,t_quot_header "
+			+ " WHERE m_payment_term.pay_term_id=t_quot_header.pay_term_id "
+			+ " AND t_quot_header.quot_head_id IN (:quotIdList)   ", nativeQuery = true)
+
+PaymentTerm getPayTermDetailForQuotPrint(@Param("quotIdList") int quotIdList);
+
 
 }

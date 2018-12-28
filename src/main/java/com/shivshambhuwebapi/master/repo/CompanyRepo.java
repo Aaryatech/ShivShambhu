@@ -27,4 +27,12 @@ public interface CompanyRepo extends JpaRepository<Company, Integer> {
 	int deleteMultiCompany(@Param("companyIds") List<Integer> companyIds);
 
 	Company findByCompGstNoAndDelStatus(String compGstNo, int i);
+	
+	//Sachin 27 Dec 2018
+	@Query(value = ""
+			+ "SELECT m_company.* FROM m_company,t_quot_header WHERE "
+			+ "m_company.company_id=t_quot_header.company_id AND "
+			+ "t_quot_header.quot_head_id IN (:quotIdList)   ", nativeQuery = true)
+	Company getCompaniesByQuotIds(@Param("quotIdList")int  quotIdList);
+	
 }

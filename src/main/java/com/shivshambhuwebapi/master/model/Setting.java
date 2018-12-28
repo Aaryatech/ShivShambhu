@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "t_setting")
+@Table(name = "t_setting_shiv")
 public class Setting {
 	
 	@Id
