@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.shivshambhuwebapi.master.model.DashPlant;
 import com.shivshambhuwebapi.master.model.DashSaleCount;
+import com.shivshambhuwebapi.master.repo.DashPlantRepo;
 import com.shivshambhuwebapi.master.repo.DashSaleCountRepo;
 
 @RestController
@@ -18,6 +20,9 @@ public class DashApiController {
 
 	@Autowired
 	DashSaleCountRepo dashSaleCountRepo;
+
+	@Autowired
+	DashPlantRepo dashPlantRepo;
 
 	// getDashboardCount
 
@@ -28,13 +33,10 @@ public class DashApiController {
 		DashSaleCount dashSaleCount = new DashSaleCount();
 
 		try {
-			if(plantId!=0)
-			{
+			if (plantId != 0) {
 
-			dashSaleCount = dashSaleCountRepo.getDashboardCountByPlantId(fromDate, toDate, plantId);
-			}
-			else
-			{
+				dashSaleCount = dashSaleCountRepo.getDashboardCountByPlantId(fromDate, toDate, plantId);
+			} else {
 				dashSaleCount = dashSaleCountRepo.getDashboardCount(fromDate, toDate);
 			}
 
@@ -46,8 +48,26 @@ public class DashApiController {
 		return dashSaleCount;
 
 	}
-	
-	
-	
+
+	// getDashboardCount
+
+	@RequestMapping(value = { "/getPlantDashCountBetDate" }, method = RequestMethod.POST)
+	public @ResponseBody DashPlant getPlantDashCountBetDate(@RequestParam("fromDate") String fromDate,
+			@RequestParam("toDate") String toDate) {
+
+		DashPlant dashSaleCount = new DashPlant();
+
+		try {
+
+			dashSaleCount = dashPlantRepo.getDashPlantCount(fromDate, toDate);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return dashSaleCount;
+
+	}
 
 }
