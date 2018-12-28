@@ -15,7 +15,7 @@ public interface GetQuotDetailPrintRepo extends JpaRepository<GetQuotDetailPrint
 					+ "SELECT t_quot_detail.quot_detail_id,t_quot_detail.quot_qty, t_quot_detail.total,t_quot_detail.rate,"
 					+ "m_uom.uom_name,m_item_fg.item_name,m_item_fg.item_code,"
 					+ "t_quot_detail.quot_uom_id,t_quot_detail.quot_head_id, "
-					+ "t_quot_detail.item_id,t_quot_header.quot_no "
+					+ "t_quot_detail.item_id,t_quot_header.quot_no,t_quot_header.quot_date "
 					+ "FROM t_quot_detail,m_uom,m_item_fg,t_quot_header\n" + 
 					"WHERE t_quot_detail.item_id=m_item_fg.item_id AND "
 					+ "t_quot_detail.quot_uom_id=m_uom.uom_id AND t_quot_detail.del_status=1 "

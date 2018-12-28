@@ -1,8 +1,12 @@
 package com.shivshambhuwebapi.master.repo;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 public class GetQuotDetailPrint {
@@ -36,6 +40,18 @@ public class GetQuotDetailPrint {
 	private int quotUomId;
 	
 	private String quotNo;
+	
+	private Date quotDate;
+	
+	
+	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
+	public Date getQuotDate() {
+		return quotDate;
+	}
+
+	public void setQuotDate(Date quotDate) {
+		this.quotDate = quotDate;
+	}
 
 	public int getQuotDetailId() {
 		return quotDetailId;

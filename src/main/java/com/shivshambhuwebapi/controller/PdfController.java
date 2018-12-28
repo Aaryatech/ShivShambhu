@@ -55,29 +55,31 @@ public class PdfController {
 		System.err.println("Inside getQuotPrintData" + quotIdList);
 		List<QuotPrintData> printDataList = new ArrayList<QuotPrintData>();
 
-		Company comp;
-
-		Cust cust;
-
-		List<GetQuotDetailPrint> quotDetPrint;
-
-		List<DocTermDetail> docTermList;
-
-		PaymentTerm payTerm;
-
-		Project proj;
-
-		BankDetail bank;
+		
 		try {
 
 			for (int i = 0; i < quotIdList.size(); i++) {
 				QuotPrintData printData = new QuotPrintData();
 
+				Company comp=new Company();
+
+				Cust cust=new Cust();
+
+
+				List<DocTermDetail> docTermList=new ArrayList<>();
+
+				PaymentTerm payTerm=new PaymentTerm();
+
+				Project proj=new Project();
+
+				BankDetail bank=new BankDetail();
+				
 				comp = getCompanyRepo.getCompaniesByQuotIds(quotIdList.get(i));
 				printData.setComp(comp);
 
 				cust = getCustRepo.getCustByQuotIdList(quotIdList.get(i));
 				printData.setCust(cust);
+				List<GetQuotDetailPrint> quotDetPrint=new ArrayList<>();
 
 				quotDetPrint = getGetQuotDetailPrintRepo.getGetQuotDetailPrint(quotIdList.get(i));
 				printData.setQuotDetPrint(quotDetPrint);
@@ -89,6 +91,7 @@ public class PdfController {
 				printData.setPayTerm(payTerm);
 
 				proj = getProjectRepo.getProjectByQuotIdList(quotIdList.get(i));
+				printData.setProj(proj);
 
 				bank = getBankDetailRepo.findFirstByCompanyIdAndDelStatus(comp.getCompanyId(), 1);
 				printData.setBank(bank);
