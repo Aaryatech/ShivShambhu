@@ -19,7 +19,7 @@ public interface OtherExpensesRepo extends JpaRepository<OtherExpenses, Integer>
 	@Transactional
 	@Modifying
 	@Query("UPDATE OtherExpenses SET delStatus=0  WHERE otherExpId=:otherExpId")
-	int deleteOtherExpenses(@Param("bankDetId") int otherExpId);
+	int deleteOtherExpenses(@Param("otherExpId") int otherExpId);
 
 	@Transactional
 	@Modifying
