@@ -11,15 +11,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.shivshambhuwebapi.common.DateConvertor;
 import com.shivshambhuwebapi.master.model.BankDetail;
 import com.shivshambhuwebapi.master.model.DashPlant;
 import com.shivshambhuwebapi.master.model.DashSaleCount;
 import com.shivshambhuwebapi.master.model.Document;
+import com.shivshambhuwebapi.master.model.GetOtherExpenses;
 import com.shivshambhuwebapi.master.model.OtherExpenses;
 import com.shivshambhuwebapi.master.repo.DashPlantRepo;
 import com.shivshambhuwebapi.master.repo.DashSaleCountRepo;
 import com.shivshambhuwebapi.master.repo.GetOtherExpRepo;
 import com.shivshambhuwebapi.master.repo.OtherExpensesRepo;
+
+import ch.qos.logback.classic.pattern.DateConverter;
 
 @RestController
 public class DashApiController {
@@ -65,6 +69,31 @@ public class DashApiController {
 
 			expList = otherExpensesRepo.findByDelStatusOrderByOtherExpIdDesc(1);
 
+			for (int i = 0; i < expList.size(); i++) {
+				expList.get(i).setDate(DateConvertor.convertToDMY(expList.get(i).getDate()));
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return expList;
+
+	}
+
+	@RequestMapping(value = { "/getOtherExpList" }, method = RequestMethod.GET)
+	public @ResponseBody List<GetOtherExpenses> getOtherExpList() {
+
+		List<GetOtherExpenses> expList = new ArrayList<GetOtherExpenses>();
+
+		try {
+
+			expList = getOtherExpRepo.getAllOterExpList();
+			for (int i = 0; i < expList.size(); i++) {
+				expList.get(i).setDate(DateConvertor.convertToDMY(expList.get(i).getDate()));
+			}
+
 		} catch (Exception e) {
 
 			e.printStackTrace();
@@ -81,6 +110,7 @@ public class DashApiController {
 
 		try {
 			otherExp = otherExpensesRepo.findByOtherExpIdAndDelStatus(otherExpId, 1);
+			otherExp.setDate(DateConvertor.convertToDMY(otherExp.getDate()));
 
 		} catch (Exception e) {
 
