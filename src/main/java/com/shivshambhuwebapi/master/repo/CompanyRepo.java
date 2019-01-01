@@ -35,4 +35,13 @@ public interface CompanyRepo extends JpaRepository<Company, Integer> {
 			+ "t_quot_header.quot_head_id IN (:quotIdList)   ", nativeQuery = true)
 	Company getCompaniesByQuotIds(@Param("quotIdList")int  quotIdList);
 	
+	
+	//SELECT m_company.*  FROM m_company,m_plant WHERE m_plant.plant_id=67 AND m_plant.company_id=m_company.company_id AND m_company.del_status=1
+	
+	
+	//Sachin  1 Jan 2019 web service for chalan print 
+	@Query(value = ""
+			+ " SELECT m_company.*  FROM m_company,m_plant WHERE m_plant.plant_id=:plantId "
+			+ " AND m_plant.company_id=m_company.company_id AND m_company.del_status=1 ", nativeQuery = true)
+	Company getCompanyByPlanId(@Param("plantId")int  plantId);
 }

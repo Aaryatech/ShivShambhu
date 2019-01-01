@@ -23,7 +23,10 @@ import com.shivshambhuwebapi.master.repo.DocTermDetailRepo;
 import com.shivshambhuwebapi.master.repo.GetQuotDetailPrint;
 import com.shivshambhuwebapi.master.repo.PaymentTermRepo;
 import com.shivshambhuwebapi.master.repo.ProjectRepo;
+import com.shivshambhuwebapi.tx.model.ChalanPrintData;
+import com.shivshambhuwebapi.tx.model.ChalanPrintItem;
 import com.shivshambhuwebapi.tx.model.QuotPrintData;
+import com.shivshambhuwebapi.tx.repo.ChalanPrintItemRepo;
 import com.shivshambhuwebapi.tx.repo.GetQuotDetailPrintRepo;
 
 @RestController
@@ -107,5 +110,41 @@ public class PdfController {
 
 		return printDataList;
 	}
+	
+	
+	@Autowired ChalanPrintItemRepo getChalanPrintItemRepo;
+	
+	@RequestMapping(value = { "/getChalanPrintData" }, method = RequestMethod.POST)
+	public @ResponseBody ChalanPrintData getChalanPrintData(@RequestParam("chalanId") int chalanId) {
+
+		System.err.println("Inside getChalanPrintData chalanId" + chalanId);
+		ChalanPrintData chPrintData=new ChalanPrintData();
+		try {
+			
+			List<ChalanPrintItem> chItemList=getChalanPrintItemRepo.getChalanPrintItem(chalanId);
+			
+			System.err.println("ch Item list " +chItemList.toString());
+			
+			
+			chPrintData.setChalanItemList(chItemList);
+			
+			Company comp=getCompanyRepo.getCompanyByPlanId(chItemList.get(0).getPlantId());
+			
+			chPrintData.setComp(comp);
+			if(chPrintData!=null)
+			System.err.println("chPrintData" +chPrintData.toString());
+			
+			
+		}catch (Exception e) {
+			
+			System.err.println("exce in  /getChalanPrintData @PDf Api Controller " + e.getMessage());
+			e.printStackTrace();
+			
+		}
+		
+		return chPrintData;
+	
+	}
+	
 
 }
