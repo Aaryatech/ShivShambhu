@@ -68,8 +68,33 @@ public class RMMaterialApiController {
 
 	}
 	
-	
-	
+	@RequestMapping(value = { "/deleteItemDetail" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteItemDetail(@RequestParam("itemDetailId") int itemDetailId) {
+
+		Info info = new Info();
+
+		try {
+			int delete = rmmaterialRepo.deleteItemDetail(itemDetailId);
+
+			if (delete == 1) {
+				info.setError(false);
+				info.setMessage("successfully Deleted");
+			} else {
+				info.setError(true);
+				info.setMessage(" Deleted to Delete");
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage(" Deleted to Delete");
+
+		}
+		return info;
+
+	}
+
 	
 
 }
