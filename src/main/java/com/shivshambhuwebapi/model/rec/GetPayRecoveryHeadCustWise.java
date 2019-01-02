@@ -29,7 +29,6 @@ public class GetPayRecoveryHeadCustWise {
 	private String billDate;
 
 	
-	
 	@Column(name = "bill_total")
 	private float billTotal;
 
