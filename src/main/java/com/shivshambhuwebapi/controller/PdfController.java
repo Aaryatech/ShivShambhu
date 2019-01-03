@@ -143,8 +143,5 @@ public class PdfController {
 		}
 		
 		return chPrintData;
-	
 	}
-	
-
 }

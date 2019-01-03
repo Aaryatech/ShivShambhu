@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.shivshambhuwebapi.master.model.CustType;
+import com.shivshambhuwebapi.model.prodrm.RmcQuotItemDetail;
+import com.shivshambhuwebapi.repository.rmc.RmcQuotItemDetailRepo;
 import com.shivshambhuwebapi.tx.model.GetEnqDetail;
 import com.shivshambhuwebapi.tx.model.GetEnqHeader;
 import com.shivshambhuwebapi.tx.model.GetItemWithEnq;
@@ -42,6 +44,27 @@ public class QuotController {
 
 	@Autowired
 	GetQuotHeaderRepo getQuotHeaderRepo;
+	
+	@Autowired RmcQuotItemDetailRepo getRmcQuotItemDetailRepo;//3 Jan 2018
+	
+	@RequestMapping(value = { "/getRmcQuotItemDetail" }, method = RequestMethod.POST)
+	public @ResponseBody List<RmcQuotItemDetail> getRmcQuotItemDetail(@RequestParam("itemId") int itemId) {
+
+		List<RmcQuotItemDetail> rmcItemDetail = new ArrayList<RmcQuotItemDetail>();
+
+		try {
+
+			rmcItemDetail = getRmcQuotItemDetailRepo.getRmcQuotItemDetail(itemId);
+		} catch (Exception e) {
+
+			System.err.println("Exce in getting  getRmcQuotItemDetail" + rmcItemDetail.toString());
+
+			e.printStackTrace();
+
+		}
+		return rmcItemDetail;
+
+	}
 
 	@RequestMapping(value = { "/saveQuotHeaderAndDetail" }, method = RequestMethod.POST)
 	public @ResponseBody QuotHeader saveQuotHeaderAndDetail(@RequestBody QuotHeader quotHeader) {
