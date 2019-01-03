@@ -16,6 +16,7 @@ import com.shivshambhuwebapi.master.repo.GetDatewiseDetailReportRepo;
 import com.shivshambhuwebapi.master.repo.GetMonthwiseReportRepo;
 import com.shivshambhuwebapi.master.repo.ItemWiseBill;
 import com.shivshambhuwebapi.master.repo.TaxWiseBillRepo;
+import com.shivshambhuwebapi.model.GetPoReport;
 import com.shivshambhuwebapi.model.bill.GetBillHeader;
 import com.shivshambhuwebapi.model.bill.GetBillReport;
 import com.shivshambhuwebapi.model.bill.GetDateWiseDetailBill;
@@ -23,6 +24,7 @@ import com.shivshambhuwebapi.model.bill.GetDatewiseReport;
 import com.shivshambhuwebapi.model.bill.MonthWiseBill;
 import com.shivshambhuwebapi.repository.GetBillReportRepo;
 import com.shivshambhuwebapi.repository.GetDatewiseReportRepo;
+import com.shivshambhuwebapi.repository.GetPoReportRepo;
 import com.shivshambhuwebapi.tx.model.GetMatIssueDetail;
 import com.shivshambhuwebapi.tx.model.GetMatIssueHeader;
 import com.shivshambhuwebapi.tx.model.GetMatIssueReport;
@@ -71,9 +73,51 @@ public class ReportApiController {
 
 	@Autowired
 	GetMonthwiseReportRepo getMonthwiseReportRepo;
-	
+
 	@Autowired
 	GetDatewiseDetailReportRepo getDatewiseDetailReportRepo;
+
+	@Autowired
+	GetPoReportRepo getPoReportRepo;
+
+	/*@RequestMapping(value = { "/getPoReportBetDateAndType" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetPoReport> getPoReportBetDateAndType(@RequestParam("fromDate") String fromDate,
+			@RequestParam("toDate") String toDate, @RequestParam("plantId") int plantId,
+			@RequestParam("type") int type) {
+
+		List<GetPoReport> poList = new ArrayList<GetPoReport>();
+
+		try {
+
+			if (type == 1) {
+
+				if (plantId != 0) {
+					poList = getPoReportRepo.getPoBetweenDateAndPlantId(fromDate, toDate, plantId);
+				}
+
+				poList = getPoReportRepo.getPoBetweenDate(fromDate, toDate);
+			} else {
+
+				if (plantId != 0) {
+					poList = getPoReportRepo.getPoByPlantId(plantId);
+				}
+
+				poList = getPoReportRepo.getPoReport();
+			}
+
+			for (int i = 0; i < poList.size(); i++) {
+				poList.get(i).setPoDate(DateConvertor.convertToDMY(poList.get(i).getPoDate()));
+
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return poList;
+
+	}*/
 
 	@RequestMapping(value = { "/getContractorBetweenDate" }, method = RequestMethod.POST)
 	public @ResponseBody List<GetMatIssueReport> getContractorBetweenDate(@RequestParam("fromDate") String fromDate,
