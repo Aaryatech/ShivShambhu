@@ -20,7 +20,7 @@ public interface GetPoReportRepo extends JpaRepository<GetPoReport, Integer> {
 	@Query(value = "SELECT d.po_detail_id, d.item_id,h.po_id ,h.po_date ,h.po_no ,d.po_remaining_qty,c.cust_name,c.cust_mob_no,i.item_name FROM t_cust_po_detail d,t_cust_po_header h,m_customer c,m_item_fg i WHERE  h.po_id=d.po_id AND d.status=0 AND h.del_status=1 AND c.cust_id=h.cust_id AND d.item_id=i.item_id", nativeQuery = true)
 	List<GetPoReport> getPoReport();
 
-	@Query(value = "SELECT d.po_detail_id, d.item_id,h.po_id ,h.po_date ,h.po_no ,d.po_remaining_qty,c.cust_name,c.cust_mob_no,i.item_name FROM t_cust_po_detail d,t_cust_po_header h,m_customer c,m_item_fg i WHERE  h.po_id=d.po_id AND d.status=0 AND h.del_status=1  AND h.plant_id:plantId AND c.cust_id=h.cust_id AND d.item_id=i.item_id", nativeQuery = true)
+	@Query(value = "SELECT d.po_detail_id, d.item_id,h.po_id ,h.po_date ,h.po_no ,d.po_remaining_qty,c.cust_name,c.cust_mob_no,i.item_name FROM t_cust_po_detail d,t_cust_po_header h,m_customer c,m_item_fg i WHERE  h.po_id=d.po_id AND d.status=0 AND h.del_status=1  AND h.plant_id=:plantId AND c.cust_id=h.cust_id AND d.item_id=i.item_id", nativeQuery = true)
 	List<GetPoReport> getPoByPlantId(@Param("plantId") int plantId);
 
 }

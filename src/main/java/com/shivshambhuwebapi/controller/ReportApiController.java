@@ -93,16 +93,18 @@ public class ReportApiController {
 
 				if (plantId != 0) {
 					poList = getPoReportRepo.getPoBetweenDateAndPlantId(fromDate, toDate, plantId);
+				} else {
+					poList = getPoReportRepo.getPoBetweenDate(fromDate, toDate);
 				}
 
-				poList = getPoReportRepo.getPoBetweenDate(fromDate, toDate);
 			} else {
 
 				if (plantId != 0) {
 					poList = getPoReportRepo.getPoByPlantId(plantId);
+				} else {
+					poList = getPoReportRepo.getPoReport();
 				}
-
-				poList = getPoReportRepo.getPoReport();
+				
 			}
 
 			for (int i = 0; i < poList.size(); i++) {
