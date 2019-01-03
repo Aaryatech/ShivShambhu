@@ -80,7 +80,7 @@ public class ReportApiController {
 	@Autowired
 	GetPoReportRepo getPoReportRepo;
 
-	/*@RequestMapping(value = { "/getPoReportBetDateAndType" }, method = RequestMethod.POST)
+	@RequestMapping(value = { "/getPoReportBetDateAndType" }, method = RequestMethod.POST)
 	public @ResponseBody List<GetPoReport> getPoReportBetDateAndType(@RequestParam("fromDate") String fromDate,
 			@RequestParam("toDate") String toDate, @RequestParam("plantId") int plantId,
 			@RequestParam("type") int type) {
@@ -117,7 +117,7 @@ public class ReportApiController {
 		}
 		return poList;
 
-	}*/
+	}
 
 	@RequestMapping(value = { "/getContractorBetweenDate" }, method = RequestMethod.POST)
 	public @ResponseBody List<GetMatIssueReport> getContractorBetweenDate(@RequestParam("fromDate") String fromDate,
