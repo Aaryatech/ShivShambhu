@@ -36,4 +36,12 @@ public interface ChalanHeaderRepo extends JpaRepository<ChalanHeader, Integer> {
 	@Modifying
 	@Query(" UPDATE ChalanHeader SET status=2  WHERE chalanId=:chalanId")
 	void updateChalanHeaderStatus(@Param("chalanId")Integer integer);
+	
+	
+	@Transactional
+	@Modifying
+	@Query("UPDATE ChalanHeader SET  exInt1=0 WHERE chalanId=:chalanId")
+	int deleteChalan(@Param("chalanId")int chalanId);
+
+	
 }

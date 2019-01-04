@@ -273,6 +273,25 @@ public class ChalanApiController {
 
 		return chList;
 	}
+	
+	
+	@RequestMapping(value = { "/deleteChalan" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteChalan(@RequestParam("chalanId") int chalanId) {
+
+		int isDeleted = chalanHeaderRepo.deleteChalan(chalanId);
+		Info infoRes=new Info();
+		if(isDeleted>=1)
+		{
+			infoRes.setError(false);
+			infoRes.setMessage("Chalan Deleted Successfully");
+		}
+		else
+		{
+			infoRes.setError(true);
+			infoRes.setMessage("Chalan Deletion Failed");
+		}
+		return infoRes;
+	}
 
 	@RequestMapping(value = { "/getChalanHeadersByChalanId" }, method = RequestMethod.POST)
 	public @ResponseBody GetChalanHeader getChalanHeadersByChalanId(@RequestParam("chalanId") int chalanId) {
