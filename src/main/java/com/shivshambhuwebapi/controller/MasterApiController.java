@@ -219,7 +219,6 @@ public class MasterApiController {
 
 	}
 
-
 	@RequestMapping(value = { "/updateDocSrNo" }, method = RequestMethod.POST)
 	public @ResponseBody Info updateDocSrNo(@RequestParam("docCode") int docCode, @RequestParam("srNo") int srNo) {
 
@@ -1384,6 +1383,7 @@ public class MasterApiController {
 		return userList;
 
 	}
+
 //get driver list for adding chalan -26-Dec-2018
 	@RequestMapping(value = { "/getDriverList" }, method = RequestMethod.GET)
 	public @ResponseBody List<User> getDriverList() {
@@ -1392,7 +1392,7 @@ public class MasterApiController {
 
 		try {
 
-			userList = userRepo.findByDeptIdAndDelStatusOrderByUserIdDesc(10,1);
+			userList = userRepo.findByDeptIdAndDelStatusOrderByUserIdDesc(10, 1);
 
 		} catch (Exception e) {
 
@@ -1562,7 +1562,6 @@ public class MasterApiController {
 		try {
 			cust = custRepo.findByCustIdAndDelStatus(custId, 1);
 			cust.setDateOfReg(DateConvertor.convertToDMY(cust.getDateOfReg()));
-			cust.setCustDob(DateConvertor.convertToDMY(cust.getCustDob()));
 
 		} catch (Exception e) {
 
@@ -2183,17 +2182,6 @@ public class MasterApiController {
 
 	}
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	@RequestMapping(value = { "/getCustListByPlantId" }, method = RequestMethod.POST)
 	public @ResponseBody List<Cust> getCustListByPlantId(@RequestParam("plantId") int plantId) {
 

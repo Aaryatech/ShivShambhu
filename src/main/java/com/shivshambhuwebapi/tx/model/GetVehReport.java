@@ -11,14 +11,14 @@ public class GetVehReport {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "veh_id")
+	private int vehId;
+
 	@Column(name = "mat_veh_header_id")
 	private int matVehHeaderId;
 
 	@Column(name = "veh_no")
 	private String vehNo;
-
-	@Column(name = "veh_id")
-	private int vehId;
 
 	@Column(name = "date")
 	private String date;
@@ -258,7 +258,5 @@ public class GetVehReport {
 				+ ", exDate2=" + exDate2 + ", exBool1=" + exBool1 + ", exBool2=" + exBool2 + ", vehicleName="
 				+ vehicleName + ", vehCompName=" + vehCompName + ", weighContrQty=" + weighContrQty + "]";
 	}
-	
-	
-	
+
 }
