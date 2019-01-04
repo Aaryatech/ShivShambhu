@@ -22,6 +22,9 @@ public interface GetPoklenReadingRepo extends JpaRepository<GetPoklenReading, In
 	@Query(value = "SELECT p.*,v.veh_no,v.vehicle_name FROM t_poklen_reading p , m_vehicle v\n"
 			+ "	WHERE p.del_status=1 AND p.poklen_id=v.vehicle_id AND p.ex_int1=:status ", nativeQuery = true)
 	List<GetPoklenReading> getPoklenReadingListByStatus(@Param("status") int status);
+	
+	
+	
 
 	//
 }
