@@ -416,23 +416,24 @@ public class MatIssueApiController {
 
 	}
 
-	 //7-1-2019
-    @RequestMapping(value = { "/getMatIssueVehicleByVehicleId" }, method = RequestMethod.POST)
-    public @ResponseBody List<GetVehDetail> getMatIssueVehicleByVehicleId(@RequestParam("vehicleId") int vehicleId,@RequestParam("fromDate") String fromDate,@RequestParam("toDate") String toDate) {
+	// 7-1-2019
+	@RequestMapping(value = { "/getMatIssueVehicleByVehicleId" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetVehDetail> getMatIssueVehicleByVehicleId(@RequestParam("vehicleId") int vehicleId,
+			@RequestParam("fromDate") String fromDate, @RequestParam("toDate") String toDate) {
 
-        List<GetVehDetail> detail = new ArrayList<GetVehDetail>();
+		List<GetVehDetail> detail = new ArrayList<GetVehDetail>();
 
-        try {
+		try {
 
-            detail = getVehDetailRepo.getMatIssueByVehicleId(vehicleId,fromDate,toDate);
+			detail = getVehDetailRepo.getMatIssueByVehicleId(vehicleId, fromDate, toDate);
 
-        } catch (Exception e) {
+		} catch (Exception e) {
 
-            e.printStackTrace();
+			e.printStackTrace();
 
-        }
-        return detail;
+		}
+		return detail;
 
-    }
+	}
 
 }
