@@ -193,8 +193,35 @@ public class MatIssueApiController {
 
 	}
 
+	/*
+	 * @RequestMapping(value = { "/getMatIssueVehicleByHeaderId" }, method =
+	 * RequestMethod.POST) public @ResponseBody GetVehHeader
+	 * getMatIssueVehicleByHeaderId(@RequestParam("matVehHeaderId") int
+	 * matVehHeaderId) {
+	 * 
+	 * GetVehHeader header = new GetVehHeader();
+	 * 
+	 * try {
+	 * 
+	 * header = getVehHeaderRepo.getMatIssueByHeaderId(matVehHeaderId);
+	 * header.setDate(DateConvertor.convertToDMY(header.getDate()));
+	 * List<GetVehDetail> vehDetailList =
+	 * getVehDetailRepo.getMatIssueByHeaderId(header.getMatVehHeaderId());
+	 * header.setVehDetailList(vehDetailList);
+	 * 
+	 * } catch (Exception e) {
+	 * 
+	 * e.printStackTrace();
+	 * 
+	 * } return header;
+	 * 
+	 * }
+	 */
+
 	@RequestMapping(value = { "/getMatIssueVehicleByHeaderId" }, method = RequestMethod.POST)
-	public @ResponseBody GetVehHeader getMatIssueVehicleByHeaderId(@RequestParam("matVehHeaderId") int matVehHeaderId) {
+	public @ResponseBody GetVehHeader getMatIssueVehicleByHeaderId(@RequestParam("matVehHeaderId") int matVehHeaderId,
+			@RequestParam("vehicleId") int vehicleId, @RequestParam("fromDate") String fromDate,
+			@RequestParam("toDate") String toDate) {
 
 		GetVehHeader header = new GetVehHeader();
 
@@ -202,7 +229,7 @@ public class MatIssueApiController {
 
 			header = getVehHeaderRepo.getMatIssueByHeaderId(matVehHeaderId);
 			header.setDate(DateConvertor.convertToDMY(header.getDate()));
-			List<GetVehDetail> vehDetailList = getVehDetailRepo.getMatIssueByHeaderId(header.getMatVehHeaderId());
+			List<GetVehDetail> vehDetailList = getVehDetailRepo.getMatIssueByVehicleId(vehicleId, fromDate, toDate);
 			header.setVehDetailList(vehDetailList);
 
 		} catch (Exception e) {
