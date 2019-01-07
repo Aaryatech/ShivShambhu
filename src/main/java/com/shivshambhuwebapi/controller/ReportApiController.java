@@ -104,7 +104,7 @@ public class ReportApiController {
 				} else {
 					poList = getPoReportRepo.getPoReport();
 				}
-				
+
 			}
 
 			for (int i = 0; i < poList.size(); i++) {
@@ -282,6 +282,31 @@ public class ReportApiController {
 		try {
 
 			billHeaderRes = getBillReportRepo.getBillHeaderByCustId(custId);
+
+			for (int i = 0; i < billHeaderRes.size(); i++) {
+				billHeaderRes.get(i).setBillDate(DateConvertor.convertToDMY(billHeaderRes.get(i).getBillDate()));
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+
+		return billHeaderRes;
+
+	}
+
+	//7-1-2019
+	@RequestMapping(value = { "/getBillDetailByCustIdAndDate" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetBillReport> getBillDetailByCustIdAndDate(@RequestParam("custId") int custId,
+			@RequestParam("fromDate") String fromDate, @RequestParam("toDate") String toDate) {
+
+		List<GetBillReport> billHeaderRes = new ArrayList<>();
+
+		try {
+
+			billHeaderRes = getBillReportRepo.getBillHeaderByCustIdAndDate(custId, fromDate, toDate);
 
 			for (int i = 0; i < billHeaderRes.size(); i++) {
 				billHeaderRes.get(i).setBillDate(DateConvertor.convertToDMY(billHeaderRes.get(i).getBillDate()));
