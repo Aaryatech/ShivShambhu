@@ -39,7 +39,7 @@ public interface PoklenReportRepo extends JpaRepository<PoklenReport, Integer> {
 			"        from\n" + 
 			"            t_weighing \n" + 
 			"        where\n" + 
-			"            m_vehicle.vehicle_id=t_weighing.poklen_id \n" + 
+			"            m_vehicle.vehicle_id=t_weighing.poklen_id AND t_weighing.date BETWEEN :fromDate AND :toDate\n" + 
 			"            ),\n" + 
 			"        0) as total_qty_load \n" + 
 			"        FROM m_vehicle WHERE m_vehicle.vehicle_type=3", nativeQuery = true)

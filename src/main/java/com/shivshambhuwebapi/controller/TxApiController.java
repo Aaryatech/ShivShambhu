@@ -132,13 +132,14 @@ public class TxApiController {
 	}
 
 	@RequestMapping(value = { "/getByPoklenId" }, method = RequestMethod.POST)
-	public @ResponseBody List<GetPoklenReading> getByPoklenId(@RequestParam("poklenId") int poklenId) {
+	public @ResponseBody List<GetPoklenReading> getByPoklenId(@RequestParam("poklenId") int poklenId,
+			@RequestParam("fromDate") String fromDate, @RequestParam("toDate") String toDate) {
 
 		List<GetPoklenReading> wList = new ArrayList<GetPoklenReading>();
 
 		try {
 
-			wList = getPoklenReadingRepo.getPoklenReadingListByPoklenId(poklenId);
+			wList = getPoklenReadingRepo.getPoklenReadingListByPoklenId(poklenId, fromDate, toDate);
 			for (int i = 0; i < wList.size(); i++) {
 				wList.get(i).setStartDate(DateConvertor.convertToDMY(wList.get(i).getStartDate()));
 				wList.get(i).setEndDate(DateConvertor.convertToDMY(wList.get(i).getEndDate()));
@@ -228,7 +229,7 @@ public class TxApiController {
 		return info;
 
 	}
-//
+	//
 	// ------------------------------------Weighing----------------------------------------------------
 
 	@RequestMapping(value = { "/saveWeighing" }, method = RequestMethod.POST)
@@ -426,12 +427,13 @@ public class TxApiController {
 	}
 
 	@RequestMapping(value = { "/getWeighByVehicleId" }, method = RequestMethod.POST)
-	public @ResponseBody List<GetWeighing> getWeighByVehicleId(@RequestParam("vehicleId") int vehicleId) {
+	public @ResponseBody List<GetWeighing> getWeighByVehicleId(@RequestParam("vehicleId") int vehicleId,
+			@RequestParam("fromDate") String fromDate, @RequestParam("toDate") String toDate) {
 
 		List<GetWeighing> wList = new ArrayList<GetWeighing>();
 
 		try {
-			wList = getWeighingRepo.getWeighingByVehicleId(vehicleId);
+			wList = getWeighingRepo.getWeighingByVehicleId(vehicleId, fromDate, toDate);
 
 		} catch (Exception e) {
 
