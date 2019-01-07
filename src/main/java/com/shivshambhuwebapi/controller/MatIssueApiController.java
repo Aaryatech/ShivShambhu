@@ -288,9 +288,11 @@ public class MatIssueApiController {
 		return header;
 
 	}
-	
+
 	@RequestMapping(value = { "/getMatIssueByContrAndDate" }, method = RequestMethod.POST)
-	public @ResponseBody GetMatIssueHeader getMatIssueByContrAndDate(@RequestParam("matHeaderId") int matHeaderId,@RequestParam("contrId") int contrId,@RequestParam("fromDate") String fromDate,@RequestParam("toDate") String toDate) {
+	public @ResponseBody GetMatIssueHeader getMatIssueByContrAndDate(@RequestParam("matHeaderId") int matHeaderId,
+			@RequestParam("contrId") int contrId, @RequestParam("fromDate") String fromDate,
+			@RequestParam("toDate") String toDate) {
 
 		GetMatIssueHeader header = new GetMatIssueHeader();
 
@@ -298,8 +300,8 @@ public class MatIssueApiController {
 
 			header = getMatIssueHeaderRepo.getMatIssueHeaderByHeaderId(matHeaderId);
 			header.setDate(DateConvertor.convertToDMY(header.getDate()));
-			List<GetMatIssueDetail> matDetailList = getMatIssueDetailRepo
-					.getMatIssueHeaderByDateAndContractor(contrId, fromDate, toDate);
+			List<GetMatIssueDetail> matDetailList = getMatIssueDetailRepo.getMatIssueHeaderByDateAndContractor(contrId,
+					fromDate, toDate);
 			header.setMatIssueDetailList(matDetailList);
 
 		} catch (Exception e) {
