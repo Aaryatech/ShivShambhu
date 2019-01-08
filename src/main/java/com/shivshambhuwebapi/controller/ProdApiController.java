@@ -25,8 +25,6 @@ import com.shivshambhuwebapi.repository.prodrm.ProdPlanDetailRepo;
 import com.shivshambhuwebapi.repository.prodrm.ProdPlanHeaderRepo;
 import com.shivshambhuwebapi.repository.prodrm.ProdReportDetailRepo;
 import com.shivshambhuwebapi.repository.prodrm.ProdReportHeaderRepo;
-import com.shivshambhuwebapi.tx.model.ChalanDetail;
-import com.shivshambhuwebapi.tx.model.ChalanHeader;
 
 @RestController
 public class ProdApiController {
@@ -43,15 +41,15 @@ public class ProdApiController {
 	@Autowired
 	GetProdPlanDetailRepo getProdPlanDetailRepo;
 
-	
-	@Autowired GetItemDetailRepo getItemDetailRepo;//for auto bill of material 
-	
-	@Autowired	ProdReportHeaderRepo getProdReportHeaderRepo;
-	
-	@Autowired ProdReportDetailRepo getProdReportDetailRepo;
-	
-	
-	
+	@Autowired
+	GetItemDetailRepo getItemDetailRepo;// for auto bill of material
+
+	@Autowired
+	ProdReportHeaderRepo getProdReportHeaderRepo;
+
+	@Autowired
+	ProdReportDetailRepo getProdReportDetailRepo;
+
 	@RequestMapping(value = { "/saveProdPlanHeaderDetail" }, method = RequestMethod.POST)
 	public @ResponseBody ProdPlanHeader saveProdPlanHeaderDetail(@RequestBody ProdPlanHeader planHeader) {
 
@@ -66,7 +64,8 @@ public class ProdApiController {
 			for (int i = 0; i < planHeader.getProdPlanDetailList().size(); i++) {
 
 				planHeader.getProdPlanDetailList().get(i).setProductionHeaderId((planHeadRes.getProductionHeaderId()));
-				planHeader.getProdPlanDetailList().get(i).setProductionBatch(""+planHeadRes.getProductionHeaderId()+"-"+planHeader.getProdPlanDetailList().get(i).getItemId());
+				planHeader.getProdPlanDetailList().get(i).setProductionBatch("" + planHeadRes.getProductionHeaderId()
+						+ "-" + planHeader.getProdPlanDetailList().get(i).getItemId());
 
 			}
 
@@ -74,9 +73,9 @@ public class ProdApiController {
 
 			planHeadRes.setProdPlanDetailList(prodPlanDetails);
 			System.err.println("saveProdPlanHeaderDetail body " + planHeadRes.toString());
-			planHeadRes.setProductionBatch(""+planHeadRes.getProductionHeaderId()+"-"+planHeadRes.getProductionDate());
+			planHeadRes.setProductionBatch(
+					"" + planHeadRes.getProductionHeaderId() + "-" + planHeadRes.getProductionDate());
 			planHeadRes = prodPlanHeaderRepo.save(planHeadRes);
-
 
 		} catch (Exception e) {
 			System.err.println("exce in saving saveProdPlanHeaderDetail " + e.getMessage());
@@ -126,7 +125,7 @@ public class ProdApiController {
 			planHeader.setGetProdPlanDetList(prodDetailList);
 		} catch (Exception e) {
 			System.err.println("exce in getProdPlanDetail " + e.getMessage());
-			
+
 			e.printStackTrace();
 
 		}
@@ -138,14 +137,14 @@ public class ProdApiController {
 	// complete Prod
 
 	@RequestMapping(value = { "/completeProd" }, method = RequestMethod.POST)
-	public @ResponseBody Info completeProd(@RequestBody  ProdPlanHeader planHeader) {
+	public @ResponseBody Info completeProd(@RequestBody ProdPlanHeader planHeader) {
 
 		Info info = new Info();
 
 		try {
 
 			int prodHeadUpdate = prodPlanHeaderRepo.completProd(planHeader.getProductionHeaderId(),
-					planHeader.getProductionStatus(),planHeader.getProductionEndDate());
+					planHeader.getProductionStatus(), planHeader.getProductionEndDate());
 
 			if (prodHeadUpdate > 0) {
 
@@ -159,7 +158,8 @@ public class ProdApiController {
 					response = 0;
 					ProdPlanDetail det = prodDetList.get(i);
 
-					response=prodPlanDetailRepo.completProdDetail(det.getProductionDetailId(), det.getStatus(), det.getProductionQty(), det.getRejectedQty());
+					response = prodPlanDetailRepo.completProdDetail(det.getProductionDetailId(), det.getStatus(),
+							det.getProductionQty(), det.getRejectedQty());
 
 					if (response > 0) {
 
@@ -172,21 +172,20 @@ public class ProdApiController {
 			}
 
 		} catch (Exception e) {
-			System.err.println("exce in /completeProd  " +e.getMessage());
+			System.err.println("exce in /completeProd  " + e.getMessage());
 			e.printStackTrace();
 		}
 		return info;
 	}
-	
-	
+
 	@RequestMapping(value = { "/getItemDetailForBOM" }, method = RequestMethod.POST)
 	public @ResponseBody List<GetItemDetail> getItemDetailForBOM(@RequestParam("prodHeaderId") int prodHeaderId) {
 
 		List<GetItemDetail> itemDetList = new ArrayList<>();
 
 		try {
-			itemDetList=getItemDetailRepo.getGetItemDetail(prodHeaderId);
-			
+			itemDetList = getItemDetailRepo.getGetItemDetail(prodHeaderId);
+
 		} catch (Exception e) {
 			System.err.println("exce in getItemDetailForBOM " + e.getMessage());
 			itemDetList = null;
@@ -199,10 +198,9 @@ public class ProdApiController {
 	}
 
 //Report Prod Header
-	
-	//getProdReportHeaderRepo
-	
-	
+
+	// getProdReportHeaderRepo
+
 	@RequestMapping(value = { "/getProdReportHeader" }, method = RequestMethod.POST)
 	public @ResponseBody List<ProdReportHeader> getProdReportHeader(@RequestParam("fromDate") String fromDate,
 			@RequestParam("toDate") String toDate, @RequestParam("plantId") int plantId) {
@@ -224,9 +222,9 @@ public class ProdApiController {
 		return prodReportHeader;
 
 	}
-	
-	//ProdReportDetailRepo
-	
+
+	// ProdReportDetailRepo
+
 	@RequestMapping(value = { "/getProdReportDetail" }, method = RequestMethod.POST)
 	public @ResponseBody List<ProdReportDetail> getProdReportDetail(@RequestParam("fromDate") String fromDate,
 			@RequestParam("toDate") String toDate, @RequestParam("plantId") int plantId,
@@ -249,7 +247,32 @@ public class ProdApiController {
 		return prodDetailReport;
 
 	}
-	
-	
-	
+
+	@RequestMapping(value = { "/deleteMultiProdPlan" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteMultiProdPlan(@RequestParam("prodHeaderIds") List<Integer> prodHeaderIds) {
+
+		Info info = new Info();
+
+		try {
+			int delete = prodPlanHeaderRepo.deleteMultiProdPlanHeader(prodHeaderIds);
+
+			if (delete >= 1) {
+				info.setError(false);
+				info.setMessage("successfully Multiple Deleted");
+			} else {
+				info.setError(true);
+				info.setMessage(" Deleted to Delete");
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage(" Deleted to Delete");
+
+		}
+		return info;
+
+	}
+
 }
