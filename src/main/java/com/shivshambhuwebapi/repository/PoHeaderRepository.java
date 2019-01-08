@@ -10,13 +10,18 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.shivshambhuwebapi.model.PoHeader;
 
-public interface PoHeaderRepository extends JpaRepository<PoHeader, Integer>{
+public interface PoHeaderRepository extends JpaRepository<PoHeader, Integer> {
 
 	@Transactional
 	@Modifying
 	@Query("UPDATE PoHeader SET del_status=0  WHERE po_id=:poId")
-	int deletePurchaseOrder(@Param("poId")int poId);
+	int deletePurchaseOrder(@Param("poId") int poId);
 
 	List<PoHeader> findByDelStatusAndCustIdAndStatusIn(int delStatus, int custId, List<Integer> statusList);
+
+	@Transactional
+	@Modifying
+	@Query("UPDATE PoHeader SET delStatus=0  WHERE poId IN(:poIds)")
+	int deleteMultiPO(@Param("poIds") List<Integer> poIds);
 
 }

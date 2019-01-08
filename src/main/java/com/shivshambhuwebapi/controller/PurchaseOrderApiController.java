@@ -243,4 +243,31 @@ public class PurchaseOrderApiController {
 
 	}
 
+	@RequestMapping(value = { "/deleteMultiPO" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteMultiPO(@RequestParam("poIds") List<Integer> poIds) {
+
+		Info info = new Info();
+
+		try {
+			int delete = poHeaderRepository.deleteMultiPO(poIds);
+
+			if (delete >= 1) {
+				info.setError(false);
+				info.setMessage("successfully Multiple Deleted");
+			} else {
+				info.setError(true);
+				info.setMessage(" Deleted to Delete");
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage(" Deleted to Delete");
+
+		}
+		return info;
+
+	}
+
 }
