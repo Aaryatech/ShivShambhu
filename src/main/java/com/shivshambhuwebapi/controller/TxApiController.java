@@ -426,7 +426,26 @@ public class TxApiController {
 
 	}
 
-	//for poklen
+	// 8-1-2019
+	@RequestMapping(value = { "/getWeighByContraAndDate" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetWeighing> getWeighByContraAndDate(@RequestParam("contrId") int contrId,
+			@RequestParam("fromDate") String fromDate, @RequestParam("toDate") String toDate) {
+
+		List<GetWeighing> wList = new ArrayList<GetWeighing>();
+
+		try {
+			wList = getWeighingRepo.getWeighingByContrId(contrId, fromDate, toDate);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return wList;
+
+	}
+
+	// for poklen
 	@RequestMapping(value = { "/getWeighByVehicleId" }, method = RequestMethod.POST)
 	public @ResponseBody List<GetWeighing> getWeighByVehicleId(@RequestParam("vehicleId") int vehicleId,
 			@RequestParam("fromDate") String fromDate, @RequestParam("toDate") String toDate) {
@@ -444,8 +463,8 @@ public class TxApiController {
 		return wList;
 
 	}
-	
-	//7-1-2019 for vehicle
+
+	// 7-1-2019 for vehicle
 	@RequestMapping(value = { "/getWeighByVehicle" }, method = RequestMethod.POST)
 	public @ResponseBody List<GetWeighing> getWeighByVehicle(@RequestParam("vehicleId") int vehicleId,
 			@RequestParam("fromDate") String fromDate, @RequestParam("toDate") String toDate) {
