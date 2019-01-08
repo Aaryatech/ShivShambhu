@@ -20,14 +20,14 @@ public interface ChalanPrintItemRepo extends JpaRepository<ChalanPrintItem, Inte
 			" t_chalan_header.in_km,t_chalan_header.veh_time_in,t_chalan_header.site_person_name,"
 			+ " t_chalan_header.site_person_mob,t_chalan_header.order_no,t_chalan_header.order_id,"
 			+ " t_chalan_header.chalan_remark,\n" + 
-			" t_chalan_detail.*,m_item_fg.item_name,m_item_fg.item_code,m_uom_store.uom,\n" + 
+			" t_chalan_detail.*,m_item_fg.item_name,m_item_fg.item_code,m_uom.uom_name as uom,\n" + 
 			" m_vehicle.vehicle_name,m_vehicle.veh_no,m_user.usr_name,m_customer.cust_name,"
 			+ " m_customer.cust_mob_no,m_project.proj_name,m_project.address\n" + 
 			" FROM t_chalan_header,t_chalan_detail,m_vehicle,m_user,m_customer,m_project,"
-			+ " m_item_fg,m_uom_store " + 
+			+ " m_item_fg,m_uom " + 
 			" WHERE t_chalan_header.chalan_id=t_chalan_detail.chalan_id "
 			+ " AND t_chalan_detail.item_id=m_item_fg.item_id AND "
-			+ " m_uom_store.uom_id=t_chalan_detail.item_uom AND "
+			+ " m_uom.uom_id=t_chalan_detail.item_uom AND "
 			+ " t_chalan_header.vehicle_id=m_vehicle.vehicle_id AND "
 			+ " t_chalan_header.driver_id=m_user.user_id AND t_chalan_header.cust_id=m_customer.cust_id "
 			+ " AND t_chalan_header.proj_id=m_project.proj_id and t_chalan_header.chalan_id=:chalanId ", nativeQuery = true)

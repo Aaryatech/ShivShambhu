@@ -233,13 +233,14 @@ public class ChalanApiController {
 	GetChalanHeaderRepo getGetChalanHeaderRepo;
 //
 	@RequestMapping(value = { "/getChalanHeadersByPlantAndStatus" }, method = RequestMethod.POST)
-	public @ResponseBody List<GetChalanHeader> getGetChalanHeaderByPlantAndStatus(@RequestParam("plantId") int plantId) {
+	public @ResponseBody List<GetChalanHeader> getGetChalanHeaderByPlantAndStatus(@RequestParam("plantId") int plantId,
+			@RequestParam("fromDate") String fromDate,@RequestParam("toDate") String toDate) {
 
 		List<GetChalanHeader> chList = new ArrayList<>();
 
 		try {
 
-			chList = getGetChalanHeaderRepo.getGetChalanHeaderByPlantId(plantId);
+			chList = getGetChalanHeaderRepo.getGetChalanHeaderByPlantId(plantId,fromDate,toDate);
 			System.out.println("chalan details::"+chList);
 
 		} catch (Exception e) {
