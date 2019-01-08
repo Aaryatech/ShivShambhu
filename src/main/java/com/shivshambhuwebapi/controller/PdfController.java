@@ -92,6 +92,7 @@ public class PdfController {
 				printData.setPayTerm(payTerm);
 
 				proj = getProjectRepo.getProjectByQuotIdList(quotIdList.get(i));
+				printData.setProj(proj);
 
 				bank = getBankDetailRepo.findFirstByCompanyIdAndDelStatus(comp.getCompanyId(), 1);
 				printData.setBank(bank);
