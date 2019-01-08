@@ -5,6 +5,8 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 public class GetChalanHeader {
 	
@@ -102,6 +104,8 @@ public void setUserName(String userName) {
 	public void setStatus(int status) {
 		this.status = status;
 	}
+	
+	@JsonFormat(locale = "hi",  pattern = "dd-MM-yyyy", timezone = "Asia/Kolkata")
 	public Date getChalanDate() {
 		return chalanDate;
 	}
