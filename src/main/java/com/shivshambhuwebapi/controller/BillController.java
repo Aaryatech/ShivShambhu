@@ -361,4 +361,24 @@ public class BillController {
 		return info;
 
 	}
+
+	@RequestMapping(value = { "/getChalanHeadersByChalanIdList" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetChalanHeader> getChalanHeadersByChalanIdList(
+			@RequestParam("chalanIdList") List<Integer> chalanIdList) {
+
+		List<GetChalanHeader> chHeader = new ArrayList<>();
+
+		try {
+
+			chHeader = getGetChalanHeaderRepo.getGetChalanHeaderByChalanIdList(chalanIdList);
+
+		} catch (Exception e) {
+
+			System.err.println("exce in  getChalanHeadersByChalanId " + e.getMessage());
+			e.printStackTrace();
+
+		}
+
+		return chHeader;
+	}
 }
