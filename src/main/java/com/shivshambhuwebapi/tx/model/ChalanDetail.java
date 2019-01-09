@@ -6,6 +6,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+import javax.transaction.TransactionScoped;
 
 @Entity
 @Table(name="t_chalan_detail")
@@ -31,7 +33,16 @@ public class ChalanDetail {
 	
 	private float itemTotalPlant;
 	
+	@Transient
+	private float itemQtyBeforeEdit;
 	
+	
+	public float getItemQtyBeforeEdit() {
+		return itemQtyBeforeEdit;
+	}
+	public void setItemQtyBeforeEdit(float itemQtyBeforeEdit) {
+		this.itemQtyBeforeEdit = itemQtyBeforeEdit;
+	}
 	public float getItemTotalPlant() {
 		return itemTotalPlant;
 	}
@@ -186,10 +197,11 @@ public class ChalanDetail {
 		return "ChalanDetail [chalanDetailId=" + chalanDetailId + ", chalanId=" + chalanId + ", itemId=" + itemId
 				+ ", itemUom=" + itemUom + ", itemQty=" + itemQty + ", itemLengthPlant=" + itemLengthPlant
 				+ ", itemWidthPlant=" + itemWidthPlant + ", itemHeightPlant=" + itemHeightPlant + ", itemTotalPlant="
-				+ itemTotalPlant + ", itemLengthSite=" + itemLengthSite + ", itemWidthSite=" + itemWidthSite
-				+ ", itemHeightSite=" + itemHeightSite + ", itemTotalSite=" + itemTotalSite + ", status=" + status
-				+ ", delStatus=" + delStatus + ", exInt1=" + exInt1 + ", exFloat1=" + exFloat1 + ", exVar1=" + exVar1
-				+ ", exVar2=" + exVar2 + ", exDate1=" + exDate1 + ", orderDetailId=" + orderDetailId + "]";
+				+ itemTotalPlant + ", itemQtyBeforeEdit=" + itemQtyBeforeEdit + ", itemLengthSite=" + itemLengthSite
+				+ ", itemWidthSite=" + itemWidthSite + ", itemHeightSite=" + itemHeightSite + ", itemTotalSite="
+				+ itemTotalSite + ", status=" + status + ", delStatus=" + delStatus + ", exInt1=" + exInt1
+				+ ", exFloat1=" + exFloat1 + ", exVar1=" + exVar1 + ", exVar2=" + exVar2 + ", exDate1=" + exDate1
+				+ ", orderDetailId=" + orderDetailId + "]";
 	}
 	
 }

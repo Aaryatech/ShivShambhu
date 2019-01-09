@@ -56,6 +56,191 @@ public class ChalanApiController {
 		try {
 			
 			chHead.setExInt1(1);
+			
+			if(chHead.getChalanId()!=0) {
+				System.err.println("It is Edit call");
+				
+				chHeaderRes = chalanHeaderRepo.save(chHead);
+				
+				
+				chHeaderRes = chalanHeaderRepo.save(chHead);
+
+				for (int i = 0; i < chHead.getChalanDetailList().size(); i++) {
+
+					chHead.getChalanDetailList().get(i).setChalanId(chHeaderRes.getChalanId());
+
+				}
+
+				List<ChalanDetail> chalanDetListRes = chalanDetailRepo.saveAll(chHead.getChalanDetailList());
+				chHeaderRes.setChalanDetailList(chalanDetListRes);
+				
+				List<ChalanDetail> chalanDetList = chHead.getChalanDetailList();
+				
+				//
+				
+				List<OrderDetail> ordDetailList = new ArrayList<>();
+
+				ordDetailList = orderDetailRepo.findByOrOrderIdAndDelStatus(chHeaderRes.getOrderId(), 1);
+
+				List<PoDetail> poDetList = new ArrayList<>();
+
+				poDetList = poDetailRepository.findByPoId(ordDetailList.get(0).getPoId());
+
+				for (int i = 0; i < chalanDetList.size(); i++) {
+
+					for (int j = 0; j < ordDetailList.size(); j++) {
+
+						if (chalanDetList.get(i).getOrderDetailId() == ordDetailList.get(j).getOrderDetId()) {
+
+							float remOrdQty = ordDetailList.get(j).getRemOrdQty() +(chalanDetList.get(i).getItemQtyBeforeEdit()- chalanDetList.get(i).getItemQty());
+
+							int status = 1;
+
+							if (remOrdQty <= 0) {
+								status = 2;
+							}
+
+							ordDetailList.get(j).setRemOrdQty(remOrdQty);
+							ordDetailList.get(j).setStatus(status);
+
+							orderDetailRepo.save(ordDetailList.get(j));
+
+						}
+
+					}//end of ordDetailList for loop
+					
+					for (int k = 0; k < poDetList.size(); k++) {
+
+						if (chalanDetList.get(i).getItemId() == poDetList.get(k).getItemId()) {
+
+							float remOrdQty = poDetList.get(k).getPoRemainingQty() +(chalanDetList.get(i).getItemQtyBeforeEdit()- chalanDetList.get(i).getItemQty());
+
+							int status = 1;
+
+							if (remOrdQty == 0) {
+								status = 2;
+							}
+
+							poDetList.get(k).setPoRemainingQty(remOrdQty);
+							poDetList.get(k).setStatus(status);
+
+							poDetailRepository.save(poDetList.get(k));
+
+						}
+
+					}//end of poDetList for loop
+					
+				} // end of chalan detail for Loop
+
+				ordDetailList = new ArrayList<>();
+
+				ordDetailList = orderDetailRepo.findByOrOrderIdAndDelStatus(chHeaderRes.getOrderId(), 1);
+
+				poDetList = new ArrayList<>();
+
+				poDetList = poDetailRepository.findByPoId(ordDetailList.get(0).getPoId());
+				try {
+					int statusOne = 0;
+					int statusTwo = 0;
+					int statusZero = 0;
+					for (int a = 0; a < ordDetailList.size(); a++) {
+
+						if (ordDetailList.get(a).getStatus() == 0) {
+							statusZero = statusZero + 1;
+						} else if (ordDetailList.get(a).getStatus() == 1) {
+							statusOne = statusOne + 1;
+						} else if (ordDetailList.get(a).getStatus() == 2) {
+							statusTwo = statusTwo + 1;
+						}
+					}
+
+					if (ordDetailList.size() == statusTwo) {
+						// order Header =2
+
+						OrderHeader header = orderHeaderRepo.findByOrderId(chHeaderRes.getOrderId());
+						header.setStatus(2);
+						orderHeaderRepo.save(header);
+
+					} else if (ordDetailList.size() == statusOne) {
+
+						// order Header =1
+
+						OrderHeader header = orderHeaderRepo.findByOrderId(chHeaderRes.getOrderId());
+						header.setStatus(1);
+						orderHeaderRepo.save(header);
+					}
+
+					else if (ordDetailList.size() == statusZero) {
+
+						// order Header =0
+
+						OrderHeader header = orderHeaderRepo.findByOrderId(chHeaderRes.getOrderId());
+						header.setStatus(0);
+						orderHeaderRepo.save(header);
+					} else if (statusOne > 0) {
+						// order Header =1
+						OrderHeader header = orderHeaderRepo.findByOrderId(chHeaderRes.getOrderId());
+						header.setStatus(1);
+						orderHeaderRepo.save(header);
+
+					}
+
+					statusOne = 0;
+					statusTwo = 0;
+					statusZero = 0;
+
+					for (int a = 0; a < poDetList.size(); a++) {
+
+						if (poDetList.get(a).getStatus() == 0) {
+							statusZero = statusZero + 1;
+						} else if (poDetList.get(a).getStatus() == 1) {
+							statusOne = statusOne + 1;
+						} else if (poDetList.get(a).getStatus() == 2) {
+							statusTwo = statusTwo + 1;
+						}
+					}
+
+					if (poDetList.size() == statusTwo) {
+						// PO Header =2
+						PoHeader header = poHeaderRepository.getOne(poDetList.get(0).getPoId());
+						header.setStatus(2);
+						poHeaderRepository.save(header);
+
+					} else if (poDetList.size() == statusOne) {
+						// PO Header =1
+						PoHeader header = poHeaderRepository.getOne(poDetList.get(0).getPoId());
+						header.setStatus(1);
+						poHeaderRepository.save(header);
+					}
+
+					else if (poDetList.size() == statusZero) {
+						// PO Header =0
+						PoHeader header = poHeaderRepository.getOne(poDetList.get(0).getPoId());
+						header.setStatus(0);
+						poHeaderRepository.save(header);
+					} else if (statusOne > 0) {
+						// PO Header =1
+						PoHeader header = poHeaderRepository.getOne(poDetList.get(0).getPoId());
+						header.setStatus(1);
+						poHeaderRepository.save(header);
+					}
+				} catch (Exception e) {
+
+					System.err.println("Exce in updating Order and PO Headers  " + e.getMessage());
+
+					e.printStackTrace();
+				}
+
+				
+				//
+				
+				
+
+				
+			}//end of if chHead.getChalanId()!=0
+			else {
+				
+				System.err.println("It is Add New Chalan  call");
 
 			chHeaderRes = chalanHeaderRepo.save(chHead);
 
@@ -97,8 +282,8 @@ public class ChalanApiController {
 
 					}
 
-				}
-
+				}//end of ordDetailList for loop
+				
 				for (int k = 0; k < poDetList.size(); k++) {
 
 					if (chalanDetList.get(i).getItemId() == poDetList.get(k).getItemId()) {
@@ -118,7 +303,8 @@ public class ChalanApiController {
 
 					}
 
-				}
+				}//end of poDetList for loop
+				
 			} // end of chalan detail for Loop
 
 			ordDetailList = new ArrayList<>();
@@ -219,6 +405,7 @@ public class ChalanApiController {
 
 				e.printStackTrace();
 			}
+			}//end of else upper
 		} catch (Exception e) {
 
 			System.err.println("Exce in saving chalan " + e.getMessage());
