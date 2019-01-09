@@ -68,7 +68,7 @@ public class ChalanApiController {
 			List<ChalanDetail> chalanDetList = chalanDetailRepo.saveAll(chHead.getChalanDetailList());
 			chHeaderRes.setChalanDetailList(chalanDetList);
 
-			/*List<OrderDetail> ordDetailList = new ArrayList<>();
+			List<OrderDetail> ordDetailList = new ArrayList<>();
 
 			ordDetailList = orderDetailRepo.findByOrOrderIdAndDelStatus(chHeaderRes.getOrderId(), 1);
 
@@ -218,7 +218,7 @@ public class ChalanApiController {
 				System.err.println("Exce in updating Order and PO Headers  " + e.getMessage());
 
 				e.printStackTrace();
-			}*/
+			}
 		} catch (Exception e) {
 
 			System.err.println("Exce in saving chalan " + e.getMessage());
@@ -372,7 +372,7 @@ public class ChalanApiController {
 			//int headClose=chalanHeaderRepo.closeChalanHeader(chalanId, status, inKm, inTime, chalanRemark, costSegment, sitePersonName, sitePersonMob)
 			
 			
-			if(info.isError()==false) {
+			/*if(info.isError()==false) {
 				
 				//chHeader 
 				
@@ -539,7 +539,7 @@ public class ChalanApiController {
 				
 				
 				
-			}
+			}*/
 
 		} catch (Exception e) {
 
