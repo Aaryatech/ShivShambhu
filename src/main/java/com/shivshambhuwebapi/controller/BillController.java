@@ -130,6 +130,27 @@ public class BillController {
 		return chList;
 	}
 
+	@RequestMapping(value = { "/getChalanHeadersByCustAndStatusAndProj" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetChalanHeader> getChalanHeadersByCustAndStatusAndProj(
+			@RequestParam("custId") int custId, @RequestParam("projId") int projId,
+			@RequestParam("chalanStatus") List<Integer> chalanStatus) {
+
+		List<GetChalanHeader> chList = new ArrayList<>();
+
+		try {
+
+			chList = getGetChalanHeaderRepo.getGetChalanHeaderByCustIdAndProId(projId, chalanStatus, custId);
+
+		} catch (Exception e) {
+
+			System.err.println("exce in  getChalanHeadersByPlantAndStatus " + e.getMessage());
+			e.printStackTrace();
+
+		}
+
+		return chList;
+	}
+
 	List<GetItemsForBill> chList = new ArrayList<>();
 
 	@RequestMapping(value = { "/getItemsForBill" }, method = RequestMethod.POST)
@@ -184,7 +205,7 @@ public class BillController {
 		return billHeaderRes;
 
 	}
-	//2018-12-27
+	// 2018-12-27
 
 	@RequestMapping(value = { "/getBillHeadersByDateAndCustAndPlant" }, method = RequestMethod.POST)
 	public @ResponseBody List<GetBillHeader> getBillHeadersByDateAndCustAndPlant(@RequestParam("plantId") int plantId,
