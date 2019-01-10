@@ -48,6 +48,10 @@ public interface GetItemWithEnqRepo extends JpaRepository<GetItemWithEnq, Intege
 			+ " WHERE t_quot_detail.quot_head_id=t_quot_header.quot_head_id AND t_quot_header.enq_head_id=:enqHeadId "
 			+ " AND t_quot_detail.item_id=i.item_id AND t_quot_detail.del_status=1),0) AS quot_qty," +
 
+			" COALESCE((SELECT t_quot_detail.quot_detail_id from t_quot_detail,t_quot_header "
+			+ " WHERE t_quot_detail.quot_head_id=t_quot_header.quot_head_id AND t_quot_header.enq_head_id=:enqHeadId "
+			+ " AND t_quot_detail.item_id=i.item_id AND t_quot_detail.del_status=1),0) AS quot_detail_id," +
+
 			" COALESCE((SELECT t_enq_detail.enq_uom_id FROM t_enq_detail,t_enq_header "
 			+ " WHERE t_enq_detail.enq_head_id=t_enq_header.enq_head_id AND t_enq_header.plant_id=p.plant_id "
 			+ "AND t_enq_header.enq_head_id=:enqHeadId AND t_enq_detail.item_id=i.item_id),0) AS enq_uom_id," +

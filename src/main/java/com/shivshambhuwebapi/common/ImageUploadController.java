@@ -19,7 +19,7 @@ import com.shivshambhuwebapi.controller.Info;
 @RestController
 public class ImageUploadController {
 
-	private static String WEIGHING_URL = "/home/lenovo/Desktop/weighing_image";
+	private static String WEIGHING_URL = "/opt/apache-tomcat-9.0.4/webapps/uploads/shiv/Weight/";
 
 	@RequestMapping(value = { "/photoUpload" }, method = RequestMethod.POST)
 	public @ResponseBody Info photoUpload(@RequestParam("file") MultipartFile uploadfile,

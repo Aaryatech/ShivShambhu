@@ -5,7 +5,7 @@ import javax.persistence.Id;
 
 @Entity
 public class GetItemWithEnq {
-	
+
 	@Id
 	private int itemId;
 
@@ -99,24 +99,24 @@ public class GetItemWithEnq {
 	private String hsnCode;
 	private String uomName;
 	private String plantName;
-	
-	private float enqQty;
-	
-	private float enqUomId;
-	
-	private String enqUomName;
-	
-	
-	private float otherCostAfterTax;//19-11-18
-	private float transCost;//19-11-18
-	private float otherCost;//19-11-18
-	private float quotQty;//19-11-18
-	
-	private float taxableValue;//19-11-18
-	private float taxValue;//19-11-18
-	private float finalTotal;//19-11-18
 
-	
+	private float enqQty;
+
+	private float enqUomId;
+
+	private String enqUomName;
+
+	private float otherCostAfterTax;// 19-11-18
+	private float transCost;// 19-11-18
+	private float otherCost;// 19-11-18
+	private float quotQty;// 19-11-18
+
+	private float taxableValue;// 19-11-18
+	private float taxValue;// 19-11-18
+	private float finalTotal;// 19-11-18
+
+	private int quotDetailId;// 2019/01/01
+
 	public float getTaxableValue() {
 		return taxableValue;
 	}
@@ -141,7 +141,6 @@ public class GetItemWithEnq {
 		this.finalTotal = finalTotal;
 	}
 
-	
 	private float totalTaxPer;
 
 	private float cgst;
@@ -152,9 +151,6 @@ public class GetItemWithEnq {
 
 	private float cess;
 
-	
-
-	
 	public float getQuotQty() {
 		return quotQty;
 	}
@@ -611,8 +607,6 @@ public class GetItemWithEnq {
 		this.enqUomId = enqUomId;
 	}
 
-	
-	
 	public float getOtherCostAfterTax() {
 		return otherCostAfterTax;
 	}
@@ -637,6 +631,14 @@ public class GetItemWithEnq {
 		this.otherCost = otherCost;
 	}
 
+	public int getQuotDetailId() {
+		return quotDetailId;
+	}
+
+	public void setQuotDetailId(int quotDetailId) {
+		this.quotDetailId = quotDetailId;
+	}
+
 	@Override
 	public String toString() {
 		return "GetItemWithEnq [itemId=" + itemId + ", itemName=" + itemName + ", itemCode=" + itemCode + ", itemImage="
@@ -655,12 +657,9 @@ public class GetItemWithEnq {
 				+ ", hsnCode=" + hsnCode + ", uomName=" + uomName + ", plantName=" + plantName + ", enqQty=" + enqQty
 				+ ", enqUomId=" + enqUomId + ", enqUomName=" + enqUomName + ", otherCostAfterTax=" + otherCostAfterTax
 				+ ", transCost=" + transCost + ", otherCost=" + otherCost + ", quotQty=" + quotQty + ", taxableValue="
-				+ taxableValue + ", taxValue=" + taxValue + ", finalTotal=" + finalTotal + ", totalTaxPer="
-				+ totalTaxPer + ", cgst=" + cgst + ", igst=" + igst + ", sgst=" + sgst + ", cess=" + cess + "]";
+				+ taxableValue + ", taxValue=" + taxValue + ", finalTotal=" + finalTotal + ", quotDetailId="
+				+ quotDetailId + ", totalTaxPer=" + totalTaxPer + ", cgst=" + cgst + ", igst=" + igst + ", sgst=" + sgst
+				+ ", cess=" + cess + "]";
 	}
-	
-	
-	
-	
 
 }
