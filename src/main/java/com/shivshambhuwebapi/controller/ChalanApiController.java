@@ -420,7 +420,7 @@ public class ChalanApiController {
 	GetChalanHeaderRepo getGetChalanHeaderRepo;
 //
 	@RequestMapping(value = { "/getChalanHeadersByPlantAndStatus" }, method = RequestMethod.POST)
-	public @ResponseBody List<GetChalanHeader> getGetChalanHeaderByPlantAndStatus(@RequestParam("plantId") int plantId,
+	public @ResponseBody List<GetChalanHeader> getGetChalanHeaderByPlantAndStatus(@RequestParam("plantId") int plantId,@RequestParam("custId") int custId,
 			@RequestParam("fromDate") String fromDate,@RequestParam("toDate") String toDate) {
 
 		List<GetChalanHeader> chList = new ArrayList<>();
@@ -429,6 +429,19 @@ public class ChalanApiController {
 
 			chList = getGetChalanHeaderRepo.getGetChalanHeaderByPlantId(plantId,fromDate,toDate);
 			System.out.println("chalan details::"+chList);
+			
+			
+			
+			if (custId == 0 && plantId != 0) {
+				chList = getGetChalanHeaderRepo.getGetChalanHeaderByPlantId(plantId, fromDate, toDate);
+			} else if (custId != 0 && plantId == 0) {
+				chList = getGetChalanHeaderRepo.getGetChalanHeaderByCustId(custId, fromDate, toDate);
+			} else if (custId == 0 && plantId == 0) {
+				chList = getGetChalanHeaderRepo.getGetChalanHeaderBetweenDate(fromDate, toDate);
+			} else {
+				chList = getGetChalanHeaderRepo.getGetChalanHeaderByPlantIdAndCustId(plantId, custId, fromDate, toDate);
+			}
+
 
 		} catch (Exception e) {
 

@@ -15,7 +15,7 @@ public interface GetProdPlanHeaderRepo extends JpaRepository<GetProdPlanHeader, 
 			" WHERE t_production_plan_header.del_status=1 AND m_plant.del_status=1 AND m_user.del_status=1 AND m_subplant.del_status=1 "
 			+ " AND t_production_plan_header.plant_id=m_plant.plant_id AND t_production_plan_header.sub_plant_id=m_subplant.subplant_id "
 			+" AND t_production_plan_header.user_id=m_user.user_id " + 
-			" AND t_production_plan_header.production_date BETWEEN :fromDate AND :toDate AND t_production_plan_header.plant_id=:plantId ", nativeQuery = true)
+			" AND t_production_plan_header.production_date BETWEEN :fromDate AND :toDate AND t_production_plan_header.plant_id=:plantId  ORDER BY  t_production_plan_header.production_date DESC", nativeQuery = true)
 
 	List<GetProdPlanHeader> getGetProdPlanHeaderByProdDateBet(@Param("fromDate") String fromDate,@Param("toDate") String toDate,
 			@Param("plantId") int plantId);
