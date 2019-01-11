@@ -40,7 +40,21 @@ public class RmcQuotTemp {
 
 	private float amt = 0;
 	private int delStatus;
+
+	@Column(name = "quot_detail_id")
 	private int quotDetailId;
+
+	@Column(name = "quot_no")
+	private String quotNo;
+
+	@Column(name = "po_no")
+	private String poNo;
+
+	@Column(name = "chalan_no")
+	private String chalanNo;
+
+	@Column(name = "order_no")
+	private String orderNo;
 
 	public int getItemDetailId() {
 		return itemDetailId;
@@ -162,13 +176,46 @@ public class RmcQuotTemp {
 		this.quotDetailId = quotDetailId;
 	}
 
+	public String getQuotNo() {
+		return quotNo;
+	}
+
+	public void setQuotNo(String quotNo) {
+		this.quotNo = quotNo;
+	}
+
+	public String getPoNo() {
+		return poNo;
+	}
+
+	public void setPoNo(String poNo) {
+		this.poNo = poNo;
+	}
+
+	public String getChalanNo() {
+		return chalanNo;
+	}
+
+	public void setChalanNo(String chalanNo) {
+		this.chalanNo = chalanNo;
+	}
+
+	public String getOrderNo() {
+		return orderNo;
+	}
+
+	public void setOrderNo(String orderNo) {
+		this.orderNo = orderNo;
+	}
+
 	@Override
 	public String toString() {
 		return "RmcQuotTemp [tempDetailId=" + tempDetailId + ", itemDetailId=" + itemDetailId + ", rmId=" + rmId
 				+ ", rmQty=" + rmQty + ", itemOpRate=" + itemOpRate + ", itemWt=" + itemWt + ", itemCode=" + itemCode
 				+ ", itemDesc=" + itemDesc + ", uom=" + uom + ", itemId=" + itemId + ", itemName=" + itemName
 				+ ", unitRate=" + unitRate + ", amt=" + amt + ", delStatus=" + delStatus + ", quotDetailId="
-				+ quotDetailId + "]";
+				+ quotDetailId + ", quotNo=" + quotNo + ", poNo=" + poNo + ", chalanNo=" + chalanNo + ", orderNo="
+				+ orderNo + "]";
 	}
 
 }

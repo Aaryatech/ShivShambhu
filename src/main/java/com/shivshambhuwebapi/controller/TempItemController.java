@@ -22,7 +22,6 @@ public class TempItemController {
 
 	@Autowired
 	RmcQuotTempRepo rmcQuotTempRepo;
-	
 
 	@RequestMapping(value = { "/saveTempItemDetail" }, method = RequestMethod.POST)
 	public @ResponseBody List<RmcQuotTemp> saveTempItemDetail(@RequestBody List<RmcQuotTemp> detailList) {
@@ -58,5 +57,90 @@ public class TempItemController {
 		return billHeaderRes;
 
 	}
+
+	@RequestMapping(value = { "/updateQuotNoAndPoNo" }, method = RequestMethod.POST)
+	public @ResponseBody Info updateQuotNoAndPoNo(@RequestParam("quotDetailId") int quotDetailId,
+			@RequestParam("quotNo") String quotNo, @RequestParam("poNo") String poNo) {
+
+		Info info = new Info();
+
+		try {
+			int delete = rmcQuotTempRepo.updateRmcQuotTemp(quotDetailId, quotNo, poNo);
+
+			if (delete == 1) {
+				info.setError(false);
+				info.setMessage("successfully Updated");
+			} else {
+				info.setError(true);
+				info.setMessage(" Deleted to Delete");
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage(" Deleted to Delete");
+
+		}
+		return info;
+
+	}
+
+	@RequestMapping(value = { "/updateChalanNo" }, method = RequestMethod.POST)
+	public @ResponseBody Info updateChalanNo(@RequestParam("quotDetailId") int quotDetailId,
+			@RequestParam("chalanNo") String chalanNo) {
+
+		Info info = new Info();
+
+		try {
+			int delete = rmcQuotTempRepo.updateChalanNo(quotDetailId, chalanNo);
+
+			if (delete == 1) {
+				info.setError(false);
+				info.setMessage("successfully Updated");
+			} else {
+				info.setError(true);
+				info.setMessage(" Deleted to Delete");
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage(" Deleted to Delete");
+
+		}
+		return info;
+
+	}
+	
+	@RequestMapping(value = { "/updateOrderNo" }, method = RequestMethod.POST)
+	public @ResponseBody Info updateOrderNo(@RequestParam("quotDetailId") int quotDetailId,
+			@RequestParam("orderNo") String orderNo) {
+
+		Info info = new Info();
+
+		try {
+			int delete = rmcQuotTempRepo.updateOrderNo(quotDetailId, orderNo);
+
+			if (delete == 1) {
+				info.setError(false);
+				info.setMessage("successfully Updated");
+			} else {
+				info.setError(true);
+				info.setMessage(" Deleted to Delete");
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage(" Deleted to Delete");
+
+		}
+		return info;
+
+	}
+
 
 }
