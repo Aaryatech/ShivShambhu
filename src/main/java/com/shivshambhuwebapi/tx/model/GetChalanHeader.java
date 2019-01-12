@@ -74,7 +74,7 @@ public class GetChalanHeader {
 	private String vehNo;
 	private String vehicleName;
 	private String plantName;
-
+	private int companyId;
 	private String compName;
 
 	private String custName;
@@ -348,6 +348,14 @@ public class GetChalanHeader {
 		this.driverName = driverName;
 	}
 
+	public int getCompanyId() {
+		return companyId;
+	}
+
+	public void setCompanyId(int companyId) {
+		this.companyId = companyId;
+	}
+
 	@Override
 	public String toString() {
 		return "GetChalanHeader [chalanId=" + chalanId + ", chalanNo=" + chalanNo + ", status=" + status
@@ -358,8 +366,9 @@ public class GetChalanHeader {
 				+ ", orderNo=" + orderNo + ", chalanRemark=" + chalanRemark + ", exInt1=" + exInt1 + ", exFloat1="
 				+ exFloat1 + ", exVar1=" + exVar1 + ", exDate1=" + exDate1 + ", costSegment=" + costSegment
 				+ ", userName=" + userName + ", vehNo=" + vehNo + ", vehicleName=" + vehicleName + ", plantName="
-				+ plantName + ", compName=" + compName + ", custName=" + custName + ", custMobNo=" + custMobNo
-				+ ", projName=" + projName + ", projAddress=" + projAddress + ", driverName=" + driverName + "]";
+				+ plantName + ", companyId=" + companyId + ", compName=" + compName + ", custName=" + custName
+				+ ", custMobNo=" + custMobNo + ", projName=" + projName + ", projAddress=" + projAddress
+				+ ", driverName=" + driverName + "]";
 	}
 
 }
