@@ -36,29 +36,28 @@ public class RmcQuotTemp {
 
 	private String itemName;// fg Item Name
 
-	private float unitRate = 0;
+	private float unitRate;
 
-	private float amt = 0;
+	private float amt;
 	private int delStatus;
 
 	@Column(name = "quot_detail_id")
 	private int quotDetailId;
 
 	@Column(name = "quot_no")
-	private String quotNo;
+	private int quotNo;
 
 	@Column(name = "po_no")
-	private String poNo;
+	private int poNo;
 
 	@Column(name = "chalan_no")
-	private String chalanNo;
+	private int chalanNo;
 
 	@Column(name = "order_no")
-	private String orderNo;
-	
-	@Column(name = "bill_no")
-	private String billNo;
+	private int orderNo;
 
+	@Column(name = "bill_no")
+	private int billNo;
 
 	public int getItemDetailId() {
 		return itemDetailId;
@@ -180,45 +179,43 @@ public class RmcQuotTemp {
 		this.quotDetailId = quotDetailId;
 	}
 
-	public String getQuotNo() {
+	public int getQuotNo() {
 		return quotNo;
 	}
 
-	public void setQuotNo(String quotNo) {
+	public void setQuotNo(int quotNo) {
 		this.quotNo = quotNo;
 	}
 
-	public String getPoNo() {
+	public int getPoNo() {
 		return poNo;
 	}
 
-	public void setPoNo(String poNo) {
+	public void setPoNo(int poNo) {
 		this.poNo = poNo;
 	}
 
-	public String getChalanNo() {
+	public int getChalanNo() {
 		return chalanNo;
 	}
 
-	public void setChalanNo(String chalanNo) {
+	public void setChalanNo(int chalanNo) {
 		this.chalanNo = chalanNo;
 	}
 
-	public String getOrderNo() {
+	public int getOrderNo() {
 		return orderNo;
 	}
 
-	public void setOrderNo(String orderNo) {
+	public void setOrderNo(int orderNo) {
 		this.orderNo = orderNo;
 	}
-	
-	
 
-	public String getBillNo() {
+	public int getBillNo() {
 		return billNo;
 	}
 
-	public void setBillNo(String billNo) {
+	public void setBillNo(int billNo) {
 		this.billNo = billNo;
 	}
 

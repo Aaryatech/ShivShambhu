@@ -59,7 +59,7 @@ public class TempItemController {
 	}
 
 	@RequestMapping(value = { "/getTempItemDetailByOrderId" }, method = RequestMethod.POST)
-	public @ResponseBody List<RmcQuotTemp> getTempItemDetailByOrderId(@RequestParam("orderId") String orderId) {
+	public @ResponseBody List<RmcQuotTemp> getTempItemDetailByOrderId(@RequestParam("orderId") int orderId) {
 
 		List<RmcQuotTemp> billHeaderRes = new ArrayList<>();
 
@@ -78,13 +78,33 @@ public class TempItemController {
 	}
 
 	@RequestMapping(value = { "/getTempItemDetailByPOId" }, method = RequestMethod.POST)
-	public @ResponseBody List<RmcQuotTemp> getTempItemDetailByPOId(@RequestParam("poId") String poId) {
+	public @ResponseBody List<RmcQuotTemp> getTempItemDetailByPOId(@RequestParam("poId") int poId) {
 
 		List<RmcQuotTemp> billHeaderRes = new ArrayList<>();
 
 		try {
 
 			billHeaderRes = rmcQuotTempRepo.findByPoNoAndDelStatus(poId, 1);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+
+		return billHeaderRes;
+
+	}
+
+	@RequestMapping(value = { "/getTempItemDetailByChalanId" }, method = RequestMethod.POST)
+	public @ResponseBody List<RmcQuotTemp> getTempItemDetailByChalanId(
+			@RequestParam("chalanIdList") List<Integer> chalanIdList) {
+
+		List<RmcQuotTemp> billHeaderRes = new ArrayList<>();
+
+		try {
+
+			billHeaderRes = rmcQuotTempRepo.getRmcByChalanIdList(chalanIdList);
 
 		} catch (Exception e) {
 
@@ -159,6 +179,34 @@ public class TempItemController {
 
 		try {
 			int delete = rmcQuotTempRepo.updateOrderNo(poId, orderNo);
+
+			if (delete == 1) {
+				info.setError(false);
+				info.setMessage("successfully Updated");
+			} else {
+				info.setError(true);
+				info.setMessage(" Deleted to Delete");
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage(" Deleted to Delete");
+
+		}
+		return info;
+
+	}
+
+	@RequestMapping(value = { "/updateBillNo" }, method = RequestMethod.POST)
+	public @ResponseBody Info updateBillNo(@RequestParam("chalanNoList") List<Integer> chalanNoList,
+			@RequestParam("billNo") String billNo) {
+
+		Info info = new Info();
+
+		try {
+			int delete = rmcQuotTempRepo.updateBillNo(chalanNoList, billNo);
 
 			if (delete == 1) {
 				info.setError(false);
