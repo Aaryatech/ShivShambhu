@@ -55,6 +55,10 @@ public class RmcQuotTemp {
 
 	@Column(name = "order_no")
 	private String orderNo;
+	
+	@Column(name = "bill_no")
+	private String billNo;
+
 
 	public int getItemDetailId() {
 		return itemDetailId;
@@ -207,6 +211,16 @@ public class RmcQuotTemp {
 	public void setOrderNo(String orderNo) {
 		this.orderNo = orderNo;
 	}
+	
+	
+
+	public String getBillNo() {
+		return billNo;
+	}
+
+	public void setBillNo(String billNo) {
+		this.billNo = billNo;
+	}
 
 	@Override
 	public String toString() {
@@ -215,7 +229,7 @@ public class RmcQuotTemp {
 				+ ", itemDesc=" + itemDesc + ", uom=" + uom + ", itemId=" + itemId + ", itemName=" + itemName
 				+ ", unitRate=" + unitRate + ", amt=" + amt + ", delStatus=" + delStatus + ", quotDetailId="
 				+ quotDetailId + ", quotNo=" + quotNo + ", poNo=" + poNo + ", chalanNo=" + chalanNo + ", orderNo="
-				+ orderNo + "]";
+				+ orderNo + ", billNo=" + billNo + "]";
 	}
 
 }
