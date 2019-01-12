@@ -22,12 +22,16 @@ public interface RmcQuotTempRepo extends JpaRepository<RmcQuotTemp, Integer> {
 
 	@Transactional
 	@Modifying
-	@Query("UPDATE RmcQuotTemp SET chalan_no=:chalanNo  WHERE quot_detail_id=:quotDetailId")
-	int updateChalanNo(@Param("quotDetailId") int quotDetailId, @Param("chalanNo") String chalanNo);
+	@Query("UPDATE RmcQuotTemp SET chalan_no=:chalanNo  WHERE order_id=:orderId")
+	int updateChalanNo(@Param("orderId") int orderId, @Param("chalanNo") String chalanNo);
 
 	@Transactional
 	@Modifying
-	@Query("UPDATE RmcQuotTemp SET order_no=:orderNo  WHERE quot_detail_id=:quotDetailId")
-	int updateOrderNo(@Param("quotDetailId") int quotDetailId, @Param("orderNo") String orderNo);
+	@Query("UPDATE RmcQuotTemp SET order_no=:orderNo  WHERE po_id=:poId")
+	int updateOrderNo(@Param("poId") int poId, @Param("orderNo") String orderNo);
+
+	List<RmcQuotTemp> findByOrderNoAndDelStatus(String orderId, int i);
+
+	List<RmcQuotTemp> findByPoNoAndDelStatus(String poId, int i);
 
 }

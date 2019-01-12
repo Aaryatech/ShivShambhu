@@ -58,6 +58,44 @@ public class TempItemController {
 
 	}
 
+	@RequestMapping(value = { "/getTempItemDetailByOrderId" }, method = RequestMethod.POST)
+	public @ResponseBody List<RmcQuotTemp> getTempItemDetailByOrderId(@RequestParam("orderId") String orderId) {
+
+		List<RmcQuotTemp> billHeaderRes = new ArrayList<>();
+
+		try {
+
+			billHeaderRes = rmcQuotTempRepo.findByOrderNoAndDelStatus(orderId, 1);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+
+		return billHeaderRes;
+
+	}
+
+	@RequestMapping(value = { "/getTempItemDetailByPOId" }, method = RequestMethod.POST)
+	public @ResponseBody List<RmcQuotTemp> getTempItemDetailByPOId(@RequestParam("poId") String poId) {
+
+		List<RmcQuotTemp> billHeaderRes = new ArrayList<>();
+
+		try {
+
+			billHeaderRes = rmcQuotTempRepo.findByPoNoAndDelStatus(poId, 1);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+
+		return billHeaderRes;
+
+	}
+
 	@RequestMapping(value = { "/updateQuotNoAndPoNo" }, method = RequestMethod.POST)
 	public @ResponseBody Info updateQuotNoAndPoNo(@RequestParam("quotDetailId") int quotDetailId,
 			@RequestParam("quotNo") String quotNo, @RequestParam("poNo") String poNo) {
@@ -87,13 +125,13 @@ public class TempItemController {
 	}
 
 	@RequestMapping(value = { "/updateChalanNo" }, method = RequestMethod.POST)
-	public @ResponseBody Info updateChalanNo(@RequestParam("quotDetailId") int quotDetailId,
+	public @ResponseBody Info updateChalanNo(@RequestParam("orderId") int orderId,
 			@RequestParam("chalanNo") String chalanNo) {
 
 		Info info = new Info();
 
 		try {
-			int delete = rmcQuotTempRepo.updateChalanNo(quotDetailId, chalanNo);
+			int delete = rmcQuotTempRepo.updateChalanNo(orderId, chalanNo);
 
 			if (delete == 1) {
 				info.setError(false);
@@ -113,15 +151,14 @@ public class TempItemController {
 		return info;
 
 	}
-	
+
 	@RequestMapping(value = { "/updateOrderNo" }, method = RequestMethod.POST)
-	public @ResponseBody Info updateOrderNo(@RequestParam("quotDetailId") int quotDetailId,
-			@RequestParam("orderNo") String orderNo) {
+	public @ResponseBody Info updateOrderNo(@RequestParam("poId") int poId, @RequestParam("orderNo") String orderNo) {
 
 		Info info = new Info();
 
 		try {
-			int delete = rmcQuotTempRepo.updateOrderNo(quotDetailId, orderNo);
+			int delete = rmcQuotTempRepo.updateOrderNo(poId, orderNo);
 
 			if (delete == 1) {
 				info.setError(false);
@@ -141,6 +178,5 @@ public class TempItemController {
 		return info;
 
 	}
-
 
 }
