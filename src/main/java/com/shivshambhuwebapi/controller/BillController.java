@@ -159,10 +159,10 @@ public class BillController {
 		try {
 			System.err.println("exce in  getChalanHeadersByPlantAndStatus " + chalanId.toString());
 			chList = getItemsForBillRepository.getItemsForBill(chalanId);
-			System.err.println("exce in  getChalanHeadersByPlantAndStatus " + chList.toString());
+			System.err.println("getItemsForBill " + chList.toString());
 
 		} catch (Exception e) {
-			System.err.println("exce in  getChalanHeadersByPlantAndStatus " + e.getMessage());
+			System.err.println("exce in  getItemsForBill " + e.getMessage());
 			e.printStackTrace();
 		}
 

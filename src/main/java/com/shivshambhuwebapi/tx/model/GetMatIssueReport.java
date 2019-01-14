@@ -10,11 +10,10 @@ public class GetMatIssueReport {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	private int contrId;
 	private int matHeaderId;
 
 	private String issueNo;
-
-	private int contrId;
 
 	private String date;
 
