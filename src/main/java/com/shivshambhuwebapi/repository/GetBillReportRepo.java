@@ -38,6 +38,8 @@ public interface GetBillReportRepo extends JpaRepository<GetBillReport, Integer>
 
 	List<GetBillReport> getBillHeadersBetDate(@Param("fromDate") String fromDate, @Param("toDate") String toDate);
 
+	
+	/////////111
 	@Query(value = "SELECT  h.bill_head_id,h.bill_no,h.bill_date,h.cust_id,h.proj_id,h.cost_segment,h.payment_term_id,h.company_id,"
 			+ "h.challan_id,h.delivery_term,h.po_id,SUM(h.taxable_amt)as taxable_amt,SUM(h.tax_amt) as tax_amt ,SUM(h.total_amt) "
 			+ "as total_amt,h.acc_id,h.order_id,h.del_status,h.ex_int1,h.ex_int2,h.ex_int3,h.ex_var1,h.ex_var2,h.ex_var3,h.ex_float1,"
@@ -52,9 +54,9 @@ public interface GetBillReportRepo extends JpaRepository<GetBillReport, Integer>
 			+ "as total_amt,h.acc_id,h.order_id,h.del_status,h.ex_int1,h.ex_int2,h.ex_int3,h.ex_var1,h.ex_var2,h.ex_var3,h.ex_float1,"
 			+ "h.ex_float2,c.cust_name,c.cust_mob_no,p.proj_name,l.plant_name  FROM t_bill_header h,m_project p ,m_customer c,m_plant "
 			+ "l WHERE h.del_status=1 AND p.proj_id=h.proj_id AND c.cust_id=h.cust_id AND l.plant_id=h.ex_int1 AND h.bill_date BETWEEN "
-			+ ":fromDate AND :toDate AND h.ex_int1 IN(:plantIdList) GROUP BY h.cust_id", nativeQuery = true)
+			+ ":fromDate AND :toDate AND h.ex_int1=:plantId  GROUP BY h.cust_id", nativeQuery = true)
 
-	List<GetBillReport> getBillCustBetDateAndPlantIdList(@Param("plantIdList") List<Integer> plantIdList,
+	List<GetBillReport> getBillCustBetDateAndPlantIdList(@Param("plantId") int plantId,
 			@Param("fromDate") String fromDate, @Param("toDate") String toDate);
 
 	@Query(value = "SELECT  h.bill_head_id,h.bill_no,h.bill_date,h.cust_id,h.proj_id,h.cost_segment,h.payment_term_id,h.company_id,"
@@ -72,9 +74,9 @@ public interface GetBillReportRepo extends JpaRepository<GetBillReport, Integer>
 			+ "SUM(h.total_amt) as total_amt,h.acc_id,h.order_id,h.del_status,h.ex_int1,h.ex_int2,h.ex_int3,h.ex_var1,h.ex_var2,"
 			+ "h.ex_var3,h.ex_float1,h.ex_float2,c.cust_name,c.cust_mob_no,p.proj_name,l.plant_name  FROM t_bill_header h,m_project "
 			+ "p ,m_customer c,m_plant l WHERE h.del_status=1 AND p.proj_id=h.proj_id AND c.cust_id=h.cust_id AND l.plant_id=h.ex_int1 "
-			+ "AND h.bill_date BETWEEN :fromDate AND :toDate AND h.cust_id IN(:custIdList) AND h.ex_int1 IN(:plantIdList) GROUP BY h.cust_id", nativeQuery = true)
+			+ "AND h.bill_date BETWEEN :fromDate AND :toDate AND h.cust_id IN(:custIdList) AND h.ex_int1=:plantId GROUP BY h.cust_id", nativeQuery = true)
 
-	List<GetBillReport> getBillHeadersBetDateANdCustIdList(@Param("plantIdList") List<Integer> plantIdList,
+	List<GetBillReport> getBillHeadersBetDateANdCustIdList(@Param("plantId") int plantId,
 			@Param("custIdList") List<Integer> custIdList, @Param("fromDate") String fromDate,
 			@Param("toDate") String toDate);
 

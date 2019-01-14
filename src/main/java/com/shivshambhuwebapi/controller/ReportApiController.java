@@ -234,28 +234,28 @@ public class ReportApiController {
 
 	@RequestMapping(value = { "/getCustomerwiseReport" }, method = RequestMethod.POST)
 	public @ResponseBody List<GetBillReport> getCustomerwiseReport(
-			@RequestParam("plantIdList") List<Integer> plantIdList,
+			@RequestParam("plantId") int plantId,
 			@RequestParam("custIdList") List<Integer> custIdList, @RequestParam("fromDate") String fromDate,
 			@RequestParam("toDate") String toDate) {
 		System.err.println(
-				"plantIdList " + plantIdList + "custIdList " + custIdList + "fromDate" + fromDate + "toDate" + toDate);
+				"plantIdList " + plantId + "custIdList " + custIdList + "fromDate" + fromDate + "toDate" + toDate);
 		List<GetBillReport> billHeaderRes = new ArrayList<>();
 
 		try {
 
-			if (plantIdList.contains(0) && custIdList.contains(0)) {
+			if (plantId==0 && custIdList.contains(0)) {
 
 				billHeaderRes = getBillReportRepo.getBillCustBetDate(fromDate, toDate);
 
-			} else if (!plantIdList.contains(0) && custIdList.contains(0)) {
-				billHeaderRes = getBillReportRepo.getBillCustBetDateAndPlantIdList(plantIdList, fromDate, toDate);
+			} else if (plantId!=0 && custIdList.contains(0)) {
+				billHeaderRes = getBillReportRepo.getBillCustBetDateAndPlantIdList(plantId, fromDate, toDate);
 
-			} else if (plantIdList.contains(0) && !custIdList.contains(0)) {
+			} else if (plantId==0 && !custIdList.contains(0)) {
 				billHeaderRes = getBillReportRepo.getBillCustBetDateANdCustIdList(custIdList, fromDate, toDate);
 
 			} else {
 
-				billHeaderRes = getBillReportRepo.getBillHeadersBetDateANdCustIdList(plantIdList, custIdList, fromDate,
+				billHeaderRes = getBillReportRepo.getBillHeadersBetDateANdCustIdList(plantId, custIdList, fromDate,
 						toDate);
 
 			}
