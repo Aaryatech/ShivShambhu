@@ -10,14 +10,14 @@ import com.shivshambhuwebapi.tx.model.GetVehDetail;
 
 public interface GetVehDetailRepo extends JpaRepository<GetVehDetail, Integer> {
 
-	/*
-	 * @Query(value =
-	 * "SELECT d.*,i.item_desc,i.item_code,u.uom_name  FROM t_issue_veh_detail d,m_item i ,m_uom u  WHERE d.del_status=1 "
-	 * +
-	 * "AND i.item_id=d.item_id AND d.mat_veh_header_id=:matVehHeaderId AND u.uom_id=d.uom_id"
-	 * , nativeQuery = true) List<GetVehDetail>
-	 * getMatIssueByHeaderId(@Param("matVehHeaderId") int matVehHeaderId);
-	 */
+	///
+ @Query(value =
+	  "SELECT d.*,i.item_desc,i.item_code,u.uom_name  FROM t_issue_veh_detail d,m_item i ,m_uom u  WHERE d.del_status=1 "
+	  +
+	  "AND i.item_id=d.item_id AND d.mat_veh_header_id=:matVehHeaderId AND u.uom_id=d.uom_id"
+	  , nativeQuery = true) List<GetVehDetail>
+	  getMatIssueByHeaderId(@Param("matVehHeaderId") int matVehHeaderId);
+	 
 
 	@Query(value = "SELECT d.*,i.item_desc,i.item_code,u.uom_name  FROM t_issue_veh_detail d,m_item i ,m_uom u, t_issue_veh_header h  WHERE d.del_status=1 AND i.item_id=d.item_id  AND u.uom_id=d.uom_id AND d.mat_veh_header_id=h.mat_veh_header_id AND h.date BETWEEN :fromDate AND :toDate AND h.veh_id=:vehicleId AND h.del_status=1", nativeQuery = true)
 	List<GetVehDetail> getMatIssueByVehId(@Param("vehicleId") int vehicleId, @Param("fromDate") String fromDate,
