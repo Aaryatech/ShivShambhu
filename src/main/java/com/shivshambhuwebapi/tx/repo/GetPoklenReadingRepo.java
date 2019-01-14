@@ -24,7 +24,7 @@ public interface GetPoklenReadingRepo extends JpaRepository<GetPoklenReading, In
 			@Param("fromDate") String fromDate, @Param("toDate") String toDate);
 
 	@Query(value = "SELECT p.*,v.veh_no,v.vehicle_name FROM t_poklen_reading p , m_vehicle v\n"
-			+ "	WHERE p.del_status=1 AND p.poklen_id=v.vehicle_id AND p.ex_int1=:status ", nativeQuery = true)
+			+ "	WHERE p.del_status=1 AND p.poklen_id=v.vehicle_id AND p.ex_int1=:status ORDER BY p.start_date  DESC", nativeQuery = true)
 	List<GetPoklenReading> getPoklenReadingListByStatus(@Param("status") int status);
 
 	//
