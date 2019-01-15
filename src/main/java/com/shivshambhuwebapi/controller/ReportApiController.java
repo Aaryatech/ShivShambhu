@@ -366,29 +366,29 @@ public class ReportApiController {
 	}
 
 	@RequestMapping(value = { "/getTaxwiseReport" }, method = RequestMethod.POST)
-	public @ResponseBody List<TaxWiseBill> getTaxwiseReport(@RequestParam("plantIdList") List<Integer> plantIdList,
+	public @ResponseBody List<TaxWiseBill> getTaxwiseReport(@RequestParam("plantId") int plantId,
 			@RequestParam("custIdList") List<Integer> custIdList, @RequestParam("fromDate") String fromDate,
 			@RequestParam("toDate") String toDate) {
 
 		System.err.println(
-				"plantIdList " + plantIdList + "custIdList " + custIdList + "fromDate" + fromDate + "toDate" + toDate);
+				"plantIdList " + plantId + "custIdList " + custIdList + "fromDate" + fromDate + "toDate" + toDate);
 		List<TaxWiseBill> billHeaderRes = new ArrayList<>();
 
 		try {
 
-			if (plantIdList.contains(0) && custIdList.contains(0)) {
+			if (plantId==0 && custIdList.contains(0)) {
 
 				billHeaderRes = taxwiseRepo.getBillDetail(fromDate, toDate);
 
-			} else if (!plantIdList.contains(0) && custIdList.contains(0)) {
-				billHeaderRes = taxwiseRepo.getBillTaxBetDateAndPlantIdList(plantIdList, fromDate, toDate);
+			} else if (plantId!=0 && custIdList.contains(0)) {
+				billHeaderRes = taxwiseRepo.getBillTaxBetDateAndPlantIdList(plantId, fromDate, toDate);
 
-			} else if (plantIdList.contains(0) && !custIdList.contains(0)) {
+			} else if (plantId==0 && !custIdList.contains(0)) {
 				billHeaderRes = taxwiseRepo.getBillCustDetail(custIdList, fromDate, toDate);
 
 			} else {
 
-				billHeaderRes = taxwiseRepo.getBillHeadersBetDateANdCustIdList(plantIdList, custIdList, fromDate,
+				billHeaderRes = taxwiseRepo.getBillHeadersBetDateANdCustIdList(plantId, custIdList, fromDate,
 						toDate);
 
 			}

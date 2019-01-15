@@ -42,9 +42,9 @@ public interface TaxWiseBillRepo extends JpaRepository<TaxWiseBill , Integer>{
 				+ " SUM(d.tax_amt) as tax_amt,SUM(d.disc_per) as disc_per,SUM(d.disc_amt) as disc_amt,"
 				+ " SUM(d.taxable_amt) as taxable_amt,SUM(d.total_amt) as total_amt  from t_bill_header h, "
 				+ " t_bill_detail d,m_customer c where h.bill_head_id=d.bill_head_id and c.cust_id=h.cust_id AND "
-				+ " h.bill_date  BETWEEN :fromDate AND :toDate AND h.ex_int1 IN (:plantIdList ) "
+				+ " h.bill_date  BETWEEN :fromDate AND :toDate AND h.ex_int1=:plantId "
 				+ " group by  h.bill_head_id ", nativeQuery = true)
-		List<TaxWiseBill> getBillTaxBetDateAndPlantIdList(@Param("plantIdList") List<Integer> plantIdList,@Param("fromDate") String fromDate,@Param("toDate") String toDate);
+		List<TaxWiseBill> getBillTaxBetDateAndPlantIdList(@Param("plantId") int plantId,@Param("fromDate") String fromDate,@Param("toDate") String toDate);
 		
 		
 	//1 1
@@ -55,9 +55,9 @@ public interface TaxWiseBillRepo extends JpaRepository<TaxWiseBill , Integer>{
 				+ " SUM(d.tax_amt) as tax_amt,SUM(d.disc_per) as disc_per,SUM(d.disc_amt) as disc_amt,"
 				+ " SUM(d.taxable_amt) as taxable_amt,SUM(d.total_amt) as total_amt  from t_bill_header h, "
 				+ " t_bill_detail d,m_customer c where h.bill_head_id=d.bill_head_id and c.cust_id=h.cust_id AND "
-				+ " h.bill_date  BETWEEN :fromDate AND :toDate AND h.ex_int1 IN (:plantIdList ) AND h.cust_id IN (:custIdList ) "
+				+ " h.bill_date  BETWEEN :fromDate AND :toDate AND h.ex_int1=:plantId  AND h.cust_id IN (:custIdList ) "
 				+ " group by  h.bill_head_id ", nativeQuery = true)
-		List<TaxWiseBill> getBillHeadersBetDateANdCustIdList (@Param("plantIdList") List<Integer> plantIdList,@Param("custIdList") List<Integer> custIdList,@Param("fromDate") String fromDate,@Param("toDate") String toDate);
+		List<TaxWiseBill> getBillHeadersBetDateANdCustIdList (@Param("plantId") int plantId,@Param("custIdList") List<Integer> custIdList,@Param("fromDate") String fromDate,@Param("toDate") String toDate);
 		
 		
 		
