@@ -11,7 +11,7 @@ import com.shivshambhuwebapi.tx.model.GetPoklenReading;
 public interface GetPoklenReadingRepo extends JpaRepository<GetPoklenReading, Integer> {
 
 	@Query(value = "SELECT  p.*,v.veh_no,v.vehicle_name  FROM t_poklen_reading p , m_vehicle v  WHERE p.del_status=1 AND "
-			+ "p.start_date BETWEEN :fromDate AND :toDate AND p.poklen_id=v.vehicle_id ", nativeQuery = true)
+			+ "p.start_date BETWEEN :fromDate AND :toDate AND p.poklen_id=v.vehicle_id ORDER BY p.start_date  DESC", nativeQuery = true)
 	List<GetPoklenReading> getPoklenReadingListBetDate(@Param("fromDate") String fromDate,
 			@Param("toDate") String toDate);
 
