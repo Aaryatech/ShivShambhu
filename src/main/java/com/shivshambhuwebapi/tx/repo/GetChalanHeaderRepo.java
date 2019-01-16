@@ -24,7 +24,7 @@ public interface GetChalanHeaderRepo extends JpaRepository<GetChalanHeader, Inte
 			+ "        AND m_customer.cust_id=t_chalan_header.cust_id  "
 			+ "        AND m_project.proj_id=t_chalan_header.proj_id "
 			+ "        AND t_chalan_header.plant_id=:plantId AND t_chalan_header.chalan_date BETWEEN :fromDate AND :toDate  "
-			+ "        AND t_chalan_header.ex_int1=1  AND t_chalan_header.status!=2 ORDER BY t_chalan_header.status  ", nativeQuery = true)
+			+ "        AND t_chalan_header.ex_int1=1  AND t_chalan_header.status!=2 ORDER BY t_chalan_header.status,t_chalan_header.chalan_date DESC  ", nativeQuery = true)
 
 	List<GetChalanHeader> getGetChalanHeaderByPlantId(@Param("plantId") int plantId, @Param("fromDate") String fromDate,
 			@Param("toDate") String toDate);
@@ -44,7 +44,7 @@ public interface GetChalanHeaderRepo extends JpaRepository<GetChalanHeader, Inte
 			+ "        AND m_customer.cust_id=t_chalan_header.cust_id  "
 			+ "        AND m_project.proj_id=t_chalan_header.proj_id "
 			+ "        AND t_chalan_header.cust_id=:custId AND t_chalan_header.chalan_date BETWEEN :fromDate AND :toDate  "
-			+ "        AND t_chalan_header.ex_int1=1  AND t_chalan_header.status!=2 ORDER BY t_chalan_header.status  ", nativeQuery = true)
+			+ "        AND t_chalan_header.ex_int1=1  AND t_chalan_header.status!=2 ORDER BY t_chalan_header.status, t_chalan_header.chalan_date DESC  ", nativeQuery = true)
 
 	List<GetChalanHeader> getGetChalanHeaderByCustId(@Param("custId") int custId, @Param("fromDate") String fromDate,
 			@Param("toDate") String toDate);
@@ -64,7 +64,7 @@ public interface GetChalanHeaderRepo extends JpaRepository<GetChalanHeader, Inte
 			+ "        AND m_customer.cust_id=t_chalan_header.cust_id  "
 			+ "        AND m_project.proj_id=t_chalan_header.proj_id "
 			+ "        AND  t_chalan_header.chalan_date BETWEEN :fromDate AND :toDate  "
-			+ "        AND t_chalan_header.ex_int1=1  AND t_chalan_header.status!=2 ORDER BY t_chalan_header.status  ", nativeQuery = true)
+			+ "        AND t_chalan_header.ex_int1=1  AND t_chalan_header.status!=2 ORDER BY t_chalan_header.status,t_chalan_header.chalan_date DESC ", nativeQuery = true)
 
 	List<GetChalanHeader> getGetChalanHeaderBetweenDate(@Param("fromDate") String fromDate,
 			@Param("toDate") String toDate);
@@ -84,7 +84,7 @@ public interface GetChalanHeaderRepo extends JpaRepository<GetChalanHeader, Inte
 			+ "        AND m_customer.cust_id=t_chalan_header.cust_id  "
 			+ "        AND m_project.proj_id=t_chalan_header.proj_id "
 			+ "        AND t_chalan_header.plant_id=:plantId AND t_chalan_header.cust_id=:custId AND t_chalan_header.chalan_date BETWEEN :fromDate AND :toDate  "
-			+ "        AND t_chalan_header.ex_int1=1  AND t_chalan_header.status!=2 ORDER BY t_chalan_header.status  ", nativeQuery = true)
+			+ "        AND t_chalan_header.ex_int1=1  AND t_chalan_header.status!=2 ORDER BY t_chalan_header.status,t_chalan_header.chalan_date DESC  ", nativeQuery = true)
 
 	List<GetChalanHeader> getGetChalanHeaderByPlantIdAndCustId(@Param("plantId") int plantId,
 			@Param("custId") int custId, @Param("fromDate") String fromDate, @Param("toDate") String toDate);
@@ -95,7 +95,7 @@ public interface GetChalanHeaderRepo extends JpaRepository<GetChalanHeader, Inte
 			+ "        m_vehicle.vehicle_name," + "        m_plant.plant_name,"
 			+ "        m_company.comp_name,m_company.company_id," + "        m_customer.cust_name,"
 			+ "        m_customer.cust_mob_no," + "        m_project.proj_name,"
-			+ "        m_project.address as proj_address "
+			+ "        m_project.address as proj_address,t_chalan_header.chalan_date "
 			+ "        , COALESCE((SELECT m_user.usr_name from m_user WHERE m_user.user_id=t_chalan_header.driver_id),'NA')AS driver_name,"
 			+ "         COALESCE((SELECT m_user.usr_name from m_user WHERE m_user.user_id=t_chalan_header.ex_var1),'NA')AS user_name"
 			+ "        " + "    FROM " + "        m_vehicle," + "        m_plant," + "        m_company,"
@@ -105,8 +105,8 @@ public interface GetChalanHeaderRepo extends JpaRepository<GetChalanHeader, Inte
 			+ "        AND m_company.company_id=m_plant.company_id "
 			+ "        AND m_customer.cust_id=t_chalan_header.cust_id  "
 			+ "        AND m_project.proj_id=t_chalan_header.proj_id "
-			+ "        AND t_chalan_header.plant_id=:plantId " + "        AND  t_chalan_header.ex_float1=0   "
-			+ "        AND t_chalan_header.ex_int1=1  ORDER BY t_chalan_header.status ,t_chalan_header.chalan_date ", nativeQuery = true)
+			+ "        AND t_chalan_header.plant_id=:plantId " + "     AND  t_chalan_header.ex_float1=0   "
+			+ "        AND t_chalan_header.ex_int1=1  ORDER BY t_chalan_header.chalan_date DESC ", nativeQuery = true)
 
 	List<GetChalanHeader> getGetOpenChalanHeaderByPlantId(@Param("plantId") int plantId);
 

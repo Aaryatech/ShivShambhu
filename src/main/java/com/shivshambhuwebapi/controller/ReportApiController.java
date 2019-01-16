@@ -1,8 +1,11 @@
 package com.shivshambhuwebapi.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import org.apache.tomcat.websocket.server.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -40,6 +43,8 @@ import com.shivshambhuwebapi.tx.repo.GetVehDetailRepo;
 import com.shivshambhuwebapi.tx.repo.GetVehHeaderRepo;
 import com.shivshambhuwebapi.tx.repo.GetVehReportRepo;
 import com.shivshambhuwebapi.tx.repo.PoklenReportRepo;
+
+import ch.qos.logback.classic.pattern.DateConverter;
 
 @RestController
 public class ReportApiController {
@@ -172,12 +177,47 @@ public class ReportApiController {
 	public @ResponseBody List<PoklenReport> getPoklenReportBetweenDate(@RequestParam("fromDate") String fromDate,
 			@RequestParam("toDate") String toDate) {
 
+		System.out.println("startgetPoklenReportBetweenDate ");
+
+		System.out.println("start date is"+fromDate); 
+		System.out.println("end date is"+toDate);
+		
+		
 		List<PoklenReport> headerList = new ArrayList<PoklenReport>();
 
 		try {
 
+		 if (fromDate.compareTo(toDate) < 0) {
+			 
+			 System.out.println("start is before end");
+			 
+			String sd=DateConvertor.convertToDMY(fromDate);
+			 String ed=DateConvertor.convertToDMY(toDate);
+			 System.out.println("start date new is"+sd);
+				System.out.println("end date new  is"+ed);
+				
+				
+			 
+			// SimpleDateFormat myFormat = new SimpleDateFormat("dd MM yyyy");
+				 Date dateBefore=new SimpleDateFormat("dd-MM-yyyy").parse(sd); 
+				 Date dateAfter=new SimpleDateFormat("dd-MM-yyyy").parse(ed); 
+				 
+			  // Date dateBefore = myFormat.parse(sd);
+		      // Date dateAfter = myFormat.parse(ed);
+		       long difference = dateAfter.getTime() - dateBefore.getTime();
+		       float diff = (difference / (1000*60*60*24));
+		       
+	             
+		       System.out.println("Number of Days between dates: "+diff);
+		
+                headerList = poklenReportRepo.getPoklenReportBetweenDate1(fromDate, toDate,diff);
+            }
+	
+		 else if(fromDate.compareTo(toDate) == 0){
+			 
+			System.out.println("start is equal to end");
 			headerList = poklenReportRepo.getPoklenReportBetweenDate(fromDate, toDate);
-
+            }
 		} catch (Exception e) {
 
 			e.printStackTrace();
