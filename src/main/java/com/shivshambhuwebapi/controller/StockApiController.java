@@ -104,6 +104,23 @@ public class StockApiController {
 
 	}
 
+	@RequestMapping(value = { "/getStockHeaderByPlantId" }, method = RequestMethod.POST)
+	public @ResponseBody StockHeader getStockHeaderByPlantId(@RequestParam("plantId") int plantId) {
+
+		StockHeader stockHeader = new StockHeader();
+
+		try {
+
+			stockHeader = stockHeaderRepo.findByPlantIdAndStatusAndDelStatus(plantId, 0, 1);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+		return stockHeader;
+
+	}
+
 	@RequestMapping(value = { "/getStockDetailByPlantId" }, method = RequestMethod.POST)
 	public @ResponseBody List<GetStockDetail> getStockDetailByPlantId(@RequestParam("plantId") int plantId) {
 
@@ -121,5 +138,43 @@ public class StockApiController {
 		return getStockDetailList;
 
 	}
+/*
+	@RequestMapping(value = { "/getStockDetailByPlantIdAndCurDate" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetStockDetail> getStockDetailByPlantIdAndCurDate(@RequestParam("plantId") int plantId,
+			@RequestParam("currDate") String currDate) {
 
+		List<GetStockDetail> getStockDetailList = new ArrayList<GetStockDetail>();
+
+		try {
+
+			getStockDetailList = getStockDetailRepo.getStockDetailByPlantAndCurDate(plantId, currDate);
+			System.out.println(getStockDetailList.toString());
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+		return getStockDetailList;
+
+	}
+
+	@RequestMapping(value = { "/getStockDetailByPlantIdAndBetDate" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetStockDetail> getStockDetailByPlantIdAndBetDate(@RequestParam("plantId") int plantId,
+			@RequestParam("fromDate") String fromDate, @RequestParam("toDate") String toDate) {
+
+		List<GetStockDetail> getStockDetailList = new ArrayList<GetStockDetail>();
+
+		try {
+
+			getStockDetailList = getStockDetailRepo.getStockDetailByPlantAndBetDate(plantId, fromDate, toDate);
+			System.out.println(getStockDetailList.toString());
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+		return getStockDetailList;
+
+	}
+*/
 }
