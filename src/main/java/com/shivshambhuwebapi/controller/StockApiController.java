@@ -158,7 +158,7 @@ public class StockApiController {
 
 	}
 
-/*	@RequestMapping(value = { "/getStockDetailByPlantIdAndBetDate" }, method = RequestMethod.POST)
+	@RequestMapping(value = { "/getStockDetailByPlantIdAndBetDate" }, method = RequestMethod.POST)
 	public @ResponseBody List<GetStockDetail> getStockDetailByPlantIdAndBetDate(@RequestParam("plantId") int plantId,
 			@RequestParam("fromDate") String fromDate, @RequestParam("toDate") String toDate) {
 
@@ -176,5 +176,5 @@ public class StockApiController {
 		return getStockDetailList;
 
 	}
-*/
+
 }
