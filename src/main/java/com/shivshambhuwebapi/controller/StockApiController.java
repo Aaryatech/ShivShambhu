@@ -121,6 +121,23 @@ public class StockApiController {
 
 	}
 
+	@RequestMapping(value = { "/getStockHeaderByStockId" }, method = RequestMethod.POST)
+	public @ResponseBody StockHeader getStockHeaderByStockId(@RequestParam("stockId") int stockId) {
+
+		StockHeader stockHeader = new StockHeader();
+
+		try {
+
+			stockHeader = stockHeaderRepo.findByStockIdAndDelStatus(stockId, 1);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+		return stockHeader;
+
+	}
+
 	@RequestMapping(value = { "/getStockDetailByPlantId" }, method = RequestMethod.POST)
 	public @ResponseBody List<GetStockDetail> getStockDetailByPlantId(@RequestParam("plantId") int plantId) {
 
