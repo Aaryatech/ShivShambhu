@@ -14,32 +14,170 @@ public interface GetStockDetailRepo extends JpaRepository<GetStockDetail, Intege
 	@Query(value = "SELECT d.*,i.item_name,i.item_code,u.uom_name  FROM t_stock_det d,m_item_fg i,m_uom u ,t_stock_head h WHERE d.stock_id=h.stock_id AND d.item_id=i.item_id AND u.uom_id=i.uom_id AND h.plant_id=:plantId AND h.status=0", nativeQuery = true)
 	List<GetStockDetail> getStockDetailByPlantId(@Param("plantId") int plantId);
 
-	@Query(value = "SELECT d.stock_det_id,d.stock_id,d.item_id,d.op_qty,i.item_name,i.item_code,u.uom_name,\n"
-			+ "COALESCE((SELECT SUM(pd.production_qty) from t_production_plan_detail pd,\n"
-			+ "t_production_plan_header ph WHERE pd.production_header_id=ph.production_header_id\n"
-			+ " AND ph.del_status=1 AND ph.plant_id=:plantId AND ph.production_date=:currDate AND \n"
-			+ "pd.item_id=d.item_id),0) as prod_qty,\n" + "COALESCE((SELECT SUM(cd.item_qty) from t_chalan_detail cd,\n"
-			+ "t_chalan_header ch WHERE cd.chalan_id=ch.chalan_id  AND ch.plant_id=:plantId\n"
-			+ " AND ch.chalan_date=:currDate AND cd.item_id=d.item_id),0) as chalan_qty,\n"
-			+ "(d.op_qty+(COALESCE((SELECT SUM(pd.production_qty) from t_production_plan_detail pd, t_production_plan_header ph WHERE pd.production_header_id=ph.production_header_id AND ph.del_status=1 AND ph.plant_id=68 AND ph.production_date=:currDate AND pd.item_id=d.item_id),0))-(COALESCE((SELECT SUM(cd.item_qty) from t_chalan_detail cd, t_chalan_header ch WHERE cd.chalan_id=ch.chalan_id  AND ch.plant_id=68 AND ch.chalan_date=:currDate AND cd.item_id=d.item_id),0))) as closing_qty,d.del_status,d.user_id,d.detail_date,d.ex_int1,d.ex_int2,d.ex_float1,\n"
-			+ "d.ex_float2,d.ex_date1,d.ex_bool1,d.ex_var1,d.ex_var2 FROM t_stock_head h, \n"
-			+ "t_stock_det d ,m_item_fg i ,m_uom u WHERE h.stock_id=d.stock_id AND h.del_status=1 AND d.del_status=1\n"
-			+ " AND h.plant_id=:plantId AND h.start_date=:currDate AND h.status=0 AND u.uom_id=i.uom_id AND i.item_id=d.item_id GROUP BY d.item_id  ", nativeQuery = true)
-	List<GetStockDetail> getStockDetailByPlantAndCurDate(@Param("plantId") int plantId,
-			@Param("currDate") String currDate);
+	@Query(value = "SELECT\n" + 
+			"    d.stock_det_id," + 
+			"    d.stock_id," + 
+			"    d.item_id," + 
+			"    d.op_qty," + 
+			"    i.item_name," + 
+			"    i.item_code," + 
+			"    u.uom_name," + 
+			"    COALESCE(" + 
+			"        (\n" + 
+			"        SELECT\n" + 
+			"            SUM(pd.production_qty)\n" + 
+			"        FROM\n" + 
+			"            t_production_plan_detail pd,\n" + 
+			"            t_production_plan_header ph\n" + 
+			"        WHERE\n" + 
+			"            pd.production_header_id = ph.production_header_id AND ph.del_status = 1 AND ph.plant_id =:plantId AND pd.item_id = d.item_id\n" + 
+			"    ),\n" + 
+			"    0\n" + 
+			"    ) AS prod_qty,\n" + 
+			"    COALESCE(\n" + 
+			"        (\n" + 
+			"        SELECT\n" + 
+			"            SUM(cd.item_qty)\n" + 
+			"        FROM\n" + 
+			"            t_chalan_detail cd,\n" + 
+			"            t_chalan_header ch\n" + 
+			"        WHERE\n" + 
+			"            cd.chalan_id = ch.chalan_id AND ch.plant_id =:plantId  AND cd.item_id = d.item_id\n" + 
+			"    ),\n" + 
+			"    0\n" + 
+			"    ) AS chalan_qty,\n" + 
+			"    (\n" + 
+			"        d.op_qty +(\n" + 
+			"            COALESCE(\n" + 
+			"                (\n" + 
+			"                SELECT\n" + 
+			"                    SUM(pd.production_qty)\n" + 
+			"                FROM\n" + 
+			"                    t_production_plan_detail pd,\n" + 
+			"                    t_production_plan_header ph\n" + 
+			"                WHERE\n" + 
+			"                    pd.production_header_id = ph.production_header_id AND ph.del_status = 1 AND ph.plant_id =:plantId  AND pd.item_id = d.item_id\n" + 
+			"            ),\n" + 
+			"            0\n" + 
+			"            )\n" + 
+			"        ) -(\n" + 
+			"            COALESCE(\n" + 
+			"                (\n" + 
+			"                SELECT\n" + 
+			"                    SUM(cd.item_qty)\n" + 
+			"                FROM\n" + 
+			"                    t_chalan_detail cd,\n" + 
+			"                    t_chalan_header ch\n" + 
+			"                WHERE\n" + 
+			"                    cd.chalan_id = ch.chalan_id AND ch.plant_id =:plantId  AND cd.item_id = d.item_id\n" + 
+			"            ),\n" + 
+			"            0\n" + 
+			"            )\n" + 
+			"        )\n" + 
+			"    ) AS closing_qty,\n" + 
+			"    d.del_status,\n" + 
+			"    d.user_id,\n" + 
+			"    d.detail_date,\n" + 
+			"    d.ex_int1,\n" + 
+			"    d.ex_int2,\n" + 
+			"    d.ex_float1,\n" + 
+			"    d.ex_float2,\n" + 
+			"    d.ex_date1,\n" + 
+			"    d.ex_bool1,\n" + 
+			"    d.ex_var1,\n" + 
+			"    d.ex_var2\n" + 
+			"FROM\n" + 
+			"    t_stock_head h,\n" + 
+			"    t_stock_det d,\n" + 
+			"    m_item_fg i,\n" + 
+			"    m_uom u\n" + 
+			"WHERE\n" + 
+			"    h.stock_id = d.stock_id AND h.del_status = 1 AND d.del_status = 1 AND h.plant_id =:plantId  AND h.status = 0 AND u.uom_id = i.uom_id AND i.item_id = d.item_id\n" + 
+			"GROUP BY\n" + 
+			"    d.item_id ", nativeQuery = true)
+	List<GetStockDetail> getStockDetailByPlantAndCurDate(@Param("plantId") int plantId);
 
-	@Query(value = "SELECT d.stock_det_id,d.stock_id,d.item_id,d.op_qty,i.item_name,i.item_code,u.uom_name,\n"
-			+ "COALESCE((SELECT SUM(pd.production_qty) from t_production_plan_detail pd,\n"
-			+ "t_production_plan_header ph WHERE pd.production_header_id=ph.production_header_id\n"
-			+ " AND ph.del_status=1 AND ph.plant_id=:plantId AND ph.production_date BETWEEN :fromDate AND :toDate AND \n"
-			+ "pd.item_id=d.item_id),0) as prod_qty,\n" + "COALESCE((SELECT SUM(cd.item_qty) from t_chalan_detail cd,\n"
-			+ "t_chalan_header ch WHERE cd.chalan_id=ch.chalan_id  AND ch.plant_id=:plantId\n"
-			+ " AND ch.chalan_date BETWEEN :fromDate AND :toDate AND cd.item_id=d.item_id),0) as chalan_qty,\n"
-			+ "(d.op_qty+(COALESCE((SELECT SUM(pd.production_qty) from t_production_plan_detail pd, t_production_plan_header ph WHERE pd.production_header_id=ph.production_header_id AND ph.del_status=1 AND ph.plant_id=68 AND ph.production_date BETWEEN :fromDate AND :toDate AND pd.item_id=d.item_id),0))-(COALESCE((SELECT SUM(cd.item_qty) from t_chalan_detail cd, t_chalan_header ch WHERE cd.chalan_id=ch.chalan_id  AND ch.plant_id=68 AND ch.chalan_date BETWEEN :fromDate AND :toDate AND cd.item_id=d.item_id),0))) as closing_qty"
-			+ ",d.del_status,d.user_id,d.detail_date,d.ex_int1,d.ex_int2,d.ex_float1,\n"
-			+ "d.ex_float2,d.ex_date1,d.ex_bool1,d.ex_var1,d.ex_var2 FROM t_stock_head h, \n"
-			+ "t_stock_det d ,m_item_fg i ,m_uom u WHERE h.stock_id=d.stock_id AND h.del_status=1 AND d.del_status=1\n"
-			+ " AND h.plant_id=:plantId AND h.start_date BETWEEN :fromDate AND :toDate AND h.status=0 AND u.uom_id=i.uom_id AND i.item_id=d.item_id GROUP BY d.item_id  ", nativeQuery = true)
+	@Query(value = "SELECT\n" + 
+			"    d.stock_det_id,\n" + 
+			"    d.stock_id,\n" + 
+			"    d.item_id,\n" + 
+			"    d.op_qty,\n" + 
+			"    i.item_name,\n" + 
+			"    i.item_code,\n" + 
+			"    u.uom_name,\n" + 
+			"    COALESCE(\n" + 
+			"        (\n" + 
+			"        SELECT\n" + 
+			"            SUM(pd.production_qty)\n" + 
+			"        FROM\n" + 
+			"            t_production_plan_detail pd,\n" + 
+			"            t_production_plan_header ph\n" + 
+			"        WHERE\n" + 
+			"            pd.production_header_id = ph.production_header_id AND ph.del_status = 1 AND ph.plant_id = :plantId AND ph.production_date BETWEEN :fromDate AND :toDate AND pd.item_id = d.item_id\n" + 
+			"    ),\n" + 
+			"    0\n" + 
+			"    ) AS prod_qty,\n" + 
+			"    COALESCE(\n" + 
+			"        (\n" + 
+			"        SELECT\n" + 
+			"            SUM(cd.item_qty)\n" + 
+			"        FROM\n" + 
+			"            t_chalan_detail cd,\n" + 
+			"            t_chalan_header ch\n" + 
+			"        WHERE\n" + 
+			"            cd.chalan_id = ch.chalan_id AND ch.plant_id = :plantId AND ch.chalan_date BETWEEN :fromDate AND :toDate AND cd.item_id = d.item_id\n" + 
+			"    ),\n" + 
+			"    0\n" + 
+			"    ) AS chalan_qty,\n" + 
+			"    (\n" + 
+			"        d.op_qty +(\n" + 
+			"            COALESCE(\n" + 
+			"                (\n" + 
+			"                SELECT\n" + 
+			"                    SUM(pd.production_qty)\n" + 
+			"                FROM\n" + 
+			"                    t_production_plan_detail pd,\n" + 
+			"                    t_production_plan_header ph\n" + 
+			"                WHERE\n" + 
+			"                    pd.production_header_id = ph.production_header_id AND ph.del_status = 1 AND ph.plant_id = :plantId AND ph.production_date BETWEEN :fromDate AND :toDate \" + \" AND pd.item_id = d.item_id\n" + 
+			"            ),\n" + 
+			"            0\n" + 
+			"            )\n" + 
+			"        ) -(\n" + 
+			"            COALESCE(\n" + 
+			"                (\n" + 
+			"                SELECT\n" + 
+			"                    SUM(cd.item_qty)\n" + 
+			"                FROM\n" + 
+			"                    t_chalan_detail cd,\n" + 
+			"                    t_chalan_header ch\n" + 
+			"                WHERE\n" + 
+			"                    cd.chalan_id = ch.chalan_id AND ch.plant_id = :plantId AND ch.chalan_date BETWEEN :fromDate AND :toDate AND cd.item_id = d.item_id\n" + 
+			"            ),\n" + 
+			"            0\n" + 
+			"            )\n" + 
+			"        )\n" + 
+			"    ) AS closing_qty,\n" + 
+			"    d.del_status,\n" + 
+			"    d.user_id,\n" + 
+			"    d.detail_date,\n" + 
+			"    d.ex_int1,\n" + 
+			"    d.ex_int2,\n" + 
+			"    d.ex_float1,\n" + 
+			"    d.ex_float2,\n" + 
+			"    d.ex_date1,\n" + 
+			"    d.ex_bool1,\n" + 
+			"    d.ex_var1,\n" + 
+			"    d.ex_var2\n" + 
+			"FROM\n" + 
+			"    t_stock_head h,\n" + 
+			"    t_stock_det d,\n" + 
+			"    m_item_fg i,\n" + 
+			"    m_uom u\n" + 
+			"WHERE\n" + 
+			"    h.stock_id = d.stock_id AND h.del_status = 1 AND d.del_status = 1 AND h.plant_id = :plantId AND h.start_date = :fromDate AND h.status = 0 AND u.uom_id = i.uom_id AND i.item_id = d.item_id\n" + 
+			"GROUP BY\n" + 
+			"    d.item_id  ", nativeQuery = true)
 	List<GetStockDetail> getStockDetailByPlantAndBetDate(@Param("plantId") int plantId,
 			@Param("fromDate") String fromDate, @Param("toDate") String toDate);
 

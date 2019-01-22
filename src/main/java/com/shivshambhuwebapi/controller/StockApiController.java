@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.shivshambhuwebapi.common.DateConvertor;
 import com.shivshambhuwebapi.model.GetPoHeader;
 import com.shivshambhuwebapi.model.prodrm.RmcQuotTemp;
 import com.shivshambhuwebapi.stock.GetStockDetail;
@@ -112,6 +113,7 @@ public class StockApiController {
 		try {
 
 			stockHeader = stockHeaderRepo.findByPlantIdAndStatusAndDelStatus(plantId, 0, 1);
+			stockHeader.setStartDate(DateConvertor.convertToDMY(stockHeader.getStartDate()));
 
 		} catch (Exception e) {
 
@@ -157,14 +159,13 @@ public class StockApiController {
 	}
 
 	@RequestMapping(value = { "/getStockDetailByPlantIdAndCurDate" }, method = RequestMethod.POST)
-	public @ResponseBody List<GetStockDetail> getStockDetailByPlantIdAndCurDate(@RequestParam("plantId") int plantId,
-			@RequestParam("currDate") String currDate) {
+	public @ResponseBody List<GetStockDetail> getStockDetailByPlantIdAndCurDate(@RequestParam("plantId") int plantId) {
 
 		List<GetStockDetail> getStockDetailList = new ArrayList<GetStockDetail>();
 
 		try {
 
-			getStockDetailList = getStockDetailRepo.getStockDetailByPlantAndCurDate(plantId, currDate);
+			getStockDetailList = getStockDetailRepo.getStockDetailByPlantAndCurDate(plantId);
 			System.out.println(getStockDetailList.toString());
 
 		} catch (Exception e) {
