@@ -28,6 +28,9 @@ public class GetQuotDetailPrint {
 	@Column(name = "rate")
 	private float rate;
 
+	private int plantId;
+	
+	private String plantName;
 	
 	private float total;
 	
@@ -182,14 +185,34 @@ public class GetQuotDetailPrint {
 	}
 
 	
+	
+	public int getPlantId() {
+		return plantId;
+	}
+
+	public void setPlantId(int plantId) {
+		this.plantId = plantId;
+	}
+
+	public String getPlantName() {
+		return plantName;
+	}
+
+	public void setPlantName(String plantName) {
+		this.plantName = plantName;
+	}
+
 	@Override
 	public String toString() {
 		return "GetQuotDetailPrint [quotDetailId=" + quotDetailId + ", quotHeadId=" + quotHeadId + ", itemId=" + itemId
-				+ ", quotQty=" + quotQty + ", rate=" + rate + ", total=" + total + ", taxPer=" + taxPer
-				+ ", taxableValue=" + taxableValue + ", taxValue=" + taxValue + ", isTaxInc=" + isTaxInc + ", uomName="
-				+ uomName + ", itemName=" + itemName + ", itemCode=" + itemCode + ", quotUomId=" + quotUomId
-				+ ", quotNo=" + quotNo + "]";
+				+ ", quotQty=" + quotQty + ", rate=" + rate + ", plantId=" + plantId + ", plantName=" + plantName
+				+ ", total=" + total + ", taxPer=" + taxPer + ", taxableValue=" + taxableValue + ", taxValue="
+				+ taxValue + ", isTaxInc=" + isTaxInc + ", uomName=" + uomName + ", itemName=" + itemName
+				+ ", itemCode=" + itemCode + ", quotUomId=" + quotUomId + ", quotNo=" + quotNo + ", quotDate="
+				+ quotDate + "]";
 	}
+
+	
 	
 	
 }
