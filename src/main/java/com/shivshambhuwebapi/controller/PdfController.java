@@ -59,7 +59,7 @@ public class PdfController {
 		List<QuotPrintData> printDataList = new ArrayList<QuotPrintData>();
 
 		Company comp;
-
+//..
 		Cust cust;
 
 		List<GetQuotDetailPrint> quotDetPrint;
