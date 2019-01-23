@@ -435,6 +435,9 @@ public class TxApiController {
 
 		try {
 			wList = getWeighingRepo.getWeighingByContrId(contrId, fromDate, toDate);
+			for (int i = 0; i < wList.size(); i++) {
+				wList.get(i).setDate(DateConvertor.convertToDMY(wList.get(i).getDate()));
+			}
 
 		} catch (Exception e) {
 
@@ -454,6 +457,9 @@ public class TxApiController {
 
 		try {
 			wList = getWeighingRepo.getWeighingByVehicleId(vehicleId, fromDate, toDate);
+			for (int i = 0; i < wList.size(); i++) {
+				wList.get(i).setDate(DateConvertor.convertToDMY(wList.get(i).getDate()));
+			}
 
 		} catch (Exception e) {
 
@@ -473,6 +479,9 @@ public class TxApiController {
 
 		try {
 			wList = getWeighingRepo.getWeighingByVehId(vehicleId, fromDate, toDate);
+			for (int i = 0; i < wList.size(); i++) {
+				wList.get(i).setDate(DateConvertor.convertToDMY(wList.get(i).getDate()));
+			}
 
 		} catch (Exception e) {
 
