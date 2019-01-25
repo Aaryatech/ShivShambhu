@@ -2,7 +2,6 @@ package com.shivshambhuwebapi.controller;
 
 import java.util.ArrayList;
 
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.shivshambhuwebapi.master.model.Contractor;
 import com.shivshambhuwebapi.master.model.GetItemTax;
+import com.shivshambhuwebapi.master.model.GetRawMatItem;
 import com.shivshambhuwebapi.master.model.GetsubplantData;
 import com.shivshambhuwebapi.master.model.ItemCategory;
 import com.shivshambhuwebapi.master.model.ItemType;
@@ -27,6 +27,7 @@ import com.shivshambhuwebapi.master.model.VehicleType;
 import com.shivshambhuwebapi.master.repo.ContractorRepo;
 import com.shivshambhuwebapi.master.repo.GetItemTaxRepo;
 import com.shivshambhuwebapi.master.repo.GetOrderDetailRepo;
+import com.shivshambhuwebapi.master.repo.GetRawMatItemRepo;
 import com.shivshambhuwebapi.master.repo.ItemCategoryRepo;
 import com.shivshambhuwebapi.master.repo.ItemTypeRepo;
 import com.shivshambhuwebapi.master.repo.RawMatItemRepo;
@@ -40,10 +41,6 @@ public class MstApiController {
 	@Autowired
 	GetItemTaxRepo getItemTaxRepo;
 
-	
-	
-	
-	
 	@Autowired
 	VehicleTypeRepo vehicleTypeRepo;
 
@@ -64,21 +61,18 @@ public class MstApiController {
 
 	@Autowired
 	ItemTypeRepo itemTypeRepo;
-	
-	
-	
-	
+
+	@Autowired
+	GetRawMatItemRepo getRawMatItemRepo;
 
 	// ----------------Contractor Master-------------------------------
-	
-	
-	
+
 	@Autowired
 	GetOrderDetailRepo getOrderDetailRepo;
 
 	@RequestMapping(value = { "/saveContractor" }, method = RequestMethod.POST)
 	public @ResponseBody Contractor saveContractor(@RequestBody Contractor con) {
-		return contractorRepo.save( con);
+		return contractorRepo.save(con);
 	}
 
 	@RequestMapping(value = { "/getAllContractorList" }, method = RequestMethod.GET)
@@ -98,16 +92,15 @@ public class MstApiController {
 		return conList;
 
 	}
-	
-	
+
 	@RequestMapping(value = { "/getContractorById" }, method = RequestMethod.POST)
 	public @ResponseBody Contractor getContractorById(@RequestParam("contrId") int contrId) {
 
-		Contractor res=new Contractor();
+		Contractor res = new Contractor();
 
 		try {
 
-			res = contractorRepo.findByContrIdAndDelStatus(contrId,1);
+			res = contractorRepo.findByContrIdAndDelStatus(contrId, 1);
 
 		} catch (Exception e) {
 
@@ -117,34 +110,29 @@ public class MstApiController {
 		return res;
 
 	}
-	
-	
+
 	@RequestMapping(value = { "/deleteContractor" }, method = RequestMethod.POST)
 	public @ResponseBody Info deleteContractor(@RequestParam("contrId") int contrId) {
 
 		int isDeleted = contractorRepo.deleteContractor(contrId);
-		Info infoRes=new Info();
-		if(isDeleted>=1)
-		{
+		Info infoRes = new Info();
+		if (isDeleted >= 1) {
 			infoRes.setError(false);
 			infoRes.setMessage("Contractor Deleted Successfully");
-		}
-		else
-		{
+		} else {
 			infoRes.setError(true);
 			infoRes.setMessage("Contractor Deletion Failed");
 		}
 		return infoRes;
 	}
-	
-	
+
 	@RequestMapping(value = { "/deleteMultiContractor" }, method = RequestMethod.POST)
 	public @ResponseBody Info deleteMultiQuot(@RequestParam("contrIds") List<Integer> contrIds) {
 
 		Info info = new Info();
 
 		try {
-			int delete =  contractorRepo.deleteMultiContDetail(contrIds);
+			int delete = contractorRepo.deleteMultiContDetail(contrIds);
 
 			if (delete >= 1) {
 				info.setError(false);
@@ -165,20 +153,13 @@ public class MstApiController {
 
 	}
 
-	
-	
-	
 	// ----------------Vehicle Master-------------------------------
 
-	
 	@RequestMapping(value = { "/saveVehicle" }, method = RequestMethod.POST)
-	public @ResponseBody Vehicle saveVehicle(@RequestBody Vehicle  veh) {
+	public @ResponseBody Vehicle saveVehicle(@RequestBody Vehicle veh) {
 		return vehicleRepo.save(veh);
 	}
 
-	
-
-	
 	@RequestMapping(value = { "/getAllVehicleList" }, method = RequestMethod.GET)
 	public @ResponseBody List<Vehicle> getAllVehicleList() {
 
@@ -196,16 +177,15 @@ public class MstApiController {
 		return vehList;
 
 	}
-	
-	
+
 	@RequestMapping(value = { "/getVehicleById" }, method = RequestMethod.POST)
 	public @ResponseBody Vehicle getVehicleById(@RequestParam("vehId") int vehId) {
 
-		Vehicle res=new Vehicle();
+		Vehicle res = new Vehicle();
 
 		try {
 
-			res = vehicleRepo.findByVehicleIdAndDelStatus(vehId,1);
+			res = vehicleRepo.findByVehicleIdAndDelStatus(vehId, 1);
 
 		} catch (Exception e) {
 
@@ -215,9 +195,6 @@ public class MstApiController {
 		return res;
 
 	}
-	
-	
-	
 
 	@RequestMapping(value = { "/getVehListByVehicleType" }, method = RequestMethod.POST)
 	public @ResponseBody List<Vehicle> getVehListByVehicleType(@RequestParam("vehicleType") int vehicleType) {
@@ -236,26 +213,20 @@ public class MstApiController {
 
 	}
 
-	
 	@RequestMapping(value = { "/deleteVehicle" }, method = RequestMethod.POST)
 	public @ResponseBody Info deleteVehicle(@RequestParam("vehId") int vehId) {
 
 		int isDeleted = vehicleRepo.deleteVehicle(vehId);
-		Info infoRes=new Info();
-		if(isDeleted>=1)
-		{
+		Info infoRes = new Info();
+		if (isDeleted >= 1) {
 			infoRes.setError(false);
 			infoRes.setMessage("Vehicle Deleted Successfully");
-		}
-		else
-		{
+		} else {
 			infoRes.setError(true);
 			infoRes.setMessage("Vehicle Deletion Failed");
 		}
 		return infoRes;
 	}
-	
-	
 
 	@RequestMapping(value = { "/deleteMultiVehicle" }, method = RequestMethod.POST)
 	public @ResponseBody Info deleteMultiVehicle(@RequestParam("vehIds") List<Integer> vehIds) {
@@ -263,7 +234,7 @@ public class MstApiController {
 		Info info = new Info();
 
 		try {
-			int delete =  vehicleRepo.deleteMultiVehicleDetail(vehIds);
+			int delete = vehicleRepo.deleteMultiVehicleDetail(vehIds);
 
 			if (delete >= 1) {
 				info.setError(false);
@@ -284,17 +255,12 @@ public class MstApiController {
 
 	}
 
-	
-	
-
 	// ----------------Subplant Master-------------------------------
-	
 
 	@RequestMapping(value = { "/saveSubPlant" }, method = RequestMethod.POST)
 	public @ResponseBody Subplant saveSubPlant(@RequestBody Subplant sp) {
 		return subplantRepo.save(sp);
 	}
-
 
 	@RequestMapping(value = { "/getAllSubPlantList" }, method = RequestMethod.GET)
 	public @ResponseBody List<Subplant> getAllSubPlantList() {
@@ -313,36 +279,35 @@ public class MstApiController {
 		return subplantList;
 
 	}
-	
-	
-	/*@RequestMapping(value = { "/getAllSubPlant" }, method = RequestMethod.GET)
-	public @ResponseBody List<GetsubplantData> getAllSubPlant() {
 
-		List<GetsubplantData> subplantList = new ArrayList<GetsubplantData>();
-
-		try {
-
-			subplantList = subplantRepo.findByDelStatusOrderBySubplantIdDesc(1);
-
-		} catch (Exception e) {
-
-			e.printStackTrace();
-
-		}
-		return subplantList;
-
-	}
-	
-	*/
+	/*
+	 * @RequestMapping(value = { "/getAllSubPlant" }, method = RequestMethod.GET)
+	 * public @ResponseBody List<GetsubplantData> getAllSubPlant() {
+	 * 
+	 * List<GetsubplantData> subplantList = new ArrayList<GetsubplantData>();
+	 * 
+	 * try {
+	 * 
+	 * subplantList = subplantRepo.findByDelStatusOrderBySubplantIdDesc(1);
+	 * 
+	 * } catch (Exception e) {
+	 * 
+	 * e.printStackTrace();
+	 * 
+	 * } return subplantList;
+	 * 
+	 * }
+	 * 
+	 */
 
 	@RequestMapping(value = { "/getSubPlantById" }, method = RequestMethod.POST)
 	public @ResponseBody Subplant getSubPlantById(@RequestParam("spId") int spId) {
 
-		Subplant res=new Subplant();
+		Subplant res = new Subplant();
 
 		try {
 
-			res =  subplantRepo.findBysubplantIdAndDelStatus(spId,1);
+			res = subplantRepo.findBysubplantIdAndDelStatus(spId, 1);
 
 		} catch (Exception e) {
 
@@ -352,30 +317,21 @@ public class MstApiController {
 		return res;
 
 	}
-	
-	
-	
-	
-	
+
 	@RequestMapping(value = { "/deleteSubPlant" }, method = RequestMethod.POST)
 	public @ResponseBody Info deleteSubPlant(@RequestParam("spId") int spId) {
 
 		int isDeleted = subplantRepo.deleteSubPlant(spId);
-		Info infoRes=new Info();
-		if(isDeleted>=1)
-		{
+		Info infoRes = new Info();
+		if (isDeleted >= 1) {
 			infoRes.setError(false);
 			infoRes.setMessage("subplant Deleted Successfully");
-		}
-		else
-		{
+		} else {
 			infoRes.setError(true);
 			infoRes.setMessage("subplant Deletion Failed");
 		}
 		return infoRes;
 	}
-	
-	
 
 	@RequestMapping(value = { "/deleteMultiSubPlant" }, method = RequestMethod.POST)
 	public @ResponseBody Info deleteMultiSubPlant(@RequestParam("spIds") List<Integer> spIds) {
@@ -404,8 +360,6 @@ public class MstApiController {
 
 	}
 
-	
-
 	// ----------------Vehicle Type Master-------------------------------
 
 	@RequestMapping(value = { "/getAllVehicleTypeList" }, method = RequestMethod.GET)
@@ -425,8 +379,6 @@ public class MstApiController {
 		return vehList;
 
 	}
-
-	
 
 	// ----------------Category Master-------------------------------
 
@@ -466,6 +418,42 @@ public class MstApiController {
 
 	}
 
+	@RequestMapping(value = { "/getAllItems" }, method = RequestMethod.GET)
+	public @ResponseBody List<GetRawMatItem> getAllItems() {
+
+		List<GetRawMatItem> itemList = new ArrayList<GetRawMatItem>();
+
+		try {
+
+			itemList = getRawMatItemRepo.getAllItems();
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return itemList;
+
+	}
+
+	@RequestMapping(value = { "/saveRawItem" }, method = RequestMethod.POST)
+	public @ResponseBody RawMatItem saveItem(@RequestBody RawMatItem item) {
+
+		RawMatItem res = new RawMatItem();
+
+		try {
+
+			res = rawMatItemRepo.saveAndFlush(item);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return res;
+
+	}
+
 	@RequestMapping(value = { "/getRawItemLByItemId" }, method = RequestMethod.POST)
 	public @ResponseBody RawMatItem getRawItemLByItemId(@RequestParam("itemId") int itemId) {
 
@@ -483,60 +471,102 @@ public class MstApiController {
 		return item;
 
 	}
-	
+
+	@RequestMapping(value = { "/deleteRawMatItem" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteRawMatItem(@RequestParam("itemId") int itemId) {
+
+		int isDeleted = rawMatItemRepo.deleteRawMatItem(itemId);
+		Info infoRes = new Info();
+		if (isDeleted >= 1) {
+			infoRes.setError(false);
+			infoRes.setMessage(" Deleted Successfully");
+		} else {
+			infoRes.setError(true);
+			infoRes.setMessage(" Deletion Failed");
+		}
+		return infoRes;
+	}
+
+	@RequestMapping(value = { "/deleteMultiRawMatItem" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteMultiRawMatItem(@RequestParam("itemIds") List<Integer> itemIds) {
+
+		Info info = new Info();
+
+		try {
+			int delete = rawMatItemRepo.deleteMultiRawMatItem(itemIds);
+
+			if (delete >= 1) {
+				info.setError(false);
+				info.setMessage("successfully Multiple Deleted");
+			} else {
+				info.setError(true);
+				info.setMessage(" Failed to Delete");
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage(" Failed to Delete");
+
+		}
+		return info;
+
+	}
+
 	// ----------------Item Type-------------------------------
 
-		@RequestMapping(value = { "/getAllItemTypeList" }, method = RequestMethod.GET)
-		public @ResponseBody List<ItemType> getAllItemTypeList() {
+	@RequestMapping(value = { "/getAllItemTypeList" }, method = RequestMethod.GET)
+	public @ResponseBody List<ItemType> getAllItemTypeList() {
 
-			List<ItemType> itemTypeList = new ArrayList<ItemType>();
+		List<ItemType> itemTypeList = new ArrayList<ItemType>();
 
-			try {
+		try {
 
-				itemTypeList = itemTypeRepo.findByDelStatusOrderByItemTypeIdDesc(1);
+			itemTypeList = itemTypeRepo.findByDelStatusOrderByItemTypeIdDesc(1);
 
-			} catch (Exception e) {
+		} catch (Exception e) {
 
-				e.printStackTrace();
-
-			}
-			return itemTypeList;
+			e.printStackTrace();
 
 		}
+		return itemTypeList;
 
-		@RequestMapping(value = { "/getItemTypeByItemTypeId" }, method = RequestMethod.POST)
-		public @ResponseBody ItemType getItemTypeByItemTypeId(@RequestParam("itemTypeId") int itemTypeId) {
+	}
 
-			ItemType itemType = new ItemType();
+	@RequestMapping(value = { "/getItemTypeByItemTypeId" }, method = RequestMethod.POST)
+	public @ResponseBody ItemType getItemTypeByItemTypeId(@RequestParam("itemTypeId") int itemTypeId) {
 
-			try {
-				itemType = itemTypeRepo.findByItemTypeIdAndDelStatus(itemTypeId, 1);
+		ItemType itemType = new ItemType();
 
-			} catch (Exception e) {
+		try {
+			itemType = itemTypeRepo.findByItemTypeIdAndDelStatus(itemTypeId, 1);
 
-				e.printStackTrace();
+		} catch (Exception e) {
 
-			}
-			return itemType;
-
-		}
-
-		@RequestMapping(value = { "/getAllItemTaxList" }, method = RequestMethod.POST)
-		public @ResponseBody List<GetItemTax> getAllItemTaxList(@RequestParam("plantId") int plantId) {
-
-			List<GetItemTax> itemList = new ArrayList<GetItemTax>();
-
-			try {
-
-				itemList = getItemTaxRepo.getItemListByPlantId(plantId);
-
-			} catch (Exception e) {
-
-				e.printStackTrace();
-
-			}
-			return itemList;
+			e.printStackTrace();
 
 		}
+		return itemType;
+
+	}
+
+	@RequestMapping(value = { "/getAllItemTaxList" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetItemTax> getAllItemTaxList(@RequestParam("plantId") int plantId) {
+
+		List<GetItemTax> itemList = new ArrayList<GetItemTax>();
+
+		try {
+
+			itemList = getItemTaxRepo.getItemListByPlantId(plantId);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return itemList;
+
+	}
 
 }
