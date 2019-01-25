@@ -23,8 +23,11 @@ import com.shivshambhuwebapi.master.repo.DocTermDetailRepo;
 import com.shivshambhuwebapi.master.repo.GetQuotDetailPrint;
 import com.shivshambhuwebapi.master.repo.PaymentTermRepo;
 import com.shivshambhuwebapi.master.repo.ProjectRepo;
+import com.shivshambhuwebapi.model.GetPoHeader;
+import com.shivshambhuwebapi.repository.GetTotalChalanQuanRepo;
 import com.shivshambhuwebapi.tx.model.ChalanPrintData;
 import com.shivshambhuwebapi.tx.model.ChalanPrintItem;
+import com.shivshambhuwebapi.tx.model.GetTotalChalanQuantity;
 import com.shivshambhuwebapi.tx.model.QuotPrintData;
 import com.shivshambhuwebapi.tx.repo.ChalanPrintItemRepo;
 import com.shivshambhuwebapi.tx.repo.GetQuotDetailPrintRepo;
@@ -59,7 +62,7 @@ public class PdfController {
 		List<QuotPrintData> printDataList = new ArrayList<QuotPrintData>();
 
 		Company comp;
-//..
+		// ..
 		Cust cust;
 
 		List<GetQuotDetailPrint> quotDetPrint;
@@ -111,38 +114,58 @@ public class PdfController {
 
 		return printDataList;
 	}
-	
-	
-	@Autowired ChalanPrintItemRepo getChalanPrintItemRepo;
-	
+
+	@Autowired
+	ChalanPrintItemRepo getChalanPrintItemRepo;
+
 	@RequestMapping(value = { "/getChalanPrintData" }, method = RequestMethod.POST)
 	public @ResponseBody ChalanPrintData getChalanPrintData(@RequestParam("chalanId") int chalanId) {
 
 		System.err.println("Inside getChalanPrintData chalanId" + chalanId);
-		ChalanPrintData chPrintData=new ChalanPrintData();
+		ChalanPrintData chPrintData = new ChalanPrintData();
 		try {
-			
-			List<ChalanPrintItem> chItemList=getChalanPrintItemRepo.getChalanPrintItem(chalanId);
-			
-			System.err.println("ch Item list " +chItemList.toString());
-			
-			
+
+			List<ChalanPrintItem> chItemList = getChalanPrintItemRepo.getChalanPrintItem(chalanId);
+
+			System.err.println("ch Item list " + chItemList.toString());
+
 			chPrintData.setChalanItemList(chItemList);
-			
-			Company comp=getCompanyRepo.getCompanyByPlanId(chItemList.get(0).getPlantId());
-			
+
+			Company comp = getCompanyRepo.getCompanyByPlanId(chItemList.get(0).getPlantId());
+
 			chPrintData.setComp(comp);
-			if(chPrintData!=null)
-			System.err.println("chPrintData" +chPrintData.toString());
-			
-			
-		}catch (Exception e) {
-			
+			if (chPrintData != null)
+				System.err.println("chPrintData" + chPrintData.toString());
+
+		} catch (Exception e) {
+
 			System.err.println("exce in  /getChalanPrintData @PDf Api Controller " + e.getMessage());
 			e.printStackTrace();
-			
+
 		}
-		
+
 		return chPrintData;
+	}
+
+	@Autowired
+	GetTotalChalanQuanRepo getChalanQuanRepo;
+
+	@RequestMapping(value = { "/getChalanQuanPrintData" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetTotalChalanQuantity> getChalanQuanPrintData(@RequestParam("orderId") int orderId) {
+
+		System.err.println("Inside getChalanPrintData chalanId" + orderId);
+		List<GetTotalChalanQuantity> chPrintData1=new ArrayList<GetTotalChalanQuantity>() ;
+		try {
+
+			chPrintData1 = getChalanQuanRepo.getChalanPrintItem(orderId);
+
+		} catch (Exception e) {
+
+			System.err.println("exce in  /getChalanPrintData @PDf Api Controller " + e.getMessage());
+			e.printStackTrace();
+
+		}
+
+		return chPrintData1;
 	}
 }

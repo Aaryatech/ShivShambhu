@@ -267,10 +267,14 @@ public class BillController {
 			billHeaderRes = getBillHeaderPdfRepository.findBillsByHeaderId(billHeadIdList);
 
 			for (int i = 0; i < billHeaderRes.size(); i++) {
+				
 				BankDetail bankDetail = bankDetailRepository
 						.findByBankDetIdAndDelStatus(billHeaderRes.get(i).getAccId(), 1);
+				
 				List<GetBillDetail> billDetailList = getBillDetailRepository
 						.getBillDetailsById(billHeaderRes.get(i).getBillHeadId());
+				
+				
 				System.err.println(billDetailList + "billDetailList");
 				billHeaderRes.get(i).setBankDetail(bankDetail);
 				billHeaderRes.get(i).setGetBillDetails(billDetailList);

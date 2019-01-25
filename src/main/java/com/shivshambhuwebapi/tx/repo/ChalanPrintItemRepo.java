@@ -12,25 +12,54 @@ public interface ChalanPrintItemRepo extends JpaRepository<ChalanPrintItem, Inte
 
 	
 	
-	@Query(value = ""
-			+ " SELECT t_chalan_header.chalan_no,t_chalan_header.chalan_date,t_chalan_header.vehicle_id,"
-			+ " t_chalan_header.plant_id,t_chalan_header.veh_in_date, " + 
-			" t_chalan_header.cust_id,t_chalan_header.proj_id,t_chalan_header.driver_id,"
-			+ " t_chalan_header.veh_time_out,t_chalan_header.out_km,\n" + 
-			" t_chalan_header.in_km,t_chalan_header.veh_time_in,t_chalan_header.site_person_name,"
-			+ " t_chalan_header.site_person_mob,t_chalan_header.order_no,t_chalan_header.order_id,"
-			+ " t_chalan_header.chalan_remark,\n" + 
-			" t_chalan_detail.*,m_item_fg.item_name,m_item_fg.item_code,m_uom.uom_name as uom,\n" + 
-			" m_vehicle.vehicle_name,m_vehicle.veh_no,m_user.usr_name,m_customer.cust_name,"
-			+ " m_customer.cust_mob_no,m_project.proj_name,m_project.address\n" + 
-			" FROM t_chalan_header,t_chalan_detail,m_vehicle,m_user,m_customer,m_project,"
-			+ " m_item_fg,m_uom " + 
-			" WHERE t_chalan_header.chalan_id=t_chalan_detail.chalan_id "
-			+ " AND t_chalan_detail.item_id=m_item_fg.item_id AND "
-			+ " m_uom.uom_id=t_chalan_detail.item_uom AND "
-			+ " t_chalan_header.vehicle_id=m_vehicle.vehicle_id AND "
-			+ " t_chalan_header.driver_id=m_user.user_id AND t_chalan_header.cust_id=m_customer.cust_id "
-			+ " AND t_chalan_header.proj_id=m_project.proj_id and t_chalan_header.chalan_id=:chalanId ", nativeQuery = true)
+	@Query(value = "SELECT DISTINCT\n" + 
+			"        t_chalan_header.chalan_no,\n" + 
+			"        t_chalan_header.chalan_date,\n" + 
+			"        t_chalan_header.vehicle_id,\n" + 
+			"        t_chalan_header.plant_id,\n" + 
+			"        t_chalan_header.veh_in_date,\n" + 
+			"        t_chalan_header.cust_id,\n" + 
+			"        t_chalan_header.proj_id,\n" + 
+			"        t_chalan_header.driver_id,\n" + 
+			"        t_chalan_header.veh_time_out,\n" + 
+			"        t_chalan_header.out_km,\n" + 
+			"        t_chalan_header.in_km,\n" + 
+			"        t_chalan_header.veh_time_in,\n" + 
+			"        t_chalan_header.site_person_name,\n" + 
+			"        t_chalan_header.site_person_mob,\n" + 
+			"        t_chalan_header.order_no,\n" + 
+			"        t_chalan_header.order_id,\n" + 
+			"        t_chalan_header.chalan_remark,\n" +  
+			"        t_chalan_detail.*,\n" + 
+			"        m_item_fg.item_name,\n" + 
+			"        m_item_fg.item_code,\n" + 
+			"        m_uom.uom_name as uom,\n" + 
+			"        m_vehicle.vehicle_name,\n" + 
+			"        m_vehicle.veh_no,\n" + 
+			"        m_user.usr_name,\n" + 
+			"        m_customer.cust_name,\n" + 
+			"        m_customer.cust_mob_no,\n" + 
+			"        m_project.proj_name,\n" + 
+			"        m_project.address ,t_order_detail.order_qty as total_quan,   t_chalan_header.ex_date1 as batch_no \n" + 
+			"    FROM\n" + 
+			"        t_chalan_header,\n" + 
+			"        t_chalan_detail,\n" + 
+			"        m_vehicle,\n" + 
+			"        m_user,\n" + 
+			"        m_customer,\n" + 
+			"        m_project,\n" + 
+			"        m_item_fg,\n" + 
+			"        m_uom,t_order_header,t_order_detail\n" + 
+			"    WHERE\n" + 
+			"        t_chalan_header.chalan_id=t_chalan_detail.chalan_id  \n" + 
+			"        AND t_chalan_detail.item_id=m_item_fg.item_id \n" + 
+			"        AND  m_uom.uom_id=t_chalan_detail.item_uom \n" + 
+			"        AND  t_chalan_header.vehicle_id=m_vehicle.vehicle_id \n" + 
+			"        AND  t_chalan_header.driver_id=m_user.user_id \n" + 
+			"        AND t_chalan_header.cust_id=m_customer.cust_id  \n" + 
+			"        AND t_chalan_header.proj_id=m_project.proj_id \n" + 
+			"        and t_chalan_header.chalan_id=:chalanId AND t_chalan_header.order_id=t_order_header.order_id\n" + 
+			"         AND t_order_header.order_id=t_order_detail.order_id", nativeQuery = true)
 	List<ChalanPrintItem> getChalanPrintItem(@Param("chalanId") int chalanId);
 	
 
