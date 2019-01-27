@@ -158,6 +158,7 @@ public class PdfController {
 		try {
 
 			chPrintData1 = getChalanQuanRepo.getChalanPrintItem(orderId);
+			System.out.println("result"+chPrintData1.toString());
 
 		} catch (Exception e) {
 
