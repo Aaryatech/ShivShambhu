@@ -172,7 +172,7 @@ public interface GetChalanHeaderRepo extends JpaRepository<GetChalanHeader, Inte
 			+ "m_vehicle.vehicle_id=t_chalan_header.vehicle_id 	AND t_chalan_header.plant_id=m_plant."
 			+ "plant_id  AND m_company.company_id=m_plant.company_id AND m_customer.cust_id=t_chalan_header.cust_id"
 			+ "  AND m_project.proj_id=t_chalan_header.proj_id AND t_chalan_header.plant_id=:plantId AND t_chalan_header.ex_int1=1 "
-			+ " AND t_chalan_header.status!=2 ORDER BY t_chalan_header.status  ", nativeQuery = true)
+			+ " AND t_chalan_header.status!=2 ORDER BY t_chalan_header.chalan_date DESC  ", nativeQuery = true)
 
 	List<GetChalanHeader> getPBillListByPlantId(@Param("plantId") int plantId);
 
@@ -185,7 +185,7 @@ public interface GetChalanHeaderRepo extends JpaRepository<GetChalanHeader, Inte
 			+ "m_vehicle.vehicle_id=t_chalan_header.vehicle_id 	AND t_chalan_header.plant_id=m_plant."
 			+ "plant_id  AND m_company.company_id=m_plant.company_id AND m_customer.cust_id=t_chalan_header.cust_id"
 			+ "  AND m_project.proj_id=t_chalan_header.proj_id AND t_chalan_header.plant_id=:plantId AND t_chalan_header.cust_id=:custId AND t_chalan_header.ex_int1=1   "
-			+ " AND t_chalan_header.status!=2 ORDER BY t_chalan_header.status  ", nativeQuery = true)
+			+ " AND t_chalan_header.status!=2 ORDER BY  t_chalan_header.chalan_date DESC  ", nativeQuery = true)
 
 	List<GetChalanHeader> getPBillListByPlantIdAndCust(@Param("plantId") int plantId, @Param("custId") int custId);
 
