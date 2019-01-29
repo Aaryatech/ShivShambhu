@@ -44,9 +44,10 @@ public class QuotController {
 
 	@Autowired
 	GetQuotHeaderRepo getQuotHeaderRepo;
-	
-	@Autowired RmcQuotItemDetailRepo getRmcQuotItemDetailRepo;//3 Jan 2018
-	
+
+	@Autowired
+	RmcQuotItemDetailRepo getRmcQuotItemDetailRepo;// 3 Jan 2018
+
 	@RequestMapping(value = { "/getRmcQuotItemDetail" }, method = RequestMethod.POST)
 	public @ResponseBody List<RmcQuotItemDetail> getRmcQuotItemDetail(@RequestParam("itemId") int itemId) {
 
@@ -178,13 +179,19 @@ public class QuotController {
 	GetQuotHeadsRepo getQuotHeadsRepo;
 
 	@RequestMapping(value = { "/getQuotHeaders" }, method = RequestMethod.POST)
-	public @ResponseBody List<GetQuotHeads> getQuotHeads(@RequestParam("statusList") List<String> statusList) {
+	public @ResponseBody List<GetQuotHeads> getQuotHeads(@RequestParam("statusList") List<String> statusList,
+			@RequestParam("plantId") int plantId) {
 
 		List<GetQuotHeads> quotHeadList = new ArrayList<GetQuotHeads>();
 
 		try {
 
-			quotHeadList = getQuotHeadsRepo.getQuotHeads(statusList);
+			if (plantId == 0) {
+
+				quotHeadList = getQuotHeadsRepo.getQuotHeads(statusList);
+			} else {
+				quotHeadList = getQuotHeadsRepo.getQuotHeadsByPlantId(statusList, plantId);
+			}
 
 		} catch (Exception e) {
 
