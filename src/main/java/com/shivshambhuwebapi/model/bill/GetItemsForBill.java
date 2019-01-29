@@ -9,65 +9,66 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class GetItemsForBill implements Serializable{
+public class GetItemsForBill implements Serializable {
 
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "chalan_detail_id")
 	private int chalanDetailId;
-	
+
 	@Column(name = "chalan_id")
 	private int chalanId;
-	
+
 	@Column(name = "chalan_no")
 	private String chalanNo;
-	
+
 	@Column(name = "chalan_date")
 	private String chalanDate;
-	
+
 	@Column(name = "item_id")
 	private int itemId;
-	
+
 	@Column(name = "item_code")
 	private String itemCode;
-	
+
 	@Column(name = "item_name")
 	private String itemName;
-	
+
 	@Column(name = "item_uom")
 	private String itemUom;
-	
+
 	@Column(name = "uom_id")
 	private int uomId;
-	
+
 	@Column(name = "hsn_code")
 	private String hsnCode;
-	
+
 	@Column(name = "item_qty")
 	private float itemQty;
-	
+
 	@Column(name = "order_rate")
 	private float orderRate;
-	
+
+	@Column(name = "order_Id")
+	private int orderId;
+
 	@Column(name = "cgst_per")
 	private float cgstPer;
-	
+
 	@Column(name = "sgst_per")
 	private float sgstPer;
-	
+
 	@Column(name = "igst_per")
 	private float igstPer;
-	
+
 	@Column(name = "po_term_id")
 	private int poTermId;
-	
+
 	@Column(name = "delivery_term")
 	private String deliveryTerm;
 
 	private int isTaxIncluding;
 
-	
 	public int getIsTaxIncluding() {
 		return isTaxIncluding;
 	}
@@ -211,12 +212,22 @@ public class GetItemsForBill implements Serializable{
 	public void setDeliveryTerm(String deliveryTerm) {
 		this.deliveryTerm = deliveryTerm;
 	}
+
+	public int getOrderId() {
+		return orderId;
+	}
+
+	public void setOrderId(int orderId) {
+		this.orderId = orderId;
+	}
+
 	@Override
 	public String toString() {
 		return "GetItemsForBill [chalanDetailId=" + chalanDetailId + ", chalanId=" + chalanId + ", chalanNo=" + chalanNo
 				+ ", chalanDate=" + chalanDate + ", itemId=" + itemId + ", itemCode=" + itemCode + ", itemName="
 				+ itemName + ", itemUom=" + itemUom + ", uomId=" + uomId + ", hsnCode=" + hsnCode + ", itemQty="
-				+ itemQty + ", orderRate=" + orderRate + ", cgstPer=" + cgstPer + ", sgstPer=" + sgstPer + ", igstPer="
-				+ igstPer + ", poTermId=" + poTermId + ", deliveryTerm=" + deliveryTerm + "]";
+				+ itemQty + ", orderRate=" + orderRate + ", orderId=" + orderId + ", cgstPer=" + cgstPer + ", sgstPer="
+				+ sgstPer + ", igstPer=" + igstPer + ", poTermId=" + poTermId + ", deliveryTerm=" + deliveryTerm
+				+ ", isTaxIncluding=" + isTaxIncluding + "]";
 	}
 }
