@@ -64,5 +64,17 @@ public interface ChalanPrintItemRepo extends JpaRepository<ChalanPrintItem, Inte
 			"        AND t_chalan_detail.order_detail_id=t_order_detail.order_det_id          ", nativeQuery = true)
 	List<ChalanPrintItem> getChalanPrintItem(@Param("chalanId") int chalanId);
 	
+	
+	/*
+	@Query(value = "select d.*,i.item_name,u.uom_name,t_bill_header.company_id,t_bill_header.ex_var1 ,c.comp_name,\n" + 
+			"comp_office_add,c.contact_no1,c.email1 ,p.plant_name,t_cust_po_header.varchar1 as dev_address,o.order_no  as order_no\n" + 
+			"from \n" + 
+			"t_cust_po_header,t_order_header o,\n" + 
+			"t_bill_detail d,m_item_fg i,m_uom u ,t_bill_header,m_company c,m_plant p where\n" + 
+			"u.uom_id=i.uom_id and d.del_status=1 and d.item_id=i.item_id and t_bill_header.bill_head_id=d.bill_head_id And t_bill_header.bill_head_id==:chalanId and\n" + 
+			"t_bill_header.company_id=c.company_id and t_bill_header.ex_int1=p.plant_id AND\n" + 
+			"t_cust_po_header.po_id=o.po_id and t_bill_header.order_id=o.order_id        ", nativeQuery = true)
+	List<ChalanPrintItem> getChalanPrintItem(@Param("chalanId") int chalanId);*/
+	
 
 }
