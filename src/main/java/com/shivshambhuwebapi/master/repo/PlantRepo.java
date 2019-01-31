@@ -31,5 +31,31 @@ public interface PlantRepo extends JpaRepository<Plant, Integer> {
 	Plant findByPlantNameAndDelStatus(String plantName, int i);
 
 	List<Plant> findByDelStatus(int i);
+	
+	
+	@Transactional
+	@Modifying
+	@Query("UPDATE Plant SET exInt1=:enqCount  WHERE plantId =:plantId")
+	int updateDocSrNo(@Param("plantId") int plantId, @Param("enqCount") int enqCount);
+	
+	
+	@Transactional
+	@Modifying
+	@Query("UPDATE Plant SET exInt2=:quotCount  WHERE plantId =:plantId")
+	int updateQuotCount(@Param("plantId") int plantId, @Param("quotCount") int quotCount);
 
+	
+	
+	@Transactional
+	@Modifying
+	@Query("UPDATE Plant SET exInt3=:ordCount  WHERE plantId =:plantId")
+	int updateOrdCount(@Param("plantId") int plantId, @Param("ordCount") int ordCount);
+	
+
+	@Transactional
+	@Modifying
+	@Query("UPDATE Plant SET exVar1=:chCount  WHERE plantId =:plantId")
+	int updateChalanCount(@Param("plantId") int plantId, @Param("chCount") String chCount);
+
+	
 }

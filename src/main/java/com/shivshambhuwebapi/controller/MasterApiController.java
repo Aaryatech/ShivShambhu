@@ -3020,4 +3020,134 @@ public class MasterApiController {
 		return loginResponse;
 	}
 
+	
+	//------------------------------Counter Updations------------------------------------
+
+		@RequestMapping(value = { "/updateEnqCounter" }, method = RequestMethod.POST)
+		public @ResponseBody Info updateEnqCounter(@RequestParam("plantId") int plantId, @RequestParam("enqCount") int enqCount) {
+
+			System.out.println("Counter updated inside ................");
+			Info info = new Info();
+
+			try {
+
+				int update = plantRepo.updateDocSrNo(plantId, enqCount);
+
+				if (update == 1) {
+					info.setError(false);
+					info.setMessage("successfully update");
+					
+					System.out.println("Counter updated................");
+				} else {
+					info.setError(true);
+					info.setMessage(" failed to update");
+				}
+
+			} catch (Exception e) {
+
+				e.printStackTrace();
+				info.setError(true);
+				info.setMessage(" failed to update");
+
+			}
+			return info;
+
+		}
+		
+		
+		@RequestMapping(value = { "/updateQuotCounter" }, method = RequestMethod.POST)
+		public @ResponseBody Info updateQuotCounter(@RequestParam("plantId") int plantId, @RequestParam("quotCount") int quotCount) {
+
+			System.out.println("Counter quot updated inside ................");
+			Info info = new Info();
+
+			try {
+
+				int update = plantRepo.updateQuotCount(plantId, quotCount);
+
+				if (update == 1) {
+					info.setError(false);
+					info.setMessage("successfully update");
+					
+					System.out.println("Counter quot updated................");
+				} else {
+					info.setError(true);
+					info.setMessage(" failed to update");
+				}
+
+			} catch (Exception e) {
+
+				e.printStackTrace();
+				info.setError(true);
+				info.setMessage(" failed to update");
+
+			}
+			return info;
+
+		}
+		
+		
+		
+		@RequestMapping(value = { "/updateOrderCounter" }, method = RequestMethod.POST)
+		public @ResponseBody Info updateOrderCounter(@RequestParam("plantId") int plantId, @RequestParam("ordCount") int ordCount) {
+
+			System.out.println("Counter order updated inside ................");
+			Info info = new Info();
+
+			try {
+
+				int update = plantRepo.updateOrdCount(plantId, ordCount);
+
+				if (update == 1) {
+					info.setError(false);
+					info.setMessage("successfully update");
+					
+					System.out.println("Counter order updated................");
+				} else {
+					info.setError(true);
+					info.setMessage(" failed to update");
+				}
+
+			} catch (Exception e) {
+
+				e.printStackTrace();
+				info.setError(true);
+				info.setMessage(" failed to update");
+
+			}
+			return info;
+
+		}
+		
+		
+		@RequestMapping(value = { "/updateChalanCounter" }, method = RequestMethod.POST)
+		public @ResponseBody Info updateChalanCounter(@RequestParam("plantId") int plantId, @RequestParam("chCount") String chCount) {
+
+			System.out.println("Counter chalan updated inside ................");
+			Info info = new Info();
+
+			try {
+
+				int update = plantRepo.updateChalanCount(plantId, chCount);
+
+				if (update == 1) {
+					info.setError(false);
+					info.setMessage("successfully update");
+					
+					System.out.println("Counter order updated................");
+				} else {
+					info.setError(true);
+					info.setMessage(" failed to update");
+				}
+
+			} catch (Exception e) {
+
+				e.printStackTrace();
+				info.setError(true);
+				info.setMessage(" failed to update");
+
+			}
+			return info;
+
+		}
 }

@@ -18,7 +18,7 @@ public interface DocumentRepo extends JpaRepository<Document, Integer> {
 
 	@Transactional
 	@Modifying
-	@Query("UPDATE Document SET srNo =:srNo  WHERE docCode =:docCode")
+	@Query("UPDATE Document SET  srNo=:srNo  WHERE docCode =:docCode")
 	int updateDocSrNo(@Param("srNo") int srNo, @Param("docCode") int docCode);
 
 	List<Document> findByDelStatusOrderByDocIdDesc(int i);
