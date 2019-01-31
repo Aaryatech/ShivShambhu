@@ -1607,14 +1607,18 @@ public class MasterApiController {
 
 	}
 
-	@RequestMapping(value = { "/getAllCustomerList" }, method = RequestMethod.GET)
-	public @ResponseBody List<GetCust> getAllCustomerList() {
+	@RequestMapping(value = { "/getAllCustomerList" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetCust> getAllCustomerList(@RequestParam("plantId") int plantId) {
 
 		List<GetCust> custList = new ArrayList<GetCust>();
 
 		try {
 
-			custList = getCustRepo.getAllCustList();
+			if (plantId == 0) {
+				custList = getCustRepo.getAllCustList();
+			} else {
+				custList = getCustRepo.getAllCustListByPlantId(plantId);
+			}
 
 		} catch (Exception e) {
 
@@ -2370,14 +2374,18 @@ public class MasterApiController {
 
 	}
 
-	@RequestMapping(value = { "/getAllProList" }, method = RequestMethod.GET)
-	public @ResponseBody List<GetProject> getAllProList() {
+	@RequestMapping(value = { "/getAllProList" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetProject> getAllProList(@RequestParam("plantId") int plantId) {
 
 		List<GetProject> proList = new ArrayList<GetProject>();
 
 		try {
+			if (plantId == 0) {
 
-			proList = getProjectRepo.getAllProList();
+				proList = getProjectRepo.getAllProList();
+			} else {
+				proList = getProjectRepo.getAllProListByPlantId(plantId);
+			}
 			for (int i = 0; i < proList.size(); i++) {
 				proList.get(i).setStartDate(DateConvertor.convertToDMY(proList.get(i).getStartDate()));
 				proList.get(i).setEndDate(DateConvertor.convertToDMY(proList.get(i).getEndDate()));
@@ -3020,134 +3028,134 @@ public class MasterApiController {
 		return loginResponse;
 	}
 
-	
-	//------------------------------Counter Updations------------------------------------
+	// ------------------------------Counter
+	// Updations------------------------------------
 
-		@RequestMapping(value = { "/updateEnqCounter" }, method = RequestMethod.POST)
-		public @ResponseBody Info updateEnqCounter(@RequestParam("plantId") int plantId, @RequestParam("enqCount") int enqCount) {
+	@RequestMapping(value = { "/updateEnqCounter" }, method = RequestMethod.POST)
+	public @ResponseBody Info updateEnqCounter(@RequestParam("plantId") int plantId,
+			@RequestParam("enqCount") int enqCount) {
 
-			System.out.println("Counter updated inside ................");
-			Info info = new Info();
+		System.out.println("Counter updated inside ................");
+		Info info = new Info();
 
-			try {
+		try {
 
-				int update = plantRepo.updateDocSrNo(plantId, enqCount);
+			int update = plantRepo.updateDocSrNo(plantId, enqCount);
 
-				if (update == 1) {
-					info.setError(false);
-					info.setMessage("successfully update");
-					
-					System.out.println("Counter updated................");
-				} else {
-					info.setError(true);
-					info.setMessage(" failed to update");
-				}
+			if (update == 1) {
+				info.setError(false);
+				info.setMessage("successfully update");
 
-			} catch (Exception e) {
-
-				e.printStackTrace();
+				System.out.println("Counter updated................");
+			} else {
 				info.setError(true);
 				info.setMessage(" failed to update");
-
 			}
-			return info;
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage(" failed to update");
 
 		}
-		
-		
-		@RequestMapping(value = { "/updateQuotCounter" }, method = RequestMethod.POST)
-		public @ResponseBody Info updateQuotCounter(@RequestParam("plantId") int plantId, @RequestParam("quotCount") int quotCount) {
+		return info;
 
-			System.out.println("Counter quot updated inside ................");
-			Info info = new Info();
+	}
 
-			try {
+	@RequestMapping(value = { "/updateQuotCounter" }, method = RequestMethod.POST)
+	public @ResponseBody Info updateQuotCounter(@RequestParam("plantId") int plantId,
+			@RequestParam("quotCount") int quotCount) {
 
-				int update = plantRepo.updateQuotCount(plantId, quotCount);
+		System.out.println("Counter quot updated inside ................");
+		Info info = new Info();
 
-				if (update == 1) {
-					info.setError(false);
-					info.setMessage("successfully update");
-					
-					System.out.println("Counter quot updated................");
-				} else {
-					info.setError(true);
-					info.setMessage(" failed to update");
-				}
+		try {
 
-			} catch (Exception e) {
+			int update = plantRepo.updateQuotCount(plantId, quotCount);
 
-				e.printStackTrace();
+			if (update == 1) {
+				info.setError(false);
+				info.setMessage("successfully update");
+
+				System.out.println("Counter quot updated................");
+			} else {
 				info.setError(true);
 				info.setMessage(" failed to update");
-
 			}
-			return info;
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage(" failed to update");
 
 		}
-		
-		
-		
-		@RequestMapping(value = { "/updateOrderCounter" }, method = RequestMethod.POST)
-		public @ResponseBody Info updateOrderCounter(@RequestParam("plantId") int plantId, @RequestParam("ordCount") int ordCount) {
+		return info;
 
-			System.out.println("Counter order updated inside ................");
-			Info info = new Info();
+	}
 
-			try {
+	@RequestMapping(value = { "/updateOrderCounter" }, method = RequestMethod.POST)
+	public @ResponseBody Info updateOrderCounter(@RequestParam("plantId") int plantId,
+			@RequestParam("ordCount") int ordCount) {
 
-				int update = plantRepo.updateOrdCount(plantId, ordCount);
+		System.out.println("Counter order updated inside ................");
+		Info info = new Info();
 
-				if (update == 1) {
-					info.setError(false);
-					info.setMessage("successfully update");
-					
-					System.out.println("Counter order updated................");
-				} else {
-					info.setError(true);
-					info.setMessage(" failed to update");
-				}
+		try {
 
-			} catch (Exception e) {
+			int update = plantRepo.updateOrdCount(plantId, ordCount);
 
-				e.printStackTrace();
+			if (update == 1) {
+				info.setError(false);
+				info.setMessage("successfully update");
+
+				System.out.println("Counter order updated................");
+			} else {
 				info.setError(true);
 				info.setMessage(" failed to update");
-
 			}
-			return info;
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage(" failed to update");
 
 		}
-		
-		
-		@RequestMapping(value = { "/updateChalanCounter" }, method = RequestMethod.POST)
-		public @ResponseBody Info updateChalanCounter(@RequestParam("plantId") int plantId, @RequestParam("chCount") String chCount) {
+		return info;
 
-			System.out.println("Counter chalan updated inside ................");
-			Info info = new Info();
+	}
 
-			try {
+	@RequestMapping(value = { "/updateChalanCounter" }, method = RequestMethod.POST)
+	public @ResponseBody Info updateChalanCounter(@RequestParam("plantId") int plantId,
+			@RequestParam("chCount") String chCount) {
 
-				int update = plantRepo.updateChalanCount(plantId, chCount);
+		System.out.println("Counter chalan updated inside ................");
+		Info info = new Info();
 
-				if (update == 1) {
-					info.setError(false);
-					info.setMessage("successfully update");
-					
-					System.out.println("Counter order updated................");
-				} else {
-					info.setError(true);
-					info.setMessage(" failed to update");
-				}
+		try {
 
-			} catch (Exception e) {
+			int update = plantRepo.updateChalanCount(plantId, chCount);
 
-				e.printStackTrace();
+			if (update == 1) {
+				info.setError(false);
+				info.setMessage("successfully update");
+
+				System.out.println("Counter order updated................");
+			} else {
 				info.setError(true);
 				info.setMessage(" failed to update");
-
 			}
-			return info;
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage(" failed to update");
 
 		}
+		return info;
+
+	}
 }

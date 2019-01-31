@@ -92,6 +92,7 @@ public class GetOrder {
 	private String custName;
 	private String projName;
 	private String address;
+	private String delivery;
 	public int getOrderId() {
 		return orderId;
 	}
@@ -278,6 +279,15 @@ public class GetOrder {
 	public void setCustMobNo(String custMobNo) {
 		this.custMobNo = custMobNo;
 	}
+	
+	
+	public String getDelivery() {
+		return delivery;
+	}
+	public void setDelivery(String delivery) {
+		this.delivery = delivery;
+	}
+
 	@Override
 	public String toString() {
 		return "GetOrder [orderId=" + orderId + ", plantId=" + plantId + ", custId=" + custId + ", poId=" + poId
@@ -286,8 +296,9 @@ public class GetOrder {
 				+ ", isTaxIncluding=" + isTaxIncluding + ", delStatus=" + delStatus + ", exInt1=" + exInt1 + ", exInt2="
 				+ exInt2 + ", exInt3=" + exInt3 + ", exVar1=" + exVar1 + ", exVar2=" + exVar2 + ", exVar3=" + exVar3
 				+ ", exDate1=" + exDate1 + ", exDate2=" + exDate2 + ", exBool1=" + exBool1 + ", exBool2=" + exBool2
-				+ ", status=" + status + ", plantName=" + plantName + ", compName=" + compName + ", custName="
-				+ custName + ", projName=" + projName + ", address=" + address + "]";
+				+ ", status=" + status + ", custMobNo=" + custMobNo + ", plantName=" + plantName + ", compName="
+				+ compName + ", custName=" + custName + ", projName=" + projName + ", address=" + address
+				+ ", delivery=" + delivery + "]";
 	}
 	
 

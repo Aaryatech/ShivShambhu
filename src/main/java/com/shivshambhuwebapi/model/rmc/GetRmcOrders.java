@@ -113,14 +113,13 @@ public class GetRmcOrders {
 	private int uomId;
 
 	private String uomName;
-	
+
 	private int companyId;
 
 	private String compName;
-	
 
-	
-	
+	private String varchar1;
+
 	public int getCompanyId() {
 		return companyId;
 	}
@@ -481,6 +480,14 @@ public class GetRmcOrders {
 		this.usrName = usrName;
 	}
 
+	public String getVarchar1() {
+		return varchar1;
+	}
+
+	public void setVarchar1(String varchar1) {
+		this.varchar1 = varchar1;
+	}
+
 	@Override
 	public String toString() {
 		return "GetRmcOrders [orderDetId=" + orderDetId + ", orderId=" + orderId + ", poId=" + poId + ", itemId="
@@ -495,7 +502,8 @@ public class GetRmcOrders {
 				+ ", contactPerMob=" + contactPerMob + ", itemName=" + itemName + ", itemCode=" + itemCode
 				+ ", plantName=" + plantName + ", poNo=" + poNo + ", projName=" + projName + ", projPerMob="
 				+ projPerMob + ", projPerName=" + projPerName + ", usrName=" + usrName + ", uomId=" + uomId
-				+ ", uomName=" + uomName + ", companyId=" + companyId + ", compName=" + compName + "]";
+				+ ", uomName=" + uomName + ", companyId=" + companyId + ", compName=" + compName + ", varchar1="
+				+ varchar1 + "]";
 	}
 
 }
