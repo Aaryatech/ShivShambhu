@@ -1758,9 +1758,11 @@ public class MasterApiController {
 		Company comp = new Company();
 
 		try {
-			comp = companyRepo.findByCompanyIdAndDelStatus(companyId, 1);
-			comp.setFromDate(DateConvertor.convertToDMY(comp.getFromDate()));
-			comp.setToDate(DateConvertor.convertToDMY(comp.getToDate()));
+			if (companyId != 0) {
+				comp = companyRepo.findByCompanyIdAndDelStatus(companyId, 1);
+				comp.setFromDate(DateConvertor.convertToDMY(comp.getFromDate()));
+				comp.setToDate(DateConvertor.convertToDMY(comp.getToDate()));
+			}
 
 		} catch (Exception e) {
 
@@ -1805,6 +1807,62 @@ public class MasterApiController {
 			if (delete == 1) {
 				info.setError(false);
 				info.setMessage("successfully Deleted");
+			} else {
+				info.setError(true);
+				info.setMessage(" Deleted to Delete");
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage(" Deleted to Delete");
+
+		}
+		return info;
+
+	}
+
+	@RequestMapping(value = { "/updateCompany" }, method = RequestMethod.POST)
+	public @ResponseBody Info updateCompany(@RequestParam("companyId") int companyId,
+			@RequestParam("exInt1") int exInt1) {
+
+		Info info = new Info();
+
+		try {
+			int delete = companyRepo.updateCompany(companyId, exInt1);
+
+			if (delete == 1) {
+				info.setError(false);
+				info.setMessage("successfully Update");
+			} else {
+				info.setError(true);
+				info.setMessage(" Deleted to Delete");
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage(" Deleted to Delete");
+
+		}
+		return info;
+
+	}
+
+	@RequestMapping(value = { "/updateCompanyGST" }, method = RequestMethod.POST)
+	public @ResponseBody Info updateCompanyGST(@RequestParam("companyId") int companyId,
+			@RequestParam("exInt2") int exInt2) {
+
+		Info info = new Info();
+
+		try {
+			int delete = companyRepo.updateCompanyGSt(companyId, exInt2);
+
+			if (delete == 1) {
+				info.setError(false);
+				info.setMessage("successfully Update");
 			} else {
 				info.setError(true);
 				info.setMessage(" Deleted to Delete");

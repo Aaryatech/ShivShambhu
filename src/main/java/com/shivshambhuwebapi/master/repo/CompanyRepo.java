@@ -20,28 +20,35 @@ public interface CompanyRepo extends JpaRepository<Company, Integer> {
 	@Modifying
 	@Query("UPDATE Company SET delStatus=0  WHERE company_id=:companyId")
 	int deleteCompany(@Param("companyId") int companyId);
-	
+
+	@Transactional
+	@Modifying
+	@Query("UPDATE Company SET exInt1=:exInt1  WHERE company_id=:companyId")
+	int updateCompany(@Param("companyId") int companyId, @Param("exInt1") int exInt1);
+
+	@Transactional
+	@Modifying
+	@Query("UPDATE Company SET exInt2=:exInt2  WHERE company_id=:companyId")
+	int updateCompanyGSt(@Param("companyId") int companyId, @Param("exInt2") int exInt2);
+
 	@Transactional
 	@Modifying
 	@Query("UPDATE Company SET delStatus=0  WHERE companyId IN(:companyIds)")
 	int deleteMultiCompany(@Param("companyIds") List<Integer> companyIds);
 
 	Company findByCompGstNoAndDelStatus(String compGstNo, int i);
-	
-	//Sachin 27 Dec 2018
-	@Query(value = ""
-			+ "SELECT m_company.* FROM m_company,t_quot_header WHERE "
+
+	// Sachin 27 Dec 2018
+	@Query(value = "" + "SELECT m_company.* FROM m_company,t_quot_header WHERE "
 			+ "m_company.company_id=t_quot_header.company_id AND "
 			+ "t_quot_header.quot_head_id IN (:quotIdList)   ", nativeQuery = true)
-	Company getCompaniesByQuotIds(@Param("quotIdList")int  quotIdList);
-	
-	
-	//SELECT m_company.*  FROM m_company,m_plant WHERE m_plant.plant_id=67 AND m_plant.company_id=m_company.company_id AND m_company.del_status=1
-	
-	
-	//Sachin  1 Jan 2019 web service for chalan print 
-	@Query(value = ""
-			+ " SELECT m_company.*  FROM m_company,m_plant WHERE m_plant.plant_id=:plantId "
+	Company getCompaniesByQuotIds(@Param("quotIdList") int quotIdList);
+
+	// SELECT m_company.* FROM m_company,m_plant WHERE m_plant.plant_id=67 AND
+	// m_plant.company_id=m_company.company_id AND m_company.del_status=1
+
+	// Sachin 1 Jan 2019 web service for chalan print
+	@Query(value = "" + " SELECT m_company.*  FROM m_company,m_plant WHERE m_plant.plant_id=:plantId "
 			+ " AND m_plant.company_id=m_company.company_id AND m_company.del_status=1 ", nativeQuery = true)
-	Company getCompanyByPlanId(@Param("plantId")int  plantId);
+	Company getCompanyByPlanId(@Param("plantId") int plantId);
 }
