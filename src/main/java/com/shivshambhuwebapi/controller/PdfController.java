@@ -151,14 +151,15 @@ public class PdfController {
 	GetTotalChalanQuanRepo getChalanQuanRepo;
 
 	@RequestMapping(value = { "/getChalanQuanPrintData" }, method = RequestMethod.POST)
-	public @ResponseBody List<GetTotalChalanQuantity> getChalanQuanPrintData(@RequestParam("orderId") int orderId) {
+	public @ResponseBody List<GetTotalChalanQuantity> getChalanQuanPrintData(@RequestParam("orderId") int orderId,
+			@RequestParam("chalanId") int chalanId) {
 
 		System.err.println("Inside getChalanPrintData chalanId" + orderId);
-		List<GetTotalChalanQuantity> chPrintData1=new ArrayList<GetTotalChalanQuantity>() ;
+		List<GetTotalChalanQuantity> chPrintData1 = new ArrayList<GetTotalChalanQuantity>();
 		try {
 
-			chPrintData1 = getChalanQuanRepo.getChalanPrintItem(orderId);
-			System.out.println("result"+chPrintData1.toString());
+			chPrintData1 = getChalanQuanRepo.getChalanPrintItem(orderId, chalanId);
+			System.out.println("result" + chPrintData1.toString());
 
 		} catch (Exception e) {
 
