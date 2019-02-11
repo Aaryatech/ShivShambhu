@@ -68,6 +68,9 @@ public class GetItemsForBill implements Serializable {
 	private String deliveryTerm;
 
 	private int isTaxIncluding;
+	
+	@Column(name = "po_rate")
+	private float poRate;
 
 	public int getIsTaxIncluding() {
 		return isTaxIncluding;
@@ -221,6 +224,14 @@ public class GetItemsForBill implements Serializable {
 		this.orderId = orderId;
 	}
 
+	public float getPoRate() {
+		return poRate;
+	}
+
+	public void setPoRate(float poRate) {
+		this.poRate = poRate;
+	}
+
 	@Override
 	public String toString() {
 		return "GetItemsForBill [chalanDetailId=" + chalanDetailId + ", chalanId=" + chalanId + ", chalanNo=" + chalanNo
@@ -228,6 +239,9 @@ public class GetItemsForBill implements Serializable {
 				+ itemName + ", itemUom=" + itemUom + ", uomId=" + uomId + ", hsnCode=" + hsnCode + ", itemQty="
 				+ itemQty + ", orderRate=" + orderRate + ", orderId=" + orderId + ", cgstPer=" + cgstPer + ", sgstPer="
 				+ sgstPer + ", igstPer=" + igstPer + ", poTermId=" + poTermId + ", deliveryTerm=" + deliveryTerm
-				+ ", isTaxIncluding=" + isTaxIncluding + "]";
+				+ ", isTaxIncluding=" + isTaxIncluding + ", poRate=" + poRate + "]";
 	}
+
+	
+	
 }
