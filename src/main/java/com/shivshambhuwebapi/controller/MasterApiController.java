@@ -2609,7 +2609,12 @@ public class MasterApiController {
 		List<GetItem> itemList = new ArrayList<>();
 
 		try {
-			itemList = getItemRepo.getItemByPlantId(plantId);
+
+			if (plantId == 0) {
+				itemList = getItemRepo.getAllItemList();
+			} else {
+				itemList = getItemRepo.getItemByPlantId(plantId);
+			}
 
 		} catch (Exception e) {
 
