@@ -215,7 +215,7 @@ public class BillController {
 		List<GetBillHeader> billHeaderRes = null;
 
 		try {
-
+ 
 			if (plantId == 0 && custId == 0) {
 				billHeaderRes = getBillHeaderRepository.getBillHeadersByDateByAll(fromDate, toDate);
 			} else if (plantId == 0 && custId != 0) {
@@ -225,6 +225,21 @@ public class BillController {
 			} else if (plantId != 0 && custId != 0) {
 				billHeaderRes = getBillHeaderRepository.getBillHeadersByDateByCustByPlant(plantId, custId, fromDate,
 						toDate);
+			}
+		
+			
+			
+			
+            for (int i = 0; i < billHeaderRes.size(); i++) {
+				
+				
+				List<GetBillDetail> billDetailList1 = getBillDetailRepository
+						.getBillDetailsById(billHeaderRes.get(i).getBillHeadId());
+				
+				
+				System.err.println(billDetailList1 + "billDetailList");
+				
+				billHeaderRes.get(i).setGetBillDetails(billDetailList1);
 			}
 
 		} catch (Exception e) {
