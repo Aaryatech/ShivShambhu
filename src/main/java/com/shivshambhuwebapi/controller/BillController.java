@@ -210,35 +210,45 @@ public class BillController {
 	@RequestMapping(value = { "/getBillHeadersByDateAndCustAndPlant" }, method = RequestMethod.POST)
 	public @ResponseBody List<GetBillHeader> getBillHeadersByDateAndCustAndPlant(@RequestParam("plantId") int plantId,
 			@RequestParam("custId") int custId, @RequestParam("fromDate") String fromDate,
-			@RequestParam("toDate") String toDate) {
+			@RequestParam("toDate") String toDate, @RequestParam("tax") int tax) {
 
 		List<GetBillHeader> billHeaderRes = null;
 
 		try {
- 
-			if (plantId == 0 && custId == 0) {
-				billHeaderRes = getBillHeaderRepository.getBillHeadersByDateByAll(fromDate, toDate);
-			} else if (plantId == 0 && custId != 0) {
-				billHeaderRes = getBillHeaderRepository.getBillHeadersByDateByCust(custId, fromDate, toDate);
-			} else if (plantId != 0 && custId == 0) {
-				billHeaderRes = getBillHeaderRepository.getBillHeadersByDateByPlant(plantId, fromDate, toDate);
-			} else if (plantId != 0 && custId != 0) {
-				billHeaderRes = getBillHeaderRepository.getBillHeadersByDateByCustByPlant(plantId, custId, fromDate,
-						toDate);
+
+			if (tax == -1) {
+				if (plantId == 0 && custId == 0) {
+					billHeaderRes = getBillHeaderRepository.getBillHeadersByDateByAll(fromDate, toDate);
+				} else if (plantId == 0 && custId != 0) {
+					billHeaderRes = getBillHeaderRepository.getBillHeadersByDateByCust(custId, fromDate, toDate);
+				} else if (plantId != 0 && custId == 0) {
+					billHeaderRes = getBillHeaderRepository.getBillHeadersByDateByPlant(plantId, fromDate, toDate);
+				} else if (plantId != 0 && custId != 0) {
+					billHeaderRes = getBillHeaderRepository.getBillHeadersByDateByCustByPlant(plantId, custId, fromDate,
+							toDate);
+				}
+			} else {
+				if (plantId == 0 && custId == 0) {
+					billHeaderRes = getBillHeaderRepository.getBillHeadersByDateAndTax(fromDate, toDate, tax);
+				} else if (plantId == 0 && custId != 0) {
+					billHeaderRes = getBillHeaderRepository.getBillHeadersByDateByCustAndTax(custId, fromDate, toDate,
+							tax);
+				} else if (plantId != 0 && custId == 0) {
+					billHeaderRes = getBillHeaderRepository.getBillHeadersByDateByPlantAndTax(plantId, fromDate, toDate,
+							tax);
+				} else if (plantId != 0 && custId != 0) {
+					billHeaderRes = getBillHeaderRepository.getBillHeadersByDateByCustByPlantAndTax(plantId, custId,
+							fromDate, toDate, tax);
+				}
 			}
-		
-			
-			
-			
-            for (int i = 0; i < billHeaderRes.size(); i++) {
-				
-				
+
+			for (int i = 0; i < billHeaderRes.size(); i++) {
+
 				List<GetBillDetail> billDetailList1 = getBillDetailRepository
 						.getBillDetailsById(billHeaderRes.get(i).getBillHeadId());
-				
-				
+
 				System.err.println(billDetailList1 + "billDetailList");
-				
+
 				billHeaderRes.get(i).setGetBillDetails(billDetailList1);
 			}
 
@@ -282,14 +292,13 @@ public class BillController {
 			billHeaderRes = getBillHeaderPdfRepository.findBillsByHeaderId(billHeadIdList);
 
 			for (int i = 0; i < billHeaderRes.size(); i++) {
-				
+
 				BankDetail bankDetail = bankDetailRepository
 						.findByBankDetIdAndDelStatus(billHeaderRes.get(i).getAccId(), 1);
-				
+
 				List<GetBillDetail> billDetailList = getBillDetailRepository
 						.getBillDetailsById(billHeaderRes.get(i).getBillHeadId());
-				
-				
+
 				System.err.println(billDetailList + "billDetailList");
 				billHeaderRes.get(i).setBankDetail(bankDetail);
 				billHeaderRes.get(i).setGetBillDetails(billDetailList);
