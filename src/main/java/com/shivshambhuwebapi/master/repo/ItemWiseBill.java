@@ -12,17 +12,21 @@ import com.shivshambhuwebapi.master.model.GetItenwiseBillReport;
 public interface ItemWiseBill extends JpaRepository<GetItenwiseBillReport , Integer>  {
 	
 	
-	@Query(value = "SELECT i.item_id,i.item_code, i.item_name, sum(b.tax_amt) as tax_amt, "
-			+ "sum(b.taxable_amt) as taxable_amt, sum(b.total_amt) as total_amt, sum(b.cgst_amt) as cgst_amt, "
-			+ "sum(b.sgst_amt) as sgst_amt, sum(b.igst_amt) as igst_amt, sum(b.qty) as qty, sum(b.rate) as rate, "
-			+ "sum(b.cgst_per) as cgst_per, sum(b.sgst_per) as sgst_per, sum(b.igst_per) as igst_per, sum(b.disc_per)"
-			+ " as disc_per, sum(b.disc_amt) as disc_amt, b.del_status FROM m_item_fg i, t_bill_detail b, t_bill_header"
-			+ " h where i.item_id=b.item_id"
-			+ " AND h.bill_date "
-			+ " BETWEEN :fromDate AND :toDate GROUP by b.item_id", nativeQuery = true)
+	@Query(value = "SELECT i.item_id,i.item_code, i.item_name, sum(b.tax_amt) as tax_amt, m.uom_name,t.hsn_code , sum(b.taxable_amt) as taxable_amt, sum(b.total_amt) as total_amt, sum(b.cgst_amt) as cgst_amt, sum(b.sgst_amt) as sgst_amt, sum(b.igst_amt) as igst_amt, sum(b.qty) as qty, sum(b.rate) as rate, sum(b.cgst_per) as cgst_per, sum(b.sgst_per) as sgst_per, sum(b.igst_per) as igst_per, sum(b.disc_per) as disc_per, sum(b.disc_amt) as disc_amt, b.del_status FROM m_item_fg i, t_bill_detail b, t_bill_header h, m_uom m, m_tax t where i.item_id=b.item_id AND i.uom_id=m.uom_id AND i.tax_id=t.tax_id AND h.bill_date BETWEEN :fromDate AND :toDate GROUP by b.item_id", nativeQuery = true)
 	List<GetItenwiseBillReport> getBillDetail(@Param("fromDate") String fromDate,@Param("toDate") String toDate);
 	
+//	SELECT i.item_id,i.item_code, i.item_name, sum(b.tax_amt) as tax_amt, "
+//			+ "sum(b.taxable_amt) as taxable_amt, sum(b.total_amt) as total_amt, sum(b.cgst_amt) as cgst_amt, "
+//			+ "sum(b.sgst_amt) as sgst_amt, sum(b.igst_amt) as igst_amt, sum(b.qty) as qty, sum(b.rate) as rate, "
+//			+ "sum(b.cgst_per) as cgst_per, sum(b.sgst_per) as sgst_per, sum(b.igst_per) as igst_per, sum(b.disc_per)"
+//			+ " as disc_per, sum(b.disc_amt) as disc_amt, b.del_status FROM m_item_fg i, t_bill_detail b, t_bill_header"
+//			+ " h where i.item_id=b.item_id"
+//			+ " AND h.bill_date "
+//			+ " BETWEEN :fromDate AND :toDate GROUP by b.item_id
 	
+	
+	
+	/////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	@Query(value = "SELECT i.item_id,i.item_code, i.item_name, sum(b.tax_amt) as tax_amt, "
 			+ "sum(b.taxable_amt) as taxable_amt, sum(b.total_amt) as total_amt, sum(b.cgst_amt) as cgst_amt, "

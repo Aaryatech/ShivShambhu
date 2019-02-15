@@ -241,21 +241,21 @@ public class ReportApiController {
 
 				billHeaderRes = getBillReportRepo.getBillHeadersBetDate(fromDate, toDate);
 
-				System.err.println("billHeaderRes" + billHeaderRes.toString());
-				System.out.println("billHeaderRes" + billHeaderRes.toString());
+				System.err.println("billHeaderRes1" + billHeaderRes.toString());
+				System.out.println("billHeaderRes1" + billHeaderRes.toString());
 
 			} else if (!plantIdList.contains(0) && companyIdList.contains(0)) {
 				billHeaderRes = getBillReportRepo.getBillHeadersBetDateANdPlantIdList(plantIdList, fromDate, toDate);
 
-				System.out.println("billHeaderRes" + billHeaderRes.toString());
+				System.out.println("billHeaderRes2" + billHeaderRes.toString());
 			} else if (plantIdList.contains(0) && !companyIdList.contains(0)) {
 				billHeaderRes = getBillReportRepo.getBillHeadersBetDateANdCompIdList(companyIdList, fromDate, toDate);
-				System.out.println("billHeaderRes" + billHeaderRes.toString());
+				System.out.println("billHeaderRes3" + billHeaderRes.toString());
 			} else {
 
 				billHeaderRes = getBillReportRepo.getBillHeadersBetDateANdIdList(plantIdList, companyIdList, fromDate,
 						toDate);
-				System.out.println("billHeaderRes" + billHeaderRes.toString());
+				System.out.println("billHeaderRes4" + billHeaderRes.toString());
 			}
 
 			for (int i = 0; i < billHeaderRes.size(); i++) {
@@ -284,20 +284,22 @@ public class ReportApiController {
 		try {
 
 			if (plantId==0 && custIdList.contains(0)) {
-
+				System.out.println("BillHeaderRes1:");	
 				billHeaderRes = getBillReportRepo.getBillCustBetDate(fromDate, toDate);
-
+				
 			} else if (plantId!=0 && custIdList.contains(0)) {
+				System.out.println("BillHeaderRes2:");
 				billHeaderRes = getBillReportRepo.getBillCustBetDateAndPlantIdList(plantId, fromDate, toDate);
-
 			} else if (plantId==0 && !custIdList.contains(0)) {
+				System.out.println("BillHeaderRes3:");
 				billHeaderRes = getBillReportRepo.getBillCustBetDateANdCustIdList(custIdList, fromDate, toDate);
-
+				
 			} else {
 
+				System.out.println("BillHeaderRes4:");
 				billHeaderRes = getBillReportRepo.getBillHeadersBetDateANdCustIdList(plantId, custIdList, fromDate,
 						toDate);
-
+				
 			}
 
 			for (int i = 0; i < billHeaderRes.size(); i++) {
@@ -377,24 +379,26 @@ public class ReportApiController {
 
 				billHeaderRes = itemwiseRepo.getBillDetail(fromDate, toDate);
 
-				System.err.println("billHeaderRes" + billHeaderRes.toString());
-				System.out.println("billHeaderRes" + billHeaderRes.toString());
+				System.err.println("billHeaderRes01" + billHeaderRes.toString());
+				System.out.println("billHeaderRes01" + billHeaderRes.toString());
 
 			} else if (!plantIdList.contains(0)) {
 				billHeaderRes = itemwiseRepo.getBillDetailByPlantId(plantIdList, fromDate, toDate);
 
-				System.out.println("billHeaderRes" + billHeaderRes.toString());
+				System.out.println("billHeaderRes1" + billHeaderRes.toString());
 			} else {
 
 				billHeaderRes = itemwiseRepo.getBillDetailByPlantId(plantIdList, fromDate, toDate);
-				System.out.println("billHeaderRes" + billHeaderRes.toString());
+				System.out.println("billHeaderRes2" + billHeaderRes.toString());
 			}
 
 			/*
 			 * for (int i = 0; i < billHeaderRes.size(); i++) {
 			 * billHeaderRes.get(i).setBillDate(DateConvertor.convertToDMY(billHeaderRes.get
 			 * (i).getBillDate())); }
-			 */
+			 *///
+			
+			
 		} catch (Exception e) {
 
 			e.printStackTrace();

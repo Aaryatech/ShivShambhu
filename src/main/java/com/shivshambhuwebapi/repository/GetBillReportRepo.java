@@ -32,10 +32,10 @@ public interface GetBillReportRepo extends JpaRepository<GetBillReport, Integer>
 	List<GetBillReport> getBillHeadersBetDateANdCompIdList(@Param("companyIdList") List<Integer> companyIdList,
 			@Param("fromDate") String fromDate, @Param("toDate") String toDate);
 
-	@Query(value = "SELECT  h.*,c.cust_name,c.cust_mob_no,p.proj_name,l.plant_name  FROM t_bill_header h,m_project p ,m_customer c,"
-			+ "m_plant l WHERE h.del_status=1 AND p.proj_id=h.proj_id AND c.cust_id=h.cust_id AND l.plant_id=h.ex_int1 AND h.bill_date "
-			+ "BETWEEN :fromDate AND :toDate ", nativeQuery = true)
-
+	@Query(value = "SELECT h.*,c.cust_name,c.cust_mob_no,p.proj_name,l.plant_name, sum(d.sgst_amt) as sgst_amt,sum(d.cgst_amt) as cgst_amt,(sum(d.sgst_amt)+sum(d.cgst_amt))as igst_amt FROM t_bill_detail d, t_bill_header h,m_project p ,m_customer c,m_plant l WHERE h.bill_head_id=d.bill_head_id AND h.del_status=1 AND p.proj_id=h.proj_id AND c.cust_id=h.cust_id AND l.plant_id=h.ex_int1 AND h.bill_date BETWEEN :fromDate AND :toDate GROUP BY h.bill_head_id", nativeQuery = true)
+		//SELECT  h.*,c.cust_name,c.cust_mob_no,p.proj_name,l.plant_name  FROM t_bill_header h,m_project p ,m_customer c,"
+		//+ "m_plant l WHERE h.del_status=1 AND p.proj_id=h.proj_id AND c.cust_id=h.cust_id AND l.plant_id=h.ex_int1 AND h.bill_date "
+		//+ "BETWEEN :fromDate AND :toDate 
 	List<GetBillReport> getBillHeadersBetDate(@Param("fromDate") String fromDate, @Param("toDate") String toDate);
 
 	

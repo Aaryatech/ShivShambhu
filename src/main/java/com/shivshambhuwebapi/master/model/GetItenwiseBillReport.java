@@ -19,7 +19,7 @@ public class GetItenwiseBillReport {
 	
 	private float qty;
 	
-	//private String hsnCode;
+	private String hsnCode;
 	
 	private float rate;
 	
@@ -50,6 +50,8 @@ public class GetItenwiseBillReport {
 
 	
 	private int delStatus;
+	
+	private String uomName;
 	
 	public int getItem_id() {
 		return item_id;
@@ -224,6 +226,27 @@ public class GetItenwiseBillReport {
 		this.delStatus = delStatus;
 	}
 
+
+	public String getUomName() {
+		return uomName;
+	}
+
+
+	public void setUomName(String uomName) {
+		this.uomName = uomName;
+	}
+
+
+	public String getHsnCode() {
+		return hsnCode;
+	}
+
+
+	public void setHsnCode(String hsnCode) {
+		this.hsnCode = hsnCode;
+	}
+
+	
 
 	/*@Override
 	public String toString() {
