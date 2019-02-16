@@ -25,9 +25,11 @@ import com.shivshambhuwebapi.model.bill.GetBillReport;
 import com.shivshambhuwebapi.model.bill.GetDateWiseDetailBill;
 import com.shivshambhuwebapi.model.bill.GetDatewiseReport;
 import com.shivshambhuwebapi.model.bill.MonthWiseBill;
+import com.shivshambhuwebapi.model.bill.TaxSummery;
 import com.shivshambhuwebapi.repository.GetBillReportRepo;
 import com.shivshambhuwebapi.repository.GetDatewiseReportRepo;
 import com.shivshambhuwebapi.repository.GetPoReportRepo;
+import com.shivshambhuwebapi.repository.TaxSummeryRepo;
 import com.shivshambhuwebapi.tx.model.GetMatIssueDetail;
 import com.shivshambhuwebapi.tx.model.GetMatIssueHeader;
 import com.shivshambhuwebapi.tx.model.GetMatIssueReport;
@@ -84,6 +86,9 @@ public class ReportApiController {
 
 	@Autowired
 	GetPoReportRepo getPoReportRepo;
+
+	@Autowired
+	TaxSummeryRepo taxSummeryRepo;
 
 	@RequestMapping(value = { "/getPoReportBetDateAndType" }, method = RequestMethod.POST)
 	public @ResponseBody List<GetPoReport> getPoReportBetDateAndType(@RequestParam("fromDate") String fromDate,
@@ -179,45 +184,41 @@ public class ReportApiController {
 
 		System.out.println("startgetPoklenReportBetweenDate ");
 
-		System.out.println("start date is"+fromDate); 
-		System.out.println("end date is"+toDate);
-		
-		
+		System.out.println("start date is" + fromDate);
+		System.out.println("end date is" + toDate);
+
 		List<PoklenReport> headerList = new ArrayList<PoklenReport>();
 
 		try {
 
-		 if (fromDate.compareTo(toDate) < 0) {
-			 
-			 System.out.println("start is before end");
-			 
-			String sd=DateConvertor.convertToDMY(fromDate);
-			 String ed=DateConvertor.convertToDMY(toDate);
-			 System.out.println("start date new is"+sd);
-				System.out.println("end date new  is"+ed);
-				
-				
-			 
-			// SimpleDateFormat myFormat = new SimpleDateFormat("dd MM yyyy");
-				 Date dateBefore=new SimpleDateFormat("dd-MM-yyyy").parse(sd); 
-				 Date dateAfter=new SimpleDateFormat("dd-MM-yyyy").parse(ed); 
-				 
-			  // Date dateBefore = myFormat.parse(sd);
-		      // Date dateAfter = myFormat.parse(ed);
-		       long difference = dateAfter.getTime() - dateBefore.getTime();
-		       float diff = (difference / (1000*60*60*24));
-		       
-	             
-		       System.out.println("Number of Days between dates: "+diff);
-		
-                headerList = poklenReportRepo.getPoklenReportBetweenDate1(fromDate, toDate,diff);
-            }
-	
-		 else if(fromDate.compareTo(toDate) == 0){
-			 
-			System.out.println("start is equal to end");
-			headerList = poklenReportRepo.getPoklenReportBetweenDate(fromDate, toDate);
-            }
+			if (fromDate.compareTo(toDate) < 0) {
+
+				System.out.println("start is before end");
+
+				String sd = DateConvertor.convertToDMY(fromDate);
+				String ed = DateConvertor.convertToDMY(toDate);
+				System.out.println("start date new is" + sd);
+				System.out.println("end date new  is" + ed);
+
+				// SimpleDateFormat myFormat = new SimpleDateFormat("dd MM yyyy");
+				Date dateBefore = new SimpleDateFormat("dd-MM-yyyy").parse(sd);
+				Date dateAfter = new SimpleDateFormat("dd-MM-yyyy").parse(ed);
+
+				// Date dateBefore = myFormat.parse(sd);
+				// Date dateAfter = myFormat.parse(ed);
+				long difference = dateAfter.getTime() - dateBefore.getTime();
+				float diff = (difference / (1000 * 60 * 60 * 24));
+
+				System.out.println("Number of Days between dates: " + diff);
+
+				headerList = poklenReportRepo.getPoklenReportBetweenDate1(fromDate, toDate, diff);
+			}
+
+			else if (fromDate.compareTo(toDate) == 0) {
+
+				System.out.println("start is equal to end");
+				headerList = poklenReportRepo.getPoklenReportBetweenDate(fromDate, toDate);
+			}
 		} catch (Exception e) {
 
 			e.printStackTrace();
@@ -273,8 +274,7 @@ public class ReportApiController {
 	}
 
 	@RequestMapping(value = { "/getCustomerwiseReport" }, method = RequestMethod.POST)
-	public @ResponseBody List<GetBillReport> getCustomerwiseReport(
-			@RequestParam("plantId") int plantId,
+	public @ResponseBody List<GetBillReport> getCustomerwiseReport(@RequestParam("plantId") int plantId,
 			@RequestParam("custIdList") List<Integer> custIdList, @RequestParam("fromDate") String fromDate,
 			@RequestParam("toDate") String toDate) {
 		System.err.println(
@@ -283,23 +283,23 @@ public class ReportApiController {
 
 		try {
 
-			if (plantId==0 && custIdList.contains(0)) {
-				System.out.println("BillHeaderRes1:");	
+			if (plantId == 0 && custIdList.contains(0)) {
+				System.out.println("BillHeaderRes1:");
 				billHeaderRes = getBillReportRepo.getBillCustBetDate(fromDate, toDate);
-				
-			} else if (plantId!=0 && custIdList.contains(0)) {
+
+			} else if (plantId != 0 && custIdList.contains(0)) {
 				System.out.println("BillHeaderRes2:");
 				billHeaderRes = getBillReportRepo.getBillCustBetDateAndPlantIdList(plantId, fromDate, toDate);
-			} else if (plantId==0 && !custIdList.contains(0)) {
+			} else if (plantId == 0 && !custIdList.contains(0)) {
 				System.out.println("BillHeaderRes3:");
 				billHeaderRes = getBillReportRepo.getBillCustBetDateANdCustIdList(custIdList, fromDate, toDate);
-				
+
 			} else {
 
 				System.out.println("BillHeaderRes4:");
 				billHeaderRes = getBillReportRepo.getBillHeadersBetDateANdCustIdList(plantId, custIdList, fromDate,
 						toDate);
-				
+
 			}
 
 			for (int i = 0; i < billHeaderRes.size(); i++) {
@@ -339,7 +339,7 @@ public class ReportApiController {
 
 	}
 
-	//7-1-2019
+	// 7-1-2019
 	@RequestMapping(value = { "/getBillDetailByCustIdAndDate" }, method = RequestMethod.POST)
 	public @ResponseBody List<GetBillReport> getBillDetailByCustIdAndDate(@RequestParam("custId") int custId,
 			@RequestParam("fromDate") String fromDate, @RequestParam("toDate") String toDate) {
@@ -397,8 +397,7 @@ public class ReportApiController {
 			 * billHeaderRes.get(i).setBillDate(DateConvertor.convertToDMY(billHeaderRes.get
 			 * (i).getBillDate())); }
 			 *///
-			
-			
+
 		} catch (Exception e) {
 
 			e.printStackTrace();
@@ -420,20 +419,19 @@ public class ReportApiController {
 
 		try {
 
-			if (plantId==0 && custIdList.contains(0)) {
+			if (plantId == 0 && custIdList.contains(0)) {
 
 				billHeaderRes = taxwiseRepo.getBillDetail(fromDate, toDate);
 
-			} else if (plantId!=0 && custIdList.contains(0)) {
+			} else if (plantId != 0 && custIdList.contains(0)) {
 				billHeaderRes = taxwiseRepo.getBillTaxBetDateAndPlantIdList(plantId, fromDate, toDate);
 
-			} else if (plantId==0 && !custIdList.contains(0)) {
+			} else if (plantId == 0 && !custIdList.contains(0)) {
 				billHeaderRes = taxwiseRepo.getBillCustDetail(custIdList, fromDate, toDate);
 
 			} else {
 
-				billHeaderRes = taxwiseRepo.getBillHeadersBetDateANdCustIdList(plantId, custIdList, fromDate,
-						toDate);
+				billHeaderRes = taxwiseRepo.getBillHeadersBetDateANdCustIdList(plantId, custIdList, fromDate, toDate);
 
 			}
 
@@ -545,6 +543,31 @@ public class ReportApiController {
 		}
 
 		return billHeaderRes;
+
+	}
+
+	@RequestMapping(value = { "/getTaxSummeryBetweenDate" }, method = RequestMethod.POST)
+	public @ResponseBody List<TaxSummery> getTaxSummeryBetweenDate(@RequestParam("plantId") int plantId,
+			@RequestParam("fromDate") String fromDate, @RequestParam("toDate") String toDate) {
+
+		List<TaxSummery> headerList = new ArrayList<TaxSummery>();
+
+		try {
+			if(plantId!=0)
+			{
+
+			headerList = taxSummeryRepo.getTaxSummeryBetDate(plantId, fromDate, toDate);
+			}else
+			{
+				headerList = taxSummeryRepo.getTaxSummeryBetDateOnly(fromDate, toDate);
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return headerList;
 
 	}
 
