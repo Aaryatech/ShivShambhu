@@ -257,4 +257,58 @@ public class OrderApiController {
 		return info;
 
 	}
+
+	@RequestMapping(value = { "/UpdateOrderHeader" }, method = RequestMethod.POST)
+	public @ResponseBody Info UpdateOrderHeader(@RequestParam("orderId") int orderId) {
+
+		Info info = new Info();
+
+		try {
+			int delete = orderHeaderRepo.UpdateOrderHeader(orderId);
+
+			if (delete >= 1) {
+				info.setError(false);
+				info.setMessage("successfully Multiple Updated");
+			} else {
+				info.setError(true);
+				info.setMessage(" failed to ");
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage(" Exception");
+
+		}
+		return info;
+
+	}
+
+	@RequestMapping(value = { "/UpdateOrderDetail" }, method = RequestMethod.POST)
+	public @ResponseBody Info UpdateOrderDetail(@RequestParam("orderId") int orderId) {
+
+		Info info = new Info();
+
+		try {
+			int delete = orderDetailRepo.updateOrderDetail(orderId);
+
+			if (delete >= 1) {
+				info.setError(false);
+				info.setMessage("successfully Multiple Updated");
+			} else {
+				info.setError(true);
+				info.setMessage(" failed to ");
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage(" Exception");
+
+		}
+		return info;
+
+	}
 }
