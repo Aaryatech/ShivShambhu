@@ -27,12 +27,14 @@ import com.shivshambhuwebapi.master.model.OrderHeader;
 import com.shivshambhuwebapi.master.repo.BankDetailRepo;
 import com.shivshambhuwebapi.model.bill.BillDetail;
 import com.shivshambhuwebapi.model.bill.BillHeader;
+import com.shivshambhuwebapi.model.bill.GetBillDetByHsn;
 import com.shivshambhuwebapi.model.bill.GetBillDetail;
 import com.shivshambhuwebapi.model.bill.GetBillHeader;
 import com.shivshambhuwebapi.model.bill.GetBillHeaderPdf;
 import com.shivshambhuwebapi.model.bill.GetItemsForBill;
 import com.shivshambhuwebapi.repository.BillDetailRepository;
 import com.shivshambhuwebapi.repository.BillHeaderRepository;
+import com.shivshambhuwebapi.repository.GetBillDetByHsnRepo;
 import com.shivshambhuwebapi.repository.GetBillDetailRepository;
 import com.shivshambhuwebapi.repository.GetBillHeaderPdfRepository;
 import com.shivshambhuwebapi.repository.GetBillHeaderRepository;
@@ -47,6 +49,9 @@ public class BillController {
 
 	@Autowired
 	BillHeaderRepository billHeaderRepository;
+
+	@Autowired
+	GetBillDetByHsnRepo getBillDetByHsnRepo;
 
 	@Autowired
 	BillDetailRepository billDetailRepository;
@@ -341,6 +346,26 @@ public class BillController {
 		try {
 
 			billDetailList = getBillDetailRepository.getBillDetailsById(billHeadId);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+
+		return billDetailList;
+
+	}
+
+	@RequestMapping(value = { "/getBillDetailsByIdAndHsnReport" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetBillDetByHsn> getBillDetailsByIdAndHsnReport(
+			@RequestParam("billHeadIds") List<Integer> billHeadIds) {
+
+		List<GetBillDetByHsn> billDetailList = null;
+
+		try {
+
+			billDetailList = getBillDetByHsnRepo.getBillDetailsById(billHeadIds);
 
 		} catch (Exception e) {
 
