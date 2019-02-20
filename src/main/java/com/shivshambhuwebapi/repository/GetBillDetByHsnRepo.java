@@ -10,7 +10,7 @@ import com.shivshambhuwebapi.model.bill.GetBillDetByHsn;
 
 public interface GetBillDetByHsnRepo extends JpaRepository<GetBillDetByHsn, Integer> {
 
-	@Query(value = "SELECT d.hsn_code,SUM(d.cgst_per) AS cgst_per,SUM(d.sgst_per) AS sgst_per ,SUM(cgst_amt) "
+	@Query(value = "SELECT d.hsn_code,d.cgst_per ,d.sgst_per ,SUM(cgst_amt) "
 			+ "as cgst_amt,SUM(sgst_amt) as sgst_amt,SUM(igst_amt) as igst_amt, SUM(igst_per) as igst_per,"
 			+ "SUM(d.taxable_amt) AS taxable_amt,SUM(d.tax_amt) AS tax_amt ,SUM(d.total_amt) AS total_amt ,"
 			+ "SUM(d.disc_per) AS disc_per ,SUM(d.disc_amt) AS disc_amt FROM t_bill_detail d WHERE "

@@ -1547,7 +1547,7 @@ public class MasterApiController {
 
 			e.printStackTrace();
 			info.setError(true);
-			info.setMessage(" In Exception");
+			info.setMessage(" Customer Mobiile no Already Exist");
 
 		}
 		return info;
