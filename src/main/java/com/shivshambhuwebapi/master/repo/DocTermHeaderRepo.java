@@ -28,4 +28,6 @@ public interface DocTermHeaderRepo extends JpaRepository<DocTermHeader, Integer>
 	@Query("UPDATE DocTermHeader SET delStatus=0  WHERE termId IN(:termIds)")
 	int deleteMultiDocHeader(@Param("termIds") List<Integer> termIds);
 
+	List<DocTermHeader> findByDocIdAndExInt1AndDelStatus(int docId, int plantId, int i);
+
 }

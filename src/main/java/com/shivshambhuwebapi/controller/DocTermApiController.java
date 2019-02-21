@@ -87,14 +87,20 @@ public class DocTermApiController {
 
 	}
 
-	@RequestMapping(value = { "/getAllDocHeaderList" }, method = RequestMethod.GET)
-	public @ResponseBody List<GetDocTermHeader> getAllDocHeaderList() {
+	@RequestMapping(value = { "/getAllDocHeaderList" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetDocTermHeader> getAllDocHeaderList(@RequestParam("plantId") int plantId) {
 
 		List<GetDocTermHeader> docHeaderList = new ArrayList<GetDocTermHeader>();
 
 		try {
+			if (plantId == 0) {
 
-			docHeaderList = getDocTermHeaderRepo.getDocHeaderList();
+				docHeaderList = getDocTermHeaderRepo.getDocHeaderList();
+			} else {
+
+				docHeaderList = getDocTermHeaderRepo.getDocHeaderListByPlantId(plantId);
+
+			}
 
 		} catch (Exception e) {
 
@@ -113,6 +119,30 @@ public class DocTermApiController {
 		try {
 
 			docHeaderList = docTermHeaderRepo.findByDocIdAndDelStatus(docId, 1);
+
+			for (int i = 0; i < docHeaderList.size(); i++) {
+				List<DocTermDetail> detailList = docTermDetailRepo.findByTermId(docHeaderList.get(i).getTermId());
+				docHeaderList.get(i).setDetailList(detailList);
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return docHeaderList;
+
+	}
+
+	@RequestMapping(value = { "/getDocHeaderByDocIdAndPlantId" }, method = RequestMethod.POST)
+	public @ResponseBody List<DocTermHeader> getDocHeaderByDocIdAndPlantId(@RequestParam("docId") int docId,
+			@RequestParam("plantId") int plantId) {
+
+		List<DocTermHeader> docHeaderList = new ArrayList<DocTermHeader>();
+
+		try {
+
+			docHeaderList = docTermHeaderRepo.findByDocIdAndExInt1AndDelStatus(docId, plantId, 1);
 
 			for (int i = 0; i < docHeaderList.size(); i++) {
 				List<DocTermDetail> detailList = docTermDetailRepo.findByTermId(docHeaderList.get(i).getTermId());
