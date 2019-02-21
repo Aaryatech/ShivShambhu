@@ -129,6 +129,16 @@ public class GetBillHeaderPdf implements Serializable{
 	@Column(name = "ex_float2")
 	private float exFloat2;
 
+	@Column(name = "proj_name")
+	private String projName;
+
+	@Column(name = "location")
+	private String location;
+
+	@Column(name = "chalan_no")
+	private String chalanNo;
+
+	
 	@Transient
 	List<GetBillDetail> getBillDetails;
 	
@@ -474,6 +484,34 @@ public class GetBillHeaderPdf implements Serializable{
 	public void setGetBillDetails(List<GetBillDetail> getBillDetails) {
 		this.getBillDetails = getBillDetails;
 	}
+	
+	
+
+	public String getProjName() {
+		return projName;
+	}
+
+	public void setProjName(String projName) {
+		this.projName = projName;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+	public String getChalanNo() {
+		return chalanNo;
+	}
+
+	public void setChalanNo(String chalanNo) {
+		this.chalanNo = chalanNo;
+	}
+	
+	
 
 	@Override
 	public String toString() {
@@ -488,7 +526,8 @@ public class GetBillHeaderPdf implements Serializable{
 				+ taxAmt + ", totalAmt=" + totalAmt + ", accId=" + accId + ", orderId=" + orderId + ", orderNo="
 				+ orderNo + ", delStatus=" + delStatus + ", exInt1=" + exInt1 + ", exInt2=" + exInt2 + ", exInt3="
 				+ exInt3 + ", exVar1=" + exVar1 + ", exVar2=" + exVar2 + ", exVar3=" + exVar3 + ", exFloat1=" + exFloat1
-				+ ", exFloat2=" + exFloat2 + ", getBillDetails=" + getBillDetails + ", bankDetail=" + bankDetail + "]";
+				+ ", exFloat2=" + exFloat2 + ", projName=" + projName + ", location=" + location + ", chalanNo="
+				+ chalanNo + ", getBillDetails=" + getBillDetails + ", bankDetail=" + bankDetail + "]";
 	}
 
     
