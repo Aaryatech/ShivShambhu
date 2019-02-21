@@ -30,4 +30,5 @@ public interface GetBillHeaderPdfRepository extends JpaRepository<GetBillHeaderP
 			,nativeQuery=true)
 	List<GetBillHeaderPdf> findBillsByHeaderId(@Param("billHeadIdList")List<Integer> billHeadIdList);
 
+	
 }
