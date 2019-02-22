@@ -219,6 +219,27 @@ public class MasterApiController {
 
 	}
 
+	@RequestMapping(value = { "/getBankDetailByCompanyId" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetBankDetail> getBankDetailByCompanyId(@RequestParam("companyId") int companyId) {
+
+		List<GetBankDetail> bankDetailList = new ArrayList<GetBankDetail>();
+
+		try {
+			if (companyId != 0) {
+				bankDetailList = getBankDetailRepo.getAllBankDetailListByCompanyId(companyId);
+			} else {
+				bankDetailList = getBankDetailRepo.getAllBankDetailList();
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return bankDetailList;
+
+	}
+
 	@RequestMapping(value = { "/updateDocSrNo" }, method = RequestMethod.POST)
 	public @ResponseBody Info updateDocSrNo(@RequestParam("docCode") int docCode, @RequestParam("srNo") int srNo) {
 
