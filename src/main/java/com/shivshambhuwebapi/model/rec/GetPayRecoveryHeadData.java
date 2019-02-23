@@ -1,10 +1,12 @@
 package com.shivshambhuwebapi.model.rec;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+@Entity
 public class GetPayRecoveryHeadData {
 
 	@Id
@@ -59,7 +61,7 @@ public class GetPayRecoveryHeadData {
 	private String custName;
 
 	private String custClass;
-	
+
 	private String days;
 
 	public int getPayHeadId() {
@@ -281,7 +283,5 @@ public class GetPayRecoveryHeadData {
 				+ exBool1 + ", exBool2=" + exBool2 + ", custName=" + custName + ", custClass=" + custClass + ", days="
 				+ days + "]";
 	}
-	
-	
-	
+
 }
