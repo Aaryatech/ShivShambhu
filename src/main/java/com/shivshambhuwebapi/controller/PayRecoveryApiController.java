@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.shivshambhuwebapi.common.DateConvertor;
 import com.shivshambhuwebapi.model.rec.GetPayRecoveryHead;
 import com.shivshambhuwebapi.model.rec.GetPayRecoveryHeadCustWise;
+import com.shivshambhuwebapi.model.rec.GetPayRecoveryHeadData;
 import com.shivshambhuwebapi.model.rec.PayRecoveryDetail;
 import com.shivshambhuwebapi.model.rec.PayRecoveryHead;
 import com.shivshambhuwebapi.repo.rec.GetPayRecoveryHeadCustwiseRepo;
+import com.shivshambhuwebapi.repo.rec.GetPayRecoveryHeadDataRepo;
 import com.shivshambhuwebapi.repo.rec.GetPayRecoveryHeadRepo;
 import com.shivshambhuwebapi.repo.rec.PayRecoveryDetailRepo;
 import com.shivshambhuwebapi.repo.rec.PayRecoveryHeadRepo;
@@ -37,6 +39,9 @@ public class PayRecoveryApiController {
 
 	@Autowired
 	GetPayRecoveryHeadCustwiseRepo payRecoveryHeadCustRepo;
+	
+	@Autowired
+	GetPayRecoveryHeadDataRepo payRecoveryHeadDataRepo;
 
 	@RequestMapping(value = { "/savePaymentRecovery" }, method = RequestMethod.POST)
 	public @ResponseBody PayRecoveryHead savePaymentRecovery(@RequestBody PayRecoveryHead payRecoveryHead) {
@@ -402,4 +407,71 @@ public class PayRecoveryApiController {
 		return wList;
 
 	}
+	
+	
+	
+	//------------Payment Recovery--------------------------
+	
+	@RequestMapping(value = { "/getPayRecoveryData" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetPayRecoveryHeadData> getPayRecoveryData(
+			@RequestParam("fromDate") String fromDate, @RequestParam("toDate") String toDate,
+			@RequestParam("plantId") int plantId, @RequestParam("custId") int custId,@RequestParam("custCatId") int custCatId) {
+
+		List<GetPayRecoveryHeadData> wList = new ArrayList<GetPayRecoveryHeadData>();
+
+		try {
+
+			// all
+			if (custId == 0 && plantId == 0 && custCatId==0) {
+				
+				wList = payRecoveryHeadDataRepo.getPayRecBetDate(fromDate, toDate);
+			}
+
+			else if (custId != 0 && plantId == 0 && custCatId==0) {
+				// specific Customer
+				wList = payRecoveryHeadDataRepo.getPayRecBetDateAndCust(fromDate, toDate, custId);
+			}
+			else if (custId == 0 && plantId != 0 && custCatId==0) {
+				// specific plant
+				wList = payRecoveryHeadDataRepo.getPayRecBetDateAndPlant(fromDate, toDate, plantId);
+			}
+
+			else if(custId == 0 && plantId == 0 && custCatId!=0){
+				// specific cust category
+				wList = payRecoveryHeadDataRepo.getPayRecBetDateAndCustCat(fromDate, toDate, custCatId);
+			}
+			
+			else if(custId != 0 && plantId != 0 && custCatId==0){
+
+				wList = payRecoveryHeadDataRepo.getPayRecBetDateCustPlant(fromDate, toDate, plantId,custId);
+			}
+			
+			else if(custId == 0 && plantId != 0 && custCatId!=0){
+
+				wList = payRecoveryHeadDataRepo.getPayRecBetDatePlantAndCustCat(fromDate, toDate, plantId,custCatId);
+			}
+			
+			else if(custId != 0 && plantId == 0 && custCatId!=0){
+
+				wList = payRecoveryHeadDataRepo.getPayRecBetDateCustAndCustCat(fromDate, toDate, custId, custCatId);
+			}
+
+			else if(custId != 0 && plantId != 0 && custCatId!=0){
+
+				wList = payRecoveryHeadDataRepo.getPayRecBetDateCustPlantCustCat(fromDate, toDate, plantId, custId, custCatId);
+			}
+
+			
+
+			
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return wList;
+
+	}
+	
+	
 }
