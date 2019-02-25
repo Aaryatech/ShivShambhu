@@ -39,7 +39,7 @@ public class PayRecoveryApiController {
 
 	@Autowired
 	GetPayRecoveryHeadCustwiseRepo payRecoveryHeadCustRepo;
-	
+
 	@Autowired
 	GetPayRecoveryHeadDataRepo payRecoveryHeadDataRepo;
 
@@ -344,10 +344,9 @@ public class PayRecoveryApiController {
 			else if (custId == 0 && plantId != 0) {
 				// specific plant
 				wList = payRecoveryHeadCustRepo.getPayRecDoneBetDatePlantId(fromDate, toDate, plantId);
-			}
-			else if (custId != 0 && plantId != 0) {
+			} else if (custId != 0 && plantId != 0) {
 				// specific plant
-				wList = payRecoveryHeadCustRepo.getPayRecDoneBetDatePlantIdCustId(fromDate, toDate, plantId,custId);
+				wList = payRecoveryHeadCustRepo.getPayRecDoneBetDatePlantIdCustId(fromDate, toDate, plantId, custId);
 			}
 
 			else {
@@ -355,19 +354,6 @@ public class PayRecoveryApiController {
 				wList = payRecoveryHeadCustRepo.getPayRecDoneBetDate(fromDate, toDate);
 			}
 
-			/*
-			 * for (int i = 0; i < wList.size(); i++) {
-			 * wList.get(i).setCreditDate1(DateConvertor.convertToDMY(wList.get(i).
-			 * getCreditDate1()));
-			 * wList.get(i).setCreditDate2(DateConvertor.convertToDMY(wList.get(i).
-			 * getCreditDate2()));
-			 * wList.get(i).setCreditDate3(DateConvertor.convertToDMY(wList.get(i).
-			 * getCreditDate3()));
-			 * wList.get(i).setBillDate(DateConvertor.convertToDMY(wList.get(i).getBillDate(
-			 * )));
-			 * 
-			 * }
-			 */
 		} catch (Exception e) {
 
 			e.printStackTrace();
@@ -377,28 +363,21 @@ public class PayRecoveryApiController {
 
 	}
 
-	
-	
 	@RequestMapping(value = { "/getPayRecoveryBetDateSpecCust" }, method = RequestMethod.POST)
-	public @ResponseBody List<GetPayRecoveryHead> getPayRecoveryBetDateSpecCust(@RequestParam("fromDate") String fromDate,
-			@RequestParam("toDate") String toDate, @RequestParam("custId") int custId) {
+	public @ResponseBody List<GetPayRecoveryHead> getPayRecoveryBetDateSpecCust(
+			@RequestParam("fromDate") String fromDate, @RequestParam("toDate") String toDate,
+			@RequestParam("custId") int custId) {
 
 		List<GetPayRecoveryHead> wList = new ArrayList<GetPayRecoveryHead>();
 
 		try {
 
 			// all
-			if (custId!= 0) {
-				wList = getPayRecoveryHeadRepo.getPayRecBetDateSpecCust(fromDate, toDate,custId);
+			if (custId != 0) {
+				wList = getPayRecoveryHeadRepo.getPayRecBetDateSpecCust(fromDate, toDate, custId);
 
-			} 
-			/*for (int i = 0; i < wList.size(); i++) {
-				wList.get(i).setCreditDate1(DateConvertor.convertToDMY(wList.get(i).getCreditDate1()));
-				wList.get(i).setCreditDate2(DateConvertor.convertToDMY(wList.get(i).getCreditDate2()));
-				wList.get(i).setCreditDate3(DateConvertor.convertToDMY(wList.get(i).getCreditDate3()));
-				wList.get(i).setBillDate(DateConvertor.convertToDMY(wList.get(i).getBillDate()));
+			}
 
-			}*/
 		} catch (Exception e) {
 
 			e.printStackTrace();
@@ -407,63 +386,89 @@ public class PayRecoveryApiController {
 		return wList;
 
 	}
-	
-	
-	
-	//------------Payment Recovery--------------------------
-	
-	@RequestMapping(value = { "/getPayRecoveryData" }, method = RequestMethod.POST)
-	public @ResponseBody List<GetPayRecoveryHeadData> getPayRecoveryData(
+
+	@RequestMapping(value = { "/getPayRecoveryBetDateSpecCustAndStatus" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetPayRecoveryHead> getPayRecoveryBetDateSpecCustAndStatus(
 			@RequestParam("fromDate") String fromDate, @RequestParam("toDate") String toDate,
-			@RequestParam("plantId") int plantId, @RequestParam("custId") int custId,@RequestParam("custCatId") int custCatId) {
+			@RequestParam("custId") int custId, @RequestParam("status") int status) {
+
+		List<GetPayRecoveryHead> wList = new ArrayList<GetPayRecoveryHead>();
+
+		try {
+
+			// all
+			if (custId != 0) {
+				wList = getPayRecoveryHeadRepo.getPayRecBetDateSpecCustAndStatus(fromDate, toDate, custId, status);
+
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return wList;
+
+	}
+
+	// ------------Payment Recovery--------------------------
+
+	@RequestMapping(value = { "/getPayRecoveryData" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetPayRecoveryHeadData> getPayRecoveryData(@RequestParam("fromDate") String fromDate,
+			@RequestParam("toDate") String toDate, @RequestParam("plantId") int plantId,
+			@RequestParam("custId") int custId, @RequestParam("custCatId") int custCatId) {
 
 		List<GetPayRecoveryHeadData> wList = new ArrayList<GetPayRecoveryHeadData>();
 
 		try {
 
 			// all
-			if (custId == 0 && plantId == 0 && custCatId==0) {
-				
+			if (custId == 0 && plantId == 0 && custCatId == 0) {
+
 				wList = payRecoveryHeadDataRepo.getPayRecBetDate(fromDate, toDate);
 			}
 
-			else if (custId != 0 && plantId == 0 && custCatId==0) {
+			else if (custId != 0 && plantId == 0 && custCatId == 0) {
 				// specific Customer
 				wList = payRecoveryHeadDataRepo.getPayRecBetDateAndCust(fromDate, toDate, custId);
-			}
-			else if (custId == 0 && plantId != 0 && custCatId==0) {
+			} else if (custId == 0 && plantId != 0 && custCatId == 0) {
 				// specific plant
 				wList = payRecoveryHeadDataRepo.getPayRecBetDateAndPlant(fromDate, toDate, plantId);
 			}
 
-			else if(custId == 0 && plantId == 0 && custCatId!=0){
+			else if (custId == 0 && plantId == 0 && custCatId != 0) {
 				// specific cust category
 				wList = payRecoveryHeadDataRepo.getPayRecBetDateAndCustCat(fromDate, toDate, custCatId);
 			}
-			
-			else if(custId != 0 && plantId != 0 && custCatId==0){
 
-				wList = payRecoveryHeadDataRepo.getPayRecBetDateCustPlant(fromDate, toDate, plantId,custId);
-			}
-			
-			else if(custId == 0 && plantId != 0 && custCatId!=0){
+			else if (custId != 0 && plantId != 0 && custCatId == 0) {
 
-				wList = payRecoveryHeadDataRepo.getPayRecBetDatePlantAndCustCat(fromDate, toDate, plantId,custCatId);
+				wList = payRecoveryHeadDataRepo.getPayRecBetDateCustPlant(fromDate, toDate, plantId, custId);
 			}
-			
-			else if(custId != 0 && plantId == 0 && custCatId!=0){
+
+			else if (custId == 0 && plantId != 0 && custCatId != 0) {
+
+				wList = payRecoveryHeadDataRepo.getPayRecBetDatePlantAndCustCat(fromDate, toDate, plantId, custCatId);
+			}
+
+			else if (custId != 0 && plantId == 0 && custCatId != 0) {
 
 				wList = payRecoveryHeadDataRepo.getPayRecBetDateCustAndCustCat(fromDate, toDate, custId, custCatId);
 			}
 
-			else if(custId != 0 && plantId != 0 && custCatId!=0){
+			else if (custId != 0 && plantId != 0 && custCatId != 0) {
 
-				wList = payRecoveryHeadDataRepo.getPayRecBetDateCustPlantCustCat(fromDate, toDate, plantId, custId, custCatId);
+				wList = payRecoveryHeadDataRepo.getPayRecBetDateCustPlantCustCat(fromDate, toDate, plantId, custId,
+						custCatId);
 			}
 
-			
+			for (int i = 0; i < wList.size(); i++) {
+				wList.get(i).setBillDate(DateConvertor.convertToDMY(wList.get(i).getBillDate()));
+				wList.get(i).setCreditDate1(DateConvertor.convertToDMY(wList.get(i).getCreditDate1()));
+				wList.get(i).setCreditDate2(DateConvertor.convertToDMY(wList.get(i).getCreditDate2()));
+				wList.get(i).setCreditDate3(DateConvertor.convertToDMY(wList.get(i).getCreditDate3()));
+			}
 
-			
 		} catch (Exception e) {
 
 			e.printStackTrace();
@@ -472,6 +477,5 @@ public class PayRecoveryApiController {
 		return wList;
 
 	}
-	
-	
+
 }

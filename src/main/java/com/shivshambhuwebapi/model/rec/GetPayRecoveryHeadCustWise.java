@@ -8,27 +8,15 @@ import javax.persistence.Id;
 
 @Entity
 public class GetPayRecoveryHeadCustWise {
-	
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "cust_id")
 	private int custId;
-	
-	
-	/*@Column(name = "pay_head_id")
-	private int payHeadId;
-*/
-	/*@Column(name = "bill_no")
-	private String billNo;*/
 
-	/*@Column(name = "bill_head_id")
-	private int billHeadId;
-*/
 	@Column(name = "bill_date")
 	private String billDate;
 
-	
 	@Column(name = "bill_total")
 	private float billTotal;
 
@@ -37,36 +25,12 @@ public class GetPayRecoveryHeadCustWise {
 
 	@Column(name = "pending_amt")
 	private float pendingAmt;
-	
+
 	@Column(name = "cust_name")
 	private String custName;
-	
+
 	@Column(name = "cust_mob_no")
 	private String custMobNo;
-/*
-	public int getPayHeadId() {
-		return payHeadId;
-	}
-
-	public void setPayHeadId(int payHeadId) {
-		this.payHeadId = payHeadId;
-	}*/
-
-	/*public String getBillNo() {
-		return billNo;
-	}
-
-	public void setBillNo(String billNo) {
-		this.billNo = billNo;
-	}
-
-	public int getBillHeadId() {
-		return billHeadId;
-	}
-
-	public void setBillHeadId(int billHeadId) {
-		this.billHeadId = billHeadId;
-	}*/
 
 	public String getBillDate() {
 		return billDate;
@@ -124,17 +88,11 @@ public class GetPayRecoveryHeadCustWise {
 		this.custMobNo = custMobNo;
 	}
 
-	/*@Override
+	@Override
 	public String toString() {
-		return "GetPayRecoveryHeadCustWise [payHeadId=" + payHeadId + ", billNo=" + billNo + ", billHeadId="
-				+ billHeadId + ", billDate=" + billDate + ", custId=" + custId + ", billTotal=" + billTotal
+		return "GetPayRecoveryHeadCustWise [custId=" + custId + ", billDate=" + billDate + ", billTotal=" + billTotal
 				+ ", paidAmt=" + paidAmt + ", pendingAmt=" + pendingAmt + ", custName=" + custName + ", custMobNo="
 				+ custMobNo + "]";
 	}
-
-	
-	*/
-	
-	
 
 }
