@@ -31,12 +31,13 @@ public class GetOrderDetail {
 
 	private float total;
 	private int delStatus;
-	
+
 	private float remOrdQty;
-	
+
 	private String uomName;
 	private int uomId;
-	
+
+	private int extra1;
 
 	public int getUomId() {
 		return uomId;
@@ -111,6 +112,14 @@ public class GetOrderDetail {
 	private String itemCode;
 	private Date poDate;
 	private String poNo;
+
+	public int getExtra1() {
+		return extra1;
+	}
+
+	public void setExtra1(int extra1) {
+		this.extra1 = extra1;
+	}
 
 	public int getOrderDetId() {
 		return orderDetId;
@@ -335,6 +344,7 @@ public class GetOrderDetail {
 	public void setItemCode(String itemCode) {
 		this.itemCode = itemCode;
 	}
+
 	@JsonFormat(locale = "hi", timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 	public Date getPoDate() {
 		return poDate;
@@ -357,12 +367,12 @@ public class GetOrderDetail {
 		return "GetOrderDetail [orderDetId=" + orderDetId + ", orderId=" + orderId + ", poId=" + poId + ", itemId="
 				+ itemId + ", poDetailId=" + poDetailId + ", orderQty=" + orderQty + ", orderRate=" + orderRate
 				+ ", total=" + total + ", delStatus=" + delStatus + ", remOrdQty=" + remOrdQty + ", uomName=" + uomName
-				+ ", uomId=" + uomId + ", exInt1=" + exInt1 + ", exInt2=" + exInt2 + ", exInt3=" + exInt3 + ", exVar1="
-				+ exVar1 + ", exVar2=" + exVar2 + ", exVar3=" + exVar3 + ", exDate1=" + exDate1 + ", exDate2=" + exDate2
-				+ ", exBool1=" + exBool1 + ", exBool2=" + exBool2 + ", exBool3=" + exBool3 + ", status=" + status
-				+ ", poRate=" + poRate + ", poQty=" + poQty + ", poConsumeQty=" + poConsumeQty + ", poTotal=" + poTotal
-				+ ", poRemainingQty=" + poRemainingQty + ", itemName=" + itemName + ", itemCode=" + itemCode
-				+ ", poDate=" + poDate + ", poNo=" + poNo + "]";
+				+ ", uomId=" + uomId + ", extra1=" + extra1 + ", exInt1=" + exInt1 + ", exInt2=" + exInt2 + ", exInt3="
+				+ exInt3 + ", exVar1=" + exVar1 + ", exVar2=" + exVar2 + ", exVar3=" + exVar3 + ", exDate1=" + exDate1
+				+ ", exDate2=" + exDate2 + ", exBool1=" + exBool1 + ", exBool2=" + exBool2 + ", exBool3=" + exBool3
+				+ ", status=" + status + ", poRate=" + poRate + ", poQty=" + poQty + ", poConsumeQty=" + poConsumeQty
+				+ ", poTotal=" + poTotal + ", poRemainingQty=" + poRemainingQty + ", itemName=" + itemName
+				+ ", itemCode=" + itemCode + ", poDate=" + poDate + ", poNo=" + poNo + "]";
 	}
 
 }
