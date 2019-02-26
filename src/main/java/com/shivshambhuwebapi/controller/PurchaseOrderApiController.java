@@ -69,6 +69,23 @@ public class PurchaseOrderApiController {
 
 	}
 
+	@RequestMapping(value = { "/getPoNoByBill" }, method = RequestMethod.POST)
+	public @ResponseBody List<PoHeader> getPoNoByBill(@RequestParam("custId") int custId,
+			@RequestParam("chalanIdList") List<Integer> chalanIdList) {
+
+		List<PoHeader> getPoListByDate = new ArrayList<PoHeader>();
+
+		try {
+			getPoListByDate = poHeaderRepository.getPoNoForBill(custId, chalanIdList);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+		return getPoListByDate;
+
+	}
+
 	@RequestMapping(value = { "/updateQuatationStatus" }, method = RequestMethod.POST)
 	public @ResponseBody Info updateQuatationStatus(@RequestParam("quotHeadId") int quotHeadId) {
 
