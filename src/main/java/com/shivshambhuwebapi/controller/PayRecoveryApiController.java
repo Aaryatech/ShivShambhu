@@ -377,6 +377,12 @@ public class PayRecoveryApiController {
 				wList = getPayRecoveryHeadRepo.getPayRecBetDateSpecCust(fromDate, toDate, custId);
 
 			}
+			for (int i = 0; i < wList.size(); i++) {
+				wList.get(i).setCreditDate1(DateConvertor.convertToDMY(wList.get(i).getCreditDate1()));
+				wList.get(i).setCreditDate2(DateConvertor.convertToDMY(wList.get(i).getCreditDate2()));
+				wList.get(i).setCreditDate3(DateConvertor.convertToDMY(wList.get(i).getCreditDate3()));
+				wList.get(i).setBillDate(DateConvertor.convertToDMY(wList.get(i).getBillDate()));
+			}
 
 		} catch (Exception e) {
 
@@ -400,6 +406,13 @@ public class PayRecoveryApiController {
 			if (custId != 0) {
 				wList = getPayRecoveryHeadRepo.getPayRecBetDateSpecCustAndStatus(fromDate, toDate, custId, status);
 
+			}
+
+			for (int i = 0; i < wList.size(); i++) {
+				wList.get(i).setCreditDate1(DateConvertor.convertToDMY(wList.get(i).getCreditDate1()));
+				wList.get(i).setCreditDate2(DateConvertor.convertToDMY(wList.get(i).getCreditDate2()));
+				wList.get(i).setCreditDate3(DateConvertor.convertToDMY(wList.get(i).getCreditDate3()));
+				wList.get(i).setBillDate(DateConvertor.convertToDMY(wList.get(i).getBillDate()));
 			}
 
 		} catch (Exception e) {
