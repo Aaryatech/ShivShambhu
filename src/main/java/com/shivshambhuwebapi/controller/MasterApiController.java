@@ -3184,4 +3184,68 @@ public class MasterApiController {
 		return info;
 
 	}
+
+	@RequestMapping(value = { "/updateBillGSTCounter" }, method = RequestMethod.POST)
+	public @ResponseBody Info updateBillGSTCounter(@RequestParam("plantId") int plantId,
+			@RequestParam("billCount") String billCount) {
+
+		System.out.println("Counter chalan updated inside ................");
+		Info info = new Info();
+
+		try {
+
+			int update = plantRepo.updateBillGstCount(plantId, billCount);
+
+			if (update == 1) {
+				info.setError(false);
+				info.setMessage("successfully update");
+
+				System.out.println("Counter order updated................");
+			} else {
+				info.setError(true);
+				info.setMessage(" failed to update");
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage(" failed to update");
+
+		}
+		return info;
+
+	}
+
+	@RequestMapping(value = { "/updateBillNonGSTCounter" }, method = RequestMethod.POST)
+	public @ResponseBody Info updateBillNonGSTCounter(@RequestParam("plantId") int plantId,
+			@RequestParam("billCount") String billCount) {
+
+		System.out.println("Counter chalan updated inside ................");
+		Info info = new Info();
+
+		try {
+
+			int update = plantRepo.updateBillNonGstCount(plantId, billCount);
+
+			if (update == 1) {
+				info.setError(false);
+				info.setMessage("successfully update");
+
+				System.out.println("Counter order updated................");
+			} else {
+				info.setError(true);
+				info.setMessage(" failed to update");
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage(" failed to update");
+
+		}
+		return info;
+
+	}
 }

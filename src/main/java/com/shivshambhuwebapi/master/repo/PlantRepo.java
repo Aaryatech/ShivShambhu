@@ -56,6 +56,17 @@ public interface PlantRepo extends JpaRepository<Plant, Integer> {
 	@Modifying
 	@Query("UPDATE Plant SET exVar1=:chCount  WHERE plantId =:plantId")
 	int updateChalanCount(@Param("plantId") int plantId, @Param("chCount") String chCount);
+	
+	@Transactional
+	@Modifying
+	@Query("UPDATE Plant SET exVar2=:billCount  WHERE plantId =:plantId")
+	int updateBillGstCount(@Param("plantId") int plantId, @Param("billCount") String billCount);
+	
+	
+	@Transactional
+	@Modifying
+	@Query("UPDATE Plant SET exVar3=:billCount  WHERE plantId =:plantId")
+	int updateBillNonGstCount(@Param("plantId") int plantId, @Param("billCount") String billCount);
 
 	
 }

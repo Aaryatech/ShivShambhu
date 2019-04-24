@@ -157,6 +157,38 @@ public class DocTermApiController {
 		return docHeaderList;
 
 	}
+	
+	@RequestMapping(value = { "/getDocHeaderByDocIdAndPlantIdForAll" }, method = RequestMethod.POST)
+	public @ResponseBody List<DocTermHeader> getDocHeaderByDocIdAndPlantIdForAll(@RequestParam("docId") int docId,
+			@RequestParam("plantId") int plantId) {
+
+		List<DocTermHeader> docHeaderList = new ArrayList<DocTermHeader>();
+
+		try {
+			if(plantId==0)
+			{
+
+			docHeaderList = docTermHeaderRepo.findByDocIdAndDelStatus(docId, 1);
+			}
+			else
+			{
+				docHeaderList = docTermHeaderRepo.findByDocIdAndExInt1AndDelStatus(docId, plantId, 1);
+			}
+
+			for (int i = 0; i < docHeaderList.size(); i++) {
+				List<DocTermDetail> detailList = docTermDetailRepo.findByTermId(docHeaderList.get(i).getTermId());
+				docHeaderList.get(i).setDetailList(detailList);
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return docHeaderList;
+
+	}
+
 
 	@RequestMapping(value = { "/getDocHeaderByTermId" }, method = RequestMethod.POST)
 	public @ResponseBody DocTermHeader getDocHeaderByTermId(@RequestParam("termId") int termId) {
