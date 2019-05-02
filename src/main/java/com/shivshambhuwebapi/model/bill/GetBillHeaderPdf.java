@@ -15,117 +15,118 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.shivshambhuwebapi.master.model.BankDetail;
 
 @Entity
-public class GetBillHeaderPdf implements Serializable{
+public class GetBillHeaderPdf implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "bill_head_id")
 	private int billHeadId;
-	
+
 	@Column(name = "bill_no")
 	private String billNo;
-	
+
 	@Column(name = "bill_date")
 	private Date billDate;
 
 	@Column(name = "cust_id")
 	private int custId;
-	
+
 	@Column(name = "cust_name")
 	private String custName;
-	
+
 	private String custVendor;
-	
+
 	private String custGstNo;
 
 	private String custMobNo;
 
 	@Column(name = "plant_name")
 	private String plantName;
-	
+
 	@Column(name = "proj_id")
 	private int projId;
-	
+
 	@Column(name = "cost_segment")
 	private String costSegment;
-	
+
 	@Column(name = "payment_term_id")
 	private int paymentTermId;
-	
+
 	@Column(name = "pay_term")
 	private String payTerm;
-	
+
 	@Column(name = "company_id")
 	private int companyId;
-	
+
 	@Column(name = "comp_name")
 	private String compName;
-	
+
 	private String compPanNo;
-	
+
 	private String compGstNo;
-	
+
 	private String contactNo1;
-	
+
 	private String contactNo2;
-	
+
 	private String email1;
-	
+
 	private String compOfficeAdd;
-	
+
 	private String compFactAdd;
-	
+	private String custAddress;
+
 	@Column(name = "challan_id")
 	private String challanId;
-	
+
 	@Column(name = "delivery_term")
 	private String deliveryTerm;
-	
+
 	@Column(name = "po_id")
 	private int poId;
-	
+
 	@Column(name = "taxable_amt")
 	private float taxableAmt;
-	
+
 	@Column(name = "tax_amt")
 	private float taxAmt;
-	
+
 	@Column(name = "total_amt")
 	private float totalAmt;
-	
+
 	@Column(name = "acc_id")
 	private int accId;
-	
+
 	@Column(name = "order_id")
 	private String orderId;
-	
+
 	@Transient
 	private String orderNo;
-	
+
 	@Column(name = "del_status")
 	private int delStatus;
-	
+
 	@Column(name = "ex_int1")
 	private int exInt1;
-	
+
 	@Column(name = "ex_int2")
 	private int exInt2;
-	
+
 	@Column(name = "ex_int3")
 	private int exInt3;
-	
+
 	@Column(name = "ex_var1")
 	private String exVar1;
-	
+
 	@Column(name = "ex_var2")
 	private String exVar2;
-	
+
 	@Column(name = "ex_var3")
 	private String exVar3;
-	
+
 	@Column(name = "ex_float1")
 	private float exFloat1;
-	
+
 	@Column(name = "ex_float2")
 	private float exFloat2;
 
@@ -138,15 +139,12 @@ public class GetBillHeaderPdf implements Serializable{
 	@Column(name = "chalan_no")
 	private String chalanNo;
 
-	
 	@Transient
 	List<GetBillDetail> getBillDetails;
-	
+
 	@Transient
 	BankDetail bankDetail;
 
-	
-	
 	public String getCustVendor() {
 		return custVendor;
 	}
@@ -243,7 +241,6 @@ public class GetBillHeaderPdf implements Serializable{
 		this.orderNo = orderNo;
 	}
 
-	
 	public BankDetail getBankDetail() {
 		return bankDetail;
 	}
@@ -267,7 +264,8 @@ public class GetBillHeaderPdf implements Serializable{
 	public void setBillNo(String billNo) {
 		this.billNo = billNo;
 	}
-	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
+
+	@JsonFormat(locale = "hi", timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 
 	public Date getBillDate() {
 		return billDate;
@@ -484,9 +482,6 @@ public class GetBillHeaderPdf implements Serializable{
 	public void setGetBillDetails(List<GetBillDetail> getBillDetails) {
 		this.getBillDetails = getBillDetails;
 	}
-	
-	
-	
 
 	public String getProjName() {
 		return projName;
@@ -511,8 +506,14 @@ public class GetBillHeaderPdf implements Serializable{
 	public void setChalanNo(String chalanNo) {
 		this.chalanNo = chalanNo;
 	}
-	
-	
+
+	public String getCustAddress() {
+		return custAddress;
+	}
+
+	public void setCustAddress(String custAddress) {
+		this.custAddress = custAddress;
+	}
 
 	@Override
 	public String toString() {
@@ -522,15 +523,14 @@ public class GetBillHeaderPdf implements Serializable{
 				+ ", costSegment=" + costSegment + ", paymentTermId=" + paymentTermId + ", payTerm=" + payTerm
 				+ ", companyId=" + companyId + ", compName=" + compName + ", compPanNo=" + compPanNo + ", compGstNo="
 				+ compGstNo + ", contactNo1=" + contactNo1 + ", contactNo2=" + contactNo2 + ", email1=" + email1
-				+ ", compOfficeAdd=" + compOfficeAdd + ", compFactAdd=" + compFactAdd + ", challanId=" + challanId
-				+ ", deliveryTerm=" + deliveryTerm + ", poId=" + poId + ", taxableAmt=" + taxableAmt + ", taxAmt="
-				+ taxAmt + ", totalAmt=" + totalAmt + ", accId=" + accId + ", orderId=" + orderId + ", orderNo="
-				+ orderNo + ", delStatus=" + delStatus + ", exInt1=" + exInt1 + ", exInt2=" + exInt2 + ", exInt3="
-				+ exInt3 + ", exVar1=" + exVar1 + ", exVar2=" + exVar2 + ", exVar3=" + exVar3 + ", exFloat1=" + exFloat1
-				+ ", exFloat2=" + exFloat2 + ", projName=" + projName + ", location=" + location + ", chalanNo="
-				+ chalanNo + ", getBillDetails=" + getBillDetails + ", bankDetail=" + bankDetail + "]";
+				+ ", compOfficeAdd=" + compOfficeAdd + ", compFactAdd=" + compFactAdd + ", custAddress=" + custAddress
+				+ ", challanId=" + challanId + ", deliveryTerm=" + deliveryTerm + ", poId=" + poId + ", taxableAmt="
+				+ taxableAmt + ", taxAmt=" + taxAmt + ", totalAmt=" + totalAmt + ", accId=" + accId + ", orderId="
+				+ orderId + ", orderNo=" + orderNo + ", delStatus=" + delStatus + ", exInt1=" + exInt1 + ", exInt2="
+				+ exInt2 + ", exInt3=" + exInt3 + ", exVar1=" + exVar1 + ", exVar2=" + exVar2 + ", exVar3=" + exVar3
+				+ ", exFloat1=" + exFloat1 + ", exFloat2=" + exFloat2 + ", projName=" + projName + ", location="
+				+ location + ", chalanNo=" + chalanNo + ", getBillDetails=" + getBillDetails + ", bankDetail="
+				+ bankDetail + "]";
 	}
-
-    
 
 }

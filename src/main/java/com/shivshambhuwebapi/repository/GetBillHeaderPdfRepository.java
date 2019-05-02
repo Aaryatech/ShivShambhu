@@ -21,7 +21,7 @@ public interface GetBillHeaderPdfRepository extends JpaRepository<GetBillHeaderP
 //			+ " t.bill_head_id IN(:billHeadIdList)",nativeQuery=true)
 	@Query(value = " select\n" + "        t.*,\n" + "        m.comp_name,\n" + "        m.comp_office_add,\n"
 			+ "        m.comp_fact_add,\n" + "        m.comp_pan_no,\n" + "        m.comp_gst_no,\n"
-			+ "        m.email1,\n" + "        m.contact_no1,\n" + "        m.contact_no2,\n" + "        c.cust_name,\n"
+			+ "        m.email1,\n" + "        m.contact_no1,\n" + "        m.contact_no2,\n" + "        c.cust_name,  c.cust_address,\n"
 			+ "        c.cust_gst_no,\n" + "        c.cust_vendor,\n" + "        c.cust_mob_no,\n"
 			+ "        p.plant_name,\n" + "        term.pay_term,\n" + "        pr.proj_name,\n"
 			+ "        pr.location,\n" + "        group_concat(ch.chalan_no) as chalan_no \n" + "    from\n"
