@@ -450,6 +450,39 @@ public class ChalanApiController {
 		return chList;
 	}
 
+	@RequestMapping(value = { "/getCancleChalanHeadersByPlantAndStatus" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetChalanHeader> getCancleChalanHeadersByPlantAndStatus(
+			@RequestParam("plantId") int plantId, @RequestParam("custId") int custId,
+			@RequestParam("fromDate") String fromDate, @RequestParam("toDate") String toDate) {
+
+		List<GetChalanHeader> chList = new ArrayList<>();
+
+		try {
+
+			chList = getGetChalanHeaderRepo.getCancleGetChalanHeaderByPlantId(plantId, fromDate, toDate);
+			System.out.println("chalan details::" + chList);
+
+			if (custId == 0 && plantId != 0) {
+				chList = getGetChalanHeaderRepo.getCancleGetChalanHeaderByPlantId(plantId, fromDate, toDate);
+			} else if (custId != 0 && plantId == 0) {
+				chList = getGetChalanHeaderRepo.getCancleGetChalanHeaderByCustId(custId, fromDate, toDate);
+			} else if (custId == 0 && plantId == 0) {
+				chList = getGetChalanHeaderRepo.getCancleGetChalanHeaderBetweenDate(fromDate, toDate);
+			} else {
+				chList = getGetChalanHeaderRepo.getCancleGetChalanHeaderByPlantIdAndCustId(plantId, custId, fromDate,
+						toDate);
+			}
+
+		} catch (Exception e) {
+
+			System.err.println("exce in  getChalanHeadersByPlantAndStatus " + e.getMessage());
+			e.printStackTrace();
+
+		}
+
+		return chList;
+	}
+
 	@RequestMapping(value = { "/getPendingBillListByPlantAndCust" }, method = RequestMethod.POST)
 	public @ResponseBody List<GetChalanHeader> getPendingBillListByPlantAndCust(@RequestParam("plantId") int plantId,
 			@RequestParam("custId") int custId) {
