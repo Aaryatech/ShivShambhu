@@ -32,6 +32,7 @@ public interface ChalanPrintItemRepo extends JpaRepository<ChalanPrintItem, Inte
 			"        t_chalan_header.order_id,\n" + 
 			"        t_chalan_header.chalan_remark,\n" + 
 			"        m_item_fg.item_name,\n" + 
+			"        m_item_fg.short_name,\n" + 
 			"        m_item_fg.item_code,\n" + 
 			"        m_uom.uom_name as uom,\n" + 
 			"        m_vehicle.vehicle_name,\n" + 

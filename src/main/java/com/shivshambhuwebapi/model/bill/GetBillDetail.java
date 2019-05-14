@@ -7,109 +7,119 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
 @Entity
-public class GetBillDetail implements Serializable{
+public class GetBillDetail implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "bill_detail_id")
 	private int billDetailId;
-	
+
 	@Column(name = "bill_head_id")
 	private int billHeadId;
-	
+
 	@Column(name = "item_id")
 	private int itemId;
-	
+
 	@Column(name = "item_name")
 	private String itemName;
-	
+
+	@Column(name = "short_name")
+	private String shortName;
+
 	@Column(name = "uom_name")
 	private String uomName;
-	
+
 	@Column(name = "qty")
 	private float qty;
-	
+
 	@Column(name = "hsn_code")
 	private String hsnCode;
-	
+
 	@Column(name = "rate")
 	private float rate;
-	
+
 	@Column(name = "cgst_per")
 	private float cgstPer;
-	
+
 	@Column(name = "sgst_per")
 	private float sgstPer;
-	
+
 	@Column(name = "igst_per")
 	private float igstPer;
-	
+
 	@Column(name = "cgst_amt")
 	private float cgstAmt;
-	
+
 	@Column(name = "sgst_amt")
 	private float sgstAmt;
-	
+
 	@Column(name = "igst_amt")
 	private float igstAmt;
-	
+
 	@Column(name = "tax_amt")
 	private float taxAmt;
-	
+
 	@Column(name = "disc_per")
 	private float discPer;
-	
+
 	@Column(name = "disc_amt")
 	private float discAmt;
-	
+
 	@Column(name = "taxable_amt")
 	private float taxableAmt;
-	
+
 	@Column(name = "total_amt")
 	private float totalAmt;
-	
+
 	@Column(name = "ex_int1")
 	private int exInt1;
-	
+
 	@Column(name = "ex_int2")
 	private int exInt2;
-	
+
 	@Column(name = "ex_float1")
 	private float exFloat1;
-	
+
 	@Column(name = "ex_float2")
 	private float exFloat2;
-	
+
 	@Column(name = "ex_var1")
 	private String exVar1;
-	
+
 	@Column(name = "ex_var2")
 	private String exVar2;
-	
+
 	@Column(name = "del_status")
 	private int delStatus;
 
 	private int company_id;
-	
+
 	private String comp_name;
-	
+
 	private String comp_office_add;
-	
+
 	private String contact_no1;
-	
+
 	private String email1;
-	
-	
-	//private int plantId;
-	
+
+	// private int plantId;
+
 	private String plantName;
-	
+
 	private String orderNo;
-	
+
 	private String refNo;
-	
-	
+
+	public String getShortName() {
+		return shortName;
+	}
+
+	public void setShortName(String shortName) {
+		this.shortName = shortName;
+	}
+
 	public String getUomName() {
 		return uomName;
 	}
@@ -317,9 +327,6 @@ public class GetBillDetail implements Serializable{
 	public void setDelStatus(int delStatus) {
 		this.delStatus = delStatus;
 	}
-	
-	
-	
 
 	public int getCompany_id() {
 		return company_id;
@@ -361,14 +368,11 @@ public class GetBillDetail implements Serializable{
 		this.email1 = email1;
 	}
 
-	
-	/*public int getPlantId() {
-		return plantId;
-	}
-
-	public void setPlantId(int plantId) {
-		this.plantId = plantId;
-	}*/
+	/*
+	 * public int getPlantId() { return plantId; }
+	 * 
+	 * public void setPlantId(int plantId) { this.plantId = plantId; }
+	 */
 
 	public String getPlantName() {
 		return plantName;
@@ -377,8 +381,6 @@ public class GetBillDetail implements Serializable{
 	public void setPlantName(String plantName) {
 		this.plantName = plantName;
 	}
-	
-	
 
 	public String getOrderNo() {
 		return orderNo;
@@ -388,8 +390,6 @@ public class GetBillDetail implements Serializable{
 		this.orderNo = orderNo;
 	}
 
-	
-	
 	public String getRefNo() {
 		return refNo;
 	}
@@ -398,23 +398,35 @@ public class GetBillDetail implements Serializable{
 		this.refNo = refNo;
 	}
 
-	/*@Override
+	@Override
 	public String toString() {
 		return "GetBillDetail [billDetailId=" + billDetailId + ", billHeadId=" + billHeadId + ", itemId=" + itemId
-				+ ", itemName=" + itemName + ", uomName=" + uomName + ", qty=" + qty + ", hsnCode=" + hsnCode
-				+ ", rate=" + rate + ", cgstPer=" + cgstPer + ", sgstPer=" + sgstPer + ", igstPer=" + igstPer
-				+ ", cgstAmt=" + cgstAmt + ", sgstAmt=" + sgstAmt + ", igstAmt=" + igstAmt + ", taxAmt=" + taxAmt
-				+ ", discPer=" + discPer + ", discAmt=" + discAmt + ", taxableAmt=" + taxableAmt + ", totalAmt="
-				+ totalAmt + ", exInt1=" + exInt1 + ", exInt2=" + exInt2 + ", exFloat1=" + exFloat1 + ", exFloat2="
-				+ exFloat2 + ", exVar1=" + exVar1 + ", exVar2=" + exVar2 + ", delStatus=" + delStatus + ", company_id="
-				+ company_id + ", comp_name=" + comp_name + ", comp_office_add=" + comp_office_add + ", contact_no1="
-				+ contact_no1 + ", email1=" + email1 + ", plantId=" + plantId + ", plantName=" + plantName
-				+ ", orderNo=" + orderNo + ", refNo=" + refNo + "]";
+				+ ", itemName=" + itemName + ", shortName=" + shortName + ", uomName=" + uomName + ", qty=" + qty
+				+ ", hsnCode=" + hsnCode + ", rate=" + rate + ", cgstPer=" + cgstPer + ", sgstPer=" + sgstPer
+				+ ", igstPer=" + igstPer + ", cgstAmt=" + cgstAmt + ", sgstAmt=" + sgstAmt + ", igstAmt=" + igstAmt
+				+ ", taxAmt=" + taxAmt + ", discPer=" + discPer + ", discAmt=" + discAmt + ", taxableAmt=" + taxableAmt
+				+ ", totalAmt=" + totalAmt + ", exInt1=" + exInt1 + ", exInt2=" + exInt2 + ", exFloat1=" + exFloat1
+				+ ", exFloat2=" + exFloat2 + ", exVar1=" + exVar1 + ", exVar2=" + exVar2 + ", delStatus=" + delStatus
+				+ ", company_id=" + company_id + ", comp_name=" + comp_name + ", comp_office_add=" + comp_office_add
+				+ ", contact_no1=" + contact_no1 + ", email1=" + email1 + ", plantName=" + plantName + ", orderNo="
+				+ orderNo + ", refNo=" + refNo + "]";
 	}
-*/
-	
-	
 
-	
-	
+	/*
+	 * @Override public String toString() { return "GetBillDetail [billDetailId=" +
+	 * billDetailId + ", billHeadId=" + billHeadId + ", itemId=" + itemId +
+	 * ", itemName=" + itemName + ", uomName=" + uomName + ", qty=" + qty +
+	 * ", hsnCode=" + hsnCode + ", rate=" + rate + ", cgstPer=" + cgstPer +
+	 * ", sgstPer=" + sgstPer + ", igstPer=" + igstPer + ", cgstAmt=" + cgstAmt +
+	 * ", sgstAmt=" + sgstAmt + ", igstAmt=" + igstAmt + ", taxAmt=" + taxAmt +
+	 * ", discPer=" + discPer + ", discAmt=" + discAmt + ", taxableAmt=" +
+	 * taxableAmt + ", totalAmt=" + totalAmt + ", exInt1=" + exInt1 + ", exInt2=" +
+	 * exInt2 + ", exFloat1=" + exFloat1 + ", exFloat2=" + exFloat2 + ", exVar1=" +
+	 * exVar1 + ", exVar2=" + exVar2 + ", delStatus=" + delStatus + ", company_id="
+	 * + company_id + ", comp_name=" + comp_name + ", comp_office_add=" +
+	 * comp_office_add + ", contact_no1=" + contact_no1 + ", email1=" + email1 +
+	 * ", plantId=" + plantId + ", plantName=" + plantName + ", orderNo=" + orderNo
+	 * + ", refNo=" + refNo + "]"; }
+	 */
+
 }

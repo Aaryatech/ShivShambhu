@@ -215,7 +215,8 @@ public class BillController {
 	@RequestMapping(value = { "/getBillHeadersByDateAndCustAndPlant" }, method = RequestMethod.POST)
 	public @ResponseBody List<GetBillHeader> getBillHeadersByDateAndCustAndPlant(@RequestParam("plantId") int plantId,
 			@RequestParam("custId") int custId, @RequestParam("fromDate") String fromDate,
-			@RequestParam("toDate") String toDate, @RequestParam("tax") int tax) {
+			@RequestParam("toDate") String toDate, @RequestParam("tax") int tax,
+			@RequestParam("delStatus") int delStatus) {
 
 		List<GetBillHeader> billHeaderRes = null;
 
@@ -223,27 +224,30 @@ public class BillController {
 
 			if (tax == -1) {
 				if (plantId == 0 && custId == 0) {
-					billHeaderRes = getBillHeaderRepository.getBillHeadersByDateByAll(fromDate, toDate);
+					billHeaderRes = getBillHeaderRepository.getBillHeadersByDateByAll(fromDate, toDate, delStatus);
 				} else if (plantId == 0 && custId != 0) {
-					billHeaderRes = getBillHeaderRepository.getBillHeadersByDateByCust(custId, fromDate, toDate);
+					billHeaderRes = getBillHeaderRepository.getBillHeadersByDateByCust(custId, fromDate, toDate,
+							delStatus);
 				} else if (plantId != 0 && custId == 0) {
-					billHeaderRes = getBillHeaderRepository.getBillHeadersByDateByPlant(plantId, fromDate, toDate);
+					billHeaderRes = getBillHeaderRepository.getBillHeadersByDateByPlant(plantId, fromDate, toDate,
+							delStatus);
 				} else if (plantId != 0 && custId != 0) {
 					billHeaderRes = getBillHeaderRepository.getBillHeadersByDateByCustByPlant(plantId, custId, fromDate,
 							toDate);
 				}
 			} else {
 				if (plantId == 0 && custId == 0) {
-					billHeaderRes = getBillHeaderRepository.getBillHeadersByDateAndTax(fromDate, toDate, tax);
+					billHeaderRes = getBillHeaderRepository.getBillHeadersByDateAndTax(fromDate, toDate, tax,
+							delStatus);
 				} else if (plantId == 0 && custId != 0) {
 					billHeaderRes = getBillHeaderRepository.getBillHeadersByDateByCustAndTax(custId, fromDate, toDate,
-							tax);
+							tax, delStatus);
 				} else if (plantId != 0 && custId == 0) {
 					billHeaderRes = getBillHeaderRepository.getBillHeadersByDateByPlantAndTax(plantId, fromDate, toDate,
-							tax);
+							tax, delStatus);
 				} else if (plantId != 0 && custId != 0) {
 					billHeaderRes = getBillHeaderRepository.getBillHeadersByDateByCustByPlantAndTax(plantId, custId,
-							fromDate, toDate, tax);
+							fromDate, toDate, tax, delStatus);
 				}
 			}
 
@@ -434,4 +438,20 @@ public class BillController {
 
 		return chHeader;
 	}
+
+	@RequestMapping(value = { "/deleteBill" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteBill(@RequestParam("billHeadId") int billHeadId) {
+
+		int isDeleted = billHeaderRepository.deleteBill(billHeadId);
+		Info infoRes = new Info();
+		if (isDeleted >= 1) {
+			infoRes.setError(false);
+			infoRes.setMessage("Bill Deleted Successfully");
+		} else {
+			infoRes.setError(true);
+			infoRes.setMessage("BILL Deletion Failed");
+		}
+		return infoRes;
+	}
+
 }

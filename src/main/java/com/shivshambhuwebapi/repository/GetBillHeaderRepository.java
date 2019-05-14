@@ -23,34 +23,34 @@ public interface GetBillHeaderRepository extends JpaRepository<GetBillHeader, In
 	List<GetBillHeader> getBillHeadersByDateByCustByPlant(@Param("plantId") int plantId, @Param("custId") int custId,
 			@Param("fromDate") String fromDate, @Param("toDate") String toDate);
 
-	@Query(value = "select t.*,m.comp_name,c.cust_name,p.plant_name from t_bill_header t,m_company m,m_customer c,m_plant p where p.plant_id=t.ex_int1 and c.cust_id=t.cust_id and m.company_id=t.company_id and t.del_status=1 and t.bill_date >=:fromDate and t.bill_date<=:toDate ORDER BY t.bill_head_id DESC", nativeQuery = true)
-	List<GetBillHeader> getBillHeadersByDateByAll(@Param("fromDate") String fromDate, @Param("toDate") String toDate);
+	@Query(value = "select t.*,m.comp_name,c.cust_name,p.plant_name from t_bill_header t,m_company m,m_customer c,m_plant p where p.plant_id=t.ex_int1 and c.cust_id=t.cust_id and m.company_id=t.company_id and t.del_status=:delStatus and t.bill_date >=:fromDate and t.bill_date<=:toDate ORDER BY t.bill_head_id DESC", nativeQuery = true)
+	List<GetBillHeader> getBillHeadersByDateByAll(@Param("fromDate") String fromDate, @Param("toDate") String toDate,@Param("delStatus") int delStatus);
 
-	@Query(value = "select t.*,m.comp_name,c.cust_name,p.plant_name from t_bill_header t,m_company m,m_customer c,m_plant p where p.plant_id=t.ex_int1 and c.cust_id=t.cust_id and t.cust_id=:custId and m.company_id=t.company_id and t.del_status=1 and t.bill_date >=:fromDate and t.bill_date<=:toDate ORDER BY t.bill_head_id DESC", nativeQuery = true)
+	@Query(value = "select t.*,m.comp_name,c.cust_name,p.plant_name from t_bill_header t,m_company m,m_customer c,m_plant p where p.plant_id=t.ex_int1 and c.cust_id=t.cust_id and t.cust_id=:custId and m.company_id=t.company_id and t.del_status=:delStatus and t.bill_date >=:fromDate and t.bill_date<=:toDate ORDER BY t.bill_head_id DESC", nativeQuery = true)
 	List<GetBillHeader> getBillHeadersByDateByCust(@Param("custId") int custId, @Param("fromDate") String fromDate,
-			@Param("toDate") String toDate);
+			@Param("toDate") String toDate,@Param("delStatus") int delStatus);
 
-	@Query(value = "select t.*,m.comp_name,c.cust_name,p.plant_name from t_bill_header t,m_company m,m_customer c,m_plant p where p.plant_id=t.ex_int1 and c.cust_id=t.cust_id and t.ex_int1=:plantId and m.company_id=t.company_id and t.del_status=1 and t.bill_date >=:fromDate and t.bill_date<=:toDate ORDER BY t.bill_head_id DESC", nativeQuery = true)
+	@Query(value = "select t.*,m.comp_name,c.cust_name,p.plant_name from t_bill_header t,m_company m,m_customer c,m_plant p where p.plant_id=t.ex_int1 and c.cust_id=t.cust_id and t.ex_int1=:plantId and m.company_id=t.company_id and t.del_status=:delStatus and t.bill_date >=:fromDate and t.bill_date<=:toDate ORDER BY t.bill_head_id DESC", nativeQuery = true)
 	List<GetBillHeader> getBillHeadersByDateByPlant(@Param("plantId") int plantId, @Param("fromDate") String fromDate,
-			@Param("toDate") String toDate);
+			@Param("toDate") String toDate,@Param("delStatus") int delStatus);
 
 	// -----------
 
-	@Query(value = "select t.*,m.comp_name,c.cust_name,p.plant_name from t_bill_header t,m_company m,m_customer c,m_plant p where p.plant_id=t.ex_int1 and c.cust_id=t.cust_id and m.company_id=t.company_id and t.del_status=1 and t.bill_date >=:fromDate and t.bill_date<=:toDate AND t.ex_int2=:tax ORDER BY t.bill_head_id DESC", nativeQuery = true)
+	@Query(value = "select t.*,m.comp_name,c.cust_name,p.plant_name from t_bill_header t,m_company m,m_customer c,m_plant p where p.plant_id=t.ex_int1 and c.cust_id=t.cust_id and m.company_id=t.company_id and t.del_status=:delStatus and t.bill_date >=:fromDate and t.bill_date<=:toDate AND t.ex_int2=:tax ORDER BY t.bill_head_id DESC", nativeQuery = true)
 	List<GetBillHeader> getBillHeadersByDateAndTax(@Param("fromDate") String fromDate, @Param("toDate") String toDate,
-			@Param("tax") int tax);
+			@Param("tax") int tax,@Param("delStatus") int delStatus);
 
-	@Query(value = "select t.*,m.comp_name,c.cust_name,p.plant_name from t_bill_header t,m_company m,m_customer c,m_plant p where p.plant_id=t.ex_int1 and c.cust_id=t.cust_id and t.cust_id=:custId and m.company_id=t.company_id and t.del_status=1 and t.bill_date >=:fromDate and t.bill_date<=:toDate AND t.ex_int2=:tax ORDER BY t.bill_head_id DESC", nativeQuery = true)
+	@Query(value = "select t.*,m.comp_name,c.cust_name,p.plant_name from t_bill_header t,m_company m,m_customer c,m_plant p where p.plant_id=t.ex_int1 and c.cust_id=t.cust_id and t.cust_id=:custId and m.company_id=t.company_id and t.del_status=:delStatus and t.bill_date >=:fromDate and t.bill_date<=:toDate AND t.ex_int2=:tax ORDER BY t.bill_head_id DESC", nativeQuery = true)
 	List<GetBillHeader> getBillHeadersByDateByCustAndTax(@Param("custId") int custId,
-			@Param("fromDate") String fromDate, @Param("toDate") String toDate, @Param("tax") int tax);
+			@Param("fromDate") String fromDate, @Param("toDate") String toDate, @Param("tax") int tax,@Param("delStatus") int delStatus);
 
-	@Query(value = "select t.*,m.comp_name,c.cust_name,p.plant_name from t_bill_header t,m_company m,m_customer c,m_plant p where p.plant_id=t.ex_int1 and c.cust_id=t.cust_id and t.ex_int1=:plantId and m.company_id=t.company_id and t.del_status=1 and t.bill_date >=:fromDate and t.bill_date<=:toDate AND t.ex_int2=:tax ORDER BY t.bill_head_id DESC", nativeQuery = true)
+	@Query(value = "select t.*,m.comp_name,c.cust_name,p.plant_name from t_bill_header t,m_company m,m_customer c,m_plant p where p.plant_id=t.ex_int1 and c.cust_id=t.cust_id and t.ex_int1=:plantId and m.company_id=t.company_id and t.del_status=:delStatus and t.bill_date >=:fromDate and t.bill_date<=:toDate AND t.ex_int2=:tax ORDER BY t.bill_head_id DESC", nativeQuery = true)
 	List<GetBillHeader> getBillHeadersByDateByPlantAndTax(@Param("plantId") int plantId,
-			@Param("fromDate") String fromDate, @Param("toDate") String toDate, @Param("tax") int tax);
+			@Param("fromDate") String fromDate, @Param("toDate") String toDate, @Param("tax") int tax,@Param("delStatus") int delStatus);
 
-	@Query(value = "select t.*,m.comp_name,c.cust_name,p.plant_name from t_bill_header t,m_company m,m_customer c,m_plant p where p.plant_id=t.ex_int1 and c.cust_id=t.cust_id and t.ex_int1=:plantId and t.cust_id=:custId and m.company_id=t.company_id and t.del_status=1 and t.bill_date >=:fromDate and t.bill_date<=:toDate AND t.ex_int2=:tax ORDER BY t.bill_head_id DESC", nativeQuery = true)
+	@Query(value = "select t.*,m.comp_name,c.cust_name,p.plant_name from t_bill_header t,m_company m,m_customer c,m_plant p where p.plant_id=t.ex_int1 and c.cust_id=t.cust_id and t.ex_int1=:plantId and t.cust_id=:custId and m.company_id=t.company_id and t.del_status=:delStatus and t.bill_date >=:fromDate and t.bill_date<=:toDate AND t.ex_int2=:tax ORDER BY t.bill_head_id DESC", nativeQuery = true)
 	List<GetBillHeader> getBillHeadersByDateByCustByPlantAndTax(@Param("plantId") int plantId,
 			@Param("custId") int custId, @Param("fromDate") String fromDate, @Param("toDate") String toDate,
-			@Param("tax") int tax);
+			@Param("tax") int tax,@Param("delStatus") int delStatus);
 
 }
