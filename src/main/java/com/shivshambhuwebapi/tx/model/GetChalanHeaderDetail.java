@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 public class GetChalanHeaderDetail {
 	@Id
@@ -183,6 +185,7 @@ public class GetChalanHeaderDetail {
 		this.status = status;
 	}
 
+	@JsonFormat(locale = "hi", pattern = "dd-MM-yyyy", timezone = "Asia/Kolkata")
 	public Date getChalanDate() {
 		return chalanDate;
 	}
@@ -247,6 +250,7 @@ public class GetChalanHeaderDetail {
 		this.vehTimeIn = vehTimeIn;
 	}
 
+	@JsonFormat(locale = "hi", pattern = "dd-MM-yyyy", timezone = "Asia/Kolkata")
 	public Date getVehInDate() {
 		return vehInDate;
 	}
