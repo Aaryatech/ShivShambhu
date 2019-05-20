@@ -1,18 +1,30 @@
 package com.shivshambhuwebapi.tx.model;
 
 import java.util.Date;
-import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Transient;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
-public class GetChalanHeader {
-
+public class GetChalanHeaderDetail {
 	@Id
+	private int chalanDetailId;
+
+	private int itemId;
+
+	private int itemUom;
+
+	private float itemQty;
+
+	private String itemName;
+	private String itemCode;
+	private String uomName;
+	private String uomShortName;
+	private float itemRate1;
+
 	private int chalanId;
 
 	private String chalanNo;
@@ -63,16 +75,6 @@ public class GetChalanHeader {
 
 	private String userName;
 
-	// extra data
-
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-
 	private String vehNo;
 	private String vehicleName;
 	private String plantName;
@@ -85,8 +87,77 @@ public class GetChalanHeader {
 	private String projAddress;
 	private String driverName;
 
-	@Transient
-	List<GetChalanDetail> detailList;
+	public int getChalanDetailId() {
+		return chalanDetailId;
+	}
+
+	public void setChalanDetailId(int chalanDetailId) {
+		this.chalanDetailId = chalanDetailId;
+	}
+
+	public int getItemId() {
+		return itemId;
+	}
+
+	public void setItemId(int itemId) {
+		this.itemId = itemId;
+	}
+
+	public int getItemUom() {
+		return itemUom;
+	}
+
+	public void setItemUom(int itemUom) {
+		this.itemUom = itemUom;
+	}
+
+	public float getItemQty() {
+		return itemQty;
+	}
+
+	public void setItemQty(float itemQty) {
+		this.itemQty = itemQty;
+	}
+
+	public String getItemName() {
+		return itemName;
+	}
+
+	public void setItemName(String itemName) {
+		this.itemName = itemName;
+	}
+
+	public String getItemCode() {
+		return itemCode;
+	}
+
+	public void setItemCode(String itemCode) {
+		this.itemCode = itemCode;
+	}
+
+	public String getUomName() {
+		return uomName;
+	}
+
+	public void setUomName(String uomName) {
+		this.uomName = uomName;
+	}
+
+	public String getUomShortName() {
+		return uomShortName;
+	}
+
+	public void setUomShortName(String uomShortName) {
+		this.uomShortName = uomShortName;
+	}
+
+	public float getItemRate1() {
+		return itemRate1;
+	}
+
+	public void setItemRate1(float itemRate1) {
+		this.itemRate1 = itemRate1;
+	}
 
 	public int getChalanId() {
 		return chalanId;
@@ -112,7 +183,6 @@ public class GetChalanHeader {
 		this.status = status;
 	}
 
-	@JsonFormat(locale = "hi", pattern = "dd-MM-yyyy", timezone = "Asia/Kolkata")
 	public Date getChalanDate() {
 		return chalanDate;
 	}
@@ -281,6 +351,14 @@ public class GetChalanHeader {
 		this.costSegment = costSegment;
 	}
 
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
 	public String getVehNo() {
 		return vehNo;
 	}
@@ -303,6 +381,14 @@ public class GetChalanHeader {
 
 	public void setPlantName(String plantName) {
 		this.plantName = plantName;
+	}
+
+	public int getCompanyId() {
+		return companyId;
+	}
+
+	public void setCompanyId(int companyId) {
+		this.companyId = companyId;
 	}
 
 	public String getCompName() {
@@ -353,35 +439,21 @@ public class GetChalanHeader {
 		this.driverName = driverName;
 	}
 
-	public int getCompanyId() {
-		return companyId;
-	}
-
-	public void setCompanyId(int companyId) {
-		this.companyId = companyId;
-	}
-
-	public List<GetChalanDetail> getDetailList() {
-		return detailList;
-	}
-
-	public void setDetailList(List<GetChalanDetail> detailList) {
-		this.detailList = detailList;
-	}
-
 	@Override
 	public String toString() {
-		return "GetChalanHeader [chalanId=" + chalanId + ", chalanNo=" + chalanNo + ", status=" + status
-				+ ", chalanDate=" + chalanDate + ", vehicleId=" + vehicleId + ", plantId=" + plantId + ", custId="
-				+ custId + ", projId=" + projId + ", driverId=" + driverId + ", vehTimeOut=" + vehTimeOut
-				+ ", vehTimeIn=" + vehTimeIn + ", vehInDate=" + vehInDate + ", outKm=" + outKm + ", inKm=" + inKm
-				+ ", sitePersonName=" + sitePersonName + ", sitePersonMob=" + sitePersonMob + ", orderId=" + orderId
-				+ ", orderNo=" + orderNo + ", chalanRemark=" + chalanRemark + ", exInt1=" + exInt1 + ", exFloat1="
-				+ exFloat1 + ", exVar1=" + exVar1 + ", exDate1=" + exDate1 + ", costSegment=" + costSegment
-				+ ", userName=" + userName + ", vehNo=" + vehNo + ", vehicleName=" + vehicleName + ", plantName="
-				+ plantName + ", companyId=" + companyId + ", compName=" + compName + ", custName=" + custName
-				+ ", custMobNo=" + custMobNo + ", projName=" + projName + ", projAddress=" + projAddress
-				+ ", driverName=" + driverName + ", detailList=" + detailList + "]";
+		return "GetChalanHeaderDetail [chalanDetailId=" + chalanDetailId + ", itemId=" + itemId + ", itemUom=" + itemUom
+				+ ", itemQty=" + itemQty + ", itemName=" + itemName + ", itemCode=" + itemCode + ", uomName=" + uomName
+				+ ", uomShortName=" + uomShortName + ", itemRate1=" + itemRate1 + ", chalanId=" + chalanId
+				+ ", chalanNo=" + chalanNo + ", status=" + status + ", chalanDate=" + chalanDate + ", vehicleId="
+				+ vehicleId + ", plantId=" + plantId + ", custId=" + custId + ", projId=" + projId + ", driverId="
+				+ driverId + ", vehTimeOut=" + vehTimeOut + ", vehTimeIn=" + vehTimeIn + ", vehInDate=" + vehInDate
+				+ ", outKm=" + outKm + ", inKm=" + inKm + ", sitePersonName=" + sitePersonName + ", sitePersonMob="
+				+ sitePersonMob + ", orderId=" + orderId + ", orderNo=" + orderNo + ", chalanRemark=" + chalanRemark
+				+ ", exInt1=" + exInt1 + ", exFloat1=" + exFloat1 + ", exVar1=" + exVar1 + ", exDate1=" + exDate1
+				+ ", costSegment=" + costSegment + ", userName=" + userName + ", vehNo=" + vehNo + ", vehicleName="
+				+ vehicleName + ", plantName=" + plantName + ", companyId=" + companyId + ", compName=" + compName
+				+ ", custName=" + custName + ", custMobNo=" + custMobNo + ", projName=" + projName + ", projAddress="
+				+ projAddress + ", driverName=" + driverName + "]";
 	}
 
 }
