@@ -31,6 +31,26 @@ public interface GetChalanHeaderRepo extends JpaRepository<GetChalanHeader, Inte
 
 	@Query(value = " SELECT " + "        t_chalan_header.*, " + "        m_vehicle.veh_no,"
 			+ "        m_vehicle.vehicle_name," + "        m_plant.plant_name,"
+			+ "        m_company.comp_name, m_company.company_id," + "        m_customer.cust_name,"
+			+ "        m_customer.cust_mob_no," + "        m_project.proj_name,"
+			+ "        m_project.address as proj_address"
+			+ "        ,COALESCE((SELECT m_user.usr_name from m_user WHERE m_user.user_id=t_chalan_header.driver_id),'NA')AS driver_name,"
+			+ "        COALESCE((SELECT m_user.usr_name from m_user WHERE m_user.user_id=t_chalan_header.ex_var1),'NA')AS user_name "
+			+ "        " + "    FROM " + "        m_vehicle," + "        m_plant," + "        m_company,"
+			+ "        m_customer," + "        m_project," + "        t_chalan_header   " + "    WHERE "
+			+ "        m_vehicle.vehicle_id=t_chalan_header.vehicle_id "
+			+ "        AND t_chalan_header.plant_id=m_plant.plant_id  "
+			+ "        AND m_company.company_id=m_plant.company_id "
+			+ "        AND m_customer.cust_id=t_chalan_header.cust_id  "
+			+ "        AND m_project.proj_id=t_chalan_header.proj_id "
+			+ "        AND t_chalan_header.plant_id=:plantId AND t_chalan_header.chalan_date BETWEEN :fromDate AND :toDate  "
+			+ "        AND t_chalan_header.ex_int1=1   ORDER BY t_chalan_header.chalan_id DESC  ", nativeQuery = true)
+
+	List<GetChalanHeader> getGetChalanHeaderByPlantId1(@Param("plantId") int plantId,
+			@Param("fromDate") String fromDate, @Param("toDate") String toDate);
+
+	@Query(value = " SELECT " + "        t_chalan_header.*, " + "        m_vehicle.veh_no,"
+			+ "        m_vehicle.vehicle_name," + "        m_plant.plant_name,"
 			+ "        m_company.comp_name,m_company.company_id," + "        m_customer.cust_name,"
 			+ "        m_customer.cust_mob_no," + "        m_project.proj_name,"
 			+ "        m_project.address as proj_address"
@@ -47,6 +67,26 @@ public interface GetChalanHeaderRepo extends JpaRepository<GetChalanHeader, Inte
 			+ "        AND t_chalan_header.ex_int1=1  AND t_chalan_header.status!=2 ORDER BY t_chalan_header.chalan_id DESC  ", nativeQuery = true)
 
 	List<GetChalanHeader> getGetChalanHeaderByCustId(@Param("custId") int custId, @Param("fromDate") String fromDate,
+			@Param("toDate") String toDate);
+
+	@Query(value = " SELECT " + "        t_chalan_header.*, " + "        m_vehicle.veh_no,"
+			+ "        m_vehicle.vehicle_name," + "        m_plant.plant_name,"
+			+ "        m_company.comp_name,m_company.company_id," + "        m_customer.cust_name,"
+			+ "        m_customer.cust_mob_no," + "        m_project.proj_name,"
+			+ "        m_project.address as proj_address"
+			+ "        ,COALESCE((SELECT m_user.usr_name from m_user WHERE m_user.user_id=t_chalan_header.driver_id),'NA')AS driver_name,"
+			+ "        COALESCE((SELECT m_user.usr_name from m_user WHERE m_user.user_id=t_chalan_header.ex_var1),'NA')AS user_name "
+			+ "        " + "    FROM " + "        m_vehicle," + "        m_plant," + "        m_company,"
+			+ "        m_customer," + "        m_project," + "        t_chalan_header   " + "    WHERE "
+			+ "        m_vehicle.vehicle_id=t_chalan_header.vehicle_id "
+			+ "        AND t_chalan_header.plant_id=m_plant.plant_id  "
+			+ "        AND m_company.company_id=m_plant.company_id "
+			+ "        AND m_customer.cust_id=t_chalan_header.cust_id  "
+			+ "        AND m_project.proj_id=t_chalan_header.proj_id "
+			+ "        AND t_chalan_header.cust_id=:custId AND t_chalan_header.chalan_date BETWEEN :fromDate AND :toDate  "
+			+ "        AND t_chalan_header.ex_int1=1  ORDER BY t_chalan_header.chalan_id DESC  ", nativeQuery = true)
+
+	List<GetChalanHeader> getGetChalanHeaderByCustId1(@Param("custId") int custId, @Param("fromDate") String fromDate,
 			@Param("toDate") String toDate);
 
 	@Query(value = " SELECT " + "        t_chalan_header.*, " + "        m_vehicle.veh_no,"
@@ -83,10 +123,50 @@ public interface GetChalanHeaderRepo extends JpaRepository<GetChalanHeader, Inte
 			+ "        AND m_company.company_id=m_plant.company_id "
 			+ "        AND m_customer.cust_id=t_chalan_header.cust_id  "
 			+ "        AND m_project.proj_id=t_chalan_header.proj_id "
+			+ "        AND  t_chalan_header.chalan_date BETWEEN :fromDate AND :toDate  "
+			+ "        AND t_chalan_header.ex_int1=1   ORDER BY t_chalan_header.chalan_id DESC ", nativeQuery = true)
+
+	List<GetChalanHeader> getGetChalanHeaderBetweenDate1(@Param("fromDate") String fromDate,
+			@Param("toDate") String toDate);
+
+	@Query(value = " SELECT " + "        t_chalan_header.*, " + "        m_vehicle.veh_no,"
+			+ "        m_vehicle.vehicle_name," + "        m_plant.plant_name,"
+			+ "        m_company.comp_name,m_company.company_id," + "        m_customer.cust_name,"
+			+ "        m_customer.cust_mob_no," + "        m_project.proj_name,"
+			+ "        m_project.address as proj_address"
+			+ "        ,COALESCE((SELECT m_user.usr_name from m_user WHERE m_user.user_id=t_chalan_header.driver_id),'NA')AS driver_name,"
+			+ "        COALESCE((SELECT m_user.usr_name from m_user WHERE m_user.user_id=t_chalan_header.ex_var1),'NA')AS user_name "
+			+ "        " + "    FROM " + "        m_vehicle," + "        m_plant," + "        m_company,"
+			+ "        m_customer," + "        m_project," + "        t_chalan_header   " + "    WHERE "
+			+ "        m_vehicle.vehicle_id=t_chalan_header.vehicle_id "
+			+ "        AND t_chalan_header.plant_id=m_plant.plant_id  "
+			+ "        AND m_company.company_id=m_plant.company_id "
+			+ "        AND m_customer.cust_id=t_chalan_header.cust_id  "
+			+ "        AND m_project.proj_id=t_chalan_header.proj_id "
 			+ "        AND t_chalan_header.plant_id=:plantId AND t_chalan_header.cust_id=:custId AND t_chalan_header.chalan_date BETWEEN :fromDate AND :toDate  "
 			+ "        AND t_chalan_header.ex_int1=1  AND t_chalan_header.status!=2 ORDER BY t_chalan_header.chalan_id DESC  ", nativeQuery = true)
 
 	List<GetChalanHeader> getGetChalanHeaderByPlantIdAndCustId(@Param("plantId") int plantId,
+			@Param("custId") int custId, @Param("fromDate") String fromDate, @Param("toDate") String toDate);
+
+	@Query(value = " SELECT " + "        t_chalan_header.*, " + "        m_vehicle.veh_no,"
+			+ "        m_vehicle.vehicle_name," + "        m_plant.plant_name,"
+			+ "        m_company.comp_name,m_company.company_id," + "        m_customer.cust_name,"
+			+ "        m_customer.cust_mob_no," + "        m_project.proj_name,"
+			+ "        m_project.address as proj_address"
+			+ "        ,COALESCE((SELECT m_user.usr_name from m_user WHERE m_user.user_id=t_chalan_header.driver_id),'NA')AS driver_name,"
+			+ "        COALESCE((SELECT m_user.usr_name from m_user WHERE m_user.user_id=t_chalan_header.ex_var1),'NA')AS user_name "
+			+ "        " + "    FROM " + "        m_vehicle," + "        m_plant," + "        m_company,"
+			+ "        m_customer," + "        m_project," + "        t_chalan_header   " + "    WHERE "
+			+ "        m_vehicle.vehicle_id=t_chalan_header.vehicle_id "
+			+ "        AND t_chalan_header.plant_id=m_plant.plant_id  "
+			+ "        AND m_company.company_id=m_plant.company_id "
+			+ "        AND m_customer.cust_id=t_chalan_header.cust_id  "
+			+ "        AND m_project.proj_id=t_chalan_header.proj_id "
+			+ "        AND t_chalan_header.plant_id=:plantId AND t_chalan_header.cust_id=:custId AND t_chalan_header.chalan_date BETWEEN :fromDate AND :toDate  "
+			+ "        AND t_chalan_header.ex_int1=1 ORDER BY t_chalan_header.chalan_id DESC  ", nativeQuery = true)
+
+	List<GetChalanHeader> getGetChalanHeaderByPlantIdAndCustId1(@Param("plantId") int plantId,
 			@Param("custId") int custId, @Param("fromDate") String fromDate, @Param("toDate") String toDate);
 
 	///////////////////////
@@ -163,6 +243,27 @@ public interface GetChalanHeaderRepo extends JpaRepository<GetChalanHeader, Inte
 	List<GetChalanHeader> getGetChalanHeaderByCustIdAndProId(@Param("projId") int projId,
 			@Param("chalan_status") List<Integer> chalanStatus, @Param("custId") int custId);
 
+	@Query(value = "    SELECT\n" + "        t_chalan_header.*,\n" + "        m_vehicle.veh_no,\n"
+			+ "        m_vehicle.vehicle_name,\n" + "        m_plant.plant_name,\n"
+			+ "        m_company.comp_name,m_company.company_id,\n" + "        m_customer.cust_name,\n"
+			+ "        m_customer.cust_mob_no,\n" + "        m_project.proj_name,\n"
+			+ "        m_project.address as proj_address,\n" + "        COALESCE((SELECT\n"
+			+ "            m_user.usr_name \n" + "        from\n" + "            m_user \n" + "        WHERE\n"
+			+ "            m_user.user_id=t_chalan_header.driver_id),\n" + "        'NA')AS driver_name,\n"
+			+ "        COALESCE((SELECT\n" + "            m_user.usr_name \n" + "        from\n"
+			+ "            m_user \n" + "        WHERE\n" + "            m_user.user_id=t_chalan_header.ex_var1),\n"
+			+ "        'NA')AS user_name  \n" + "    FROM\n" + "        m_vehicle,\n" + "        m_plant,\n"
+			+ "        m_company,\n" + "        m_customer,\n" + "        m_project,\n" + "        t_chalan_header  \n"
+			+ "    WHERE\n" + "        m_vehicle.vehicle_id=t_chalan_header.vehicle_id \n"
+			+ "        AND t_chalan_header.plant_id=m_plant.plant_id  \n"
+			+ "        AND m_company.company_id=m_plant.company_id \n"
+			+ "        AND m_customer.cust_id=t_chalan_header.cust_id \n"
+			+ "        AND m_project.proj_id=t_chalan_header.proj_id  \n" + "    "
+			+ "     AND t_chalan_header.cust_id=:custId \n" + "     AND t_chalan_header.status IN(:chalan_status)\n"
+			+ "     AND t_chalan_header.ex_int1=1  ", nativeQuery = true)
+	List<GetChalanHeader> getGetChalanHeaderByCusTId(@Param("chalan_status") List<Integer> chalanStatus,
+			@Param("custId") int custId);
+
 	@Query(value = " SELECT  t_chalan_header.*, m_vehicle.veh_no,m_vehicle.vehicle_name,m_plant.plant_name,"
 			+ "  m_company.comp_name,m_company.company_id, m_customer.cust_name,  m_customer.cust_mob_no,m_project.proj_name, "
 			+ "m_project.address as proj_address,COALESCE((SELECT m_user.usr_name from m_user WHERE "
@@ -188,11 +289,7 @@ public interface GetChalanHeaderRepo extends JpaRepository<GetChalanHeader, Inte
 			+ " AND t_chalan_header.status!=2 ORDER BY  t_chalan_header.chalan_id DESC  ", nativeQuery = true)
 
 	List<GetChalanHeader> getPBillListByPlantIdAndCust(@Param("plantId") int plantId, @Param("custId") int custId);
-	
-	
-	
-	
-	
+
 	@Query(value = " SELECT " + "        t_chalan_header.*, " + "        m_vehicle.veh_no,"
 			+ "        m_vehicle.vehicle_name," + "        m_plant.plant_name,"
 			+ "        m_company.comp_name, m_company.company_id," + "        m_customer.cust_name,"
@@ -210,11 +307,9 @@ public interface GetChalanHeaderRepo extends JpaRepository<GetChalanHeader, Inte
 			+ "        AND t_chalan_header.plant_id=:plantId AND t_chalan_header.chalan_date BETWEEN :fromDate AND :toDate  "
 			+ "        AND t_chalan_header.ex_int1=0  AND t_chalan_header.status!=2 ORDER BY t_chalan_header.chalan_id DESC  ", nativeQuery = true)
 
-	List<GetChalanHeader> getCancleGetChalanHeaderByPlantId(@Param("plantId") int plantId, @Param("fromDate") String fromDate,
-			@Param("toDate") String toDate);
-	
-	
-	
+	List<GetChalanHeader> getCancleGetChalanHeaderByPlantId(@Param("plantId") int plantId,
+			@Param("fromDate") String fromDate, @Param("toDate") String toDate);
+
 	@Query(value = " SELECT " + "        t_chalan_header.*, " + "        m_vehicle.veh_no,"
 			+ "        m_vehicle.vehicle_name," + "        m_plant.plant_name,"
 			+ "        m_company.comp_name,m_company.company_id," + "        m_customer.cust_name,"
@@ -232,10 +327,9 @@ public interface GetChalanHeaderRepo extends JpaRepository<GetChalanHeader, Inte
 			+ "        AND t_chalan_header.cust_id=:custId AND t_chalan_header.chalan_date BETWEEN :fromDate AND :toDate  "
 			+ "        AND t_chalan_header.ex_int1=1  AND t_chalan_header.status!=2 ORDER BY t_chalan_header.chalan_id DESC  ", nativeQuery = true)
 
-	List<GetChalanHeader> getCancleGetChalanHeaderByCustId(@Param("custId") int custId, @Param("fromDate") String fromDate,
-			@Param("toDate") String toDate);
-	
-	
+	List<GetChalanHeader> getCancleGetChalanHeaderByCustId(@Param("custId") int custId,
+			@Param("fromDate") String fromDate, @Param("toDate") String toDate);
+
 	@Query(value = " SELECT " + "        t_chalan_header.*, " + "        m_vehicle.veh_no,"
 			+ "        m_vehicle.vehicle_name," + "        m_plant.plant_name,"
 			+ "        m_company.comp_name,m_company.company_id," + "        m_customer.cust_name,"
@@ -255,8 +349,7 @@ public interface GetChalanHeaderRepo extends JpaRepository<GetChalanHeader, Inte
 
 	List<GetChalanHeader> getCancleGetChalanHeaderBetweenDate(@Param("fromDate") String fromDate,
 			@Param("toDate") String toDate);
-	
-	
+
 	@Query(value = " SELECT " + "        t_chalan_header.*, " + "        m_vehicle.veh_no,"
 			+ "        m_vehicle.vehicle_name," + "        m_plant.plant_name,"
 			+ "        m_company.comp_name,m_company.company_id," + "        m_customer.cust_name,"
@@ -276,6 +369,5 @@ public interface GetChalanHeaderRepo extends JpaRepository<GetChalanHeader, Inte
 
 	List<GetChalanHeader> getCancleGetChalanHeaderByPlantIdAndCustId(@Param("plantId") int plantId,
 			@Param("custId") int custId, @Param("fromDate") String fromDate, @Param("toDate") String toDate);
-
 
 }

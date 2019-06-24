@@ -491,4 +491,51 @@ public class PayRecoveryApiController {
 
 	}
 
+	@RequestMapping(value = { "/updatePayRecoveryDate" }, method = RequestMethod.POST)
+	public @ResponseBody Info updatePayRecoveryDate(@RequestParam("billHeadId") int billHeadId,
+			@RequestParam("billDate") String billDate, @RequestParam("creditDate1") String creditDate1,
+			@RequestParam("creditDate2") String creditDate2, @RequestParam("creditDate3") String creditDate3) {
+
+		Info info = new Info();
+
+		try {
+			int delete = payRecoveryHeadRepo.updateDate(billDate, creditDate1, creditDate2, creditDate3, billHeadId);
+
+			if (delete >= 1) {
+				info.setError(false);
+				info.setMessage("successfully Updated");
+			} else {
+				info.setError(true);
+				info.setMessage(" not update");
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage(" Not Update");
+
+		}
+		return info;
+
+	}
+
+	@RequestMapping(value = { "/getPayRecByPayHeadId" }, method = RequestMethod.POST)
+	public @ResponseBody PayRecoveryHead getPayRecByPayHeadId(@RequestParam("billHeadId") int billHeadId) {
+
+		PayRecoveryHead wget = new PayRecoveryHead();
+
+		try {
+
+			wget = payRecoveryHeadRepo.findByBillHeadIdAndDelStatus(billHeadId, 1);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return wget;
+
+	}
+
 }

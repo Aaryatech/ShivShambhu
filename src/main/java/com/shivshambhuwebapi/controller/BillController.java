@@ -144,7 +144,13 @@ public class BillController {
 
 		try {
 
-			chList = getGetChalanHeaderRepo.getGetChalanHeaderByCustIdAndProId(projId, chalanStatus, custId);
+			if (projId == -1) {
+				chList = getGetChalanHeaderRepo.getGetChalanHeaderByCusTId(chalanStatus, custId);
+				System.out.println("chListchListchListchListchList" + chList.toString());
+			} else {
+
+				chList = getGetChalanHeaderRepo.getGetChalanHeaderByCustIdAndProId(projId, chalanStatus, custId);
+			}
 
 		} catch (Exception e) {
 
