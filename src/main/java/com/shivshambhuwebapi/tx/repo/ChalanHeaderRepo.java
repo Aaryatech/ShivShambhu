@@ -42,4 +42,9 @@ public interface ChalanHeaderRepo extends JpaRepository<ChalanHeader, Integer> {
 
 	List<ChalanHeader> findByChalanId(int chalanId);
 
+	@Transactional
+	@Modifying
+	@Query(" UPDATE ChalanHeader SET cost_segment=1  WHERE chalanId=:chalanIdlist")
+	void updateChalanCostSeg(@Param("chalanIdlist") List<Integer> chalanIdlist);
+
 }

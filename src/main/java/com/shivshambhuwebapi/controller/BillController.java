@@ -162,6 +162,32 @@ public class BillController {
 		return chList;
 	}
 
+	@RequestMapping(value = { "/getChalanHeadersByCustAndCostSegAndProj" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetChalanHeader> getChalanHeadersByCustAndCostSegAndProj(
+			@RequestParam("custId") int custId, @RequestParam("projId") int projId) {
+
+		List<GetChalanHeader> chList = new ArrayList<>();
+
+		try {
+
+			if (projId == -1) {
+				chList = getGetChalanHeaderRepo.getGetChalanHeaderByCustIdAndCostSeg(custId);
+				System.out.println("chListchListchListchListchList" + chList.toString());
+			} else {
+
+				chList = getGetChalanHeaderRepo.getGetChalanHeaderByCustIdAndProIdAndCostSeg(projId, custId);
+			}
+
+		} catch (Exception e) {
+
+			System.err.println("exce in  getChalanHeadersByPlantAndStatus " + e.getMessage());
+			e.printStackTrace();
+
+		}
+
+		return chList;
+	}
+
 	List<GetItemsForBill> chList = new ArrayList<>();
 
 	@RequestMapping(value = { "/getItemsForBill" }, method = RequestMethod.POST)
@@ -403,6 +429,44 @@ public class BillController {
 					System.err.println(cnt);
 					if (cnt == 0) {
 						chalanHeaderRepo.updateChalanHeaderStatus(chalanIds.get(i));
+						System.err.println(chalanIds.get(i));
+					}
+				}
+				info = new Info();
+				info.setError(false);
+				info.setMessage("Chalan Updated Successfully.");
+			} else {
+				info = new Info();
+				info.setError(true);
+				info.setMessage("Chalan Not Updated.");
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+
+		return info;
+
+	}
+
+	@RequestMapping(value = { "/updateCostSegAfterBillGen" }, method = RequestMethod.POST)
+	public @ResponseBody Info updateCostSegAfterBillGen(@RequestParam("chalanDetailId") List<Integer> chalanDetailId) {
+
+		Info info = null;
+
+		try {
+
+			int isUpdated = chalanDetailRepo.updateChalanStatus(chalanDetailId);
+			if (isUpdated >= 1) {
+				List<Integer> chalanIds = getBillDetailRepository.getDistinctChalanIds(chalanDetailId);
+				System.err.println(chalanIds.toString());
+				for (int i = 0; i < chalanIds.size(); i++) {
+					int cnt = getBillDetailRepository.getStatusCnt(chalanIds.get(i));
+					System.err.println(cnt);
+					if (cnt == 0) {
+						chalanHeaderRepo.updateChalanCostSeg(chalanIds);
 						System.err.println(chalanIds.get(i));
 					}
 				}
