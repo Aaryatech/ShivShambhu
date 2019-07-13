@@ -24,12 +24,14 @@ import com.shivshambhuwebapi.tx.model.ChalanDetail;
 import com.shivshambhuwebapi.tx.model.ChalanHeader;
 import com.shivshambhuwebapi.tx.model.GetChalanDetail;
 import com.shivshambhuwebapi.tx.model.GetChalanHeader;
+import com.shivshambhuwebapi.tx.model.GetChalanHeader2;
 import com.shivshambhuwebapi.tx.model.GetChalanHeaderDetail;
 import com.shivshambhuwebapi.tx.repo.ChalanDetailRepo;
 import com.shivshambhuwebapi.tx.repo.ChalanHeaderRepo;
 import com.shivshambhuwebapi.tx.repo.GetChalanDetailRepo;
 import com.shivshambhuwebapi.tx.repo.GetChalanHeaderDetailRepo;
 import com.shivshambhuwebapi.tx.repo.GetChalanHeaderRepo;
+import com.shivshambhuwebapi.tx.repo.GetChalanHeaderRepo2;
 
 @RestController
 public class ChalanApiController {
@@ -631,6 +633,28 @@ public class ChalanApiController {
 			infoRes.setMessage("Chalan Deletion Failed");
 		}
 		return infoRes;
+	}
+
+	@Autowired
+	GetChalanHeaderRepo2 getChalanHeaderRepo2;
+
+	@RequestMapping(value = { "/getChalanHeaders2ByChalanId" }, method = RequestMethod.POST)
+	public @ResponseBody GetChalanHeader2 getChalanHeaders2ByChalanId(@RequestParam("chalanId") int chalanId) {
+
+		GetChalanHeader2 chHeader = new GetChalanHeader2();
+
+		try {
+
+			chHeader = getChalanHeaderRepo2.getGetChalanHeaderByChalanId(chalanId);
+
+		} catch (Exception e) {
+
+			System.err.println("exce in  getChalanHeadersByChalanId " + e.getMessage());
+			e.printStackTrace();
+
+		}
+
+		return chHeader;
 	}
 
 	@RequestMapping(value = { "/getChalanHeadersByChalanId" }, method = RequestMethod.POST)
