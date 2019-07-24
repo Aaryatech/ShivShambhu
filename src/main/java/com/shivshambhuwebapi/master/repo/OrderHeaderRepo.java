@@ -28,4 +28,8 @@ public interface OrderHeaderRepo extends JpaRepository<OrderHeader, Integer> {
 	@Query("UPDATE OrderHeader  SET status=2  WHERE orderId=:orderId")
 	int UpdateOrderHeader(@Param("orderId") int orderId);
 
+	List<OrderHeader> findByCustIdAndStatusInAndDelStatus(int custId, List<Integer> statusList, int i);
+
+	List<OrderHeader> findByProjIdAndStatusInAndDelStatus(int projId, List<Integer> statusList, int i);
+
 }

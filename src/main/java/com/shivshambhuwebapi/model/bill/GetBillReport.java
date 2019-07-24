@@ -88,7 +88,6 @@ public class GetBillReport {
 	@Column(name = "ex_float2")
 	private float exFloat2;
 
-	private String projName;
 	private String custName;
 	private String custMobNo;
 	private String plantName;
@@ -97,7 +96,6 @@ public class GetBillReport {
 	private float cgstAmt;
 	private float igstAmt;
 
-	
 	public float getSgstAmt() {
 		return sgstAmt;
 	}
@@ -322,14 +320,6 @@ public class GetBillReport {
 		this.exFloat2 = exFloat2;
 	}
 
-	public String getProjName() {
-		return projName;
-	}
-
-	public void setProjName(String projName) {
-		this.projName = projName;
-	}
-
 	public String getCustName() {
 		return custName;
 	}
@@ -362,9 +352,9 @@ public class GetBillReport {
 				+ poId + ", taxableAmt=" + taxableAmt + ", taxAmt=" + taxAmt + ", totalAmt=" + totalAmt + ", accId="
 				+ accId + ", orderId=" + orderId + ", delStatus=" + delStatus + ", exInt1=" + exInt1 + ", exInt2="
 				+ exInt2 + ", exInt3=" + exInt3 + ", exVar1=" + exVar1 + ", exVar2=" + exVar2 + ", exVar3=" + exVar3
-				+ ", exFloat1=" + exFloat1 + ", exFloat2=" + exFloat2 + ", projName=" + projName + ", custName="
-				+ custName + ", custMobNo=" + custMobNo + ", plantName=" + plantName + ", sgstAmt=" + sgstAmt
-				+ ", cgstAmt=" + cgstAmt + ", igstAmt=" + igstAmt + "]";
+				+ ", exFloat1=" + exFloat1 + ", exFloat2=" + exFloat2 + ", custName=" + custName + ", custMobNo="
+				+ custMobNo + ", plantName=" + plantName + ", sgstAmt=" + sgstAmt + ", cgstAmt=" + cgstAmt
+				+ ", igstAmt=" + igstAmt + "]";
 	}
 
 }

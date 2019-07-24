@@ -215,11 +215,11 @@ public class OrderApiController {
 
 			if (projId == -1) {
 
-				orderResList = orderHeaderRepo.findByCustIdAndStatusIn(custId, statusList);
+				orderResList = orderHeaderRepo.findByCustIdAndStatusInAndDelStatus(custId, statusList, 1);
 
 			} else {
 
-				orderResList = orderHeaderRepo.findByProjIdAndStatusIn(projId, statusList);
+				orderResList = orderHeaderRepo.findByProjIdAndStatusInAndDelStatus(projId, statusList, 1);
 			}
 		} catch (Exception e) {
 
