@@ -66,6 +66,12 @@ public interface GetPayRecoveryHeadDataRepo extends JpaRepository<GetPayRecovery
 			+ "AND p.cust_id=:custId AND s.setting_id=:custCatId AND p.status=0", nativeQuery = true)
 	List<GetPayRecoveryHeadData> getPayRecBetDateCustPlantCustCat(@Param("fromDate") String fromDate, @Param("toDate") String toDate,@Param("plantId") int plantId,@Param("custId") int custId,@Param("custCatId") int custCatId);
 
+	@Query(value = "SELECT c.cust_name,s.setting_value as cust_class,p.*, DATEDIFF(CURDATE(),p.credit_date2) as days"
+			+ " FROM m_customer c,t_pay_recovery_header p, t_setting_shiv s, t_bill_header b WHERE p.cust_id=c.cust_id "
+			+ "AND c.cust_cat=s.setting_id AND b.bill_head_id=p.bill_head_id "
+			+ "AND  pay_head_id in (:payId) order by pay_head_id asc", nativeQuery = true)
+	List<GetPayRecoveryHeadData> getPayHeaderByHeaderId(@Param("payId") List<Integer> payId);
+
 	
 	
 	
