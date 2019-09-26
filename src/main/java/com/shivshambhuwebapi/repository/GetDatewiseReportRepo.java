@@ -15,7 +15,7 @@ public interface GetDatewiseReportRepo extends JpaRepository<GetDatewiseReport, 
 			+ "SUM(d.igst_amt) as igst_amt,SUM(d.tax_amt) as tax_amt,SUM(d.disc_per) as disc_per,SUM(d.disc_amt) as disc_amt,"
 			+ "SUM(d.taxable_amt) as taxable_amt,SUM(d.total_amt) as total_amt  from t_bill_header h,t_bill_detail d,m_customer "
 			+ "c where h.bill_head_id=d.bill_head_id and c.cust_id=h.cust_id  AND h.bill_date BETWEEN :fromDate AND :toDate"
-			+ "  AND h.cust_id=:custId AND h.ex_int1=:plantId group by  h.bill_date", nativeQuery = true)
+			+ "  AND h.cust_id=:custId AND h.ex_int1=:plantId and h.del_status=1 and d.del_status=1 group by  h.bill_date", nativeQuery = true)
 	List<GetDatewiseReport> getBillById(@Param("fromDate") String fromDate, @Param("toDate") String toDate,
 			@Param("plantId") int plantId, @Param("custId") int custId);
 
@@ -24,7 +24,7 @@ public interface GetDatewiseReportRepo extends JpaRepository<GetDatewiseReport, 
 			+ "SUM(d.igst_amt) as igst_amt,SUM(d.tax_amt) as tax_amt,SUM(d.disc_per) as disc_per,SUM(d.disc_amt) as disc_amt,"
 			+ "SUM(d.taxable_amt) as taxable_amt,SUM(d.total_amt) as total_amt  from t_bill_header h,t_bill_detail d,m_customer "
 			+ "c where h.bill_head_id=d.bill_head_id and c.cust_id=h.cust_id  AND h.bill_date BETWEEN :fromDate AND :toDate"
-			+ "  AND  h.ex_int1=:plantId group by  h.bill_date", nativeQuery = true)
+			+ "  AND  h.ex_int1=:plantId and h.del_status=1 and d.del_status=1 group by  h.bill_date", nativeQuery = true)
 	List<GetDatewiseReport> getBillBetDateAndPlantId(@Param("fromDate") String fromDate, @Param("toDate") String toDate,
 			@Param("plantId") int plantId);
 
@@ -33,7 +33,7 @@ public interface GetDatewiseReportRepo extends JpaRepository<GetDatewiseReport, 
 			+ "SUM(d.igst_amt) as igst_amt,SUM(d.tax_amt) as tax_amt,SUM(d.disc_per) as disc_per,SUM(d.disc_amt) as disc_amt,"
 			+ "SUM(d.taxable_amt) as taxable_amt,SUM(d.total_amt) as total_amt  from t_bill_header h,t_bill_detail d,m_customer "
 			+ "c where h.bill_head_id=d.bill_head_id and c.cust_id=h.cust_id  AND h.bill_date BETWEEN :fromDate AND :toDate"
-			+ "  AND h.cust_id=:custId  group by  h.bill_date", nativeQuery = true)
+			+ "  AND h.cust_id=:custId  and h.del_status=1 and d.del_status=1 group by  h.bill_date", nativeQuery = true)
 	List<GetDatewiseReport> getBillByCustId(@Param("fromDate") String fromDate, @Param("toDate") String toDate,
 			@Param("custId") int custId);
 
@@ -42,7 +42,7 @@ public interface GetDatewiseReportRepo extends JpaRepository<GetDatewiseReport, 
 			+ "SUM(d.igst_amt) as igst_amt,SUM(d.tax_amt) as tax_amt,SUM(d.disc_per) as disc_per,SUM(d.disc_amt) as disc_amt,"
 			+ "SUM(d.taxable_amt) as taxable_amt,SUM(d.total_amt) as total_amt  from t_bill_header h,t_bill_detail d,m_customer "
 			+ "c where h.bill_head_id=d.bill_head_id and c.cust_id=h.cust_id  AND h.bill_date BETWEEN :fromDate AND :toDate"
-			+ "   group by  h.bill_date", nativeQuery = true)
+			+ "   and h.del_status=1 and d.del_status=1 group by  h.bill_date", nativeQuery = true)
 	List<GetDatewiseReport> getBillBetdate(@Param("fromDate") String fromDate, @Param("toDate") String toDate);
 
 	///

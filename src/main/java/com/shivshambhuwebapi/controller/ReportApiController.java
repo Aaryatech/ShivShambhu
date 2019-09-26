@@ -485,12 +485,29 @@ public class ReportApiController {
 
 	@RequestMapping(value = { "/getDatewiseDetailBillReport" }, method = RequestMethod.POST)
 	public @ResponseBody List<GetDateWiseDetailBill> getDatewiseDetailBillReport(
-			@RequestParam("billDate") String billDate) {
+			@RequestParam("billDate") String billDate,@RequestParam("plantIdList") List<Integer> plantIdList,
+			@RequestParam("custIdList") List<Integer> custIdList) {
 
 		List<GetDateWiseDetailBill> billHeaderRes = new ArrayList<>();
 
 		try {
-			billHeaderRes = getDatewiseDetailReportRepo.getBillByBillHeadId(billDate);
+			
+			if (!plantIdList.contains(0) && !custIdList.contains(0)) {
+ 
+				billHeaderRes = getDatewiseDetailReportRepo.getBillByBillHeadId(billDate,plantIdList,custIdList);
+			} else if (!plantIdList.contains(0) && custIdList.contains(0)) {
+				 
+				billHeaderRes = getDatewiseDetailReportRepo.getBillByBillHeadIdpalnt(billDate,plantIdList);
+			} else if (plantIdList.contains(0) && !custIdList.contains(0)) {
+				 
+				billHeaderRes = getDatewiseDetailReportRepo.getBillByBillHeadId(billDate,custIdList);
+
+			} else {
+
+				billHeaderRes = getDatewiseDetailReportRepo.getBillByBillHeadId(billDate);
+
+			}
+			 
 			for (int i = 0; i < billHeaderRes.size(); i++) {
 				billHeaderRes.get(i).setBillDate(DateConvertor.convertToDMY(billHeaderRes.get(i).getBillDate()));
 			}
