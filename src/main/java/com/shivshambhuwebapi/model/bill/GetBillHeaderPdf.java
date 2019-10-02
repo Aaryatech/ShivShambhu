@@ -141,6 +141,9 @@ public class GetBillHeaderPdf implements Serializable {
 
 	private int isSameState;
 
+	@Column(name = "cust_pan_no")
+	private String custPanNo;
+	
 	@Transient
 	List<GetBillDetail> getBillDetails;
 
@@ -525,6 +528,14 @@ public class GetBillHeaderPdf implements Serializable {
 		this.isSameState = isSameState;
 	}
 
+	public String getCustPanNo() {
+		return custPanNo;
+	}
+
+	public void setCustPanNo(String custPanNo) {
+		this.custPanNo = custPanNo;
+	}
+
 	@Override
 	public String toString() {
 		return "GetBillHeaderPdf [billHeadId=" + billHeadId + ", billNo=" + billNo + ", billDate=" + billDate
@@ -539,8 +550,8 @@ public class GetBillHeaderPdf implements Serializable {
 				+ orderId + ", orderNo=" + orderNo + ", delStatus=" + delStatus + ", exInt1=" + exInt1 + ", exInt2="
 				+ exInt2 + ", exInt3=" + exInt3 + ", exVar1=" + exVar1 + ", exVar2=" + exVar2 + ", exVar3=" + exVar3
 				+ ", exFloat1=" + exFloat1 + ", exFloat2=" + exFloat2 + ", projName=" + projName + ", location="
-				+ location + ", chalanNo=" + chalanNo + ", isSameState=" + isSameState + ", getBillDetails="
-				+ getBillDetails + ", bankDetail=" + bankDetail + "]";
+				+ location + ", chalanNo=" + chalanNo + ", isSameState=" + isSameState + ", custPanNo=" + custPanNo
+				+ ", getBillDetails=" + getBillDetails + ", bankDetail=" + bankDetail + "]";
 	}
 
 }
