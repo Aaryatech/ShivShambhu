@@ -31,5 +31,12 @@ public interface OrderHeaderRepo extends JpaRepository<OrderHeader, Integer> {
 	List<OrderHeader> findByCustIdAndStatusInAndDelStatus(int custId, List<Integer> statusList, int i);
 
 	List<OrderHeader> findByProjIdAndStatusInAndDelStatus(int projId, List<Integer> statusList, int i);
+	
+	
+	//Anmol-->2-12-2019---->update status
+	@Transactional
+	@Modifying
+	@Query("UPDATE OrderHeader  SET status=:status  WHERE delivery_date<:currDate")
+	int updateStatusDateLessThanCurrent(@Param("status") int status, @Param("currDate") String currDate);
 
 }
