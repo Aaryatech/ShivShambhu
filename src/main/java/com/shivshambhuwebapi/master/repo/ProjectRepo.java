@@ -21,6 +21,8 @@ public interface ProjectRepo extends JpaRepository<Project, Integer> {
 	List<Project> findByDelStatusOrderByProjIdDesc(int i);
 
 	Project findByProjIdAndDelStatus(int projId, int i);
+	
+	Project findByProjNameAndDelStatus(String projName, int i);
 
 	List<Project> findByCustIdAndDelStatus(int custId, int delStatus);
 

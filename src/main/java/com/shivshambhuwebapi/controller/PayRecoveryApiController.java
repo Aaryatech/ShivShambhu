@@ -490,6 +490,74 @@ public class PayRecoveryApiController {
 		return wList;
 
 	}
+	
+	
+	
+	//Anmol---->3/12/2019-------
+	@RequestMapping(value = { "/getPayRecoveryDataAll" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetPayRecoveryHeadData> getPayRecoveryDataAll(@RequestParam("plantId") int plantId,
+			@RequestParam("custId") int custId, @RequestParam("custCatId") int custCatId) {
+
+		List<GetPayRecoveryHeadData> wList = new ArrayList<GetPayRecoveryHeadData>();
+
+		try {
+
+			// all
+			if (custId == 0 && plantId == 0 && custCatId == 0) {
+
+				wList = payRecoveryHeadDataRepo.getPayRecAllPending();
+			}
+
+			else if (custId != 0 && plantId == 0 && custCatId == 0) {
+				// specific Customer
+				wList = payRecoveryHeadDataRepo.getPayRecBetCust(custId);
+			} else if (custId == 0 && plantId != 0 && custCatId == 0) {
+				// specific plant
+				wList = payRecoveryHeadDataRepo.getPayRecBetPlant(plantId);
+			}
+
+			else if (custId == 0 && plantId == 0 && custCatId != 0) {
+				// specific cust category
+				wList = payRecoveryHeadDataRepo.getPayRecBetCustCat(custCatId);
+			}
+
+			else if (custId != 0 && plantId != 0 && custCatId == 0) {
+
+				wList = payRecoveryHeadDataRepo.getPayRecBetCustPlant(plantId, custId);
+			}
+
+			else if (custId == 0 && plantId != 0 && custCatId != 0) {
+
+				wList = payRecoveryHeadDataRepo.getPayRecBetPlantAndCustCat(plantId, custCatId);
+			}
+
+			else if (custId != 0 && plantId == 0 && custCatId != 0) {
+
+				wList = payRecoveryHeadDataRepo.getPayRecBetCustAndCustCat(custId, custCatId);
+			}
+
+			else if (custId != 0 && plantId != 0 && custCatId != 0) {
+
+				wList = payRecoveryHeadDataRepo.getPayRecBetCustPlantCustCat(plantId, custId,
+						custCatId);
+			}
+
+			for (int i = 0; i < wList.size(); i++) {
+				wList.get(i).setBillDate(DateConvertor.convertToDMY(wList.get(i).getBillDate()));
+				wList.get(i).setCreditDate1(DateConvertor.convertToDMY(wList.get(i).getCreditDate1()));
+				wList.get(i).setCreditDate2(DateConvertor.convertToDMY(wList.get(i).getCreditDate2()));
+				wList.get(i).setCreditDate3(DateConvertor.convertToDMY(wList.get(i).getCreditDate3()));
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return wList;
+
+	}
+	
 
 	@RequestMapping(value = { "/updatePayRecoveryDate" }, method = RequestMethod.POST)
 	public @ResponseBody Info updatePayRecoveryDate(@RequestParam("billHeadId") int billHeadId,

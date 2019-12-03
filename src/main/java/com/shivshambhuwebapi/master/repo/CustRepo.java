@@ -29,6 +29,10 @@ public interface CustRepo extends JpaRepository<Cust, Integer> {
 	int deleteMultiCust(@Param("custIds") List<Integer> custIds);
 
 	Cust findByCustMobNoAndDelStatus(String custMobNo, int i);
+	
+	Cust findByCustMobNoAndDelStatusAndPlantId(String custMobNo, int i,int id);
+	
+	Cust findByCustNameIgnoreCaseAndDelStatusAndPlantId(String custName, int i,int id);
 
 	List<Cust> findByDelStatus(int i);
 

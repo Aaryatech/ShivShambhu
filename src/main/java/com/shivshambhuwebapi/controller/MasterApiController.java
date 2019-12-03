@@ -1560,7 +1560,7 @@ public class MasterApiController {
 				System.out.println("In If");
 			} else {
 				info.setError(true);
-				info.setMessage("Customer Mobiile no Already Exist");
+				info.setMessage("Customer Mobile Already Exist");
 				System.out.println("In else");
 			}
 
@@ -1568,7 +1568,72 @@ public class MasterApiController {
 
 			e.printStackTrace();
 			info.setError(true);
-			info.setMessage(" Customer Mobiile no Already Exist");
+			info.setMessage(" Customer Mobile Already Exist");
+
+		}
+		return info;
+
+	}
+	
+	
+	@RequestMapping(value = { "/saveUniqueCustomerMobile" }, method = RequestMethod.POST)
+	public @ResponseBody Info saveUniqueCustomerMobile(@RequestParam("custMobNo") String custMobNo,@RequestParam("plantId") int plantId) {
+
+		Cust res = new Cust();
+		Info info = new Info();
+
+		try {
+
+			res = custRepo.findByCustMobNoAndDelStatusAndPlantId(custMobNo, 1,plantId);
+
+			if (res == null) {
+
+				info.setError(false);
+				info.setMessage("save Successfully");
+				System.out.println("In If");
+			} else {
+				info.setError(true);
+				info.setMessage("Customer Already Exist");
+				System.out.println("In else");
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage(" Customer Already Exist");
+
+		}
+		return info;
+
+	}
+	
+	@RequestMapping(value = { "/saveUniqueCustomerName" }, method = RequestMethod.POST)
+	public @ResponseBody Info saveUniqueCustomerName(@RequestParam("custName") String custName,@RequestParam("plantId") int plantId) {
+
+		Cust res = new Cust();
+		Info info = new Info();
+
+		try {
+
+			res = custRepo.findByCustNameIgnoreCaseAndDelStatusAndPlantId(custName.trim(), 1,plantId);
+
+			if (res == null) {
+
+				info.setError(false);
+				info.setMessage("save Successfully");
+				System.out.println("In If");
+			} else {
+				info.setError(true);
+				info.setMessage("Customer Already Exist");
+				System.out.println("In else");
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage(" Customer Already Exist");
 
 		}
 		return info;
@@ -2374,6 +2439,39 @@ public class MasterApiController {
 
 		}
 		return res;
+
+	}
+	
+	
+	@RequestMapping(value = { "/saveUniqueProjectName" }, method = RequestMethod.POST)
+	public @ResponseBody Info saveUniqueProjectName(@RequestParam("projectName") String projectName) {
+
+		Project res = new Project();
+		Info info = new Info();
+
+		try {
+
+			res = projectRepo.findByProjNameAndDelStatus(projectName.trim(), 1);
+
+			if (res == null) {
+
+				info.setError(false);
+				info.setMessage("save Successfully");
+				System.out.println("In If");
+			} else {
+				info.setError(true);
+				info.setMessage("Project Already Exist");
+				System.out.println("In else");
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage("Project Already Exist");
+
+		}
+		return info;
 
 	}
 
