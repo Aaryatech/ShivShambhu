@@ -15,6 +15,8 @@ import com.shivshambhuwebapi.master.model.OrderDetail;
 import com.shivshambhuwebapi.master.model.OrderHeader;
 import com.shivshambhuwebapi.master.repo.OrderDetailRepo;
 import com.shivshambhuwebapi.master.repo.OrderHeaderRepo;
+import com.shivshambhuwebapi.model.GetPoChallan;
+import com.shivshambhuwebapi.model.PoChallanDetails;
 import com.shivshambhuwebapi.model.PoDetail;
 import com.shivshambhuwebapi.model.PoHeader;
 import com.shivshambhuwebapi.model.bill.GetBillHeader;
@@ -32,6 +34,8 @@ import com.shivshambhuwebapi.tx.repo.GetChalanDetailRepo;
 import com.shivshambhuwebapi.tx.repo.GetChalanHeaderDetailRepo;
 import com.shivshambhuwebapi.tx.repo.GetChalanHeaderRepo;
 import com.shivshambhuwebapi.tx.repo.GetChalanHeaderRepo2;
+import com.shivshambhuwebapi.repository.PoChallanDetailsRepo;
+import com.shivshambhuwebapi.repository.PoChallanReportRepo;
 
 @RestController
 public class ChalanApiController {
@@ -915,4 +919,53 @@ public class ChalanApiController {
 
 	}
 
+	/************************************************************************/
+	//mahendra
+	//06-01-2020
+	
+	@Autowired
+	PoChallanReportRepo poChallanRepo;
+	@RequestMapping(value = { "/getPoChallanReportInfo" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetPoChallan> PoChallanReportRepo(
+			@RequestParam("plantId") int plantId, @RequestParam("custIds") List<Integer> custIds) {
+
+		List<GetPoChallan> chList = new ArrayList<GetPoChallan>();
+
+		try {
+
+			chList = poChallanRepo.getPoChallanDetails(plantId, custIds);
+			System.out.println("chalan details::" + chList);
+
+		} catch (Exception e) {
+
+			System.err.println("exce in getPoChallanReportInfo " + e.getMessage());
+			e.printStackTrace();
+
+		}
+
+		return chList;
+	}
+	
+	@Autowired
+	PoChallanDetailsRepo challanRepo;	
+	
+	@RequestMapping(value = { "/getChalanDetailInfo" }, method = RequestMethod.POST)
+	public @ResponseBody List<PoChallanDetails> getChalanDetailInfo(@RequestParam("challanId") int challanId) {
+
+		List<PoChallanDetails> chList = new ArrayList<PoChallanDetails>();
+
+		try {
+
+			chList = challanRepo.getChallanDetails(challanId);
+			System.out.println("chalan details::" + chList);
+
+		} catch (Exception e) {
+
+			System.err.println("exce in getChalanDetailInfo " + e.getMessage());
+			e.printStackTrace();
+
+		}
+
+		return chList;
+	}
 }
