@@ -36,7 +36,7 @@ public interface OrderHeaderRepo extends JpaRepository<OrderHeader, Integer> {
 	//Anmol-->2-12-2019---->update status
 	@Transactional
 	@Modifying
-	@Query("UPDATE OrderHeader  SET status=:status  WHERE delivery_date<:currDate")
+	@Query("UPDATE OrderHeader  SET status=:status  WHERE delivery_date<:currDate AND plant_id=70")
 	int updateStatusDateLessThanCurrent(@Param("status") int status, @Param("currDate") String currDate);
 
 }
