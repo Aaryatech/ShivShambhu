@@ -22,11 +22,13 @@ import com.shivshambhuwebapi.master.repo.TaxWiseBillRepo;
 import com.shivshambhuwebapi.model.GetPoReport;
 import com.shivshambhuwebapi.model.bill.GetBillHeader;
 import com.shivshambhuwebapi.model.bill.GetBillReport;
+import com.shivshambhuwebapi.model.bill.GetDailySalesReport;
 import com.shivshambhuwebapi.model.bill.GetDateWiseDetailBill;
 import com.shivshambhuwebapi.model.bill.GetDatewiseReport;
 import com.shivshambhuwebapi.model.bill.MonthWiseBill;
 import com.shivshambhuwebapi.model.bill.TaxSummery;
 import com.shivshambhuwebapi.repository.GetBillReportRepo;
+import com.shivshambhuwebapi.repository.GetDailySalesReportRepo;
 import com.shivshambhuwebapi.repository.GetDatewiseReportRepo;
 import com.shivshambhuwebapi.repository.GetPoReportRepo;
 import com.shivshambhuwebapi.repository.TaxSummeryRepo;
@@ -585,6 +587,38 @@ public class ReportApiController {
 
 		}
 		return headerList;
+
+	}
+	
+	/***************************************************************************/
+	@Autowired GetDailySalesReportRepo dailySalesRepo;
+	@RequestMapping(value = { "/getDailySalesReport" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetDailySalesReport> getDailySalesReport(
+			@RequestParam("plantId") int plantId,  @RequestParam("fromDate") String fromDate,
+			@RequestParam("toDate") String toDate) {
+		System.err.println(
+				"plantIdList " + plantId + "fromDate" + fromDate + "toDate" + toDate);
+		List<GetDailySalesReport> billHeaderRes = new ArrayList<GetDailySalesReport>();
+
+		try {
+
+			if (plantId==0) {
+				System.out.println("getDailySalesReport1:");	
+				billHeaderRes = dailySalesRepo.getDailySalesBetDate(fromDate, toDate);
+				
+			} else{
+				System.out.println("getDailySalesReport2:");
+				billHeaderRes = dailySalesRepo.getDailySalesBetDateByPlantId(fromDate, toDate, plantId);
+			} 
+			System.err.println("Daily Sales Rep-------------"+billHeaderRes);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+
+		return billHeaderRes;
 
 	}
 
