@@ -39,6 +39,8 @@ public class GetBillHeaderPdf implements Serializable {
 	private String custGstNo;
 
 	private String custMobNo;
+	
+	private float exBool1;
 
 	@Column(name = "plant_name")
 	private String plantName;
@@ -536,22 +538,32 @@ public class GetBillHeaderPdf implements Serializable {
 		this.custPanNo = custPanNo;
 	}
 
+	public float getExBool1() {
+		return exBool1;
+	}
+
+	public void setExBool1(float exBool1) {
+		this.exBool1 = exBool1;
+	}
+
 	@Override
 	public String toString() {
 		return "GetBillHeaderPdf [billHeadId=" + billHeadId + ", billNo=" + billNo + ", billDate=" + billDate
 				+ ", custId=" + custId + ", custName=" + custName + ", custVendor=" + custVendor + ", custGstNo="
-				+ custGstNo + ", custMobNo=" + custMobNo + ", plantName=" + plantName + ", projId=" + projId
-				+ ", costSegment=" + costSegment + ", paymentTermId=" + paymentTermId + ", payTerm=" + payTerm
-				+ ", companyId=" + companyId + ", compName=" + compName + ", compPanNo=" + compPanNo + ", compGstNo="
-				+ compGstNo + ", contactNo1=" + contactNo1 + ", contactNo2=" + contactNo2 + ", email1=" + email1
-				+ ", compOfficeAdd=" + compOfficeAdd + ", compFactAdd=" + compFactAdd + ", custAddress=" + custAddress
-				+ ", challanId=" + challanId + ", deliveryTerm=" + deliveryTerm + ", poId=" + poId + ", taxableAmt="
-				+ taxableAmt + ", taxAmt=" + taxAmt + ", totalAmt=" + totalAmt + ", accId=" + accId + ", orderId="
-				+ orderId + ", orderNo=" + orderNo + ", delStatus=" + delStatus + ", exInt1=" + exInt1 + ", exInt2="
-				+ exInt2 + ", exInt3=" + exInt3 + ", exVar1=" + exVar1 + ", exVar2=" + exVar2 + ", exVar3=" + exVar3
-				+ ", exFloat1=" + exFloat1 + ", exFloat2=" + exFloat2 + ", projName=" + projName + ", location="
-				+ location + ", chalanNo=" + chalanNo + ", isSameState=" + isSameState + ", custPanNo=" + custPanNo
-				+ ", getBillDetails=" + getBillDetails + ", bankDetail=" + bankDetail + "]";
+				+ custGstNo + ", custMobNo=" + custMobNo + ", exBool1=" + exBool1 + ", plantName=" + plantName
+				+ ", projId=" + projId + ", costSegment=" + costSegment + ", paymentTermId=" + paymentTermId
+				+ ", payTerm=" + payTerm + ", companyId=" + companyId + ", compName=" + compName + ", compPanNo="
+				+ compPanNo + ", compGstNo=" + compGstNo + ", contactNo1=" + contactNo1 + ", contactNo2=" + contactNo2
+				+ ", email1=" + email1 + ", compOfficeAdd=" + compOfficeAdd + ", compFactAdd=" + compFactAdd
+				+ ", custAddress=" + custAddress + ", challanId=" + challanId + ", deliveryTerm=" + deliveryTerm
+				+ ", poId=" + poId + ", taxableAmt=" + taxableAmt + ", taxAmt=" + taxAmt + ", totalAmt=" + totalAmt
+				+ ", accId=" + accId + ", orderId=" + orderId + ", orderNo=" + orderNo + ", delStatus=" + delStatus
+				+ ", exInt1=" + exInt1 + ", exInt2=" + exInt2 + ", exInt3=" + exInt3 + ", exVar1=" + exVar1
+				+ ", exVar2=" + exVar2 + ", exVar3=" + exVar3 + ", exFloat1=" + exFloat1 + ", exFloat2=" + exFloat2
+				+ ", projName=" + projName + ", location=" + location + ", chalanNo=" + chalanNo + ", isSameState="
+				+ isSameState + ", custPanNo=" + custPanNo + ", getBillDetails=" + getBillDetails + ", bankDetail="
+				+ bankDetail + "]";
 	}
 
+	
 }

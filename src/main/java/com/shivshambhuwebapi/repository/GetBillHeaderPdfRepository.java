@@ -35,6 +35,7 @@ public interface GetBillHeaderPdfRepository extends JpaRepository<GetBillHeaderP
 			"        c.cust_gst_no,\n" + 
 			"        c.cust_vendor,\n" + 
 			"        c.cust_mob_no,\n" + 
+			"        c.ex_bool1,\n" + 
 			"        p.plant_name,\n" + 
 			"        term.pay_term,\n" + 
 			"        c.cust_pan_no,\n" + 

@@ -612,5 +612,26 @@ public class TxApiController {
 		return settingList;
 
 	}
+	
+	// Mahendra 1 Sept 2020
+	@RequestMapping(value = { "/getSettingValueByKey" }, method = RequestMethod.POST)
+	public @ResponseBody Setting getSettingValueByKey(@RequestParam("key") int key) {
+
+		Setting setting = new Setting();
+
+		try {
+
+			setting = settingRepo.findBySettingKey(key);
+
+		} catch (Exception e) {
+
+			System.err.println("Exce in getting  getSettingValueByKey  In TxApi" + e.getMessage());
+			e.printStackTrace();
+
+		}
+
+		return setting;
+
+	}
 
 }

@@ -10,6 +10,8 @@ public interface SettingRepo extends JpaRepository<Setting, Integer> {
 
 	List<Setting> findBySettingKeyIn(List<Integer> keyList);
 	
+	Setting findBySettingKey(int key);
+	
 	
 	//List<Setting> findBySettingKeyIN(List<Integer> keyList);
 	
