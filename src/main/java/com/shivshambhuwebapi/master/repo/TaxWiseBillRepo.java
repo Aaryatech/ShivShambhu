@@ -16,7 +16,7 @@ public interface TaxWiseBillRepo extends JpaRepository<TaxWiseBill , Integer>{
 			+ " SUM(d.sgst_per) as sgst_per,SUM(d.cgst_per) as cgst_per,SUM(d.igst_per) as igst_per, "
 			+ " SUM(d.sgst_amt) as sgst_amt,SUM(d.cgst_amt) as cgst_amt,SUM(d.igst_amt) as igst_amt, "
 			+ " SUM(d.tax_amt) as tax_amt,SUM(d.disc_per) as disc_per,SUM(d.disc_amt) as disc_amt,"
-			+ " SUM(d.taxable_amt) as taxable_amt,SUM(d.total_amt) as total_amt  from t_bill_header h, "
+			+ " SUM(d.taxable_amt) as taxable_amt,SUM(d.total_amt) as total_amt, h.total_amt as grand_total, h.ex_float1  from t_bill_header h, "
 			+ " t_bill_detail d,m_customer c where h.bill_head_id=d.bill_head_id and c.cust_id=h.cust_id AND "
 			+ " h.bill_date  BETWEEN :fromDate AND :toDate "
 			+ " group by  h.bill_head_id ", nativeQuery = true)
@@ -28,7 +28,7 @@ public interface TaxWiseBillRepo extends JpaRepository<TaxWiseBill , Integer>{
 				+ " SUM(d.sgst_per) as sgst_per,SUM(d.cgst_per) as cgst_per,SUM(d.igst_per) as igst_per, "
 				+ " SUM(d.sgst_amt) as sgst_amt,SUM(d.cgst_amt) as cgst_amt,SUM(d.igst_amt) as igst_amt, "
 				+ " SUM(d.tax_amt) as tax_amt,SUM(d.disc_per) as disc_per,SUM(d.disc_amt) as disc_amt,"
-				+ " SUM(d.taxable_amt) as taxable_amt,SUM(d.total_amt) as total_amt  from t_bill_header h, "
+				+ " SUM(d.taxable_amt) as taxable_amt,SUM(d.total_amt) as total_amt, h.total_amt as grand_total, h.ex_float1  from t_bill_header h, "
 				+ " t_bill_detail d,m_customer c where h.bill_head_id=d.bill_head_id and c.cust_id=h.cust_id AND "
 				+ " h.bill_date  BETWEEN :fromDate AND :toDate AND h.cust_id IN (:custIdList ) "
 				+ " group by  h.bill_head_id ", nativeQuery = true)
@@ -40,7 +40,7 @@ public interface TaxWiseBillRepo extends JpaRepository<TaxWiseBill , Integer>{
 				+ " SUM(d.sgst_per) as sgst_per,SUM(d.cgst_per) as cgst_per,SUM(d.igst_per) as igst_per, "
 				+ " SUM(d.sgst_amt) as sgst_amt,SUM(d.cgst_amt) as cgst_amt,SUM(d.igst_amt) as igst_amt, "
 				+ " SUM(d.tax_amt) as tax_amt,SUM(d.disc_per) as disc_per,SUM(d.disc_amt) as disc_amt,"
-				+ " SUM(d.taxable_amt) as taxable_amt,SUM(d.total_amt) as total_amt  from t_bill_header h, "
+				+ " SUM(d.taxable_amt) as taxable_amt,SUM(d.total_amt) as total_amt, h.total_amt as grand_total, h.ex_float1  from t_bill_header h, "
 				+ " t_bill_detail d,m_customer c where h.bill_head_id=d.bill_head_id and c.cust_id=h.cust_id AND "
 				+ " h.bill_date  BETWEEN :fromDate AND :toDate AND h.ex_int1=:plantId "
 				+ " group by  h.bill_head_id ", nativeQuery = true)
@@ -53,7 +53,7 @@ public interface TaxWiseBillRepo extends JpaRepository<TaxWiseBill , Integer>{
 				+ " SUM(d.sgst_per) as sgst_per,SUM(d.cgst_per) as cgst_per,SUM(d.igst_per) as igst_per, "
 				+ " SUM(d.sgst_amt) as sgst_amt,SUM(d.cgst_amt) as cgst_amt,SUM(d.igst_amt) as igst_amt, "
 				+ " SUM(d.tax_amt) as tax_amt,SUM(d.disc_per) as disc_per,SUM(d.disc_amt) as disc_amt,"
-				+ " SUM(d.taxable_amt) as taxable_amt,SUM(d.total_amt) as total_amt  from t_bill_header h, "
+				+ " SUM(d.taxable_amt) as taxable_amt,SUM(d.total_amt) as total_amt, h.total_amt as grand_total, h.ex_float1 from t_bill_header h, "
 				+ " t_bill_detail d,m_customer c where h.bill_head_id=d.bill_head_id and c.cust_id=h.cust_id AND "
 				+ " h.bill_date  BETWEEN :fromDate AND :toDate AND h.ex_int1=:plantId  AND h.cust_id IN (:custIdList ) "
 				+ " group by  h.bill_head_id ", nativeQuery = true)

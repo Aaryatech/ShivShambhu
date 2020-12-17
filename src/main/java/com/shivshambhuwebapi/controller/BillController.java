@@ -329,7 +329,7 @@ public class BillController {
 		List<GetBillHeaderPdf> billHeaderRes = null;
 
 		try {
-
+			System.err.println("Id Found------"+billHeadIdList);
 			billHeaderRes = getBillHeaderPdfRepository.findBillsByHeaderId(billHeadIdList);
 
 			for (int i = 0; i < billHeaderRes.size(); i++) {
