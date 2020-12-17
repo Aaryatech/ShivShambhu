@@ -457,13 +457,15 @@ public class ReportApiController {
 		try {
 
 			if (plantId != 0 && custId != 0) {
-
+				
 				billHeaderRes = getDatewiseReportRepo.getBillById(fromDate, toDate, plantId, custId);
 
 			} else if (plantId != 0 && custId == 0) {
+
 				billHeaderRes = getDatewiseReportRepo.getBillBetDateAndPlantId(fromDate, toDate, plantId);
 
 			} else if (plantId == 0 && custId != 0) {
+
 				billHeaderRes = getDatewiseReportRepo.getBillByCustId(fromDate, toDate, custId);
 
 			} else {
@@ -495,17 +497,17 @@ public class ReportApiController {
 		try {
 			
 			if (!plantIdList.contains(0) && !custIdList.contains(0)) {
- 
+				System.out.println("Q1");
 				billHeaderRes = getDatewiseDetailReportRepo.getBillByBillHeadId(billDate,plantIdList,custIdList);
 			} else if (!plantIdList.contains(0) && custIdList.contains(0)) {
-				 
+				System.out.println("Q2");
 				billHeaderRes = getDatewiseDetailReportRepo.getBillByBillHeadIdpalnt(billDate,plantIdList);
 			} else if (plantIdList.contains(0) && !custIdList.contains(0)) {
-				 
+				System.out.println("Q3");
 				billHeaderRes = getDatewiseDetailReportRepo.getBillByBillHeadId(billDate,custIdList);
 
 			} else {
-
+				System.out.println("Q4");
 				billHeaderRes = getDatewiseDetailReportRepo.getBillByBillHeadId(billDate);
 
 			}
@@ -535,17 +537,19 @@ public class ReportApiController {
 		try {
 
 			if (!plantIdList.contains(0) && !custIdList.contains(0)) {
-
+				
 				billHeaderRes = getMonthwiseReportRepo.getBillById(fromDate, toDate, plantIdList, custIdList);
 
 			} else if (!plantIdList.contains(0) && custIdList.contains(0)) {
+				
 				billHeaderRes = getMonthwiseReportRepo.getBillByPlantId(fromDate, toDate, plantIdList);
 
 			} else if (plantIdList.contains(0) && !custIdList.contains(0)) {
+				
 				billHeaderRes = getMonthwiseReportRepo.getBillByCustId(fromDate, toDate, custIdList);
 
 			} else {
-
+				
 				billHeaderRes = getMonthwiseReportRepo.getBillBetdate(fromDate, toDate);
 
 			}
