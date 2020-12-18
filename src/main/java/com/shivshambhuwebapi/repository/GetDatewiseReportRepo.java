@@ -11,7 +11,7 @@ import com.shivshambhuwebapi.model.bill.GetDatewiseReport;
 public interface GetDatewiseReportRepo extends JpaRepository<GetDatewiseReport, Integer> {
 
 	@Query(value = "  SELECT t1.*,\n" + 
-			" 		t2.*\n" + 
+			" 		t2.grand_total, t2.tcs_amt\n" + 
 			" FROM\n" + 
 			"(select\n" + 
 			"        h.bill_head_id,\n" + 
@@ -69,7 +69,7 @@ public interface GetDatewiseReportRepo extends JpaRepository<GetDatewiseReport, 
 	/**************************************************************************************************************************/
 
 	@Query(value = "  SELECT t1.*,\n" + 
-			" 		t2.*\n" + 
+			" 		t2.grand_total, t2.tcs_amt\n" + 
 			" FROM\n" + 
 			"(select\n" + 
 			"        h.bill_head_id,\n" + 
@@ -126,7 +126,7 @@ public interface GetDatewiseReportRepo extends JpaRepository<GetDatewiseReport, 
 
 	@Query(value = "SELECT\n" + 
 			"        t1.*,\n" + 
-			"        t2.*  \n" + 
+			"        t2.grand_total, t2.tcs_amt  \n" + 
 			"    FROM\n" + 
 			"        (select\n" + 
 			"        h.bill_head_id,\n" + 
@@ -187,7 +187,7 @@ public interface GetDatewiseReportRepo extends JpaRepository<GetDatewiseReport, 
 	/*************************************************************************************************************************/
 
 	@Query(value = " SELECT t1.*,\n" + 
-			" 		t2.*\n" + 
+			" 		t2.grand_total, t2.tcs_amt\n" + 
 			" FROM\n" + 
 			"(select\n" + 
 			"        h.bill_head_id,\n" + 

@@ -13,7 +13,7 @@ public interface GetMonthwiseReportRepo  extends JpaRepository<MonthWiseBill, St
 
 	
 	@Query(value = "SELECT t1.*,\r\n" + 
-			" 		t2.*\r\n" + 
+			" 		t2.grand_total, t2.tcs_amt\r\n" + 
 			" FROM\r\n" + 
 			"(SELECT\r\n" + 
 			"        monthname(h.bill_date) as month,\r\n" + 
@@ -66,7 +66,7 @@ public interface GetMonthwiseReportRepo  extends JpaRepository<MonthWiseBill, St
 	/************************************************************************************************************************************/
 	@Query(value = "SELECT\r\n" + 
 			"    t1.*,\r\n" + 
-			"    t2.*\r\n" + 
+			"    t2.grand_total, t2.tcs_amt\r\n" + 
 			"FROM\r\n" + 
 			"    (\r\n" + 
 			"    SELECT\r\n" + 
@@ -120,7 +120,7 @@ public interface GetMonthwiseReportRepo  extends JpaRepository<MonthWiseBill, St
 	
 	@Query(value = "SELECT\r\n" + 
 			"    t1.*,\r\n" + 
-			"    t2.*\r\n" + 
+			"    t2.grand_total, t2.tcs_amt\r\n" + 
 			"FROM\r\n" + 
 			"    (\r\n" + 
 			"    SELECT\r\n" + 
@@ -175,7 +175,7 @@ public interface GetMonthwiseReportRepo  extends JpaRepository<MonthWiseBill, St
 	
 	@Query(value = "SELECT\r\n" + 
 			"    t1.*,\r\n" + 
-			"    t2.*\r\n" + 
+			"    t2.grand_total, t2.tcs_amt\r\n" + 
 			"FROM\r\n" + 
 			"    (\r\n" + 
 			"    SELECT\r\n" + 

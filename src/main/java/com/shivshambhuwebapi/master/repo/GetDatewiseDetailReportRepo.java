@@ -14,7 +14,7 @@ public interface GetDatewiseDetailReportRepo  extends JpaRepository<GetDateWiseD
 	
 	@Query(value = "SELECT\r\n" + 
 			"        t1.*,\r\n" + 
-			"        t2.*  \r\n" + 
+			"       t2.grand_total, t2.tcs_amt  \r\n" + 
 			"    FROM\r\n" + 
 			"        (select\r\n" + 
 			"        d.bill_detail_id,\r\n" + 
@@ -94,7 +94,7 @@ public interface GetDatewiseDetailReportRepo  extends JpaRepository<GetDateWiseD
 
 	@Query(value = "SELECT\r\n" + 
 			"        t1.*,\r\n" + 
-			"        t2.*  \r\n" + 
+			"        t2.grand_total, t2.tcs_amt  \r\n" + 
 			"    FROM\r\n" + 
 			"        ( select\r\n" + 
 			"        d.bill_detail_id,\r\n" + 

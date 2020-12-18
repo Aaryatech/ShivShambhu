@@ -497,17 +497,17 @@ public class ReportApiController {
 		try {
 			
 			if (!plantIdList.contains(0) && !custIdList.contains(0)) {
-				System.out.println("Q1");
+				
 				billHeaderRes = getDatewiseDetailReportRepo.getBillByBillHeadId(billDate,plantIdList,custIdList);
 			} else if (!plantIdList.contains(0) && custIdList.contains(0)) {
-				System.out.println("Q2");
+				
 				billHeaderRes = getDatewiseDetailReportRepo.getBillByBillHeadIdpalnt(billDate,plantIdList);
 			} else if (plantIdList.contains(0) && !custIdList.contains(0)) {
-				System.out.println("Q3");
+				
 				billHeaderRes = getDatewiseDetailReportRepo.getBillByBillHeadId(billDate,custIdList);
 
 			} else {
-				System.out.println("Q4");
+				
 				billHeaderRes = getDatewiseDetailReportRepo.getBillByBillHeadId(billDate);
 
 			}
@@ -578,10 +578,11 @@ public class ReportApiController {
 		try {
 			if(plantId!=0)
 			{
-
+			System.out.println("Q1");
 			headerList = taxSummeryRepo.getTaxSummeryBetDate(plantId, fromDate, toDate);
 			}else
 			{
+				System.out.println("Q2");
 				headerList = taxSummeryRepo.getTaxSummeryBetDateOnly(fromDate, toDate);
 			}
 
