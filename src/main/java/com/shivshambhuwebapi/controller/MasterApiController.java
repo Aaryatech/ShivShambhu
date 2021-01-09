@@ -63,11 +63,13 @@ import com.shivshambhuwebapi.master.repo.PaymentTermRepo;
 import com.shivshambhuwebapi.master.repo.PlantRepo;
 import com.shivshambhuwebapi.master.repo.ProjectRepo;
 import com.shivshambhuwebapi.master.repo.QuotTrackingRepo;
+import com.shivshambhuwebapi.master.repo.StatesRepo;
 import com.shivshambhuwebapi.master.repo.TaskRepo;
 import com.shivshambhuwebapi.master.repo.TaxRepo;
 import com.shivshambhuwebapi.master.repo.UomRepo;
 import com.shivshambhuwebapi.master.repo.UserRepo;
 import com.shivshambhuwebapi.master.repo.VendorRepo;
+import com.shivshambhuwebapi.model.States;
 
 @RestController
 public class MasterApiController {
@@ -140,6 +142,9 @@ public class MasterApiController {
 
 	@Autowired
 	GetProjectRepo getProjectRepo;
+	
+	@Autowired 
+	StatesRepo stateRepo; 
 
 	// --------------------------------------Document-------------------------
 
@@ -3344,6 +3349,42 @@ public class MasterApiController {
 
 		}
 		return info;
+
+	}
+	
+	@RequestMapping(value = { "/getStatesList" }, method = RequestMethod.GET)
+	public @ResponseBody List<States> getStatesList() {
+
+		List<States> stateList = new ArrayList<States>();
+
+		try {
+
+			stateList = stateRepo.getAllStates();
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return stateList;
+
+	}
+	
+	@RequestMapping(value = { "/getStatesByCust" }, method = RequestMethod.POST)
+	public @ResponseBody States getStatesByCust(@RequestParam int custId) {
+
+		States state = new States();
+
+		try {
+
+			state = stateRepo.getStateByCustId(custId);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return state;
 
 	}
 }
